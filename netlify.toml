@@ -3,6 +3,10 @@ publish = "__sapper__/export/"
 command = "npm run build:publish"
 functions = "functions/"
 
+[template.environment]
+  SITE_TITLE = "A ProgNovel App"
+  BACKEND_API = "https://{api-name}.{your-account}.workers.dev/"
+
 # [[plugins]]
 #   package = "@netlify/plugin-lighthouse"
   # optional, fails build when a category is below a threshold
