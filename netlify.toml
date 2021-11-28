@@ -1,6 +1,6 @@
 [build]
 publish = "__sapper__/export/"
-command = "npm run build:publish"
+command = "npm run build"
 functions = "functions/"
 
 [template.environment]
