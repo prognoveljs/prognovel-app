@@ -4,8 +4,8 @@ command = "npm run build:publish"
 functions = "functions/"
 
 [template.environment]
-  SITE_TITLE = "A ProgNovel App"
-  BACKEND_API = "https://{api-name}.{your-account}.workers.dev/"
+  SITE_TITLE = "Site title"
+  BACKEND_API = "Your Cloudflare Workers backend URL"
 
 # [[plugins]]
 #   package = "@netlify/plugin-lighthouse"
