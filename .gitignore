@@ -1,0 +1,16 @@
+.DS_Store
+/node_modules/
+/src/node_modules/
+/static/publish/
+yarn-error.log
+/cypress/screenshots/
+/__sapper__/
+/__build-stats__/
+/workers/node_modules/
+.env
+.cache
+.svelte
+
+# Local Netlify folder
+.netlify
+/functions/

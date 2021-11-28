@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#333333" />
+  <!-- <link id="carbon-css" rel="stylesheet" href="/style/carbon-css/g90.css" media="print" onload="this.media='all'" /> -->
+  %sapper.base%
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <meta name="description" content="The next generation web novel platform for all." />
+  %css%
+  <!-- <link rel="preload" as="font" href="/fonts/Roboto-Regular-preload.woff2" crossorigin> -->
+  <link rel="preload" as="font" href="/fonts/Roboto-Bold-preload.woff2" crossorigin />
+
+  %sapper.styles%
+  %sapper.head%
+</head>
+
+<body style="
+      background-color: var(--background-color);
+      transition: background-color 0.06s ease-in-out;
+      width: 100%;
+    ">
+  <div id="sapper">%sapper.html%</div>
+  %sapper.scripts%
+  %css.lazy%
+</body>
+
+</html>

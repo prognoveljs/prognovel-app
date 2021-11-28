@@ -1,0 +1,23 @@
+{
+  "editor.formatOnSave": true,
+  "eslint.alwaysShowStatus": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode",
+  },
+  "[json]": {
+    "editor.tabSize": 2
+  },
+  "[svx]": {
+    "eslint.formatOnSave": false
+  },
+  "deno.enable": false,
+  "files.associations": {
+    "*.svx": "mdx"
+  }
+}

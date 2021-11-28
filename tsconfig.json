@@ -1,0 +1,35 @@
+{
+  "include": ["src/**/*", "node_modules/idb-keyval/dist/esm/index.d.ts"],
+  "exclude": ["node_modules/*"],
+  "compilerOptions": {
+    "lib": ["DOM", "ES2015", "ESNext"],
+    "target": "es2017",
+    "module": "esnext",
+    "types": ["node", "@sapper", "./typings/global",],
+    "typeRoots": ["typings"],
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    // "strict": true,
+    "baseUrl": "./",
+    "paths": {
+      "typings/": ["src/typings/"],
+      "polka/*": ["node_modules/polka/*"],
+      "components/*": ["src/components/*"],
+      "plugins/*": ["plugins/*"],
+      "utils/*": ["src/utils/*"],
+      "routes/*": ["src/routes/*"],
+      "service-worker/*": ["src/service-worker/*"],
+      "src/*": ["src/*"],
+      "cache/*": [".cache/*"],
+      "scss/*": ["scss/*"],
+      "read/*": ["src/routes/read/*"],
+      "novel/*": ["src/routes/novel/*"],
+      "store/*": ["src/store/*"],
+      "states": ["src/store/states.ts"],
+      "store/states": ["src/store/states.ts"],
+      "settings": ["src/_setting.ts"],
+      "init": ["src/_app-init.ts"],
+      "monetization": ["src/_web-monetization.ts"]
+    }
+  }
+}

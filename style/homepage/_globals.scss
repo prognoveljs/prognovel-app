@@ -1,0 +1,5 @@
+:global(section.contain) {
+  --maxWidth: 56em;
+  max-width: var(--maxWidth);
+  margin: 0 auto;
+}

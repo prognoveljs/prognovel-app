@@ -1,0 +1,3 @@
+/read/* /read?load=:splat
+/image-resize/* https://image-resize.fly.dev/resize?url=:splat 200
+/* /404 

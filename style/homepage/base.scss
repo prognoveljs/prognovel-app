@@ -1,0 +1,94 @@
+@import "grid";
+@import "../scss/mediaquery";
+
+h1 {
+  font-size: 1.5em;
+  letter-spacing: 0.025em;
+  font-weight: 700;
+  margin: -8px 0 18px 0;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  // max-width: var(--max-width);
+
+  --shortcut-width: 270px;
+  --max-width: 56em;
+
+  .page-content {
+    --hero-bg: hsl(var(--primary-color-h), 85%, 35%);
+    width: calc(100% - var(--shortcut-width));
+    left: var(--shortcut-width);
+    position: relative;
+    min-height: 100vh;
+
+    @include screen("tablet") {
+      width: 100%;
+      left: 0;
+      margin: 0 auto;
+    }
+
+    @include screen("small-mobile") {
+      width: 100%;
+      left: 0;
+      margin: 0 auto;
+    }
+
+    .hero-container {
+      position: relative;
+      svg {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        transform: translateY(96%);
+      }
+    }
+  }
+
+  .hero {
+    --padding-side: calc(50% - var(--max-width) / 2);
+    --padding-top: 24px;
+    --padding-bottom: 32px;
+    overflow: auto;
+    overflow-x: auto;
+    width: auto;
+    background-color: var(--hero-bg);
+    padding: var(--padding-top) var(--padding-side) var(--padding-bottom) var(--padding-side);
+  }
+
+  @include screen("large-desktop") {
+    --shortcut-width: 320px;
+  }
+
+  @include screen("wide-desktop") {
+    --shortcut-width: 350px;
+  }
+}
+
+h1 {
+  font-size: 4em;
+  margin-top: 56px;
+
+  @include screen("tablet") {
+    margin-left: 24px;
+    font-size: 3.25em;
+  }
+  @include screen("small-tablet") {
+    margin: 0;
+    font-size: 2.78em;
+  }
+
+  @include screen("mobile") {
+    margin-left: 24px;
+    font-size: 2.25em;
+  }
+  @include screen("small-mobile") {
+    margin-left: 24px;
+    font-size: 1.8em;
+  }
+}
+
+@import "globals";
+@import "extend";

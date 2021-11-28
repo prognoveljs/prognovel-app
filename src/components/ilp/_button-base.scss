@@ -1,0 +1,18 @@
+button {
+  display: flex;
+  color: #fff;
+  background-color: #222;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  font-family: Rubik, Roboto, Arial, Helvetica, sans-serif;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  img {
+    margin-right: 8px;
+    display: inline-block;
+  }
+}

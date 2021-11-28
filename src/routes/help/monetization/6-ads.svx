@@ -1,0 +1,8 @@
+---
+title: Include Ads on ProgNovel
+layout: help_child
+---
+
+Many native monetization options in ProgNovel is newly emerging and still in experimental phase, we can't expect them to provide stable source of income for content creators as it is now. Therefore, it is necessary for ProgNovel to support the already established monetization practices such as ads.
+
+Ads components in ProgNovel is on the roadmap, but official ads component from ProgNovel is planned to support only optimized and unobstrusive ads network.

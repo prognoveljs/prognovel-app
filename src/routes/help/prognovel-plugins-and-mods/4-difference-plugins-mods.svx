@@ -1,0 +1,6 @@
+---
+title: Difference between plugins and mods
+layout: help_child
+---
+
+Basically, there's no difference between plugins and mods. But to avoid confussion to WordPress's plugins that offer no further functionality beyond the how their websites work, ProgNovel uses term mods for scripts that bring enough interactivity to make some novels potentionally evolved from statically published webnovels; in the previous LitRPG example, if the scripts made enough to blur the novel's form between webnovel and web game, then they can be considered as mods. Think of mods as in game mods, where modders can create an entirely different form of stuff than they originally are. On the otherhands, if the components are strictly UI and for cosmetic purpose only (e.g. table for stats in LitRPG), they will fall into plugins category.

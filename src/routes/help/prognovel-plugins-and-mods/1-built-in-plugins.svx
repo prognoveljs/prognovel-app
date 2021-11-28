@@ -1,0 +1,14 @@
+---
+title: Built-in Plugins and Mods
+layout: help_child
+---
+
+ProgNovel has a few built-in plugins, such as `<novel-trivia></novel-trivia>`, `<authors-note></authors-note>`, and more. To use built-in plugins or mods in ProgNovel, simply add the html tag you needed directly in the markdown of the chapter.
+
+For example, in Yashura Legacy, using the sliding trivia window is to use this in markdown:
+
+```md
+<novel-trivia label="trivia">
+  bla bla bla inside trivia window, hover to slide, bla bla bla.
+</novel-trivia>
+```

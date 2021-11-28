@@ -1,0 +1,12 @@
+---
+title: Chapter lock and ads delay
+layout: help_child
+---
+
+## 🔓 Chapter lock with Web Monetization
+
+ProgNovel has built-in chapter lock mechanism to drive subscription that can be activated easily with one line inside the chapter markdown. Currently, chapter lock is hidden behind Web Monetization API only. However, in the future, we do have plans to support custom subscription that is dedicated to your contents only, instead of shared with other websites.
+
+## ⏲️ Chapter ads delay
+
+(WIP)

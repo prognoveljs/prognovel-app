@@ -1,0 +1,26 @@
+---
+title: Web Monetization API
+layout: help_child
+---
+
+ProgNovel has built-in feature to include the newly emerging Web Monetization API to provide shared subscription across community. Web Monetization API let users to subscribe one time subscription that is shared across multiple content creators based on how much the user consume their contents. It works by sending very small amounts of money per second, in real-time.
+
+Web Monetization is currently being proposed as web standard in W3C as the first real native payment baked inside the browsers, created in effort to reduce the web dependency on data-grabbing ads ecosystem and its surveillance nature in order to make profits, allowing a more fair and cleaner monetization where content creators only need to answer for their users, instead of advertisers or sponsors.
+
+Moreover, users who subscribe to Web Monetization providers don't have to sign-in multiple times across the supporting websites, logging-in to a browser extension instead, while native . Currently, there are efforts to directly implement Web Monetization into browsers, such as in Mozilla Firefox and Puma browser.
+
+## 🤔 How Web Monetization API works in ProgNovel
+
+ProgNovel platform owners, authors, and contributors (editors and proofreaders) all will provide payment pointer address that will point out to a digital wallet which will receive payments from subscribing users.
+
+Web Monetization API, unlike conventional subscription plans, happen to pay content creators at fraction of cents per second, in real time. The monthly subscription that users paid to Web Monetization providers like Coil will be spread to Web Monetization-enabled websites, including ProgNovel platforms, at different rates depending on users' Web Monetization providers.
+
+[Coil](https://coil.com), the only Web Monetization provider at this time, has pay out rate at $0.36 USD an hour ([more details](https://help.coil.com/docs/monetize/get-creator-account/index.html#:~:text=The%20payout%20rate%20starts%20at%20%240.36%20USD%20an%20hour%20per%20Coil%20Member.)). Note that this behaviour will be slightly different when revenue share payouts come into play; more of that will be discussed in the next revenue share section.
+
+## 💰 Get your own payment pointer wallets
+
+Web Monetization API requires payment pointers to inform browser which person it requires to pay. To receive money from Web Monetization, you need to create digital wallets that supports [Interledger protocol](https://interledger.org/).
+
+At this moment, digital wallet providers that you can use are [Uphold]() and [Gatehub](). Note that Web Monetization ecoystem still in its infancy and it is expected that more and more digital wallet providers will support Web Monetization once the standard proposal advances toward more browsers adoptions.
+
+_for more updated digital wallet list, visit [https://webmonetization.org/docs/ilp-wallets](https://webmonetization.org/docs/ilp-wallets)_

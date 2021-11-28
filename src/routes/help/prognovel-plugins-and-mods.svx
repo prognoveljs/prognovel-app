@@ -1,0 +1,9 @@
+---
+title: Use, contribute and write plugins/mods for ProgNovel
+order: 5
+---
+
+ProgNovel comes with expendable features that enable authors, translators, and website owners to easily extends the web app features with Web Component script, either with built-in plugins (trivia window, author's note, etc) or custom made script that can be imported through external storage (usually using external CDN).
+
+Plugins and mods are extendable scripts made to improve UI and user experience for readers of particular novels. They can be loaded on-demand, has functionality ranging from trivial like author's note to an elaborate one that can bring interactivity to the novel (for example, if someone serious about making mods for LitRPG, they can write scripts to gamify readers' progress and code their skill, stats, and quest window.)
+

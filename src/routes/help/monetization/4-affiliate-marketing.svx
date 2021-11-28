@@ -1,0 +1,26 @@
+---
+title: ProgNovel's Affiliate Marketing
+layout: help_child
+---
+
+Aside from website and novel staffs, outside party like readers and influencers can also profit from ProgNovel-based websites by helping promote novels through Instant Affiliate Link program.
+
+Affiliate marketing in ProgNovel is an extension of revenue share using Web Monetization API. With only an Interledger payment pointer from wallet providers (Gatehub and Uphold), anyone can promote novels hosted on ProgNovel app and gains revenue share through Web Monetization subscription. The process is frictionless that all the marketers have to do is put their payment pointers on the affiliate link generators and they'll get the shareable link to the nove that bind to their pointer. The affiliate link referrer then will be saved in the browser (or will be synced to online profile somehow) and the referrer will be considered as pseudo contributors in the novel revenue sharing.
+
+Note that, however, since this affiliate link rely on Web Monetization API, the revenue will be calculated on how much time the readers spent reading the novels, thus spamming click bait links on public forums unlikely to bring money at all. First time marketers might not see a good numbers of revenue but with times and a good amount of followers it could become a considerable passive income.
+
+It is recommended for anyone who's serious in becoming ProgNovel affiliate marketers to start their own content creations, such as podcasts, review blogs, youtube channel, etc, and build their own followerships. And the best way for marketers to get the most out of this feature is to hunt for novels with potential for popularity that anyone else hasn't yet to read, write a trustable and engageable reviews about them.
+
+**Goals of affiliate marketing in ProgNovel:**
+
+1. To create a sustainable human curation recommendation system that doesn't rely on big data
+2. To promote hunt for "hidden gems" behavior and helps more niche genres to flourish
+3. To foster non-fiction content creations that novel community lacks, such as podcasts, youtubers, review blogs, etc.
+4. To provide more recommendation links with context that webnovel currently lacking
+
+## 💰 Earn money by promoting novels
+
+You can start earning money by promoting webnovels hosted on ProgNovel-based websites. There's no sign up and paperwork required - all you need is a payment pointer to Interledger supported wallet ready and generate your own affiliate link from the novel page you want to promote.
+
+![Instant affiliate link](https://prognovel-static.b-cdn.net/prognovel-static-images/affiliate-marketing.png)
+

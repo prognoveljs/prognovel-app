@@ -1,0 +1,14 @@
+$margin-side: 12px;
+$background-color: hsl(var(--primary-color-h), var(--saturate), var(--light));
+
+.options {
+  --saturate: 15%;
+  --light: 20%;
+  box-shadow: 0 -4px 18px #0002;
+  background-color: $background-color;
+
+  :global(html.light) & {
+    --saturate: 60%;
+    --light: 80%;
+  }
+}

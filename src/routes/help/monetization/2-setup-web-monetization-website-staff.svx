@@ -1,0 +1,47 @@
+---
+title: Setup Web Monetization for Website Staffs
+layout: help_child
+---
+
+ProgNovel requires website owners and teams to set up payment pointers so it knows people needed to be reimbursed for their efforts in bringing contents to readers. 
+
+Website owners and staffs has fixed rate of payment pointers across the site, will reimbursed in full when Web Monetization subscribers browsing non-novel pages, such as home page, explore page, help page, etc. Once subscribers browse novel and reading pages, their rates will be limited as they will have to share revenue with authors and the novel contributors.
+
+To set up payment pointers for website owner and staffs, go to `site-contributors.yml` in the project root folder. The config is in YAML format so be aware of the spacing rule. For shorthand, you can set the item value to string that adhere to Webfunding.js syntax, like example below:
+
+```yaml
+Website Owner: $wallet.example.com/owner#20
+```
+
+In the example above we got Website Owner with a weight of 20, where their portion of revenue will be directed to payment address `$wallet.example.com/owner`. Note that in ProgNovel, this person will be listed as `Website Owner` as their name, so feel free to change it as you or your team would like to be listed.
+
+If you need more information about the payee, you can include their email to, though with this you can no longer use Webfunding.js syntax shorthand for it. 
+
+```yaml
+Website Owner:
+  email: owner@example.com
+  payment: $ilp.uphold.com/edR8erBDbRyq
+  rate: 25
+
+Frontend Dev:
+  payment: $ilp.uphold.com/edR8erBDbRyq
+  rate: 14
+
+Backend Dev:
+  payment: $ilp.uphold.com/edR8erBDbRyq
+  rate: 10
+
+Website Manager:
+  email: manager@example.com
+  payment: $ilp.uphold.com/edR8erBDbRyq
+  rate: 22
+
+General Staff:
+  payment: $ilp.uphold.com/edR8erBDbRyq
+  rate: 15
+```
+
+If you include email, ProgNovel will pull avatar and about me information from public [Gravatar](https://www.gravatar.com) database. Currently listing email in contributors config is the only way to show users avatars in revenue share listing shown in novel page. 
+
+As mentioned previously, owners and website staffs (or any payee set up in `site-contributors.yml` file) will have their revshare rate limited when subscribers are reading novels, in order to make room for revenue to be shared for authors and their helpers. By default, website staff group will have their overall revenue limited to 30% in novel pages--but this can be configured in `site-settings.yml` config by changing the value of `limit_global_payment_pointers_share_in_novel`.
+

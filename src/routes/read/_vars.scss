@@ -1,0 +1,18 @@
+$padding-ratio: 4vw;
+$padding-base: 12px;
+
+// MANUAL ===
+$fontSizeBase: 18px;
+$lineHeight: 1.4;
+// =========
+$fontCustomRatio: 1;
+$fontResponsiveRatio: 1;
+$fontWeight: 1;
+$fontSize: calc(
+  var(--fontSizeBase) * var(--fontCustomRatio, #{$fontCustomRatio}) * var(--fontResponsiveRatio)
+);
+$textWidth: 50;
+$contentMaxWidth: calc(var(--fontSizeBase) * var(--fontResponsiveRatio) * var(--textWidth));
+$contentPadding: 0 24px;
+$contentPaddingMobile: 0 12px;
+$contentIntrinsicWidth: 900px;

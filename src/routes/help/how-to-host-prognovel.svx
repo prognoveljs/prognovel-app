@@ -1,0 +1,61 @@
+---
+title: How to host ProgNovel for free (and beyond)
+order: 4
+---
+
+ProgNovel is created mainly with NodeJS. As such, you needed to download [NodeJS](https://nodejs.org/en/) for your desktop.
+
+After that, you can download ProgNovel globally to your desktop through NPM, a package manager for NodeJS:
+```
+npm install prognovel -g
+```
+
+You have ProgNovel in your desktop, but not a complete content for your website yet. To create a website with ProgNovel, there are a few things to take care of.
+
+ProgNovel has 3 parts that you need to setup to get it started off the ground. First, the backend, which comes with three flavors itself that you can choose based on your need and strategy (optimizing cost vs optimizing performance vs optimizing both but with caveats). Second, the frontend, is basic Jamstack site where you'll need to plug your Jamstack hosting to git repo to host it. The third is microservices and third-party API, which is should be optional, since ProgNovel should be able to run without them though it is strongly recommended to setup.
+
+Below are steps to get started on hosting ProgNovel webapp:<br />
+[1) Hosting backend](help/how-to-host-prognovel/1-hosting-backend)<br/>
+[2) Hosting frontend](help/how-to-host-prognovel/2-hosting-frontend)<br/>
+[3) Hosting microservices and third-party APIs](help/how-to-host-prognovel/3-hosting-microservices-and-third-party-api)<br/>
+
+### Questions and Answers
+
+<script>import Collapse from "components/Collapse.svelte";</script>
+
+<Collapse title="Is it really free? How come?">
+
+ProgNovel project is started by a webnovelist, not corporate efforts, so ProgNovel has a big leeway to operate under very little financial burden (though supports are very much appreciated). Agile "free but powerfull" is part of ProgNovel strategy to achieve its goal as a distruptive force for indie content creators to rely less on big corporate-backed platforms to publish their works.
+
+ProgNovel will be distributed as an open source with permissive Apache 2.0 License that is free to use for both
+non-commercial and commercial projects.
+
+It built upon modern architectures like Jamstack and serverless, allowing more
+efficient hosting by removing servers moving part like database and the need to build a page everytime users
+visiting your website.
+
+However, hosting statically means that your webapp will not have the capability to lock a chapter securely due that static files on the CDN are publicly accessible by default. ProgNovel gives flavor options for the backend--with paid version of the backend (that initially has free monthly usage) provide ways to authorize locked contents, while giving extra performance boost as benefit.
+
+**Please note that usually our recommended static hosting only provide free subdomain for hosting.** If you need your own custom domain such as to register on ads network, you still need to pay for it (Web Monetization API, the new way monetizing website that ProgNovel strongly recommended, doesn't need custom domain to get started)
+
+**ProgNovel got funded in its development phase from Grant for the Web comitte to explore and experimenting new business models with Web Monetization API (especially for revenue share and affiliate system in ProgNovel). Grant for the Web also funds many other open source projects, arts, custodians, and many other from many industries with mission to improve Web Monetization ecosystem for fairer business models for the internet.**
+
+</Collapse>
+
+<Collapse title="Is there benefits using ProgNovel beside for free hosting?">
+
+Jamstack architecture at its basic is pre-building website pages ahead of time, eliminating the need of querying databases, thus giving benefits like improved security, as no web servers and databases to maintain means that common attacks such as SQL injections simply vanish. DDoS attacks also will have much harder time to take down Jamstack websites since that instead having to target a single server, they will have to bypass multiple datacenter-backed battle-tested CDN networks that already have many experiences dealing with such hostile actors. In real world, free hosted Jamstack websites are usually more resilliant than traditional servers due to its simplicity design.
+
+Most importantly, serving sites from CDN benefits from performance improvement since ProgNovel websites will be distributed on network hosted all around the world. ~99% websites are being hosted on single location--if a website hosted on the US, it will be serve swiftly for users that live in the US and nearby countries; but at the same time will take several times longer for users that live on the other side of the planet like Asia and Australia. ProgNovel is able to be hosted on CDN networks all over the world, therefore its performance is significantly less impacted by geography restriction.
+
+</Collapse>
+
+<Collapse title="Any caveats using ProgNovel?">
+
+Eliminating the moving parts of the servers mean that it shifts compute responsibility to client browsers. Because of this, it is (currently) impossible to serve ProgNovel without JavaScript turned on.
+
+ProgNovel also rely heavily on modern browsers' technologies like Service Workers, CSS Grid, modern JavaScript syntax, and other emerging technologies like WebAssembly and CSS Houdini that ProgNovel planned to use in the future. Although some of these technologies can be polyfilled for older browsers support, some of them are so crucial for ProgNovel that we're unable to develop backward compatiblity in mind; that and the lack of manpower (as it's currrently a one developer effort) mean that ProgNovel will not support legacy browsers like IE and Opera Mini, and some older versions of major browsers published before 2017 probably will not work. ProgNovel generally should be able to be used in versions of modern browsers published at least in 2017, should at least have support for CSS Grid, CSS Variables, and Service Worker--like Chrome 57 and equivalents.
+
+If you believe that your website should be able to be used without JavaScript and should have support for legacy browsers, you can still use both ProgNovel and WordPress concurrently (by introducing separate BETA web apps to your users), or explore other Jamstack frameworks that rely less on JavaScript like Hugo or Eleventy.
+
+</Collapse>

@@ -1,0 +1,65 @@
+---
+title: Hosting ProgNovel's Backend
+layout: help_child
+---
+
+Web stacks choice and strategies do come each with their benefits and caveats. ProgNovel tries to bring up the quality baseline after one year of researching and eliminating many technologies, but strategy and planning alone won't remove the tradeoff dillema for website developers to decide on. In the end, the best result to create the best website as ProgNovel can possibly gets is still depends on each and every website owners' needs and resources.
+
+## ⚡ Dynamic API backend ⚡
+
+**For the best performance.** ProgNovel is amongst the early generation of webapps that adopt Edge computing paradigm, often hailed as the next paradigm that will replace Cloud computing that currently dominated by Amazon's AWS, Google's GCP, and Microsoft's Azure. ProgNovel's dynamic API backend utilizes Cloudflare Workers to fetch contents and novels' data, while using Workers KV for the best CDN cache hit rate, enabling your contents to be served on Cloudflare 200+ datacenters all around the world almost all the time. This eliminates the need to travel data across the world that usually be done in traditional server hosted in one location or datacenter only, giving you the unmatched backend performance that you will never able to get elsewhere.
+
+<strong style="color: green;">PROS</strong> of hosting the backend on dynamic API:
+
+- Leveraging the best of Cloudflare Workers platform and cache contents on KV Workers, enabling consistently best performance.
+- Enabling proxy for other microservices (like on-the-fly image optimization) and cache them in 200+ Cloudflare datacenters, giving more breath room if you want to keep hosting your microservices on free servers and boost their performance with KV Workers caching.
+- Allow you to set custom authorization for contents and connect them to payment gateways. (You'll basically need this if you want to setup paywalled contents that don't rely on Web Monetization API)
+- ProgNovel has built-in optimization for Cloudflare Workers pay-as-you-go pricing scheme that bills you per API request, cutting down request counts by merging several chapters in one API fetch, thus generally more cost-effective than average serverless-adopted websites.
+
+<br />
+<strong style="color: red;">CONS</strong> of hosting with dynamic API:
+
+- While it has a very generous free-tier, Cloudflare Workers is a serverless platform that does cost minimum \$5/months to get the best out of it (though the free-tier still overwhelmingly good). It should be fine to start your ProgNovel webapp with free-tier Cloudlfare Workers and move to paid version once the traffic big enough for you to scale your webapp.
+- Free-tier of Cloudflare Workers also does have usage limit; 100.000 requests per day and also has short limitation 1000 requests per minute. Generally, you'll want to move to paid Cloudflare Workers once you get around 50k~100k pageviews per day and often hit 1000 pageviews in under 1 minute.
+
+<div class="recommended">
+  Dynamic API setup is recommended if you have budgets or planning to monetize your contents beyond ads and
+  Web Monetization API
+</div>
+
+**How to host dynamic API on Cloudflare Workers**: WIP...<br/>
+**Learn more how ProgNovel's dynamic API requests work**: WIP...
+
+## 💸 Static API backend 💸
+
+**Forever free hosting.** Although ProgNovel processed contents separately from its main frontend (which is quite different from general Jamstack frameworks), the API needed to display content are basically just markdown files that parsed into flat JSON documents. Like the usual Jamstack sites that host HTML, CSS, and JavaScript files on the CDN, these JSON documents can also hosted on CDN networks that usually are cheaper than using serverless platforms like Cloudflare Workers. Even more awesome is that some providers also do have unlimited bandwidth and unlimited requests free hosting that can be used to host ProgNovel's API statically (hint: Cloudflare Pages).
+
+<strong style="color: green;">PROS</strong> of using static API backend:
+
+- Some static host provides free hosting with unlimited bandwidth and unlimited bandwidth, enabling you to keep your hosting cost at \$0 even after millions of users. (NOTE: you still have to pay for a custom domain if you need it)
+
+<br />
+<strong style="color: red;">CONS</strong> of using static API backend:
+
+- Using static API backend alone forces your contents to be available for public, thus you'll need other strategy if you want to setup paywalled contents other than ads and Web Monetization API.
+- Less consistent performance than dynamic API backend. Lack of Clouflare Workers KV means the CDN provisioned by your hosting will sometimes wipeout the cache of your contents to make room for other files. This is common practice for CDN providers, usually refers to term CDN cache hit rate. (Don't worry; though static API perform less than dynamic API backend, it is actually perform far better than about 99% servers on the internet)
+- Although static hosting providers give very generous bandwidth, you stil subjected to build usage pricing that Jamstack hosting providers set. Cloudflare Pages, for example, give 500x build per month for free-tier users; which means you can only update your site and update your content (which billed separately) 500 times for each month. You can update multiple chapters across several novels at the same time, so average static hosting build time should be viable if you keep a proper schedule to publish new contents.
+
+<div class="recommended">
+  Static API setup is recommended for indie authors and fans translations that doesn't have the upfront money
+  or credit cards to setup for paid hosting but still want an awesome ProgNovel webapp.
+</div>
+
+**How to host dynamic API on Cloudflare Workers**: WIP...<br/>
+**Learn more about static API hosting**: WIP...
+
+## 💕 Hybrid API backend 💕
+
+**WIP**
+
+<style lang="scss">
+  .recommended {
+    text-align: center; margin: 3em auto 2em; max-width: 600px; font-style: italic;
+  }
+</style>
+

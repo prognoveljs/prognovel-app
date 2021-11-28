@@ -1,0 +1,32 @@
+$margin-top-bottom: 72px;
+$content-max-width: 1400px;
+$content-width: 1fr;
+$sidebar-width: 300px;
+$gap: 0;
+
+.body {
+  margin-bottom: $margin-top-bottom;
+}
+
+.content {
+  --sidebarOptionWidthVariant: 1;
+  --sidebarOptionWidth: calc(#{$sidebar-width} * var(--sidebarOptionWidthVariant));
+  width: 100%;
+  display: grid;
+  grid-gap: $gap * 4;
+  grid-template-columns: $content-width var(--sidebarOptionWidth);
+
+  @include screen("tablet") {
+    // --sidebarOptionWidthVariant: 0;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  @include screen("desktop") {
+    --sidebarOptionWidthVariant: 1.25;
+  }
+
+  @include screen("large-desktop") {
+    --sidebarOptionWidthVariant: 1.5;
+  }
+}

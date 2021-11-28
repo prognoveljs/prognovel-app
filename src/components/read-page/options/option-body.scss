@@ -1,0 +1,29 @@
+:global(.option__checkbox) {
+  $checkbox-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  width: 100%;
+
+  :global(label) {
+    font-size: 15px;
+  }
+
+  :global(input[type="checkbox" i]) {
+    width: $checkbox-size;
+    height: $checkbox-size;
+  }
+}
+
+:global(.option__desc) {
+  font-weight: 300;
+  line-height: 1.25;
+  opacity: 0.66;
+  font-size: 0.835rem;
+
+  :global(b) {
+    font-size: 1em;
+    color: red;
+  }
+}

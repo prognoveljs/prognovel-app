@@ -1,0 +1,70 @@
+---
+title: Setup Web Monetization for Novel Staffs
+layout: help_child
+---
+
+Unlike website owners and staffs, authors or anyone who helped in creating novels published don't have fixed rate in their payment, instead their revshare payment rate will accumulate every time they are being credited in raw chapter markdown. So make sure to write their name correctly or else they won't be getting their fair share of revshare payment! (the good news is, ProgNovel CLI will inform for typo for novel contributors name)
+
+For example, below is how a chapter is being configured in a markdown file. Every chapter markdown has YAML configuration section at the top of the file, wrapped in three dash line `---` on the top and below of the YAML section. This is where the chapter title is being configured, and every contributors have their name listed as credits.
+
+```md
+---
+title: Awesome Chapter Title
+author: Iory
+editor: Jane, Jonathan, Jamaludin
+proofreader: Jamaludin
+---
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec laoreet bibendum semper. Vivamus nec velit interdum, varius odio at, auctor lacus.
+
+Nullam condimentum nisi nunc. Morbi consectetur, nibh vitae dignissim tempor, libero nulla facilisis orci, eu dictum eros purus ut orci. Phasellus magna est, molestie vitae purus ut, lobortis rhoncus ex. Nam nec nisl quis eros iaculis rutrum id aliquet massa. Donec laoreet sit amet tortor dictum tincidunt. 
+```
+
+In example above, author Iory wrote a chapter helped by three people Jane, Jonathan, and Jamaludin. The three helpers edit the novel while one of them, Jamaludin, also helps in proofreading the final edit of the chapter. Because Jamaludin has more work compared to Jane and Jonathan, it is only fair for Jamaludin to get more share compared the other two.
+
+Instead of configuring payment rate for everyone who helps creating the novel, ProgNovel rate their roles instead. In file `site-settings.yml` config, you might find `rev_share_contribution_per_chapter` which has children of roles that can be awarded to novel contributors.
+
+By default, it will look like this:
+
+```yaml
+rev_share_contribution_per_chapter:
+  author: 5
+  translator: 4
+  editor: 3
+  proofreader: 2
+```
+
+If we go with default rate above then the revshare rate of Iory's novel chapter goes--
+
+```
+Iory: 5
+Jane: 3
+Jonathan: 3
+Jamaludin: 5
+```
+
+--in which Jamaludin gets 2 more rate than Jane and Jonathan since he also credited as proofreader that has been configured to have revshare rate of 2 in `site-settings.yml`.
+
+This rate will accumulated in every chapter. If 4 other chapters have the same credits, then the final payment rate calculation (for 5 chapters) will be--
+
+```
+Iory: 25 .......... 5 x 5 chapters
+Jane: 15 .......... 3 x 5 chapters
+Jonathan: 15 ...... 3 x 5 chapters
+Jamaludin: 25 ..... (3 + 2) x 5 chapters
+```
+
+--however, in case if Jamaludin could no longer help editing due to overworking, he'll have fewer rate than Jane and Jonathan in the long run since he will be no longer credited as `editor` for future chapters. If, say, in this case Iory plans to write 20 chapters, with Jamaludin only work as both of an editor and proofreader in the first 5 chapters and only proofreading for the rest, then the final revshare payment rate will look like this--
+
+```
+Iory: 100 .......... 5 x 20 chapters
+Jane: 60 ........... 3 x 20 chapters
+Jonathan: 60 ....... 3 x 20 chapters
+Jamaludin: 55 ...... ((3 + 2) x 5 chapters) + (2 x 15 chapters)
+```
+
+--in this situation Jamaludin will have slightly less payment rate than Jane and Jonathan.
+
+## 👨‍👩‍👧‍👧 Still shared with Website staffs
+
+Please note that the payment rate mentioned above is calculated before including the share of website owner and staffs. To see how revenue is being distributed with the website staffs, head to [previous section](http://localhost:3000/help/monetization/2-setup-web-monetization-website-staff) on how website staffs share their payment rate.

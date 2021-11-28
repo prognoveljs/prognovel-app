@@ -1,0 +1,13 @@
+---
+title: Help Center
+---
+
+This is help page.
+
+[Get started with ProgNovel's features](help/get-started-with-prognovel-features)
+
+[Tweak themes and performance settings](help/themes-and-performance-settings)
+
+[How to host ProgNovel for free (and beyond)](help/how-to-host-prognovel)
+
+[Use, contribute, and write plugins/mods for ProgNovel](help/prognovel-plugins-and-mods)

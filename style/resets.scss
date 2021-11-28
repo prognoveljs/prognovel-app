@@ -1,0 +1,51 @@
+:global(*) {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:global(p) {
+  margin: 1em 0;
+}
+
+:global(body) {
+  margin: 0;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-body-color);
+}
+
+:global(h1),
+:global(h2),
+:global(h3),
+:global(h4),
+:global(h5),
+:global(h6) {
+  margin: 1em 0 0.5em 0;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+:global(h1) {
+  font-size: 2em;
+}
+
+:global(a) {
+  color: inherit;
+}
+
+@media (min-width: 400px) {
+  :global(body) {
+    font-size: 16px;
+  }
+}
+
+:global(h1),
+:global(h2),
+:global(h3),
+:global(h4),
+:global(h5),
+:global(figcaption) {
+  color: var(--text-head-color);
+}

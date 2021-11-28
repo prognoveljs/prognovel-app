@@ -1,0 +1,26 @@
+h1 {
+  // disable SITE_TITLE for styling
+  display: none;
+}
+
+h2 {
+  font-size: 4.35em;
+  text-align: center;
+  letter-spacing: -0.0225em;
+  font-weight: 700;
+  margin: 0 auto;
+  margin-top: 0.5em;
+  line-height: 1.1;
+  margin-bottom: 0.125em;
+  font-family: system-ui, Helvetica, sans-serif;
+  max-width: 850px;
+}
+
+h3 {
+  font-size: 0.9325em;
+  text-align: center;
+  font-weight: 300;
+  margin: 0 auto;
+  opacity: 0.765;
+  max-width: 850px;
+}

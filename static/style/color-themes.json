@@ -1,0 +1,53 @@
+{
+    "basic": {
+        "hue": 15,
+        "saturate": 100,
+        "light": 50
+    },
+    "crimson": {
+        "hue": 45,
+        "saturate": 100,
+        "light": 50
+    },
+    "nature": {
+        "hue": 115,
+        "saturate": 100,
+        "light": 50
+    },
+    "elegant": {
+        "hue": 55,
+        "saturate": 100,
+        "light": 50,
+        "vip": true
+    },
+    "chrome": {
+        "hue": 180,
+        "saturate": 100,
+        "light": 50,
+        "vip": true
+    },
+    "some-color": {
+        "hue": 88,
+        "saturate": 100,
+        "light": 50,
+        "vip": true
+    },
+    "earth": {
+        "hue": 332,
+        "saturate": 100,
+        "light": 50,
+        "vip": true
+    },
+    "wowee": {
+        "hue": 5,
+        "saturate": 100,
+        "light": 50,
+        "vip": true
+    },
+    "kfssf": {
+        "hue": 120,
+        "saturate": 100,
+        "light": 50,
+        "vip": true
+    }
+}

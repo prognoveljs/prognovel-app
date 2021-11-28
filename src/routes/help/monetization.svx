@@ -1,0 +1,16 @@
+---
+title: Monetization in ProgNovel
+order: 3
+---
+
+ProgNovel runs many experimentation of monetization on the web to find new business models best suited for web novel. Unlike traditional novel sites that rely on ads to make money, ProgNovel choose the newly proposed browser API standard called Web Monetization API, which allow readers to subscribe directly to content creators in an open and efficient way, without having to signing up and re-subscribe for every ProgNovel-based websites that use Web Monetization API.
+
+Web Monetization API works directly via browsers' JavaScript API, allowing ProgNovel to use novel features to nudge readers to subscribe like providing more color themes and options for Web Monetization subscribers, easy chapter locks for subscribers that can be easily activated, and programized revenue share that rewards authors and contributors based on efforts they poured in to create contents for their readers.
+
+## 📌 Interesting articles
+
+To get payment for website owners and website staffs, head to [Setup Web Monetization for Website Staffs](help/monetization/2-setup-web-monetization-website-staff).
+ßß
+To get payment for novel authors and contributors (editors, proofreaders, etc), head to [Setup Web Monetization for Novel Staffs](help/monetization/3-setup-web-monetization-novel-staff)
+
+To get payment for readers and influencers who helps promoting novels, ead to [ProgNovel's Affiliate Marketing](help/monetization/4-affiliate-marketing)

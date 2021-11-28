@@ -1,0 +1,25 @@
+:global(path) {
+  $saturate: 88%;
+  $light: 56%;
+  $alpha: 0.44;
+  color: hsla(#{$h}, #{$saturate}, #{$light}, #{$alpha});
+
+  :global(html.light) & {
+    $alpha: 0.86;
+    color: hsla(#{$h}, #{$saturate}, #{$light}, #{$alpha});
+  }
+}
+
+em {
+  display: block;
+  font-weight: 300;
+  opacity: 0.56;
+  margin-top: 12px;
+  font-size: 0.95em;
+  padding: 4px 42px 12px;
+  line-height: 1.2;
+
+  :global(html.light) & {
+    opacity: 0.85;
+  }
+}
