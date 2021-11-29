@@ -119,12 +119,6 @@
     <div class="hero-container">
       <section class="hero">
         <h1>{SITE_TITLE}</h1>
-        {#if SITE_SUBTITLE}
-          <h2><span style="font-size: 0.8em;">🔥🔥🔥</span><br />{SITE_SUBTITLE}</h2>
-        {/if}
-        {#if SITE_SUBTITLE2}
-          <h3>{SITE_SUBTITLE2}</h3>
-        {/if}
         <HomeHero titles={novelTitles} {novelList} {novelsMetadata} grid={"novels"} />
       </section>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"
