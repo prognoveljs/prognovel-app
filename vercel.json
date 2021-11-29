@@ -1,8 +1,9 @@
 {
-  "routes": [
+  "redirects": [
     {
-      "src": "/read/(?<slug>)",
-      "dest": "/read?load=$slug"
+      "source": "/read/:slug",
+      "destination": "/read?load=:slug",
+      "permanent": true
     }
   ]
 }
