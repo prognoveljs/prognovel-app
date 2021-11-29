@@ -17,7 +17,7 @@ First, you need to get your backend hosted on Cloudflare Workers:
 3. Again in Workers section, create KV Workers.
 4. Fork [ProgNovel backend](https://github.com/prognoveljs/prognovel-workers) repo.
 5. In your new forked repo, go to Actions tab, and enable Workflow if it isn't enabled yet.
-6. Then go to settings tab, look for Environments section, click the green button `Configure Environment` after you fill out the Name input with whatever you'd like. You need to do this in order to add two environment secrets, Cloudflare Account ID and API token (from step 2) - which you can create by click `+ Add secret` in Environment secret section. Fill both under environment secret names `CF_ACCOUNT_ID` and `CF_API_TOKEN`, case sensitive.
+6. Then go to settings tab, look for Environments section, click the green button `Configure Environment` after you fill out the Name input with whatever you like. You need to do this in order to add two environment secrets, Cloudflare Account ID and API token (from step 2) - which you can create by click `+ Add secret` in Environment secret section. Fill both under environment secret names `CF_ACCOUNT_ID` and `CF_API_TOKEN`, case sensitive.
 7. Go to `wrangler.toml`; fill your `account_id` with your Account ID and `kv-namespaces` with KV Workers ID you created in step 3.
 8. Wait for Github Action to complete installing CF Workers backend for you.
 
@@ -41,7 +41,7 @@ ProgNovel works best when hosted on Jamstack platforms for performance and effie
 3. Fill the build configuration with these:
 
 - Build command: `npm run build`
-- Publish directory: `__sapper__/export/`
+- Publish/output directory: `__sapper__/export/`
 - Under secret environment section, create new variable with key `BACKEND_API` and value of URL of your backend API you create previously (usually is `https://api.{your-cloudflare-account}.workers.dev`).
 
 4. Wait for your hosting platforms building your ProgNovel App, which might takes 2~10 minutes depending on the hosting platform you used. Usually you'll be notified in the dashboard with the link of your newly created site once the build is complete.
