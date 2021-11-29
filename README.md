@@ -37,6 +37,12 @@ ProgNovel works best when hosted on Jamstack platforms for performance and effie
 > Before hosting the frontend, make sure you don't skip hosting your first Cloudflare Workers backend and publishing content so that the frontend has something to build with.
 
 1. Have a Github account and fork this repo.
-2. You'll have have your own forked copy of prognovel frontend app in your Github account - use that to connect with Jamstack hosting platforms like Netlify, Vercel, or Cloudflare Page.
-3. Wait for your hosting platforms building your ProgNovel App, might takes 2~10 minutes depending on the hosting platform you used. Usually you'll be notified in the dashboard with the link of your newly created site once the build is complete.
-4. If you need to upgrade your ProgNovel app, simply click fetch upstream in your forked repo. Your hosting platforms will usually detects change in your repo and will rebuild the app with the latest codebase. (Make sure to your installed backend and CLI compatible first before upgrading your frontend)
+2. You'll have have your own forked copy of prognovel frontend app in your Github account - use that to connect with Jamstack hosting platforms like [Netlify](https://www.netlify.com/), [Vercel](https://vercel.com/), or [Cloudflare Page](https://pages.cloudflare.com/).
+3. Fill the build configuration with these:
+
+- Build command: `npm run build`
+- Publish directory: `__sapper__/export/`
+- Under secret environment section, create new variable with key `BACKEND_API` and value of URL of your backend API you create previously (usually is `https://api.{your-account-name}.workers.dev`).
+
+4. Wait for your hosting platforms building your ProgNovel App, might takes 2~10 minutes depending on the hosting platform you used. Usually you'll be notified in the dashboard with the link of your newly created site once the build is complete.
+5. If you need to upgrade your ProgNovel app, simply click fetch upstream in your forked repo. Your hosting platforms will usually detects change in your repo and will rebuild the app with the latest codebase. (Make sure to your installed backend and CLI compatible first before upgrading your frontend)
