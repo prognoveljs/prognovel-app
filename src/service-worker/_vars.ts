@@ -14,15 +14,13 @@ const routesToCache: string[] = [
   "/read/",
   "/novel/",
 ];
-// TODO refactor this later and get from cache/sitemetadata.json
-export const IPFS_USE_PREFIX: string = "%USE__IPFS%";
 
 export const SW_HOST: string = "";
 export const cachedRoutes = routesToCache.concat(NOVEL_LIST.map((novel) => `/novel/${novel}/`));
 const cachedFiles = shell.concat(files).concat(cachedRoutes);
 
 let filesCache: string[];
-export const preIPFSfiles = (): string[] => {
+export const cacheFileFiltered = (): string[] => {
   return filesCache || (filesCache = cachedFiles.filter(validAssets));
 };
 
@@ -30,7 +28,7 @@ export const assets = {
   name: ASSETS,
   cache: {
     files: (): string[] => {
-      return preIPFSfiles().map((asset) => SW_HOST + asset);
+      return cacheFileFiltered().map((asset) => SW_HOST + asset);
     },
     fonts: (): string[] => {
       return cachedFiles.filter((value) => {

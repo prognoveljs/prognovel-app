@@ -4,7 +4,6 @@ const AssetsPlugin = require("assets-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin");
 const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
-const IPFSPlugin = require("./plugins/build/duplicate-to-ipfs");
 const CSSPlugin = require("./plugins/build/themes/css-global");
 const BuildStart = require("./plugins/build/_start");
 const OptimizePlugin = require("optimize-plugin");
@@ -47,7 +46,6 @@ const alias = {
 function getClientPlugins() {
   const prod = [];
   if (!dev) {
-    prod.push(new IPFSPlugin({ prefix: "ProgNovel" }));
     prod.push(
       new BundleAnalyzerPlugin({
         analyzerMode: "static",
