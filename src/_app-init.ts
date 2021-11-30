@@ -17,6 +17,7 @@ import { fetchSiteMetadata } from "utils/fetch-metadata";
 import { signInCredentialModeInit } from "utils/users";
 import { bookmarkInit } from "utils/bookmark";
 import "utils/navigation/app-preload";
+import { loadWorklet } from "utils/animation";
 
 async function init() {
   const url = new URL(window.location.href);
@@ -39,4 +40,5 @@ export default async () => {
   mobileInit();
   signInCredentialModeInit();
   bookmarkInit();
+  loadWorklet();
 };
