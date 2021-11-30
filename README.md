@@ -1,8 +1,9 @@
 # ProgNovel
 
 [![NodeJS Build](https://github.com/prognoveljs/prognovel-app/actions/workflows/nodejs.yml/badge.svg)](https://github.com/prognoveljs/prognovel-app/actions/workflows/nodejs.yml)
-![last commit](https://img.shields.io/github/last-commit/prognoveljs/prognovel-app)
-![commit](https://img.shields.io/github/commit-activity/m/prognoveljs/prognovel-app)
+![maintained?](https://img.shields.io/badge/maintained%3F-yes-green.svg)
+![last commit](https://img.shields.io/github/last-commit/prognoveljs/prognovel-app/develop)
+![commit](https://img.shields.io/github/commit-activity/m/prognoveljs/prognovel-app/develop)
 ![version](https://img.shields.io/github/package-json/v/prognoveljs/prognovel-app)
 ![netlify](https://img.shields.io/netlify/da504f88-e78c-4e63-bed4-52ebf13860b2)
 
