@@ -1,7 +1,7 @@
 <script lang="ts">
   import { bannerImages, updateBannerImage } from "utils/images";
   import { NOVEL_BANNER_HEIGHT } from "settings";
-  import { getContext } from "svelte";
+  import { getContext, onMount } from "svelte";
   import type { NovelMetadata } from "typings";
 
   export let novelMetadata: NovelMetadata = getContext("novelMetadata");
@@ -47,8 +47,10 @@
       width: 100%;
       height: auto;
       transform-origin: bottom center;
-      animation: 1s linear both banner-scroll;
+      animation: 1s linear forwards progress;
       animation-timeline: banner-scroll;
+      will-change: filter;
+      transform-origin: bottom;
     }
 
     &.hide {
@@ -71,18 +73,20 @@
         from {
           transform: scale(1.1);
           opacity: 1;
+          filter: blur(0);
         }
 
         to {
           transform: scale(1);
           opacity: 0;
+          filter: blur(20px);
         }
       }
 
       @scroll-timeline banner-scroll {
         source: auto;
         orientation: vertical;
-        scroll-offsets: 0%, 100%;
+        scroll-offsets: 0%, 200px;
         time-range: 1s;
       }
     }

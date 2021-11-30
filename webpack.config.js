@@ -13,8 +13,6 @@ const {
   alias,
   mainFields,
   extensions,
-  swc,
-  swc_prod,
   babel,
   getClientPlugins,
   getServiceWorkerPlugins,
@@ -43,7 +41,7 @@ module.exports = {
       extensions,
       mainFields,
       alias,
-      symlinks: false
+      symlinks: false,
     },
     module: {
       rules: [
@@ -77,6 +75,7 @@ module.exports = {
     module: {
       rules: [
         babel,
+        // urlLoader,
         {
           test: /\.(svelte|svx|html)$/,
           use: {
@@ -102,7 +101,7 @@ module.exports = {
     resolve: {
       extensions: [".ts", ".js", ".json"],
       alias,
-      symlinks: false
+      symlinks: false,
     },
     module: {
       rules: [babel],

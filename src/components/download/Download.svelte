@@ -11,8 +11,6 @@
   export let id: string = getContext("id");
   export let mobileDisplay: "block" | "none" = "none";
 
-  $: console.log(id);
-
   export let isDownloading = false;
   let iconSize = 24;
 
