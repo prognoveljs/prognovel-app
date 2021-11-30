@@ -13,10 +13,9 @@ const dev = mode === "development";
 
 // ENV below are shared both in Client and Server (build pipeline)
 const SHARED_ENV = {
-  "process.env.SITE_TITLE": JSON.stringify(process.env.SITE_TITLE),
-  "process.env.SITE_SUBTITLE": JSON.stringify(process.env.SITE_SUBTITLE),
-  "process.env.SITE_SUBTITLE2": JSON.stringify(process.env.SITE_SUBTITLE2),
-  "process.env.SITE_DESCRIPTION": JSON.stringify(process.env.SITE_DESCRIPTION),
+  "process.env.SITE_TITLE": JSON.stringify(
+    require("./.cache/assets/publish/sitemetadata.json").site_title,
+  ),
 };
 
 const alias = {

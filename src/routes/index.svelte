@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import { SITE_TITLE, BACKEND_API, SITE_SUBTITLE, SITE_SUBTITLE2 } from "settings";
+  import { SITE_TITLE, BACKEND_API } from "settings";
   import { get } from "idb-keyval";
   import { fetchSiteMetadata, getMetadataStore } from "utils/fetch-metadata";
   import { loadNovelTitles, loadPartialNovelsMetadata } from "utils/novel-page";
@@ -69,8 +69,6 @@
         bookmarkData,
         novelsMetadata,
         novelTitles,
-        SITE_SUBTITLE,
-        SITE_SUBTITLE2,
       };
     } else {
       console.log("Error!");
@@ -96,8 +94,6 @@
   export let sitemetadata: SiteMetadata & PreloadData;
   export let novelsMetadata: NovelsMetadata;
   export let bookmarkData: Bookmark[];
-  export let SITE_SUBTITLE;
-  export let SITE_SUBTITLE2;
 
   $: setContext("data", {
     siteMetadata: $siteMetadata,
