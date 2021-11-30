@@ -1,4 +1,4 @@
-# ProgNovel
+# 🚀 ProgNovel
 
 [![NodeJS Build](https://github.com/prognoveljs/prognovel-app/actions/workflows/nodejs.yml/badge.svg)](https://github.com/prognoveljs/prognovel-app/actions/workflows/nodejs.yml)
 ![maintained?](https://img.shields.io/badge/maintained%3F-yes-green.svg)
@@ -13,7 +13,7 @@ for content creators to experiment with.
 
 ## Self-host ProgNovel
 
-### Create backend and upload your first content
+### 🖥️ Create backend and upload your first content
 
 Although ProgNovel strives to be as simple as possible, it is currently very difficult to create a smooth flow for deployment due to how young Jamstack ecosystem is (the architecture ProgNovel uses). In the future as the toolings more mature, we're hoping to simplify the deployment process - but for now we'll have to get our hands dirty and go through several steps in getting your ProgNovel ready.
 
@@ -37,16 +37,16 @@ Second, create a ProgNovel project in your computer and publish your first conte
 
 After your contents already published in your backend, you are ready to install your frontend.
 
-### Create frontend
+### 🎨 Create frontend
 
 ProgNovel works best when hosted on Jamstack platforms for performance and effiency purpose. Recommended platforms to host ProgNovel's frontend are Netlify, Vercel, and Cloudflare Page.
 
-> Before hosting the frontend, make sure you don't skip hosting your first Cloudflare Workers backend and publishing content so that the frontend has something to build with.
+> ❗ Before hosting the frontend, make sure you don't skip hosting your first Cloudflare Workers backend and publishing content so that the frontend has something to build with.
 
 1. Have a Github account and fork this repo.
 2. You'll have have your own forked copy of prognovel frontend app in your Github account - use that to connect with Jamstack hosting platforms like [Netlify](https://www.netlify.com/), [Vercel](https://vercel.com/), or [Cloudflare Page](https://pages.cloudflare.com/).
 
-**NOTE:** For now, it is recommended to host on Netlify since there are still bugs when hosting on Vercel and Cloudflare Pages.
+> **NOTE:** For now, it is recommended to host on Netlify since there are still bugs when hosting on Vercel and Cloudflare Pages.
 
 3. Fill the build configuration with these:
 
