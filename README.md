@@ -1,5 +1,6 @@
 # ProgNovel
 
+[![NodeJS Build](https://github.com/prognoveljs/prognovel-app/actions/workflows/nodejs.yml/badge.svg)](https://github.com/prognoveljs/prognovel-app/actions/workflows/nodejs.yml)
 ![last commit](https://img.shields.io/github/last-commit/prognoveljs/prognovel-app)
 ![commit](https://img.shields.io/github/commit-activity/m/prognoveljs/prognovel-app)
 ![version](https://img.shields.io/github/package-json/v/prognoveljs/prognovel-app)
