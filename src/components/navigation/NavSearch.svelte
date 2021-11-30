@@ -128,7 +128,7 @@
         border-color: var(--primary-color);
         // transform: translateX(0);
         & + .icon {
-          transform: scale(1.3);
+          // transform: scale(1.3);
         }
       }
     }
