@@ -1,17 +1,27 @@
-<script>
-  import { updateBannerImage } from "utils/images";
+<script lang="ts">
+  import { bannerImages, updateBannerImage } from "utils/images";
   import { NOVEL_BANNER_HEIGHT } from "settings";
-  export let novelMetadata = {};
+  import { getContext } from "svelte";
+  import type { NovelMetadata } from "typings";
 
-  export let id = "";
+  export let novelMetadata: NovelMetadata = getContext("novelMetadata");
+  export let id: string = getContext("id");
   let banner;
+  let img;
+  let hide = true;
   $: if (banner && id && banner.querySelector(`img[data-banner=${id}]`) !== undefined) {
     updateBannerImage(id);
+    if (hide && (img?.src || "").length < 1024 * 10) hide = false;
   }
 </script>
 
-<div class="banner" style="height: {NOVEL_BANNER_HEIGHT}px;" bind:this={banner}>
-  <img crossorigin data-banner={id} alt={novelMetadata ? novelMetadata.title + " cover." : ""} />
+<div class="banner" style="height: {NOVEL_BANNER_HEIGHT}px;" bind:this={banner} class:hide>
+  <img
+    bind:this={img}
+    crossorigin
+    data-banner={id}
+    alt={novelMetadata ? novelMetadata.title + " cover." : ""}
+  />
   <div class="gradient" />
 </div>
 
@@ -39,6 +49,12 @@
       transform-origin: bottom center;
       animation: 1s linear both banner-scroll;
       animation-timeline: banner-scroll;
+    }
+
+    &.hide {
+      img {
+        visibility: hidden;
+      }
     }
 
     .gradient {

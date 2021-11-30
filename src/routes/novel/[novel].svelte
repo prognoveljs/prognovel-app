@@ -3,39 +3,38 @@
   import { getCoverURLPath, prefetchBannerImage } from "utils/images";
 
   const __SAPPER__PRELOAD_INDEX = 2;
-  let SLUG;
 
   export async function preload({ params, query }) {
-    SLUG = params.novel;
+    const { novel } = params;
     let data: any = {};
     let url;
 
-    url = `/publish/${SLUG}/metadata.json`;
+    url = `/publish/${novel}/metadata.json`;
     if ((process as any).browser) {
-      prefetchBannerImage(SLUG);
-      data = await getLocalNovelMetadataCache(SLUG);
+      prefetchBannerImage(novel);
+      data = await getLocalNovelMetadataCache(novel);
 
       if (!data) {
-        data = await fetchNovelMetadata(SLUG);
+        data = await fetchNovelMetadata(novel);
         data.fresh = true;
       }
       data.status = 200;
     } else {
       const path = await import("path");
       const fs = await import("fs");
-      url = process.env.CACHE_FOLDER + `/assets/publish/${SLUG}/metadata.json`;
+      url = process.env.CACHE_FOLDER + `/assets/publish/${novel}/metadata.json`;
       try {
         data = JSON.parse(fs.readFileSync(url, "utf-8"));
         data.status = 200;
       } catch (error) {
         data.status = 500;
-        data.message = "Error when reading " + SLUG + " metadata from build cache.";
+        data.message = "Error when reading " + novel + " metadata from build cache.";
         console.error(error);
       }
     }
 
     if (data.status === 200) {
-      return { novelMetadata: data, id: SLUG };
+      return { novelMetadata: data, id: novel };
     } else {
       this.error(data.status, data.message);
     }
@@ -43,7 +42,7 @@
 </script>
 
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { setContext } from "svelte";
   // import { novels } from "../../mock";
   import { fetchSuggestions } from "./_suggestions";
   import { stores } from "@sapper/app";
@@ -61,6 +60,9 @@
   const { page } = stores() as any;
   let affiliate = $page.query.affiliate || "";
   let affiliateName = $page.query.affiliateName || "";
+
+  setContext("id", id);
+  setContext("novelMetadata", novelMetadata);
 
   toc.subscribe((chapterList) => {
     // TODO - use recent novel history
@@ -95,8 +97,8 @@
   />
 </svelte:head>
 
-<Banner {novelMetadata} {id} />
-<Book {novelMetadata} {id} title={novelMetadata.title} />
+<Banner />
+<Book />
 
 <RevenueSharingStats />
 <Affiliate {affiliate} {affiliateName} title={novelMetadata.title || ""} />

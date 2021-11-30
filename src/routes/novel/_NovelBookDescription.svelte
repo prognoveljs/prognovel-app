@@ -1,7 +1,10 @@
-<script>
+<script lang="ts">
   import DescriptionInfo from "components/novel-page/DescriptionInfo.svelte";
   import { readPageLink } from "src/store/read-page/read-page-navigation";
-  export let novelMetadata;
+  import { getContext } from "svelte";
+  import type { NovelMetadata } from "typings";
+
+  export let novelMetadata: NovelMetadata = getContext("novelMetadata");
 
   let showMore = false;
   $: height = showMore ? "auto" : "270px";
@@ -15,7 +18,7 @@
     {#if !showMore}<span class="show-more" on:click={() => (showMore = true)}>show more</span>{/if}
   </div>
   <div class="flex">
-    <a href={$readPageLink}>READ NOW</a>
+    <a href={$readPageLink || "."} disabled={!$readPageLink}>READ NOW</a>
   </div>
 </article>
 
@@ -41,7 +44,7 @@
       cursor: pointer;
       padding: 8px 18px;
       border-radius: 4px;
-      color: #fffd;
+      color: #fffd !important;
       background-color: var(--bg);
       border: 1px solid var(--bg);
       text-decoration: none;
@@ -54,6 +57,12 @@
       &:hover {
         background-color: hsl(var(--primary-color-h), 67%, 39%);
         // color: #000e;
+      }
+
+      &:disabled {
+        filter: saturate(0.4);
+        pointer-events: none;
+        cursor: default;
       }
 
       @include screen("mobile") {
