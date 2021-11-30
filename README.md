@@ -1,6 +1,9 @@
 # ProgNovel
 
+![last commit](https://img.shields.io/github/last-commit/prognoveljs/prognovel-app)
 ![commit](https://img.shields.io/github/commit-activity/m/prognoveljs/prognovel-app)
+![version](https://img.shields.io/github/package-json/v/prognoveljs/prognovel-app)
+![netlify](https://img.shields.io/netlify/da504f88-e78c-4e63-bed4-52ebf13860b2)
 
 ProgNovel is a JAMstack web app to make great webnovels. The main feature of ProgNovel, beside offline-first
 web app with offline read features and great performance, is to be able to inject interactive plugins
