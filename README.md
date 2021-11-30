@@ -46,7 +46,7 @@ ProgNovel works best when hosted on Jamstack platforms for performance and effie
 1. Have a Github account and fork this repo.
 2. You'll have have your own forked copy of prognovel frontend app in your Github account - use that to connect with Jamstack hosting platforms like [Netlify](https://www.netlify.com/), [Vercel](https://vercel.com/), or [Cloudflare Page](https://pages.cloudflare.com/).
 
-**NOTE:** For now, it is recommended to host on Netlify since there are still bugs when hosting on Vercel and Cloudflare Pages.
+> **NOTE:** For now, it is recommended to host on Netlify since there are still bugs when hosting on Vercel and Cloudflare Pages.
 
 3. Fill the build configuration with these:
 
