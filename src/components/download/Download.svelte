@@ -4,10 +4,14 @@
   import DownloadLoadingSVG from "./DownloadLoadingSVG.svelte";
   import { startDownload } from "utils/offline-reading/download";
   import { downloadProgress } from "utils/offline-reading/store";
+  import { getContext } from "svelte";
+  import { NovelMetadata } from "typings";
 
-  export let id = "";
-  export let novelMetadata = {};
+  export let novelMetadata: NovelMetadata = getContext("novelMetadata");
+  export let id: string = getContext("id");
   export let mobileDisplay: "block" | "none" = "none";
+
+  $: console.log(id);
 
   export let isDownloading = false;
   let iconSize = 24;

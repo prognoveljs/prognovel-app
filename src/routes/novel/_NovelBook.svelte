@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Download from "components/download/Download.svelte";
   import Cover from "components/BookCover.svelte";
   import Description from "novel/_NovelBookDescription.svelte";
@@ -6,7 +6,6 @@
     downloadProgress as progress,
     downloadCount as count,
   } from "utils/offline-reading/store";
-  import { onMount } from "svelte";
   import {
     faShareAlt,
     faBookmark,
@@ -23,18 +22,17 @@
   import { showTOC } from "src/store/read-page/read-page-state";
   import { showAffiliateReferrer, showRevshareStats } from "src/store/novel-page";
   import DownloadWindow from "components/download/DownloadWindow.svelte";
+  import { getContext } from "svelte";
+  import type { NovelMetadata } from "typings";
 
-  export let novelMetadata = {};
-  export let id;
-  export let title = "";
+  export let novelMetadata: NovelMetadata = getContext("novelMetadata");
+  export let id: string = getContext("id");
+
+  $: title = novelMetadata?.title || "";
   $: isDownloading = $progress !== undefined;
 
-  let alreadyPrefetch = false;
   let showShareWindow = false;
   let showBookmark;
-  onMount(() => {
-    alreadyPrefetch = true;
-  });
 </script>
 
 <div class="meta container-center">
@@ -65,11 +63,11 @@
         <Icon size={"1.5em"} paddingBottom={"2.75px"} icon={faMoneyBill} />
         <span>promote novel</span>
       </button>
-      <Download {novelMetadata} {id} {isDownloading} />
+      <Download {isDownloading} />
       <GenreTags />
     </div>
   </section>
-  <Description {novelMetadata} {id} />
+  <Description />
   <button class="toc" on:click={() => ($showTOC = !$showTOC)}>
     <Icon icon={faList} size="20px" color="#222" />
   </button>

@@ -3,7 +3,7 @@
   import { getCoverURLPath } from "utils/images";
 
   export let novel: string;
-  export let title: string;
+  export let title: string = "";
   export let sub: string = "#webnovel";
   export let showTitle: boolean = false;
   export let showSub: boolean = false;

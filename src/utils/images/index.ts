@@ -46,7 +46,7 @@ interface BannerImage {
 // TODO - buffers from banner image stored in memory
 //        implement custom garbage collection later on if necessary
 //        (or, use WeakMap instead to automatically clean memory)
-const bannerImages = new Map<string, BannerImage>();
+export const bannerImages = new Map<string, BannerImage>();
 export async function appendBannerImageStream(key: string, src: string) {
   if (bannerImages[key]) return;
   bannerImages[key] = {
