@@ -13,7 +13,7 @@ for content creators to experiment with.
 
 ## Self-host ProgNovel
 
-### 🖥️ - Create backend and upload your first content
+### 🖥️ Create backend and upload your first content
 
 Although ProgNovel strives to be as simple as possible, it is currently very difficult to create a smooth flow for deployment due to how young Jamstack ecosystem is (the architecture ProgNovel uses). In the future as the toolings more mature, we're hoping to simplify the deployment process - but for now we'll have to get our hands dirty and go through several steps in getting your ProgNovel ready.
 
@@ -37,7 +37,7 @@ Second, create a ProgNovel project in your computer and publish your first conte
 
 After your contents already published in your backend, you are ready to install your frontend.
 
-### 🎨 - Create frontend
+### 🎨 Create frontend
 
 ProgNovel works best when hosted on Jamstack platforms for performance and effiency purpose. Recommended platforms to host ProgNovel's frontend are Netlify, Vercel, and Cloudflare Page.
 
