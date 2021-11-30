@@ -18,7 +18,7 @@
 <div class="banner" style="height: {NOVEL_BANNER_HEIGHT}px;" bind:this={banner} class:hide>
   <img
     bind:this={img}
-    crossorigin
+    crossorigin="anonymous"
     data-banner={id}
     alt={novelMetadata ? novelMetadata.title + " cover." : ""}
   />
