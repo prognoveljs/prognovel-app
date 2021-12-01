@@ -1,7 +1,7 @@
 {
 	"name": "@prognovel/frontend",
 	"description": "Next-Generation WebNovel platform.",
-	"version": "0.3.2",
+	"version": "0.5.0",
 	"scripts": {
 		"populate": "node plugins/build/populate/assets && node plugins/build/populate/copy-assets",
 		"dev": "sapper dev --no-hot --ext \".svelte .svx\"",
