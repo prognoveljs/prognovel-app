@@ -9,7 +9,7 @@
 		"build": "npm run populate && npm run export && node plugins/build/finish",
 		"test": "cypress run",
 		"test:cy": "cypress open",
-		"format": "prettier --write src/**/*.{ts,js,svelte} --plugin-search-dir=.",
+		"format": "prettier --write src/**/*.{ts,js,svelte} --plugin-search-dir=."
 	},
 	"dependencies": {
 		"@fortawesome/free-brands-svg-icons": "^5.15.3",
