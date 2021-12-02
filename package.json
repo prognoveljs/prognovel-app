@@ -4,16 +4,12 @@
 	"version": "0.5.0",
 	"scripts": {
 		"populate": "node plugins/build/populate/assets && node plugins/build/populate/copy-assets",
+		"export": "sapper export --ext \".svelte .svx\" --timeout 60000",
 		"dev": "sapper dev --no-hot --ext \".svelte .svx\"",
 		"build": "npm run populate && npm run export && node plugins/build/finish",
-		"build:functions": "netlify-lambda build ./src/.netlify-functions --config ./webpack.functions.js --babelrc false",
-		"build:serve": "npm run export && serve __sapper__/export",
-		"build:publish": "npm run populate && npm run build",
-		"export": "sapper export --ext \".svelte .svx\" --timeout 60000",
 		"test": "cypress run",
 		"test:cy": "cypress open",
 		"format": "prettier --write src/**/*.{ts,js,svelte} --plugin-search-dir=.",
-		"ilp:stream": "node interledger/ilp-stream-server"
 	},
 	"dependencies": {
 		"@fortawesome/free-brands-svg-icons": "^5.15.3",
