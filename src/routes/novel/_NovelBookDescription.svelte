@@ -26,6 +26,38 @@
   article {
     position: relative;
     grid-area: description;
+
+    animation: 1s linear forwards progress;
+    animation-timeline: desc-roll;
+
+    @include screen("mobile") {
+      background: var(--foreground-color);
+      margin: {
+        right: calc(var(--padding) * -1);
+        left: calc(var(--padding) * -1);
+      }
+      padding: var(--padding);
+
+      @supports (animation-timeline: works) {
+        box-shadow: 0 -4px 12px #0002, 0 -2px 4px #0005;
+        @keyframes progress {
+          from {
+            transform: translateY(-100px);
+          }
+
+          to {
+            transform: translateY(0);
+          }
+        }
+
+        @scroll-timeline desc-roll {
+          source: auto;
+          orientation: vertical;
+          scroll-offsets: 0%, 200px;
+          time-range: 1s;
+        }
+      }
+    }
   }
 
   h1 {
@@ -95,13 +127,11 @@
       &:hover {
         opacity: 1;
       }
-    }
-  }
 
-  @media screen and (max-width: 768px) {
-    .show-more {
-      font-size: 16px;
-      padding-bottom: 16px;
+      @include screen("mobile") {
+        font-size: 16px;
+        padding-bottom: 16px;
+      }
     }
   }
 

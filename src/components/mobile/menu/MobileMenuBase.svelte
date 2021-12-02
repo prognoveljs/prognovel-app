@@ -30,11 +30,11 @@
   $: buttonsLength = function () {
     switch ($menuVariance) {
       case MenuVariance.NovelPage:
-        return 4;
+        return 5;
       case MenuVariance.General:
         return 5;
       default:
-        return 4;
+        return 5;
     }
   };
 </script>
@@ -64,6 +64,9 @@
       </button>
     {/if}
     {#if $menuVariance === MenuVariance.NovelPage}
+      <a class:active={!$showSettings && $path === "/"} href="."
+        ><Icon icon={faHome} /><small>Home</small>
+      </a>
       <button class:active={$showTOC} on:click={() => showNovelPageWindow(showTOC)}
         ><Icon icon={faListAlt} /> <small>Ch. List</small>
       </button>
@@ -78,6 +81,9 @@
       </a>
     {/if}
     {#if $menuVariance === MenuVariance.ReadPage}
+      <a class:active={!$showSettings && $path === "/"} href="."
+        ><Icon icon={faHome} /><small>Home</small>
+      </a>
       <button class:active={$showTOC} on:click={() => showReadPageWindow(showTOC)}
         ><Icon icon={faListAlt} /> <small>Ch. List</small>
       </button>
