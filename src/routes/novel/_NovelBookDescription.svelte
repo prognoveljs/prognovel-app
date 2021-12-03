@@ -31,7 +31,6 @@
     animation-timeline: desc-roll;
 
     @include screen("mobile") {
-      background: var(--foreground-color);
       margin: {
         right: calc(var(--padding) * -1);
         left: calc(var(--padding) * -1);
@@ -39,6 +38,7 @@
       padding: var(--padding);
 
       @supports (animation-timeline: works) {
+        background: var(--foreground-color);
         box-shadow: 0 -4px 12px #0002, 0 -2px 4px #0005;
         @keyframes progress {
           from {
@@ -149,6 +149,15 @@
         var(--background-color-alpha)
       );
       border-bottom: 1.5px solid hsla(var(--primary-color-h), 55%, 44%, 1);
+      @include screen("mobile") {
+        @supports (animation-timeline: works) {
+          background-image: linear-gradient(
+            to top,
+            var(--foreground-color),
+            var(--foreground-color-alpha)
+          );
+        }
+      }
     }
   }
 </style>
