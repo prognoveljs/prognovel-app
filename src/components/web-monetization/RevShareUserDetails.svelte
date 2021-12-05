@@ -30,7 +30,12 @@
   <section class="head">
     <img class="avatar" src={getUser(user.email).avatar} alt={user.name} />
     <div class="name-and-roles">
-      <h1>{user.name} <small>({user.roles})</small></h1>
+      <h1>
+        {user.name}
+        {#if user.roles}
+          <small>({user.roles})</small>
+        {/if}
+      </h1>
     </div>
     <span class="ilp-address">
       {user.paymentPointer}

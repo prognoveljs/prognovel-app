@@ -85,22 +85,21 @@
   $button-size: 36px;
 
   .meta {
+    --padding: 24px;
     position: relative;
     display: grid;
     grid-template-columns: $cover-width 1fr;
     grid-template-areas: "cover description";
     grid-gap: 24px;
     margin-top: -86px;
+    padding: var(--padding);
 
     @include screen("small-desktop") {
       margin-bottom: 4em;
     }
-    @include screen("small-tablet") {
-      padding: 24px;
-    }
 
     @include screen("mobile") {
-      padding: 12px !important;
+      --padding: 12px;
       max-width: 100vw !important;
       grid-template-columns: 1fr;
       grid-template-rows: auto 1fr;
