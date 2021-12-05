@@ -17,7 +17,7 @@
     {@html novelMetadata ? novelMetadata.synopsis : ""}
     {#if !showMore}<span class="show-more" on:click={() => (showMore = true)}>show more</span>{/if}
   </div>
-  <div class="flex">
+  <div class="read-button-flex">
     <a href={$readPageLink || "."} disabled={!$readPageLink}>READ NOW</a>
   </div>
 </article>
@@ -66,7 +66,7 @@
     color: #fff;
   }
 
-  .flex {
+  .read-button-flex {
     text-align: right;
     margin-top: 24px;
     justify-content: end;
@@ -96,10 +96,10 @@
         pointer-events: none;
         cursor: default;
       }
+    }
 
-      @include screen("mobile") {
-        display: none;
-      }
+    @include screen("mobile") {
+      display: none;
     }
   }
 
