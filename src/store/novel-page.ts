@@ -17,7 +17,9 @@ export let entireSiteGenres: Readable<string[]> = derived([siteMetadata], ([meta
 export let discordGroupId: Readable<string> = derived(
   [novelsData, currentNovel],
   ([metadata, novel]) => {
-    return metadata?.[novel]?.discord_group_id || "";
+    return metadata?.[novel]?.discord_group_id || metadata?.[novel]?.discord_group_id !== "null"
+      ? metadata?.[novel]?.discord_group_id
+      : "";
   },
 );
 
