@@ -17,7 +17,7 @@ Although ProgNovel strives to be as simple as possible, it is currently very dif
 
 ProgNovel works best when hosted on Jamstack platforms for performance and effiency purpose. Recommended platforms to host ProgNovel's frontend are Netlify, Vercel, and Cloudflare Page.
 
-> ❗ Before hosting the frontend, make sure you don't skip hosting your first Cloudflare Workers backend and publishing content so that the frontend has something to build with.
+> ❗ Before hosting the frontend, make sure you don't skip hosting your first ProgNovel backend on Cloudflare Workers and publishing content with ProgNovel CLI so that the frontend has something to build with.
 
 1. You need to get your backend hosted on Cloudflare Workers: [read how to host ProgNovel backend here.](https://github.com/prognoveljs/prognovel-workers)
 2. Publish your first content to your backend. Yes, publish first before even you have an actual website. This is because part of ProgNovel webapp are static and need to pull some content first to build web pages. Follow on [how to get your first content published with ProgNovel CLI here](https://github.com/prognoveljs/prognovel-cli).
