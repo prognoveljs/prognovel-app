@@ -17,6 +17,7 @@ export const SITE_TITLE = parse(process.env.SITE_TITLE) || "A ProgNovel App";
 
 export const BACKEND_API =
   parse(process.env.BACKEND_API) || "https://api-v2.prognovel.workers.dev/";
+export const IMAGE_RESIZER_SERVICE = parse(process.env.IMAGE_RESIZER_SERVICE) || "";
 export const WEB_MONETIZATION_VERIFY: boolean | undefined =
   parse(process.env.WEB_MONETIZATION_VERIFY, false) || false;
 

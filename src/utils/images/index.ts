@@ -1,4 +1,4 @@
-import { NOVEL_BANNER_HEIGHT, BACKEND_API } from "settings";
+import { NOVEL_BANNER_HEIGHT, BACKEND_API, IMAGE_RESIZER_SERVICE } from "settings";
 
 export let isWEBP: boolean;
 const BANNER_IMAGE_FETCH_TIMEOUT = 10000; // in ms
@@ -6,12 +6,13 @@ const BANNER_IMAGE_FETCH_TIMEOUT = 10000; // in ms
 export async function initImageTypeSupport(): Promise<boolean> {
   isWEBP = true;
 
-  // if (isWEBP) {
-  //   console.log("Can use WEBP.");
-  // } else {
-  //   console.log("Can't use WEBP.");
-  // }
-
+  const canvas = document.createElement("canvas");
+  if (!!(canvas.getContext && canvas.getContext("2d"))) {
+    isWEBP = canvas.toDataURL("image/webp").indexOf("data:image/webp") == 0;
+  } else {
+    isWEBP = false;
+  }
+  // very old browser like IE 8, canvas not supported
   return isWEBP;
 }
 
@@ -19,22 +20,34 @@ export function getNovelBannerImageWidth(): number {
   return document.body.clientWidth - document.body.querySelector("nav").offsetWidth;
 }
 
-const endpoint = BACKEND_API + "/image?";
-const url =
-  "https://raw.githubusercontent.com/ProgNovel/prognovel-contents/master/novels/yashura-legacy/banner.jpeg";
-
-export function getNovelBannerImageSrc(novel: string, width: number, height: number): string {
-  return endpoint + `width=${width}&height=${height}&url=${getNovelBannerRawUrl()}`;
-
-  function getNovelBannerRawUrl() {
-    return url;
-  }
-}
+const imageEndpoint = (
+  novel: string,
+  { width, height, type = isWEBP ? "webp" : "jpeg", imageResizerService = "" },
+) => {
+  // return imageResizerService
+  //   ? `${imageResizerService}/resize?width=${width}&height=${height}&type=${type}&nocrop=false&stripmeta=true&url=${encodeURIComponent(
+  //       BACKEND_API + `/fetchImage?novel=${novel}&file=banner`,
+  //     )}`
+  //   : BACKEND_API + `/fetchImage?novel=${novel}&file=banner`;
+  return (
+    BACKEND_API +
+    `/fetchImage?novel=${novel}&file=banner${
+      imageResizerService
+        ? `&width=${width}&height=${height}&type=${type}&imageresizeservice=${imageResizerService}`
+        : ""
+    }`
+  );
+};
 
 export function prefetchBannerImage(novel: string): void {
   appendBannerImageStream(
     novel,
-    getNovelBannerImageSrc(novel, getNovelBannerImageWidth(), NOVEL_BANNER_HEIGHT),
+    imageEndpoint(novel, {
+      width: getNovelBannerImageWidth(),
+      height: NOVEL_BANNER_HEIGHT,
+      type: isWEBP ? "webp" : "jpeg",
+      imageResizerService: IMAGE_RESIZER_SERVICE,
+    }),
   );
 }
 
@@ -50,19 +63,19 @@ export const bannerImages = new Map<string, BannerImage>();
 export async function appendBannerImageStream(key: string, src: string) {
   if (bannerImages[key]) return;
   bannerImages[key] = {
-    data: [],
+    data: new Uint8Array(),
   };
   const res = await fetch(src);
   const type = res.headers.get("content-type").slice(6); // slice "image/" from "image/webp"
   bannerImages[key].type = type;
-
+  console.log(src);
   // initialize streams
   const reader = res.body.getReader();
   while (true) {
     const { value, done } = await reader.read();
 
     if (value) {
-      bannerImages[key].data.push(...value);
+      bannerImages[key].data = new Uint8Array([...bannerImages[key].data, ...value]);
     }
 
     updateBannerImage(key, type, bannerImages[key].data);
@@ -83,7 +96,12 @@ export function updateBannerImage(key: string, type?: string, data?: Uint8Array)
   if (!bannerImages[key]) {
     appendBannerImageStream(
       key,
-      getNovelBannerImageSrc(key, getNovelBannerImageWidth(), NOVEL_BANNER_HEIGHT),
+      imageEndpoint(key, {
+        width: getNovelBannerImageWidth(),
+        height: NOVEL_BANNER_HEIGHT,
+        type: isWEBP ? "webp" : "jpeg",
+        imageResizerService: IMAGE_RESIZER_SERVICE,
+      }),
     );
   }
 

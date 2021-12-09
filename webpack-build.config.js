@@ -11,11 +11,12 @@ const OptimizePlugin = require("optimize-plugin");
 const mode = process.env.NODE_ENV;
 const dev = mode === "development";
 
+const siteMetadata = require("./.cache/assets/publish/sitemetadata.json");
+
 // ENV below are shared both in Client and Server (build pipeline)
 const SHARED_ENV = {
-  "process.env.SITE_TITLE": JSON.stringify(
-    require("./.cache/assets/publish/sitemetadata.json").site_title,
-  ),
+  "process.env.SITE_TITLE": JSON.stringify(siteMetadata.site_title),
+  "process.env.IMAGE_RESIZER_SERVICE": JSON.stringify(siteMetadata.image_resizer_service),
 };
 
 const alias = {
@@ -66,10 +67,6 @@ function getClientPlugins() {
       "process.env.NODE_ENV": JSON.stringify(mode),
       "process.env.WEB_MONETIZATION_VERIFY": JSON.stringify(process.env.WEB_MONETIZATION_VERIFY),
       "process.env.BACKEND_API": JSON.stringify(process.env.BACKEND_API),
-      "process.env.CONTENT_CDN_ENDPOINT": JSON.stringify(process.env.CONTENT_CDN_ENDPOINT),
-      "process.env.GITHUB_USER": JSON.stringify(process.env.GITHUB_USER),
-      "process.env.WORKING_REPO": JSON.stringify(process.env.WORKING_REPO),
-      "process.env.GITHUB_SITE": JSON.stringify(process.env.GITHUB_SITE),
       ...SHARED_ENV,
     }),
     // new AssetsPlugin({ filename: ".cache/assets.json" }),
@@ -97,15 +94,10 @@ function getServerPlugins() {
     ...prod,
     new webpack.DefinePlugin({
       "process.env.BACKEND_API": JSON.stringify(process.env.BACKEND_API),
-      "process.env.GITHUB_USER": JSON.stringify(process.env.GITHUB_USER),
-      "process.env.WORKING_REPO": JSON.stringify(process.env.WORKING_REPO),
-      "process.env.GITHUB_SITE": JSON.stringify(process.env.GITHUB_SITE),
       "process.env.BASEPATH": JSON.stringify(path.resolve(__dirname)),
       "process.env.PREFETCH_CHAPTER": JSON.stringify(process.env.PREFETCH_CHAPTER),
       "process.env.CACHE_FOLDER": JSON.stringify(path.resolve(__dirname, "./.cache")),
       "process.env.PUBLISH_FOLDER": JSON.stringify(path.resolve(__dirname, "./static/publish")),
-      "process.env.BTP_SERVER": JSON.stringify(process.env.BTP_SERVER),
-      "process.env.TEST_INTERLEDGER": process.env.TEST_INTERLEDGER,
     }),
   ];
 }

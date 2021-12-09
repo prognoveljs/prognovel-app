@@ -3,21 +3,12 @@ title: How to host ProgNovel for free (and beyond)
 order: 4
 ---
 
-ProgNovel is created mainly with NodeJS. As such, you needed to download [NodeJS](https://nodejs.org/en/) for your desktop.
-
-After that, you can download ProgNovel globally to your desktop through NPM, a package manager for NodeJS:
-```
-npm install prognovel -g
-```
-
-You have ProgNovel in your desktop, but not a complete content for your website yet. To create a website with ProgNovel, there are a few things to take care of.
-
-ProgNovel has 3 parts that you need to setup to get it started off the ground. First, the backend, which comes with three flavors itself that you can choose based on your need and strategy (optimizing cost vs optimizing performance vs optimizing both but with caveats). Second, the frontend, is basic Jamstack site where you'll need to plug your Jamstack hosting to git repo to host it. The third is microservices and third-party API, which is should be optional, since ProgNovel should be able to run without them though it is strongly recommended to setup.
+ProgNovel has 3 parts that you need to setup to get it started off the ground. First, the backend, which comes with three flavors itself that you can choose based on your need and strategy (optimizing cost vs optimizing performance vs optimizing both but with caveats). Second, uploading content to the backend with ProgNovel CLI. Finally, the frontend, is basic Jamstack site where you'll need to plug your Jamstack hosting to git repo to host it.
 
 Below are steps to get started on hosting ProgNovel webapp:<br />
-[1) Hosting backend](help/how-to-host-prognovel/1-hosting-backend)<br/>
-[2) Hosting frontend](help/how-to-host-prognovel/2-hosting-frontend)<br/>
-[3) Hosting microservices and third-party APIs](help/how-to-host-prognovel/3-hosting-microservices-and-third-party-api)<br/>
+[1) Hosting backend](https://github.com/prognoveljs/prognovel-workers)<br/>
+[2) Installing CLI and upload content](https://github.com/prognoveljs/prognovel-cli)<br/>
+[3) Hosting frontend](https://github.com/prognoveljs/prognovel-app)<br/>
 
 ### Questions and Answers
 
