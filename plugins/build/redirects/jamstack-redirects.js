@@ -23,18 +23,20 @@ if (process.env.NETLIFY) {
 } else if (process.env.VERCEL) {
   const vercelConfig = require("../../../vercel.json");
 
-  vercelConfig.rewrites.push(
-    ...[
-      {
-        source: "/feed/:splat*",
-        destination: `${new URL(backend_api).href}feed?novel=:splat*`,
-      },
-      {
-        source: "/chapter-list/:splat*",
-        destination: `${new URL(backend_api).href}chapter-list?novel=:splat*`,
-      },
-    ],
-  );
+  vercelConfig.rewrites = [
+    {
+      source: "/read/:load*",
+      destination: "/read?load=:load*",
+    },
+    {
+      source: "/feed/:splat*",
+      destination: `${new URL(backend_api).href}feed?novel=:splat*`,
+    },
+    {
+      source: "/chapter-list/:splat*",
+      destination: `${new URL(backend_api).href}chapter-list?novel=:splat*`,
+    },
+  ];
 
   writeFileSync("vercel.json", JSON.stringify(vercelConfig, null, 2), "utf-8");
 }
