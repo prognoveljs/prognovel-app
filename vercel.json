@@ -1,9 +1,8 @@
 {
-  "redirects": [
+  "rewrites": [
     {
-      "source": "/read//(.*)",
-      "destination": "/read?load=$1",
-      "permanent": true
+      "source": "/read/:load*",
+      "destination": "/read?load=:load*"
     }
   ]
 }
