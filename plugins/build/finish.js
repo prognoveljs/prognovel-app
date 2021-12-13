@@ -1,1 +1,1 @@
-require("./redirects/netlify-redirects");
+require("./redirects/jamstack-redirects");
