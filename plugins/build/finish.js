@@ -1,2 +1,1 @@
-require("../append-preload");
-require("./bundle-analyzer")();
+require("./redirects/netlify-redirects");
