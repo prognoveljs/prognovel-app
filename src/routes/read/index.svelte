@@ -1,10 +1,10 @@
 <script context="module">
-  let load;
-
   export async function preload(page) {
     const { query } = page;
 
-    load = query.load;
+    return {
+      load: query.load,
+    };
   }
 </script>
 
