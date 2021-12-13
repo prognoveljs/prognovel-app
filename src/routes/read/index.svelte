@@ -12,9 +12,6 @@
   import { onMount } from "svelte";
   import { goto } from "@sapper/app";
   import { getLoadingPlaceholder } from "utils/read-page";
-
-  export let load;
-
   onMount(async () => {
     if (load) {
       goto("/read/" + load);
