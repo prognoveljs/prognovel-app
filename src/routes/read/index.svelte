@@ -1,10 +1,9 @@
 <script context="module">
+  let load;
   export async function preload(page) {
     const { query } = page;
 
-    return {
-      load: query.load,
-    };
+    load = query.load;
   }
 </script>
 
@@ -13,9 +12,8 @@
   import { goto } from "@sapper/app";
   import { getLoadingPlaceholder } from "utils/read-page";
 
-  export let load;
-
   onMount(async () => {
+    console.log("🚀 redirecting to", load);
     if (load) {
       goto("/read/" + load);
       return;
