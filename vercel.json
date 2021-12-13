@@ -1,8 +1,8 @@
 {
   "redirects": [
     {
-      "source": "/read/:slug",
-      "destination": "/read?load=:slug",
+      "source": "/read//(.*)",
+      "destination": "/read?load=$1",
       "permanent": true
     }
   ]
