@@ -14,8 +14,8 @@ if (process.env.NETLIFY) {
     redirectsFile,
     redirectsContent +
       `
-  /feed/* ${new URL(backend_api).href}feed?novel=:splat
-  /chapter-list/* ${new URL(backend_api).href}chapter-list?novel=:splat
+  /feed/* ${new URL(backend_api).href}feed?novel=:splat 200
+  /chapter-list/* ${new URL(backend_api).href}chapter-list?novel=:splat 200
   /* /404 
   `,
     "utf-8",
