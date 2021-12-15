@@ -21,6 +21,34 @@
           &#x1F5A5; <a href="https://community.webmonetization.org/prognovel">Dev Logs</a>
         </div>
         <div>&#x1F6A9; <a href="roadmap" sapper:prefetch>Roadmaps</a></div>
+        <div>
+          🚀 <a href="https://github.com/prognoveljs/prognovel-app">Self-host ProgNovel</a>
+        </div>
+        <img
+          loading="lazy"
+          src="https://img.shields.io/badge/maintained%3F-yes-green.svg"
+          alt="maintained?"
+        />
+        <img
+          loading="lazy"
+          src="https://img.shields.io/github/last-commit/prognoveljs/prognovel-app/develop"
+          alt="last commit"
+        />
+        <img
+          loading="lazy"
+          src="https://img.shields.io/github/commit-activity/m/prognoveljs/prognovel-app/develop"
+          alt="commit activity"
+        />
+        <img
+          loading="lazy"
+          src="https://img.shields.io/github/package-json/v/prognoveljs/prognovel-app"
+          alt="version"
+        />
+        <img
+          loading="lazy"
+          src="https://img.shields.io/netlify/da504f88-e78c-4e63-bed4-52ebf13860b2"
+          alt="netlify"
+        />
       </div>
       <Stacks grid={"stack"} />
     </div>
