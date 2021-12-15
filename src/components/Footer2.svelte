@@ -53,9 +53,11 @@
       <Stacks grid={"stack"} />
     </div>
     <div class="misc">
-      <!-- <a rel="prefetch" href="privacy">privacy policy</a>
-      <a rel="prefetch" href="dmca">DMCA</a>
-      <a rel="prefetch" href="help">user help</a> -->
+      <a rel="prefetch" href="https://www.twitter.com/prognovel">twitter</a>
+      <a rel="prefetch" href="https://www.github.com/prognoveljs">github</a>
+      <a rel="prefetch" href="https://comunity.webmonetization.org/prognovel"
+        >web monetization community</a
+      >
       <strong style="display: block;">
         <small>&copy; Copyright {COPYRIGHT_YEAR}, ProgNovel</small>
       </strong>

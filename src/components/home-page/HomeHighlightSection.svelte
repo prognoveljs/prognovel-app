@@ -149,12 +149,14 @@
       --overlay-height: 200px;
 
       :global(img) {
+        --size: 100px;
         margin-top: 1em;
-        width: 100px;
+        width: var(--size);
+        height: var(--size);
 
         @include screen("mobile") {
           margin-top: -0.4em;
-          width: 64px;
+          --size: 64px;
         }
       }
     }
