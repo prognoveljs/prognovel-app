@@ -34,3 +34,7 @@ ProgNovel works best when hosted on Jamstack platforms for performance and effie
 
 6. Wait for your hosting platforms building your ProgNovel App, which might takes 2~10 minutes depending on the hosting platform you used. Usually you'll be notified in the dashboard with the link of your newly created site once the build is complete.
 7. (Optional) If you need to upgrade your ProgNovel app, simply click fetch upstream in your forked repo. Your hosting platforms will usually detects change in your repo and will rebuild the app with the latest codebase.
+
+## License and Fair Use
+
+ProgNovel is licensed with Apache 2.0. See [license details](LICENSE.md) for more information.
