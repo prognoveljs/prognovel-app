@@ -7,12 +7,19 @@
 ![version](https://img.shields.io/github/package-json/v/prognoveljs/prognovel-app)
 ![netlify](https://img.shields.io/netlify/da504f88-e78c-4e63-bed4-52ebf13860b2)
 
+[Demo](https://demo.prognovel.com) | [Promotional Video](https://youtu.be/4nBUq1638zk)
+
 ProgNovel Promotional Video (YouTube):
 [![ProgNovel Promotional Video](https://img.youtube.com/vi/4nBUq1638zk/maxresdefault.jpg)](https://youtu.be/4nBUq1638zk)
 
 ProgNovel is a JAMstack web app to make great webnovels. The main feature of ProgNovel, beside offline-first
 web app with offline read features and great performance, is to be able to inject interactive plugins
 for content creators to experiment with. Because ProgNovel built mainly in Jamstack architecture, it can be hosted with great loading page performance on many Jamstack platform free-tier offerings such as Netlify and Cloudflare Workers.
+
+## Screenshot
+
+![ProgNovel on Desktop](images/prognovel-desktop.jpg "ProgNovel on Desktop")
+![ProgNovel on Mobile](images/prognovel-mobile.jpg "ProgNovel on Mobile")
 
 ## Self-host ProgNovel
 
@@ -37,6 +44,18 @@ ProgNovel works best when hosted on Jamstack platforms for performance and effie
 
 6. Wait for your hosting platforms building your ProgNovel App, which might takes 2~10 minutes depending on the hosting platform you used. Usually you'll be notified in the dashboard with the link of your newly created site once the build is complete.
 7. (Optional) If you need to upgrade your ProgNovel app, simply click fetch upstream in your forked repo. Your hosting platforms will usually detects change in your repo and will rebuild the app with the latest codebase.
+
+## Other links
+
+[ProgNovel on Web Monetization community space](https://community.webmonetization.org/prognovel)
+[ProgNovel on Twitter](https://twitter.com/ProgNovel)
+[ProgNovel on Reddit](https://www.redit.com/r/prognovel)
+
+## Credits
+
+![GftW](images/gftw.jpg)
+
+ProgNovel is honored to join ranks of experimenters and innovators in the Web Monetization space as a spark Grant for the Web grantee during June~December 2021.
 
 ## License and Fair Use
 
