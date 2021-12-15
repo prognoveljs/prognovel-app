@@ -1,7 +1,11 @@
 <section>
   <picture>
     <source srcset="/img/third-party-logos/gftw.jpg" type="image/jpeg" />
-    <img src="/img/third-party-logos/gftw.jpg" alt="Grant for the Web spark grantee" />
+    <img
+      loading="lazy"
+      src="/img/third-party-logos/gftw.jpg"
+      alt="Grant for the Web spark grantee"
+    />
   </picture>
   <div class="text">
     As a spark grantee of <a

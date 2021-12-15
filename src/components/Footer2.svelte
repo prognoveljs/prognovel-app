@@ -53,9 +53,9 @@
       <Stacks grid={"stack"} />
     </div>
     <div class="misc">
-      <a rel="prefetch" href="privacy">privacy policy</a>
+      <!-- <a rel="prefetch" href="privacy">privacy policy</a>
       <a rel="prefetch" href="dmca">DMCA</a>
-      <a rel="prefetch" href="help">user help</a>
+      <a rel="prefetch" href="help">user help</a> -->
       <strong style="display: block;">
         <small>&copy; Copyright {COPYRIGHT_YEAR}, ProgNovel</small>
       </strong>
