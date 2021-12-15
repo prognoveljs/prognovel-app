@@ -15,7 +15,14 @@
         alt="Grant for the Web"
       />
     </section>
-    <img class="doodles" width="100%" height="auto" src="/img/svg/doodles.svg" alt="Doodles" />
+    <img
+      loading="lazy"
+      class="doodles"
+      width="100%"
+      height="auto"
+      src="/img/svg/doodles.svg"
+      alt="Doodles"
+    />
   </div>
 </a>
 
