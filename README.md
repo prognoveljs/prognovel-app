@@ -14,8 +14,10 @@ ProgNovel is a JAMstack web app to make great webnovels. The main feature of Pro
 web app with offline read features and great performance, is to be able to inject interactive plugins
 for content creators to experiment with. Because ProgNovel built mainly in Jamstack architecture, it can be hosted with great loading page performance on many Jamstack platform free-tier offerings such as Netlify and Cloudflare Workers.
 
-![ProgNovel on Desktop](images/prognovel-desktop.png "ProgNovel on Desktop")
-![ProgNovel on Mobile](images/prognovel-mobile.png "ProgNovel on Mobile")
+## Screenshot
+
+![ProgNovel on Desktop](images/prognovel-desktop.jpg "ProgNovel on Desktop")
+![ProgNovel on Mobile](images/prognovel-mobile.jpg "ProgNovel on Mobile")
 
 ## Self-host ProgNovel
 
