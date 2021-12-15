@@ -7,6 +7,7 @@
 ![version](https://img.shields.io/github/package-json/v/prognoveljs/prognovel-app)
 ![netlify](https://img.shields.io/netlify/da504f88-e78c-4e63-bed4-52ebf13860b2)
 
+ProgNovel Promotional Video (YouTube):
 [![ProgNovel Promotional Video](https://img.youtube.com/vi/4nBUq1638zk/maxresdefault.jpg)](https://youtu.be/4nBUq1638zk)
 
 ProgNovel is a JAMstack web app to make great webnovels. The main feature of ProgNovel, beside offline-first
