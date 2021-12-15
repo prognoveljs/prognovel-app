@@ -30,7 +30,7 @@ function parse(env, isString = true): any {
   try {
     parsed = JSON.parse(env);
   } catch (error) {
-    console.error("Error parsing env.", { env: JSON.stringify(env) });
+    // console.error("Error parsing env.", { env: JSON.stringify(env) });
   }
 
   return parsed;

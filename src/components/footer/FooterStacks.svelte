@@ -7,6 +7,7 @@
     <h3>ProgNovel is <span>Grant for the Web</span> Spark Grantee</h3>
     <section>
       <img
+        loading="lazy"
         class="logo"
         width="100%"
         height="auto"

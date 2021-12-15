@@ -75,7 +75,11 @@
 
       a {
         font-size: 1rem;
-        color: var(--primary-color);
+        color: var(--primary-color-lighten-3);
+
+        :global(html.light) & {
+          color: var(--primary-color-darken-2);
+        }
 
         &:hover {
           color: hsl(var(--primary-color-h), 90%, 47%);

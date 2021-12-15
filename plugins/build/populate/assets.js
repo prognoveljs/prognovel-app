@@ -54,6 +54,10 @@ if (apiEndpoint.slice(-1) === "/") apiEndpoint = apiEndpoint.slice(0, -1);
       },
       {
         width: null,
+        height: 128,
+      },
+      {
+        width: null,
         height: 64,
       },
     ],
