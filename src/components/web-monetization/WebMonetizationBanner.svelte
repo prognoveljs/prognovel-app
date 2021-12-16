@@ -5,7 +5,7 @@
 <section>
   <Illustration />
   <div style="position: relative; z-index: 2;">
-    <h3>Part of Web Monetization API</h3>
+    <h2>Part of Web Monetization API</h2>
     <p>Subscribe once, enjoy VIP experiences across all ProgNovel-based sites.</p>
     <div class="flex">
       <a href="https://coil.com/learn-more" target="_blank" rel="noopener" class="learn-more"
@@ -39,7 +39,7 @@
     }
   }
 
-  h3,
+  h2,
   p {
     position: relative;
     max-width: 400px;
@@ -48,7 +48,7 @@
     z-index: 1;
   }
 
-  h3 {
+  h2 {
     font-weight: 700;
   }
 
