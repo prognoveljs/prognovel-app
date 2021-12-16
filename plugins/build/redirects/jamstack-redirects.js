@@ -16,7 +16,6 @@ if (process.env.NETLIFY) {
       `
   /feed/* ${new URL(backend_api).href}feed?novel=:splat 200
   /chapter-list/* ${new URL(backend_api).href}chapter-list?novel=:splat 200
-  /* /404 
   `,
     "utf-8",
   );
