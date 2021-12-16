@@ -1,2 +1,2 @@
-/read/* /read?load=:splat
+/read/:slug /read?load=:slug
 
