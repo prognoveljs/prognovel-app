@@ -51,6 +51,7 @@
     img {
       border-radius: 50%;
       min-height: var(--minImgSize);
+      aspect-ratio: 1/1;
     }
     @include screen("mobile") {
       gap: 24px;

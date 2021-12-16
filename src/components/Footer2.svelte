@@ -170,6 +170,7 @@
 
     a {
       padding: 4px 8px;
+      font-size: 1.1em;
 
       &:not(:first-of-type) {
         border-left: 1px solid #8883;
