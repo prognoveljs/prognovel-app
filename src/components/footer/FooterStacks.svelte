@@ -73,7 +73,7 @@
     img.logo {
       border-radius: 50%;
       filter: contrast(0.8) grayscale(0.3);
-      padding: 4px 10px;
+      // padding: 4px 10px;
       aspect-ratio: 1/1;
     }
 
