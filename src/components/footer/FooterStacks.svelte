@@ -9,8 +9,8 @@
       <img
         loading="lazy"
         class="logo"
-        width="100%"
-        height="auto"
+        width="225"
+        height="225"
         src="/img/third-party-logos/gftw.jpg"
         alt="Grant for the Web"
       />
@@ -28,6 +28,7 @@
     background-color: #0002;
     position: relative;
     overflow: hidden;
+    height: 100%;
 
     :global(html.light) & {
       background-color: hsl(var(--primary-color-h), 100%, 96%);
@@ -76,12 +77,14 @@
     }
 
     .doodles {
+      --translate: translateX(25%) translateY(-40%);
       position: absolute;
-      bottom: -30%;
-      left: -20%;
+      bottom: -50%;
+      left: -50%;
       width: 130%;
       z-index: -1;
       transition: all 0.225s ease-in-out;
+      transform: var(--translate) scale(1.1);
     }
 
     &:hover {
@@ -103,7 +106,7 @@
       }
 
       .doodles {
-        transform: scale(1.1);
+        transform: var(--translate) scale(1.175);
       }
     }
 

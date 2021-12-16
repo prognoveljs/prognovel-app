@@ -5,6 +5,8 @@
       loading="lazy"
       src="/img/third-party-logos/gftw.jpg"
       alt="Grant for the Web spark grantee"
+      width="275"
+      height="275"
     />
   </picture>
   <div class="text">
@@ -48,8 +50,6 @@
 
     img {
       border-radius: 50%;
-      width: 100%;
-      height: auto;
       min-height: var(--minImgSize);
     }
     @include screen("mobile") {
@@ -62,7 +62,7 @@
       }
 
       img {
-        width: 60%;
+        // width: 60%;
       }
     }
 
