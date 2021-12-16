@@ -18,7 +18,10 @@ for content creators to experiment with. Because ProgNovel built mainly in Jamst
 
 ## Screenshot
 
+_ProgNovel on Desktop_
 ![ProgNovel on Desktop](images/prognovel-desktop.jpg "ProgNovel on Desktop")
+
+_ProgNovel on Mobile_
 ![ProgNovel on Mobile](images/prognovel-mobile.jpg "ProgNovel on Mobile")
 
 ## Self-host ProgNovel
