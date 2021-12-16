@@ -10,7 +10,7 @@
 [Demo](https://demo.prognovel.com) | [Promotional Video](https://youtu.be/4nBUq1638zk)
 
 ProgNovel Promotional Video (YouTube):
-[![ProgNovel Promotional Video](https://img.youtube.com/vi/4nBUq1638zk/maxresdefault.jpg)](https://youtu.be/4nBUq1638zk)
+[![ProgNovel Promotional Video](images/pv-screenshot.png)](https://youtu.be/4nBUq1638zk)
 
 ProgNovel is a JAMstack web app to make great webnovels. The main feature of ProgNovel, beside offline-first
 web app with offline read features and great performance, is to be able to inject interactive plugins
@@ -47,8 +47,8 @@ ProgNovel works best when hosted on Jamstack platforms for performance and effie
 
 ## Other links
 
-[ProgNovel on Web Monetization community space](https://community.webmonetization.org/prognovel)
-[ProgNovel on Twitter](https://twitter.com/ProgNovel)
+[ProgNovel on Web Monetization community space](https://community.webmonetization.org/prognovel)<br/>
+[ProgNovel on Twitter](https://twitter.com/ProgNovel)<br/>
 [ProgNovel on Reddit](https://www.redit.com/r/prognovel)
 
 ## Credits
