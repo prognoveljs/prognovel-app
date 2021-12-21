@@ -11,7 +11,9 @@
 </script>
 
 <article>
-  <h1 id="novel-title">{novelMetadata ? novelMetadata.title : "Loading..."}</h1>
+  <div class="header-wrapper">
+    <h1 id="novel-title">{novelMetadata ? novelMetadata.title : "Loading..."}</h1>
+  </div>
   <DescriptionInfo {novelMetadata} />
   <div class="novel-description" style="height: {height};" class:hideMore={!showMore}>
     {@html novelMetadata ? novelMetadata.synopsis : ""}
@@ -29,6 +31,7 @@
 
     animation: 1s linear forwards progress;
     animation-timeline: desc-roll;
+    padding-top: 56px;
 
     @include screen("mobile") {
       margin: {
@@ -60,10 +63,21 @@
     }
   }
 
-  h1 {
-    margin-top: 0;
-    font-weight: 700;
-    color: #fff;
+  .header-wrapper {
+    position: relative;
+    h1 {
+      margin-top: 0;
+      font-weight: 700;
+      color: #fff;
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+
+      @include screen("mobile") {
+        position: relative;
+      }
+    }
   }
 
   .read-button-flex {
