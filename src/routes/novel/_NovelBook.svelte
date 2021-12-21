@@ -91,7 +91,7 @@
     grid-template-columns: $cover-width 1fr;
     grid-template-areas: "cover description";
     grid-gap: 24px;
-    margin-top: -86px;
+    margin-top: -72px;
     padding: var(--padding);
 
     @include screen("small-desktop") {
@@ -187,7 +187,7 @@
     --light: 46%;
     --saturate: 92%;
     position: absolute;
-    top: 62px;
+    top: 50px;
     right: -4px;
     padding: 12px;
     border-radius: 50%;

@@ -1,6 +1,7 @@
 <script lang="ts">
   import DescriptionInfo from "components/novel-page/DescriptionInfo.svelte";
-  import { readPageLink } from "src/store/read-page/read-page-navigation";
+  import { readPageLink } from "store/read-page/read-page-navigation";
+  import { isBrowser } from "store/states";
   import { getContext } from "svelte";
   import type { NovelMetadata } from "typings";
 
@@ -8,17 +9,20 @@
 
   let showMore = false;
   $: height = showMore ? "auto" : "270px";
+  $: disableLink = Boolean(!isBrowser || !$readPageLink);
 </script>
 
 <article>
-  <h1 id="novel-title">{novelMetadata ? novelMetadata.title : "Loading..."}</h1>
+  <div class="header-wrapper">
+    <h1 id="novel-title">{novelMetadata ? novelMetadata.title : "Loading..."}</h1>
+  </div>
   <DescriptionInfo {novelMetadata} />
   <div class="novel-description" style="height: {height};" class:hideMore={!showMore}>
     {@html novelMetadata ? novelMetadata.synopsis : ""}
     {#if !showMore}<span class="show-more" on:click={() => (showMore = true)}>show more</span>{/if}
   </div>
   <div class="read-button-flex">
-    <a href={$readPageLink || "."} disabled={!$readPageLink}>READ NOW</a>
+    <a href={$readPageLink || "."} disabled={disableLink}>READ NOW</a>
   </div>
 </article>
 
@@ -29,6 +33,7 @@
 
     animation: 1s linear forwards progress;
     animation-timeline: desc-roll;
+    padding-top: 56px;
 
     @include screen("mobile") {
       margin: {
@@ -60,10 +65,21 @@
     }
   }
 
-  h1 {
-    margin-top: 0;
-    font-weight: 700;
-    color: #fff;
+  .header-wrapper {
+    position: relative;
+    h1 {
+      margin-top: 0;
+      font-weight: 700;
+      color: #fff;
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+
+      @include screen("mobile") {
+        position: relative;
+      }
+    }
   }
 
   .read-button-flex {
@@ -91,7 +107,7 @@
         // color: #000e;
       }
 
-      &:disabled {
+      &[disabled="true"] {
         filter: saturate(0.4);
         pointer-events: none;
         cursor: default;
