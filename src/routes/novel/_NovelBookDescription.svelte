@@ -1,6 +1,7 @@
 <script lang="ts">
   import DescriptionInfo from "components/novel-page/DescriptionInfo.svelte";
-  import { readPageLink } from "src/store/read-page/read-page-navigation";
+  import { readPageLink } from "store/read-page/read-page-navigation";
+  import { isBrowser } from "store/states";
   import { getContext } from "svelte";
   import type { NovelMetadata } from "typings";
 
@@ -8,6 +9,7 @@
 
   let showMore = false;
   $: height = showMore ? "auto" : "270px";
+  $: disableLink = Boolean(!isBrowser || !$readPageLink);
 </script>
 
 <article>
@@ -20,7 +22,7 @@
     {#if !showMore}<span class="show-more" on:click={() => (showMore = true)}>show more</span>{/if}
   </div>
   <div class="read-button-flex">
-    <a href={$readPageLink || "."} disabled={!$readPageLink}>READ NOW</a>
+    <a href={$readPageLink || "."} disabled={disableLink}>READ NOW</a>
   </div>
 </article>
 
@@ -105,7 +107,7 @@
         // color: #000e;
       }
 
-      &:disabled {
+      &[disabled="true"] {
         filter: saturate(0.4);
         pointer-events: none;
         cursor: default;
