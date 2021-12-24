@@ -51,6 +51,11 @@
       animation-timeline: banner-scroll;
       will-change: filter;
       transform-origin: bottom;
+
+      @include screen("mobile") {
+        height: 100%;
+        object-fit: cover;
+      }
     }
 
     &.hide {
