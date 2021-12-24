@@ -49,6 +49,7 @@
 		"@babel/preset-env": "^7.12.11",
 		"@babel/preset-typescript": "^7.12.7",
 		"@beyonk/svelte-google-analytics": "^2.2.0",
+		"@cloudflare/workers-types": "^3.3.0",
 		"@types/aws-lambda": "^8.10.67",
 		"@typescript-eslint/parser": "^4.0.0",
 		"assets-webpack-plugin": "^6.1.2",

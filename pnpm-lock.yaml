@@ -10,6 +10,7 @@ specifiers:
   '@babel/preset-env': ^7.12.11
   '@babel/preset-typescript': ^7.12.7
   '@beyonk/svelte-google-analytics': ^2.2.0
+  '@cloudflare/workers-types': ^3.3.0
   '@fortawesome/free-brands-svg-icons': ^5.15.3
   '@fortawesome/free-regular-svg-icons': ^5.15.3
   '@fortawesome/free-solid-svg-icons': ^5.15.3
@@ -112,6 +113,7 @@ devDependencies:
   '@babel/preset-env': 7.14.2_@babel+core@7.14.3
   '@babel/preset-typescript': 7.13.0_@babel+core@7.14.3
   '@beyonk/svelte-google-analytics': 2.2.0
+  '@cloudflare/workers-types': 3.3.0
   '@types/aws-lambda': 8.10.76
   '@typescript-eslint/parser': 4.24.0_eslint@7.26.0+typescript@4.2.4
   assets-webpack-plugin: 6.1.2
@@ -1289,6 +1291,10 @@ packages:
     resolution: {integrity: sha512-SwH0+fw1JW7YIw61AnyeJRyGadwu0nkz6dpQZP+z8h85IJShXf4JIxwAXNLdsWf7ogEy6MRU0YoC1Mn6YF7pHw==}
     dependencies:
       '@beyonk/async-script-loader': 2.0.0
+    dev: true
+
+  /@cloudflare/workers-types/3.3.0:
+    resolution: {integrity: sha512-3v3bm/hOuzNtHgDqPowrRE63H0GEn40LfhLMVpzS5yeg5tlE5nEQ0qobmGOJBCvJJ1LhgRRHZTJszXHs1DXQWg==}
     dev: true
 
   /@cypress/listr-verbose-renderer/0.4.1:
