@@ -45,12 +45,19 @@
 
     img {
       width: 100%;
+      height: 100%;
+      object-fit: cover;
       height: auto;
       transform-origin: bottom center;
       animation: 1s linear forwards progress;
       animation-timeline: banner-scroll;
       will-change: filter;
       transform-origin: bottom;
+
+      @include screen("mobile") {
+        height: 100%;
+        object-fit: cover;
+      }
     }
 
     &.hide {
