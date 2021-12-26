@@ -1,7 +1,9 @@
 [build]
 publish = "__sapper__/export/"
 command = "npm run build"
-Functions = "netlify-functions"
+
+[functions]
+directory = "functions-netlify"
 
 [template.environment]
 SITE_TITLE = "Site title"
