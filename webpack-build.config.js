@@ -98,6 +98,7 @@ function getServerPlugins() {
       "process.env.PREFETCH_CHAPTER": JSON.stringify(process.env.PREFETCH_CHAPTER),
       "process.env.CACHE_FOLDER": JSON.stringify(path.resolve(__dirname, "./.cache")),
       "process.env.PUBLISH_FOLDER": JSON.stringify(path.resolve(__dirname, "./static/publish")),
+      ...SHARED_ENV,
     }),
   ];
 }
