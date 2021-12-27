@@ -1,6 +1,3 @@
-import "@cloudflare/workers-types";
-import "../../api-types";
-
 export const onRequest: PagesFunction = async (context): Promise<Response> => {
   const { file } = context.params;
 

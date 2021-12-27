@@ -1,5 +1,3 @@
-import "@cloudflare/workers-types";
-import "../api-types";
 import { DB, headers } from "./_shared";
 
 export const onRequest: PagesFunction = async (context): Promise<Response> => {
