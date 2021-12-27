@@ -1,5 +1,4 @@
 import { getMaxAge } from "../utils/cache";
-import "../api-types";
 
 export const DB = {
   metadata: {} as any,

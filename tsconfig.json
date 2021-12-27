@@ -5,7 +5,7 @@
     "lib": ["DOM", "ES2015", "ESNext"],
     "target": "es2017",
     "module": "esnext",
-    "types": ["node", "@sapper", "./typings/global"],
+    "types": ["node", "@sapper", "@cloudflare/workers-types", "./typings/global"],
     "typeRoots": ["typings"],
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
