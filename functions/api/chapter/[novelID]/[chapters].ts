@@ -1,5 +1,3 @@
-import "@cloudflare/workers-types";
-import "../../../api-types";
 import { DB, headers } from "../../_shared";
 import { responseError, chapterNameNotFound, chapterNovelNotFound } from "../../../utils/errors";
 const MAX_AGE = 60 * 60;

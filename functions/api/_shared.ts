@@ -1,5 +1,3 @@
-declare const BUCKET: KVNamespace;
-// import fm from 'front-matter';
 import { getMaxAge } from "../utils/cache";
 import "../api-types";
 

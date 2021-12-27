@@ -1,6 +1,4 @@
 import { fetchNovel } from "./_handlers";
-import "@cloudflare/workers-types";
-import "../../api-types";
 
 export const onRequest: PagesFunction = async (context) => {
   // Contents of context object
