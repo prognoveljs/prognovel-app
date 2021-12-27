@@ -1,4 +1,3 @@
-import "@cloudflare/workers-types";
 import { fetchNovelChapterTitles } from "../_handlers";
 
 export const onRequest: PagesFunction = async (context) => {
