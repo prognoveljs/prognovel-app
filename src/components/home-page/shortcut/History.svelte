@@ -8,7 +8,7 @@
   import Icon from "components/Icon.svelte";
   import { faClock } from "@fortawesome/free-regular-svg-icons";
   import type { HistoryRecent } from "typings";
-  import { getCoverURLPath } from "utils/images";
+  import { getCoverURLPath, isWEBP } from "utils/images";
 
   let history: HistoryRecent[] = [];
   $: titles = loadNovelTitles($siteMetadata);
@@ -25,7 +25,10 @@
   {#if titles && history.length}
     {#each history as novel}
       <a class="novel" rel="preload" href="/read/{novel.id}/{novel.lastChapterRead}">
-        <img src={getCoverURLPath(novel.id, { width: 128, height: 128 }, "jpeg")} alt={novel.id} />
+        <img
+          src={getCoverURLPath(novel.id, { width: 128, height: 128 }, isWEBP ? "webp" : "jpeg")}
+          alt={novel.id}
+        />
         <span class="title">{titles[novel.id] || novel.id}</span>
         <span class="chapter"
           >Ch
