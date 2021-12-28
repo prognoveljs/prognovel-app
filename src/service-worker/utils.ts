@@ -25,17 +25,14 @@ export function validAssets(value: string): boolean {
     !value.endsWith(".svg")
   );
   const notNetworkFolder = !(value.includes("network/") && true); // true boolean prevent linter
-  const notDevLogs = !(value.includes("devlog/") && true); // from messing with it;
-  const notFontsFolder = !(value.includes("fonts/") && true); // :)
-  const notPublishAssets = !(value.includes("publish/") && !value.endsWith(".json"));
   const notImageResizeService = !(value.includes("image-resize/") && true);
-  return (
-    notNetlifyConfigs &&
-    notNetworkFolder &&
-    // notFontsFolder &&
-    // notPublishAssets &&
-    notImageResizeService
-  );
+  return notNetlifyConfigs && notNetworkFolder && notImageResizeService;
+}
+
+export function validInstallAssets(value: string): boolean {
+  const fontsAssets = value.includes("fonts/") && true; // :)
+  const publishAssets = value.includes("publish/") && !value.endsWith(".json");
+  return !(fontsAssets || publishAssets);
 }
 
 export function validFetchEvent(event: FetchEvent): boolean {

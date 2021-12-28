@@ -1,6 +1,6 @@
 import { timestamp, files, shell, routes } from "@sapper/service-worker";
 //@ts-ignore
-import { validAssets } from "./utils";
+import { validInstallAssets, validAssets } from "./utils";
 //@ts-ignore
 // import siteMetadata from "cache/sitemetadata.json";
 
@@ -21,7 +21,7 @@ const cachedFiles = shell.concat(files).concat(cachedRoutes);
 
 let filesCache: string[];
 export const cacheFileFiltered = (): string[] => {
-  return filesCache || (filesCache = cachedFiles.filter(validAssets));
+  return filesCache || (filesCache = cachedFiles.filter(validAssets).filter(validInstallAssets));
 };
 
 export const assets = {
