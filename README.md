@@ -7,7 +7,7 @@
 ![version](https://img.shields.io/github/package-json/v/prognoveljs/prognovel-app)
 ![netlify](https://img.shields.io/netlify/da504f88-e78c-4e63-bed4-52ebf13860b2)
 
-[Demo](https://demo.prognovel.com) | [Promotional Video](https://youtu.be/4nBUq1638zk)
+[Demo](https://demo.prognovel.com) | [Changelog](CHANGELOG.md) | [Promotional Video](https://youtu.be/4nBUq1638zk)
 
 ProgNovel Promotional Video (YouTube):
 [![ProgNovel Promotional Video](images/pv-screenshot.png)](https://youtu.be/4nBUq1638zk)
