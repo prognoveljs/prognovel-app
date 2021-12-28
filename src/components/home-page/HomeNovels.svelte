@@ -15,18 +15,7 @@
 
   const MAX_NOVEL_LISTED = 6;
 
-  const novelListMock = [
-    "yashura-legacy",
-    "yashura-legacy",
-    "yashura-legacy",
-    "yashura-legacy",
-    "yashura-legacy",
-    "yashura-legacy",
-    "yashura-legacy",
-    "yashura-legacy",
-    "yashura-legacy",
-    "yashura-legacy",
-  ];
+  const novelListMock = Array(10).fill("yashura-legacy");
 
   let willChange = "transform, box-shadow";
 
