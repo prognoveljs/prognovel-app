@@ -8,6 +8,8 @@ export function pickCache(event: FetchEvent): string {
     return "fonts";
   } else if (url.pathname.includes("wasm/")) {
     return "web-assembly";
+  } else if (url.pathname.includes("publish/") && !url.pathname.endsWith(".json")) {
+    return "publish-assets";
   } else {
     return assets.name;
   }
@@ -30,8 +32,8 @@ export function validAssets(value: string): boolean {
   return (
     notNetlifyConfigs &&
     notNetworkFolder &&
-    notFontsFolder &&
-    notPublishAssets &&
+    // notFontsFolder &&
+    // notPublishAssets &&
     notImageResizeService
   );
 }
