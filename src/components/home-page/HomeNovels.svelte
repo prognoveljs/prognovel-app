@@ -3,6 +3,8 @@
   import { getNovelCoverSubtitle, loadNovelTitles } from "utils/novel-page";
   import { NOVEL_COVER_WIDTH, NOVEL_COVER_HEIGHT } from "settings";
   import Cover from "components/BookCover.svelte";
+  import Icon from "components/Icon.svelte";
+  import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
   import type { NovelsMetadata } from "typings";
 
   export let grid;
@@ -26,8 +28,6 @@
     "yashura-legacy",
   ];
 
-  $: listedNovels = novelList.slice(0, 6);
-
   let willChange = "transform, box-shadow";
 
   function removeWillChange() {
@@ -50,7 +50,7 @@
     class="grid"
     style="grid-template-columns: repeat(auto-fill, {NOVEL_COVER_WIDTH}px); grid-template-rows: {NOVEL_COVER_HEIGHT}px;"
   >
-    {#each listedNovels as novel}
+    {#each novelList.slice(0, 6) as novel}
       <a
         data-cy="yashura"
         rel="prefetch"
@@ -71,7 +71,11 @@
   </div>
   {#if novelList.length > MAX_NOVEL_LISTED}
     <div class="flex">
-      <a class="see-all" href="novel">see all</a>
+      <a class="see-all" href="novel"
+        >see all
+
+        <Icon icon={faChevronRight} size="1.25em" paddingBottom="3px" marginLeft="4px" />
+      </a>
     </div>
   {/if}
 </div>
@@ -136,9 +140,23 @@
         background-color: #fff3;
         border-radius: calc(1em + 4px);
         padding: 4px 16px;
+        padding-right: 12px;
+        text-decoration-skip-ink: none;
+        text-decoration-thickness: 4px;
+        text-underline-offset: -4px;
+        text-decoration-color: hsla(#{$h}, 79%, 73%, 0.6);
+
+        :global(svg) {
+          opacity: 0.8;
+          transition: transform 0.125s ease-in-out;
+        }
 
         &:hover {
           background-color: #fff5;
+          :global(svg) {
+            opacity: 1;
+            transform: translateX(2px);
+          }
         }
       }
     }
