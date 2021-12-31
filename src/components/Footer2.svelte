@@ -55,7 +55,7 @@
     <div class="misc">
       <a rel="prefetch" href="https://www.twitter.com/prognovel">twitter</a>
       <a rel="prefetch" href="https://www.github.com/prognoveljs">github</a>
-      <a rel="prefetch" href="https://comunity.webmonetization.org/prognovel">WM API community</a>
+      <a rel="prefetch" href="https://community.webmonetization.org/prognovel">WM API community</a>
       <strong style="display: block;">
         <small>&copy; Copyright {COPYRIGHT_YEAR}, ProgNovel</small>
       </strong>
