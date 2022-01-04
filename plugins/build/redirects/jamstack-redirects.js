@@ -5,6 +5,8 @@ const siteMetadata = require("../../../.cache/assets/publish/sitemetadata.json")
 const { backend_api } = siteMetadata;
 const buildFolder = "__sapper__/export";
 
+const BACKEND_API = process.env.BACKEND_API;
+
 console.log("ENV Netlify", process.env.NETLIFY);
 
 const redirectsFile = join(buildFolder, "_redirects");
@@ -14,8 +16,8 @@ const redirectsFile = join(buildFolder, "_redirects");
 writeFileSync(
   redirectsFile,
   `${process.env.NETLIFY ? "/read/* /read?load=:splat" : "/read/:slug /read?load=:slug"}
-/feed/* ${new URL(backend_api).href}feed?novel=:splat 200
-/chapter-list/* ${new URL(backend_api).href}chapter-list?novel=:splat 200
+/feed/* ${new URL(BACKEND_API).href}feed?novel=:splat 200
+/chapter-list/* ${new URL(BACKEND_API).href}chapter-list?novel=:splat 200
 `,
   "utf-8",
 );
