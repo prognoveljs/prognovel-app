@@ -11,7 +11,7 @@
     <Icon icon={faTools} />
     Site Configurations</a
   >
-  <a href="admin/revenue-share-configuration"
+  <a href="admin/revenue-share"
     ><Icon icon={faMoneyBillAlt} />
     Revenue Share</a
   >
