@@ -19,6 +19,10 @@
 
     .body {
       padding: 2em;
+
+      :global(form label) {
+        display: block;
+      }
     }
   }
 </style>
