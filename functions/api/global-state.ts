@@ -8,7 +8,7 @@ export const onRequest: PagesFunction = async (context): Promise<Response> => {
     console.error(error);
     return new Response("Error connecting to KV database BUCKET.", {
       status: 501,
-      statusText: "Error connecting to KV database BUCKET.",
+      statusText: "Error connecting to KV database BUCKET.\n\n" + error,
     });
   }
 
