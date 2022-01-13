@@ -27,7 +27,6 @@ export function validAssets(value: string): boolean {
   const notNetworkFolder = !(value.includes("network/") && true); // true boolean prevent linter
   const notApiRoutes = !(value.startsWith("/api/") && true); // true boolean prevent linter
   const notImageResizeService = !(value.includes("image-resize/") && true);
-  console.log("Service worker validate:", value);
   return notApiRoutes && notNetlifyConfigs && notNetworkFolder && notImageResizeService;
 }
 

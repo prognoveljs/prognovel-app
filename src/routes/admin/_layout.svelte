@@ -1,11 +1,26 @@
 <script lang="ts">
   import AdminSidebar from "components/admin-page/AdminSidebar.svelte";
+  import { onDestroy, onMount } from "svelte";
+  import { destroyAdminGUI, initializeAdminGUI } from "utils/admin";
+  import { isAdminGUIConnected } from "utils/admin/_store";
+
+  onMount(() => {
+    initializeAdminGUI();
+  });
+
+  onDestroy(() => {
+    destroyAdminGUI();
+  });
 </script>
 
 <article>
   <AdminSidebar />
   <section class="body">
-    <slot />
+    {#if $isAdminGUIConnected}
+      <slot />
+    {:else}
+      OI! Connect ProgNovel GUI first!
+    {/if}
   </section>
 </article>
 
@@ -20,8 +35,20 @@
     .body {
       padding: 2em;
 
-      :global(form label) {
+      :global(h1) {
         display: block;
+        font-weight: 700;
+      }
+
+      :global(label) {
+        display: block;
+        margin-top: 1em;
+      }
+
+      :global(input[type="text"]) {
+        padding: 0.25em 0.5em;
+        min-width: 30em;
+        color: #000a;
       }
     }
   }

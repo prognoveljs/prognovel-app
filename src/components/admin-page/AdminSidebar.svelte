@@ -1,5 +1,11 @@
 <script lang="ts">
-  import { faMoneyBillAlt, faPalette, faStar, faTools } from "@fortawesome/free-solid-svg-icons";
+  import {
+    faBookmark,
+    faMoneyBillAlt,
+    faPalette,
+    faStar,
+    faTools,
+  } from "@fortawesome/free-solid-svg-icons";
   import Icon from "components/Icon.svelte";
   import { path } from "src/store/states";
 
@@ -33,6 +39,14 @@
       href: "admin/revenue-share",
     },
   ];
+
+  const novelNavLink = [
+    {
+      label: "Novel Configurations",
+      icon: faBookmark,
+      href: "admin/novel-configurations",
+    },
+  ];
 </script>
 
 <section>
@@ -45,6 +59,13 @@
     >
   {/each}
   <strong>Novels</strong>
+  {#each novelNavLink as link}
+    <a href={link.href} class:selected={$path.includes(link.href)}>
+      <Icon icon={link.icon} />
+      {link.label}</a
+    >
+  {/each}
+  <hr />
   {#each novels as novel}
     <a class:selected={$path.includes("admin/novel/" + novel)} href="admin/novel/{novel}">
       <img
@@ -73,7 +94,7 @@
       position: relative;
 
       &::before {
-        $size: 0.7em;
+        $size: 0.9em;
         position: absolute;
         content: "";
         width: $size;
@@ -81,8 +102,8 @@
         border-radius: 50%;
         background-color: var(--primary-color);
         opacity: 0.6;
-        top: -0.05em;
-        left: -0.5em;
+        top: -0.03em;
+        left: -0.4em;
         z-index: -1;
       }
     }
@@ -151,6 +172,12 @@
         font-size: 1.5em;
         font-weight: 700;
       }
+    }
+
+    hr {
+      width: 5em;
+      border-color: #fff6;
+      margin: 0.5em 0 1em;
     }
   }
 </style>

@@ -2,15 +2,15 @@ import { DB, headers } from "./_shared";
 
 export const onRequest: PagesFunction = async (context): Promise<Response> => {
   let meta;
-  try {
-    meta = await DB.getSiteMetadata();
-  } catch (error) {
-    console.error(error);
-    return new Response("Error connecting to KV database BUCKET.", {
-      status: 501,
-      statusText: "Error connecting to KV database BUCKET.\n\n" + error,
-    });
-  }
+  meta = await DB.getSiteMetadata();
+  // try {
+  // } catch (error) {
+  //   console.error(error);
+  //   return new Response("Error connecting to KV database BUCKET.\n\n" + error, {
+  //     status: 501,
+  //     statusText: "Error connecting to KV database BUCKET.",
+  //   });
+  // }
 
   return new Response(
     JSON.stringify(
