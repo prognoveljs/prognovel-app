@@ -1,7 +1,7 @@
 import { isAdminGUIConnected } from "./_store";
 
 const WEB_SOCKET_PORT = 6060;
-let ws: WebSocket;
+export let ws: WebSocket;
 
 export function initializeAdminGUI() {
   ws = new WebSocket(`ws://127.0.0.1:${WEB_SOCKET_PORT}`);
@@ -18,3 +18,5 @@ export function initializeAdminGUI() {
 export function destroyAdminGUI() {
   if (ws && !ws.CLOSED) ws.close();
 }
+
+export { getDataFromFile } from "./data";

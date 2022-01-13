@@ -47,8 +47,13 @@
 
       :global(input[type="text"]) {
         padding: 0.25em 0.5em;
-        min-width: 30em;
         color: #000a;
+      }
+
+      :global(button.submit) {
+        padding: 0.25em 1em 0.25em 0.7em;
+        align-self: flex-end;
+        margin-top: 1em;
       }
     }
   }

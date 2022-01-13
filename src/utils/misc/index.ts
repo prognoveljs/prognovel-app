@@ -1,0 +1,1 @@
+export { deepEqual } from "./object";
