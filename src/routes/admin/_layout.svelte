@@ -9,6 +9,7 @@
   });
 
   onDestroy(() => {
+    console.log("Destroy admin GUI");
     destroyAdminGUI();
   });
 </script>

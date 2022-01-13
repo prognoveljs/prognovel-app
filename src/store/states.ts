@@ -42,7 +42,7 @@ export const liteNovelsMetadata: Readable<any> = derived(siteMetadata, ($meta: S
 // utils
 export const isDownloading: Writable<boolean> = writable(false);
 export const isBusy: Writable<boolean> = writable(false);
-export const saveData: Writable<boolean> = writable(false);
+export const isSaveData: Writable<boolean> = writable(false);
 export const disableAnimations: Writable<boolean> = writable(false);
 
 export const showSettings: Writable<boolean> = writable(false);

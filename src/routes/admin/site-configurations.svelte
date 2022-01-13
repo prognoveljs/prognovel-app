@@ -3,6 +3,7 @@
   import Icon from "components/Icon.svelte";
   import { onMount } from "svelte";
   import { getDataFromFile } from "utils/admin";
+  import { saveDataForFile } from "utils/admin/data";
   import { deepEqual } from "utils/misc";
 
   let dataSnapshot = {
@@ -17,16 +18,22 @@
   let disqusId: string = "";
   let imageResizeService: string = "";
 
-  $: snap = dataSnapshot;
-
   $: canSubmit = () => {
-    return deepEqual(dataSnapshot, {
+    return deepEqual(dataSnapshot, getDataStructure());
+  };
+
+  function getDataStructure() {
+    return {
       site_title: siteTitle,
       contact: contactEmail,
       disqus_id: disqusId,
       image_resizer_service: imageResizeService,
-    });
-  };
+    };
+  }
+
+  function saveData() {
+    saveDataForFile("settings", getDataStructure());
+  }
 
   onMount(async () => {
     dataSnapshot = (await getDataFromFile("settings")).data;
@@ -72,11 +79,9 @@
     id="image-resizer-service"
   />
 
-  <button disabled={canSubmit()} class="submit">
+  <button disabled={canSubmit()} class="submit" on:click={saveData}>
     <Icon icon={faSave} color="var(--body-text-color)" size="1.5em" paddingBottom="4px" /> Save
   </button>
-
-  <pre>{JSON.stringify(snap)}</pre>
 </div>
 
 <style lang="scss">
