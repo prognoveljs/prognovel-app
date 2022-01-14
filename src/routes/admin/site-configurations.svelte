@@ -13,21 +13,21 @@
     image_resizer_service: "",
   };
 
-  let siteTitle: string = "";
-  let contactEmail: string = "";
-  let disqusId: string = "";
-  let imageResizeService: string = "";
+  let site_title: string = "";
+  let contact: string = "";
+  let disqus_id: string = "";
+  let image_resizer_service: string = "";
 
   $: canSubmit = () => {
-    return deepEqual(dataSnapshot, getDataStructure());
+    return !deepEqual(dataSnapshot, getDataStructure());
   };
 
   function getDataStructure() {
     return {
-      site_title: siteTitle,
-      contact: contactEmail,
-      disqus_id: disqusId,
-      image_resizer_service: imageResizeService,
+      site_title: site_title,
+      contact: contact,
+      disqus_id: disqus_id,
+      image_resizer_service: image_resizer_service,
     };
   }
 
@@ -37,10 +37,10 @@
 
   onMount(async () => {
     dataSnapshot = (await getDataFromFile("settings")).data;
-    siteTitle = dataSnapshot["site_title"];
-    contactEmail = dataSnapshot["contact"];
-    disqusId = dataSnapshot["disqus_id"];
-    imageResizeService = dataSnapshot["image_resize_service"];
+    site_title = dataSnapshot["site_title"];
+    contact = dataSnapshot["contact"];
+    disqus_id = dataSnapshot["disqus_id"];
+    image_resizer_service = dataSnapshot["image_resize_service"];
   });
 </script>
 
@@ -48,7 +48,7 @@
 <div class="flex">
   <label for="site-title">Site title</label>
   <input
-    bind:value={siteTitle}
+    bind:value={site_title}
     placeholder="My Great ProgNovel Site"
     type="text"
     name="site-title"
@@ -56,7 +56,7 @@
   />
   <label for="contact">Contact email</label>
   <input
-    bind:value={contactEmail}
+    bind:value={contact}
     placeholder="admin@example.com"
     type="text"
     name="contact"
@@ -64,7 +64,7 @@
   />
   <label for="disqus-id">Disqus Shortname ID</label>
   <input
-    bind:value={disqusId}
+    bind:value={disqus_id}
     placeholder="my-disqus-channel"
     type="text"
     name="disqus-id"
@@ -72,14 +72,14 @@
   />
   <label for="image-resizer-service">Image resizer service</label>
   <input
-    bind:value={imageResizeService}
+    bind:value={image_resizer_service}
     placeholder="https://www.example-image-resizer.com"
     type="text"
     name="image-resizer-service"
     id="image-resizer-service"
   />
 
-  <button disabled={canSubmit()} class="submit" on:click={saveData}>
+  <button disabled={!canSubmit()} class="submit" on:click={saveData}>
     <Icon icon={faSave} color="var(--body-text-color)" size="1.5em" paddingBottom="4px" /> Save
   </button>
 </div>

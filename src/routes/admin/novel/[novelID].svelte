@@ -7,50 +7,142 @@
 </script>
 
 <script lang="ts">
-  export let novel;
+  import { faSave } from "@fortawesome/free-solid-svg-icons";
+  import Icon from "components/Icon.svelte";
+  import { onMount } from "svelte";
+  import { getDataFromFile } from "utils/admin";
+  import { saveDataForFile } from "utils/admin/data";
+  import { deepEqual } from "utils/misc";
 
+  export let novel;
   $: novelTitle = novel;
 
-  let contributors = [
-    {
-      name: "Jonathan",
-      email: "test1@email.com",
-      paymentPointer: "$wallet.address.com/test-1",
+  let dataSnapshot = {};
+  let synopsisSnapshot = "";
+  let contributorsSnaphsot = {
+    mm: {
+      name: "--",
+      paymentPointer: "--",
     },
-    {
-      name: "April",
-      email: "test2@email.com",
-      paymentPointer: "$wallet.address.com/test-2",
-    },
-    {
-      name: "Emmy",
-      email: "test3@email.com",
-      paymentPointer: "$wallet.address.com/test-3",
-    },
-    {
-      name: "Samaludin",
-      email: "test4@email.com",
-      paymentPointer: "$wallet.address.com/test-4",
-    },
-  ];
+  };
+  let title: string = "";
+  let author: string = "";
+  let contact: string = "";
+  let demographic: string = "";
+  let genre: string = "";
+  let tags: string = "";
+  let discord_group_id: string = "";
+  let synopsis: string = "";
+  let contributors: {
+    [id: string]: {
+      name?: string;
+      email?: string;
+      paymentPointer?: string;
+    };
+  } = {};
+
+  $: snap = dataSnapshot;
+  function getDataStructure() {
+    return {
+      title: title,
+      author: author,
+      demographic: demographic,
+      contact: contact,
+      genre: genre,
+      tags: tags,
+      discord_group_id: discord_group_id,
+      // contributors: contributorsSnaphsot,
+    };
+  }
+
+  onMount(async () => {
+    [dataSnapshot, synopsisSnapshot, contributorsSnaphsot] = await Promise.all([
+      (await getDataFromFile(`${novel}/info`)).data,
+      (await getDataFromFile(`${novel}/synopsis`)).data,
+      (await getDataFromFile(`${novel}/contributorsConfig`)).data,
+    ]);
+    title = dataSnapshot.title;
+    author = dataSnapshot.author;
+    demographic = dataSnapshot.demographic;
+    contact = dataSnapshot.contact;
+    genre = dataSnapshot.genre;
+    tags = dataSnapshot.tags;
+    discord_group_id = dataSnapshot.discord_group_id;
+    synopsis = synopsisSnapshot;
+    contributors = contributorsSnaphsot;
+  });
+
+  $: canSubmit = () => {
+    return !(deepEqual(dataSnapshot, getDataStructure()) && deepEqual(synopsisSnapshot, synopsis));
+  };
+
+  function saveData() {
+    saveDataForFile(`${novel}/info`, getDataStructure());
+    saveDataForFile(`${novel}/synopsis`, synopsis);
+  }
+
+  $: console.log(contributors);
 </script>
 
 <h1>{novel}</h1>
+<div class="flex">
+  <label for="novel-title">Site title</label>
+  <input
+    bind:value={title}
+    placeholder="My Awesome Novel"
+    type="text"
+    name="novel-title"
+    id="novel-title"
+  />
+  <label for="author">Author</label>
+  <input bind:value={author} placeholder="My Awesome Novel" type="text" name="author" id="author" />
+  <label for="demographic">Demographic</label>
+  <input
+    bind:value={demographic}
+    placeholder="Shounen / Young Adult"
+    type="text"
+    name="demographic"
+    id="demographic"
+  />
+  <label for="genre">Genre</label>
+  <input
+    bind:value={genre}
+    placeholder="fantasy, drama, comedy"
+    type="text"
+    name="genre"
+    id="genre"
+  />
+  <label for="tags">Tags</label>
+  <input
+    bind:value={tags}
+    placeholder="demo novel, translated novel, web novel"
+    type="text"
+    name="tags"
+    id="tags"
+  />
+  <label for="contact">Contact</label>
+  <input
+    bind:value={contact}
+    placeholder="author@example.com"
+    type="text"
+    name="contact"
+    id="contact"
+  />
+  <label for="discord-group-id">Discord Group ID</label>
+  <input
+    bind:value={discord_group_id}
+    placeholder="888472524xxxxx"
+    type="number"
+    name="discord-group-id"
+    id="discord-group-id"
+  />
+  <label for="synopsis">Synopsis</label>
+  <div bind:innerHTML={synopsis} contenteditable="true" id="synopsis" />
 
-<label for="site-title">Site title</label>
-<input placeholder="My Great ProgNovel Site" type="text" name="site-title" id="site-title" />
-<label for="contact">Contact email</label>
-<input placeholder="admin@example.com" type="text" name="contact" id="contact" />
-<label for="disqus-id">Disqus Shortname ID</label>
-<input placeholder="my-disqus-channel" type="text" name="disqus-id" id="disqus-id" />
-<label for="image-resizer-service">Image resizer service</label>
-<input
-  placeholder="https://www.example-image-resizer.com"
-  type="text"
-  name="image-resizer-service"
-  id="image-resizer-service"
-/>
-
+  <button class="submit" disabled={!canSubmit()} on:click={saveData}>
+    <Icon icon={faSave} color="var(--body-text-color)" size="1.5em" paddingBottom="4px" /> Save</button
+  >
+</div>
 <h2>Contributors</h2>
 <article>
   <em
@@ -58,16 +150,30 @@
     through revenue share from Web Monetization subscriptions built-in into ProgNovel.
   </em>
   <div class="grid">
-    {#each contributors as { name, email, paymentPointer }}
+    {#each Object.keys(contributors) as id}
       <section>
-        {name}
-        <em>{paymentPointer}</em>
+        {contributors[id].name}
+        <em>{contributors[id].paymentPointer}</em>
       </section>
     {/each}
   </div>
 </article>
 
+<pre>{snap}</pre>
+
 <style lang="scss">
+  .flex {
+    display: flex;
+    flex-direction: column;
+    max-width: 30em;
+
+    #synopsis {
+      min-height: 20em;
+      border-radius: 2px;
+      background-color: #fff3;
+    }
+  }
+
   article {
     max-width: 76em;
 

@@ -9,9 +9,9 @@
   import Icon from "components/Icon.svelte";
   import { path } from "src/store/states";
 
-  let novels = ["yashura-legacy"];
+  let novels = ["wadaw"];
   let novelsData = {
-    "yashura-legacy": {
+    wadaw: {
       title: "Yashura Legacy",
       cover: "publish/yashura-legacy/cover-64.webp",
     },
