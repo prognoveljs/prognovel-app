@@ -9,13 +9,15 @@
 <script lang="ts">
   import { faSave } from "@fortawesome/free-solid-svg-icons";
   import Icon from "components/Icon.svelte";
-  import { onMount } from "svelte";
-  import { getDataFromFile } from "utils/admin";
+  import { isBrowser } from "src/store/states";
+  import { onMount, tick } from "svelte";
+  import { getDataFromFile, isGUIWebSocketReady } from "utils/admin";
   import { saveDataForFile } from "utils/admin/data";
+  import { adminPageData, isAdminGUIConnected } from "utils/admin/_store";
   import { deepEqual } from "utils/misc";
 
   export let novel;
-  $: novelTitle = novel;
+  $: novelTitle = $adminPageData?.[novel]?.title || novel;
 
   let dataSnapshot = {};
   let synopsisSnapshot = "";
@@ -56,11 +58,15 @@
   }
 
   onMount(async () => {
-    [dataSnapshot, synopsisSnapshot, contributorsSnaphsot] = await Promise.all([
-      (await getDataFromFile(`${novel}/info`)).data,
-      (await getDataFromFile(`${novel}/synopsis`)).data,
-      (await getDataFromFile(`${novel}/contributorsConfig`)).data,
+    await isGUIWebSocketReady;
+    const [data_snapshot, synospsis_snapshot, contributors_snapshot] = await Promise.all([
+      getDataFromFile(`${novel}/info`),
+      getDataFromFile(`${novel}/synopsis`),
+      getDataFromFile(`${novel}/contributorsConfig`),
     ]);
+    dataSnapshot = data_snapshot.data;
+    synopsisSnapshot = synospsis_snapshot.data;
+    contributorsSnaphsot = contributors_snapshot.data;
     title = dataSnapshot.title;
     author = dataSnapshot.author;
     demographic = dataSnapshot.demographic;
@@ -80,11 +86,9 @@
     saveDataForFile(`${novel}/info`, getDataStructure());
     saveDataForFile(`${novel}/synopsis`, synopsis);
   }
-
-  $: console.log(contributors);
 </script>
 
-<h1>{novel}</h1>
+<h1>{novelTitle}</h1>
 <div class="flex">
   <label for="novel-title">Site title</label>
   <input

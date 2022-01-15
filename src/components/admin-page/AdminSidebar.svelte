@@ -8,14 +8,10 @@
   } from "@fortawesome/free-solid-svg-icons";
   import Icon from "components/Icon.svelte";
   import { path } from "src/store/states";
+  import { adminPageData } from "utils/admin/_store";
 
-  let novels = ["wadaw"];
-  let novelsData = {
-    wadaw: {
-      title: "Yashura Legacy",
-      cover: "publish/yashura-legacy/cover-64.webp",
-    },
-  };
+  $: novels = Object.keys($adminPageData);
+  $: novelsData = $adminPageData || {};
 
   const navLink = [
     {
