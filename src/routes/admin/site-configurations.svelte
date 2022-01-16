@@ -4,6 +4,7 @@
   import { onMount } from "svelte";
   import { getDataFromFile } from "utils/admin";
   import { saveDataForFile } from "utils/admin/data";
+  import { adminSiteData } from "utils/admin/_store";
   import { deepEqual } from "utils/misc";
 
   let dataSnapshot = {
@@ -22,21 +23,32 @@
     return !deepEqual(dataSnapshot, getDataStructure());
   };
 
-  function getDataStructure() {
+  $: getDataStructure = () => {
     return {
-      site_title: site_title,
-      contact: contact,
-      disqus_id: disqus_id,
-      image_resizer_service: image_resizer_service,
+      site_title: site_title || "",
+      contact: contact || "",
+      disqus_id: disqus_id || "",
+      image_resizer_service: image_resizer_service || "",
     };
-  }
+  };
 
   function saveData() {
     saveDataForFile("settings", getDataStructure());
+    dataSnapshot = getDataStructure();
   }
 
   onMount(async () => {
-    dataSnapshot = (await getDataFromFile("settings")).data;
+    dataSnapshot = await new Promise(async (resolve) => {
+      while (JSON.stringify($adminSiteData) === "{}") {
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+      resolve({
+        site_title: $adminSiteData.site_title || "",
+        contact: $adminSiteData.contact || "",
+        disqus_id: $adminSiteData.disqus_id || "",
+        image_resizer_service: $adminSiteData.image_resizer_service || "",
+      });
+    });
     site_title = dataSnapshot["site_title"];
     contact = dataSnapshot["contact"];
     disqus_id = dataSnapshot["disqus_id"];

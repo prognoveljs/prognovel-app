@@ -13,15 +13,15 @@
   import { onMount, tick } from "svelte";
   import { getDataFromFile, isGUIWebSocketReady } from "utils/admin";
   import { saveDataForFile } from "utils/admin/data";
-  import { adminPageData, isAdminGUIConnected } from "utils/admin/_store";
+  import { adminNovelsData, isAdminGUIConnected } from "utils/admin/_store";
   import { deepEqual } from "utils/misc";
 
   export let novel;
-  $: novelTitle = $adminPageData?.[novel]?.title || novel;
+  $: novelTitle = $adminNovelsData?.[novel]?.title || novel;
 
   let dataSnapshot = {};
   let synopsisSnapshot = "";
-  let contributorsSnaphsot = {
+  let contributorsSnapshot = {
     mm: {
       name: "--",
       paymentPointer: "--",
@@ -44,18 +44,18 @@
   } = {};
 
   $: snap = dataSnapshot;
-  function getDataStructure() {
+  $: getDataStructure = () => {
     return {
-      title: title,
-      author: author,
-      demographic: demographic,
-      contact: contact,
-      genre: genre,
-      tags: tags,
-      discord_group_id: discord_group_id,
+      title: title || "",
+      author: author || "",
+      demographic: demographic || "",
+      contact: contact || "",
+      genre: genre || "",
+      tags: tags || "",
+      discord_group_id: discord_group_id || "",
       // contributors: contributorsSnaphsot,
     };
-  }
+  };
 
   onMount(async () => {
     await isGUIWebSocketReady;
@@ -64,18 +64,26 @@
       getDataFromFile(`${novel}/synopsis`),
       getDataFromFile(`${novel}/contributorsConfig`),
     ]);
-    dataSnapshot = data_snapshot.data;
+    dataSnapshot = {
+      title: data_snapshot?.data?.title || "",
+      author: data_snapshot?.data?.author || "",
+      demographic: data_snapshot?.data?.demographic || "",
+      contact: data_snapshot?.data?.contact || "",
+      genre: data_snapshot?.data?.genre || "",
+      tags: data_snapshot?.data?.tags || "",
+      discord_group_id: data_snapshot.data.discord_group_id || "",
+    };
     synopsisSnapshot = synospsis_snapshot.data;
-    contributorsSnaphsot = contributors_snapshot.data;
-    title = dataSnapshot.title;
-    author = dataSnapshot.author;
-    demographic = dataSnapshot.demographic;
-    contact = dataSnapshot.contact;
-    genre = dataSnapshot.genre;
-    tags = dataSnapshot.tags;
-    discord_group_id = dataSnapshot.discord_group_id;
-    synopsis = synopsisSnapshot;
-    contributors = contributorsSnaphsot;
+    contributorsSnapshot = contributors_snapshot.data;
+    title = dataSnapshot.title || "";
+    author = dataSnapshot.author || "";
+    demographic = dataSnapshot.demographic || "";
+    contact = dataSnapshot.contact || "";
+    genre = dataSnapshot.genre || "";
+    tags = dataSnapshot.tags || "";
+    discord_group_id = dataSnapshot.discord_group_id || "";
+    synopsis = synopsisSnapshot || "";
+    contributors = contributorsSnapshot || {};
   });
 
   $: canSubmit = () => {
@@ -90,7 +98,7 @@
 
 <h1>{novelTitle}</h1>
 <div class="flex">
-  <label for="novel-title">Site title</label>
+  <label for="novel-title">Novel title</label>
   <input
     bind:value={title}
     placeholder="My Awesome Novel"
@@ -147,6 +155,7 @@
     <Icon icon={faSave} color="var(--body-text-color)" size="1.5em" paddingBottom="4px" /> Save</button
   >
 </div>
+
 <h2>Contributors</h2>
 <article>
   <em
@@ -162,8 +171,6 @@
     {/each}
   </div>
 </article>
-
-<pre>{snap}</pre>
 
 <style lang="scss">
   .flex {

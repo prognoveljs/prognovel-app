@@ -1,6 +1,6 @@
 import { get as getStore } from "svelte/store";
 import { ws } from ".";
-import { adminPageData } from "./_store";
+import { adminNovelsData, adminSiteData } from "./_store";
 
 export const dataQueue = {};
 const fetchEvent = new EventTarget();
@@ -37,10 +37,14 @@ export async function saveDataForFile(fileName: string, data: any) {
     }),
   );
   if (fileName.split("/")[1] === "info") {
-    const d = getStore(adminPageData);
+    const d = getStore(adminNovelsData);
     const novel = fileName.split("/")[0];
     d[novel] = { ...d[novel], ...data };
-    adminPageData.set(d);
+    adminNovelsData.set(d);
+  }
+  if (fileName === "settings") {
+    const d = getStore(adminSiteData);
+    adminSiteData.set({ ...d, ...data });
   }
 }
 
@@ -49,7 +53,8 @@ export function listenPullData(ws: WebSocket) {
     try {
       const data = JSON.parse(ev.data);
       if (data.type === "PULLDATA") {
-        adminPageData.set(data.data);
+        adminNovelsData.set(data.data.novelsMetadata);
+        adminSiteData.set(data.data.siteMetadata);
       } else if (data.type === "FETCH") {
         console.log("halo FETCH", data.file);
         const ev = new Event(data.file);

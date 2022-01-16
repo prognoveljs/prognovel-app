@@ -8,10 +8,10 @@
   } from "@fortawesome/free-solid-svg-icons";
   import Icon from "components/Icon.svelte";
   import { path } from "src/store/states";
-  import { adminPageData } from "utils/admin/_store";
+  import { adminNovelsData } from "utils/admin/_store";
 
-  $: novels = Object.keys($adminPageData);
-  $: novelsData = $adminPageData || {};
+  $: novels = Object.keys($adminNovelsData);
+  $: novelsData = $adminNovelsData || {};
 
   const navLink = [
     {
