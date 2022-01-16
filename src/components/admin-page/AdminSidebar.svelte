@@ -1,17 +1,24 @@
 <script lang="ts">
   import {
     faBookmark,
+    faCloudUploadAlt,
+    faCogs,
     faMoneyBillAlt,
     faPalette,
+    faPlus,
     faStar,
     faTools,
   } from "@fortawesome/free-solid-svg-icons";
   import Icon from "components/Icon.svelte";
+  import Modal from "components/Modal.svelte";
   import { path } from "src/store/states";
+  import { createNovel } from "utils/admin/novel";
   import { adminNovelsData } from "utils/admin/_store";
 
   $: novels = Object.keys($adminNovelsData);
   $: novelsData = $adminNovelsData || {};
+  let newNovelTitle = null;
+  $: validNovelTitle = newNovelTitle && /^[0-9A-Za-z\-]+$/.test(newNovelTitle);
 
   const navLink = [
     {
@@ -54,14 +61,17 @@
       {link.label}</a
     >
   {/each}
-  <strong>Novels</strong>
-  {#each novelNavLink as link}
+  <div class="novel-header">
+    <strong>Novels </strong>
+    <button on:click={() => (newNovelTitle = "")}><Icon icon={faPlus} /></button>
+  </div>
+  <!-- {#each novelNavLink as link}
     <a href={link.href} class:selected={$path.includes(link.href)}>
       <Icon icon={link.icon} />
       {link.label}</a
     >
   {/each}
-  <hr />
+  <hr /> -->
   {#each novels as novel}
     <a class:selected={$path.includes("admin/novel/" + novel)} href="admin/novel/{novel}">
       <img
@@ -71,9 +81,39 @@
       {((novelsData || {})[novel] || {}).title || "--"}</a
     >
   {/each}
+
+  <hr />
+
+  {#if novels.length}
+    <button class="btn-build">
+      <Icon icon={faCogs} size="2em" marginRight=".5em" />
+      BUILD CONTENT</button
+    >
+    <button class="btn-publish">
+      <Icon icon={faCloudUploadAlt} size="2em" marginRight=".5em" />
+      PUBLISH CONTENT</button
+    >
+  {/if}
+
+  <Modal showModal={newNovelTitle !== null} on:close={() => (newNovelTitle = null)}>
+    <div class="new-novel-flex">
+      <strong>Enter ID for your new novel</strong>
+      <em>only digits, characters, and dash (-) allowed</em>
+      <input bind:value={newNovelTitle} type="text" name="new-novel" id="new-novel" />
+      <button
+        on:click={() => {
+          createNovel(newNovelTitle);
+          newNovelTitle = null;
+        }}
+        disabled={!validNovelTitle}
+        class="submit">Create novel</button
+      >
+    </div>
+  </Modal>
 </section>
 
 <style lang="scss">
+  $section-header-margin-top: 1.5em;
   section {
     background-color: #0002;
     min-height: 100%;
@@ -85,7 +125,7 @@
     }
 
     strong {
-      margin-top: 1.5em;
+      margin-top: $section-header-margin-top;
       font-size: 1.15em;
       position: relative;
 
@@ -173,7 +213,79 @@
     hr {
       width: 5em;
       border-color: #fff6;
-      margin: 0.5em 0 1em;
+      margin: 1em 0 1.5em;
+    }
+
+    .novel-header {
+      margin-top: $section-header-margin-top;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      strong {
+        margin: 0;
+      }
+      button {
+        background-color: hsla(#{$hsl}, 0.1);
+        outline: none;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        user-select: none;
+        padding: 4px 6px;
+
+        &:hover {
+          background-color: hsla(#{$hsl}, 0.3);
+        }
+      }
+    }
+
+    .btn-build,
+    .btn-publish {
+      display: block;
+      padding: 0.5em;
+      width: 100%;
+      font-weight: 700;
+      margin-bottom: 0.5em;
+      color: #fff;
+      border-radius: 4px;
+      outline: none;
+      border: none;
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .btn-build {
+      background-color: orange;
+    }
+    .btn-publish {
+      background-color: green;
+    }
+  }
+
+  :global(.new-novel-flex) {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    strong {
+      margin-bottom: 0;
+    }
+
+    em {
+      margin-top: -4px;
+      opacity: 0.7;
+      font-weight: 300;
+    }
+
+    input {
+      padding: 4px;
+    }
+
+    button {
+      align-self: end;
     }
   }
 </style>
