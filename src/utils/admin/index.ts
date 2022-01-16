@@ -1,5 +1,5 @@
-import { isAdminGUIConnected } from "./_store";
 import { listenPullData } from "./data";
+import { isAdminGUIConnected } from "./_store";
 
 const WEB_SOCKET_PORT = 6060;
 export let ws: WebSocket;
@@ -9,10 +9,7 @@ export async function initializeAdminGUI() {
   ws = new WebSocket(`ws://127.0.0.1:${WEB_SOCKET_PORT}`);
 
   listenPullData(ws);
-  ws.onopen = (event) => {
-    isAdminGUIConnected.set(true);
-    isGUIWebSocketReady = Promise.resolve("");
-  };
+  ws.onopen = (event) => {};
 
   ws.onclose = async (event) => {
     isAdminGUIConnected.set(false);
@@ -23,6 +20,10 @@ export async function initializeAdminGUI() {
 
 export function destroyAdminGUI() {
   if (ws && !ws.CLOSED) ws.close();
+}
+
+export function finishConnecting() {
+  isGUIWebSocketReady = Promise.resolve("");
 }
 
 export { getDataFromFile } from "./data";

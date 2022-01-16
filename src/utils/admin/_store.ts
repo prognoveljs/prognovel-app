@@ -7,3 +7,4 @@ export const adminSiteData: Writable<SiteMetadata | {}> = writable({});
 export const activeNovels: Readable<string[]> = derived([adminSiteData], ([data]) => {
   return "novels" in data ? (data.novels as string[]) : [];
 });
+export const adminPageErrors: Writable<any> = writable([]);

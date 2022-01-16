@@ -10,14 +10,14 @@
   import { faSave } from "@fortawesome/free-solid-svg-icons";
   import Icon from "components/Icon.svelte";
   import { isBrowser } from "src/store/states";
-  import { onMount, tick } from "svelte";
   import { getDataFromFile, isGUIWebSocketReady } from "utils/admin";
   import { saveDataForFile } from "utils/admin/data";
-  import { adminNovelsData, isAdminGUIConnected } from "utils/admin/_store";
+  import { activeNovels, adminNovelsData, isAdminGUIConnected } from "utils/admin/_store";
   import { deepEqual } from "utils/misc";
 
   export let novel;
   $: novelTitle = $adminNovelsData?.[novel]?.title || novel;
+  let isActive;
 
   let dataSnapshot = {};
   let synopsisSnapshot = "";
@@ -43,7 +43,6 @@
     };
   } = {};
 
-  $: snap = dataSnapshot;
   $: getDataStructure = () => {
     return {
       title: title || "",
@@ -57,7 +56,8 @@
     };
   };
 
-  onMount(async () => {
+  $: if (isBrowser && novel) onStart();
+  async function onStart() {
     await isGUIWebSocketReady;
     const [data_snapshot, synospsis_snapshot, contributors_snapshot] = await Promise.all([
       getDataFromFile(`${novel}/info`),
@@ -84,7 +84,12 @@
     discord_group_id = dataSnapshot.discord_group_id || "";
     synopsis = synopsisSnapshot || "";
     contributors = contributorsSnapshot || {};
-  });
+
+    (async () => {
+      await isGUIWebSocketReady;
+      isActive = $activeNovels.includes(novel);
+    })();
+  }
 
   $: canSubmit = () => {
     return !(deepEqual(dataSnapshot, getDataStructure()) && deepEqual(synopsisSnapshot, synopsis));
@@ -93,10 +98,29 @@
   function saveData() {
     saveDataForFile(`${novel}/info`, getDataStructure());
     saveDataForFile(`${novel}/synopsis`, synopsis);
+    dataSnapshot = getDataStructure();
+    synopsisSnapshot = synopsis;
+  }
+
+  function changeActiveState() {
+    const novels = isActive
+      ? [...new Set([...$activeNovels, novel])]
+      : $activeNovels.filter((n) => n !== novel);
+    saveDataForFile("settings", {
+      novels,
+    });
   }
 </script>
 
 <h1>{novelTitle}</h1>
+<strong> Enable novel: </strong>
+<input
+  bind:checked={isActive}
+  on:change={changeActiveState}
+  type="checkbox"
+  name="active-novel"
+  id="active-novel"
+/>
 <div class="flex">
   <label for="novel-title">Novel title</label>
   <input

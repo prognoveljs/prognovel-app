@@ -13,7 +13,8 @@
   import Modal from "components/Modal.svelte";
   import { path } from "src/store/states";
   import { createNovel } from "utils/admin/novel";
-  import { adminNovelsData } from "utils/admin/_store";
+  import { runTask } from "utils/admin/utils";
+  import { activeNovels, adminNovelsData } from "utils/admin/_store";
 
   $: novels = Object.keys($adminNovelsData);
   $: novelsData = $adminNovelsData || {};
@@ -73,7 +74,11 @@
   {/each}
   <hr /> -->
   {#each novels as novel}
-    <a class:selected={$path.includes("admin/novel/" + novel)} href="admin/novel/{novel}">
+    <a
+      class:disabled={!$activeNovels.includes(novel)}
+      class:selected={$path.includes("admin/novel/" + novel)}
+      href="admin/novel/{novel}"
+    >
       <img
         src={((novelsData || {})[novel] || {}).cover}
         alt={((novelsData || {})[novel] || {}).title}
@@ -85,12 +90,22 @@
   <hr />
 
   {#if novels.length}
-    <button class="btn-build">
-      <Icon icon={faCogs} size="2em" marginRight=".5em" />
+    <button disabled={!$activeNovels.length} class="btn-build" on:click={() => runTask("build")}>
+      <Icon icon={faCogs} size="1.4em" marginRight=".75em" marginLeft=".25em" paddingBottom="2px" />
       BUILD CONTENT</button
     >
-    <button class="btn-publish">
-      <Icon icon={faCloudUploadAlt} size="2em" marginRight=".5em" />
+    <button
+      disabled={!$activeNovels.length}
+      class="btn-publish"
+      on:click={() => runTask("publish")}
+    >
+      <Icon
+        icon={faCloudUploadAlt}
+        size="1.4em"
+        marginRight=".75em"
+        marginLeft=".25em"
+        paddingBottom="4px"
+      />
       PUBLISH CONTENT</button
     >
   {/if}
@@ -156,6 +171,11 @@
       display: flex;
       align-items: center;
       overflow: hidden;
+
+      &.disabled {
+        filter: grayscale(0.4);
+        opacity: 0.6;
+      }
 
       img {
         height: 2.5em;
@@ -255,13 +275,19 @@
       align-items: center;
       cursor: pointer;
       user-select: none;
+
+      &[disabled] {
+        opacity: 0.6;
+        filter: grayscale(0.4);
+        cursor: auto;
+      }
     }
 
     .btn-build {
-      background-color: orange;
+      background-color: #e67e22;
     }
     .btn-publish {
-      background-color: green;
+      background-color: #27ae60;
     }
   }
 

@@ -1,6 +1,6 @@
 import { get as getStore } from "svelte/store";
-import { ws } from ".";
-import { adminNovelsData, adminSiteData } from "./_store";
+import { finishConnecting, ws } from ".";
+import { adminNovelsData, adminPageErrors, adminSiteData, isAdminGUIConnected } from "./_store";
 
 export const dataQueue = {};
 const fetchEvent = new EventTarget();
@@ -55,17 +55,17 @@ export function listenPullData(ws: WebSocket) {
       if (data.type === "PULLDATA") {
         adminNovelsData.set(data.data.novelsMetadata);
         adminSiteData.set(data.data.siteMetadata);
+        isAdminGUIConnected.set(true);
+        finishConnecting();
       } else if (data.type === "FETCH") {
         console.log("halo FETCH", data.file);
         const ev = new Event(data.file);
         ev.data = data;
         fetchEvent.dispatchEvent(ev);
-        // dataQueue[data.file] = Promise.resolve({
-        //   type: data.type,
-        //   file: data.file,
-        //   data: data.data,
-        // });
-        // console.log(data.file, dataQueue[data.file]);
+      } else if (data.type === "COMMANDERROR") {
+        adminPageErrors.update((errors) => {
+          return [...errors, data];
+        });
       }
     } catch (error) {}
   });
