@@ -2,7 +2,6 @@
   import { faSave } from "@fortawesome/free-solid-svg-icons";
   import Icon from "components/Icon.svelte";
   import { onMount } from "svelte";
-  import { getDataFromFile } from "utils/admin";
   import { saveDataForFile } from "utils/admin/data";
   import { adminSiteData } from "utils/admin/_store";
   import { deepEqual } from "utils/misc";

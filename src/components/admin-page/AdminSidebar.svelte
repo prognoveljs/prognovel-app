@@ -18,7 +18,7 @@
   $: novels = Object.keys($adminNovelsData);
   $: novelsData = $adminNovelsData || {};
   let newNovelTitle = null;
-  $: validNovelTitle = newNovelTitle && /^[0-9A-Za-z\-]+$/.test(newNovelTitle);
+  $: validNovelTitle = newNovelTitle && /^[0-9a-z\-]+$/.test(newNovelTitle);
 
   const navLink = [
     {
@@ -98,7 +98,7 @@
   <Modal showModal={newNovelTitle !== null} on:close={() => (newNovelTitle = null)}>
     <div class="new-novel-flex">
       <strong>Enter ID for your new novel</strong>
-      <em>only digits, characters, and dash (-) allowed</em>
+      <em>only digits, lowcase letters, and dash (-) allowed</em>
       <input bind:value={newNovelTitle} type="text" name="new-novel" id="new-novel" />
       <button
         on:click={() => {
