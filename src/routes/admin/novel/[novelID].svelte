@@ -113,7 +113,7 @@
 </script>
 
 <h1>{novelTitle}</h1>
-<strong> Enable novel: </strong>
+<strong>Publish novel: </strong>
 <input
   bind:checked={isActive}
   on:change={changeActiveState}
@@ -180,7 +180,17 @@
   >
 </div>
 
-<h2>Contributors</h2>
+<h2>Chapters (WIP)</h2>
+<p>
+  Feature to edit chapters in admin dashboard is under construction. In the meantime, you can create
+  and edit chapter markdown files manually. Please read <a
+    href="https://github.com/prognoveljs/prognovel-cli"
+  >
+    this instruction</a
+  > to do so.
+</p>
+
+<h2>Contributors (WIP)</h2>
 <article>
   <em
     >List the name of all contributors of {novelTitle} here. Their works will be reimbursed in real-time
@@ -209,6 +219,14 @@
     }
   }
 
+  p {
+    max-width: 36em;
+
+    a {
+      color: var(--primary-color-lighten-2);
+    }
+  }
+
   article {
     max-width: 76em;
 
@@ -222,7 +240,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1em;
-      section {
+      opacity: 0.6 section {
         padding: 24px;
         border-radius: 4px;
         box-shadow: 0 2px 8px #0003;

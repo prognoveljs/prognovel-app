@@ -5,11 +5,7 @@
 </script>
 
 <section>
-  {#if workingDirectory}
-    ...
-  {:else}
-    <DashboardEmpty />
-  {/if}
+  <h1>Welcome</h1>
 </section>
 
 <style lang="scss">

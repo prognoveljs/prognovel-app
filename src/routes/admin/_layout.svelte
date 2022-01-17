@@ -1,4 +1,5 @@
 <script lang="ts">
+  import AdminPageNotConnected from "components/admin-page/AdminPageNotConnected.svelte";
   import AdminSidebar from "components/admin-page/AdminSidebar.svelte";
   import { onDestroy, onMount } from "svelte";
   import { destroyAdminGUI, initializeAdminGUI } from "utils/admin";
@@ -20,7 +21,7 @@
     {#if $isAdminGUIConnected}
       <slot />
     {:else}
-      OI! Connect ProgNovel GUI first!
+      <AdminPageNotConnected />
     {/if}
   </section>
 </article>

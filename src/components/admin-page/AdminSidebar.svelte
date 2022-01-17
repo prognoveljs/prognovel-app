@@ -2,10 +2,12 @@
   import {
     faBookmark,
     faCloudUploadAlt,
+    faCog,
     faCogs,
     faMoneyBillAlt,
     faPalette,
     faPlus,
+    faScrewdriver,
     faStar,
     faTools,
   } from "@fortawesome/free-solid-svg-icons";
@@ -14,7 +16,7 @@
   import { path } from "src/store/states";
   import { createNovel } from "utils/admin/novel";
   import { runTask } from "utils/admin/utils";
-  import { activeNovels, adminNovelsData } from "utils/admin/_store";
+  import { activeNovels, adminNovelsData, isAdminGUIConnected } from "utils/admin/_store";
 
   $: novels = Object.keys($adminNovelsData);
   $: novelsData = $adminNovelsData || {};
@@ -24,13 +26,8 @@
   const navLink = [
     {
       label: "Site configurations",
-      icon: faTools,
+      icon: faCog,
       href: "admin/site-configurations",
-    },
-    {
-      label: "Themes and layout",
-      icon: faPalette,
-      href: "admin/themes-and-layout",
     },
     {
       label: "Memberships and patrons",
@@ -41,6 +38,16 @@
       label: "Revenue share",
       icon: faMoneyBillAlt,
       href: "admin/revenue-share",
+    },
+    {
+      label: "Themes and layout",
+      icon: faPalette,
+      href: "admin/themes-and-layout",
+    },
+    {
+      label: "Plugins",
+      icon: faTools,
+      href: "admin/plugins",
     },
   ];
 
@@ -64,7 +71,9 @@
   {/each}
   <div class="novel-header">
     <strong>Novels </strong>
-    <button on:click={() => (newNovelTitle = "")}><Icon icon={faPlus} /></button>
+    {#if $isAdminGUIConnected}
+      <button on:click={() => (newNovelTitle = "")}><Icon icon={faPlus} /></button>
+    {/if}
   </div>
   <!-- {#each novelNavLink as link}
     <a href={link.href} class:selected={$path.includes(link.href)}>
