@@ -5,19 +5,20 @@ const siteMetadata = require("../../../.cache/assets/publish/sitemetadata.json")
 const { backend_api } = siteMetadata;
 const buildFolder = "__sapper__/export";
 
-const BACKEND_API = process.env.BACKEND_API;
+let BACKEND_API = process.env.BACKEND_API || "";
 
 console.log("ENV Netlify", process.env.NETLIFY);
 
 const redirectsFile = join(buildFolder, "_redirects");
 
+if (BACKEND_API.endsWith("/")) BACKEND_API.slice(0, -1);
 // const redirectsContent = readFileSync(redirectsFile, "utf-8");
 
 writeFileSync(
   redirectsFile,
   `${process.env.NETLIFY ? "/read/* /read?load=:splat" : "/read/:slug /read?load=:slug"}
-/feed/* ${new URL(BACKEND_API).href}feed?novel=:splat 200
-/chapter-list/* ${new URL(BACKEND_API).href}chapter-list?novel=:splat 200
+/feed/* ${BACKEND_API}feed?novel=:splat 200
+/chapter-list/* ${BACKEND_API}chapter-list?novel=:splat 200
 `,
   "utf-8",
 );

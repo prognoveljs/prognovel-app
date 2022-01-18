@@ -31,13 +31,7 @@
       <button on:click={() => ($newNovelTitle = "")}><Icon icon={faPlus} /></button>
     {/if}
   </div>
-  <!-- {#each novelNavLink as link}
-    <a href={link.href} class:selected={$path.includes(link.href)}>
-      <Icon icon={link.icon} />
-      {link.label}</a
-    >
-  {/each}
-  <hr /> -->
+
   {#each novels as novel}
     <a
       class:disabled={!$activeNovels.includes(novel)}

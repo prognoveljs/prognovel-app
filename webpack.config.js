@@ -1,6 +1,6 @@
+require("dotenv").config();
 const config = require("sapper/config/webpack.js");
 const pkg = require("./package.json");
-require("dotenv").config();
 let preprocess;
 try {
   preprocess = require("./svelte.config").preprocess;
