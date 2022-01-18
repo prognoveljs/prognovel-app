@@ -1,5 +1,5 @@
 import { derived, writable, Writable, Readable } from "svelte/store";
-import { SiteMetadata } from "typings";
+import type { SiteMetadata } from "typings";
 
 export const isAdminGUIConnected: Writable<boolean> = writable(false);
 export const adminNovelsData: Writable<any> = writable({});
