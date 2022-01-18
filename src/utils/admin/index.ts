@@ -13,7 +13,6 @@ export async function initializeAdminGUI() {
   ws = new WebSocket(`ws://127.0.0.1:${WEB_SOCKET_PORT}`);
 
   listenWS(ws);
-  ws.onopen = (event) => {};
 
   ws.onclose = async (event) => {
     isAdminGUIConnected.set(false);
