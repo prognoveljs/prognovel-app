@@ -113,6 +113,7 @@
 </script>
 
 <h1>{novelTitle}</h1>
+<strong>Novel ID:</strong> <em>{novel}</em><br />
 <strong>Publish novel: </strong>
 <input
   bind:checked={isActive}

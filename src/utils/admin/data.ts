@@ -48,7 +48,7 @@ export async function saveDataForFile(fileName: string, data: any) {
   }
 }
 
-export function listenPullData(ws: WebSocket) {
+export function listenWS(ws: WebSocket) {
   ws.addEventListener("message", (ev) => {
     try {
       const data = JSON.parse(ev.data);
@@ -63,8 +63,9 @@ export function listenPullData(ws: WebSocket) {
         ev.data = data;
         fetchEvent.dispatchEvent(ev);
       } else if (data.type === "COMMANDERROR") {
+        console.log(data);
         adminPageErrors.update((errors) => {
-          return [...errors, data];
+          return [...(errors || []), data];
         });
       }
     } catch (error) {}

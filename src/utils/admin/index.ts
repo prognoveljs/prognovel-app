@@ -1,4 +1,4 @@
-import { listenPullData } from "./data";
+import { listenWS } from "./data";
 import { isAdminGUIConnected } from "./_store";
 
 const WEB_SOCKET_PORT = 6060;
@@ -8,7 +8,7 @@ export let isGUIWebSocketReady: Promise<any> = new Promise(() => {});
 export async function initializeAdminGUI() {
   ws = new WebSocket(`ws://127.0.0.1:${WEB_SOCKET_PORT}`);
 
-  listenPullData(ws);
+  listenWS(ws);
   ws.onopen = (event) => {};
 
   ws.onclose = async (event) => {

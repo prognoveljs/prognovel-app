@@ -8,3 +8,4 @@ export const activeNovels: Readable<string[]> = derived([adminSiteData], ([data]
   return "novels" in data ? (data.novels as string[]) : [];
 });
 export const adminPageErrors: Writable<any> = writable([]);
+export const newNovelTitle: Writable<string | null> = writable(null);

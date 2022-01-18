@@ -1,63 +1,19 @@
 <script lang="ts">
-  import {
-    faBookmark,
-    faCloudUploadAlt,
-    faCog,
-    faCogs,
-    faMoneyBillAlt,
-    faPalette,
-    faPlus,
-    faScrewdriver,
-    faStar,
-    faTools,
-  } from "@fortawesome/free-solid-svg-icons";
+  import { faCloudUploadAlt, faCogs, faPlus } from "@fortawesome/free-solid-svg-icons";
   import Icon from "components/Icon.svelte";
-  import Modal from "components/Modal.svelte";
   import { path } from "src/store/states";
-  import { createNovel } from "utils/admin/novel";
-  import { runTask } from "utils/admin/utils";
-  import { activeNovels, adminNovelsData, isAdminGUIConnected } from "utils/admin/_store";
+  import { navLink, novelNavLink, runTask } from "utils/admin/utils";
+  import {
+    activeNovels,
+    adminNovelsData,
+    isAdminGUIConnected,
+    newNovelTitle,
+  } from "utils/admin/_store";
+  import AlertEnv from "./sidebar/AlertENV.svelte";
+  import CreateNewNovel from "./sidebar/CreateNewNovel.svelte";
 
   $: novels = Object.keys($adminNovelsData);
   $: novelsData = $adminNovelsData || {};
-  let newNovelTitle = null;
-  $: validNovelTitle = newNovelTitle && /^[0-9a-z\-]+$/.test(newNovelTitle);
-
-  const navLink = [
-    {
-      label: "Site configurations",
-      icon: faCog,
-      href: "admin/site-configurations",
-    },
-    {
-      label: "Memberships and patrons",
-      icon: faStar,
-      href: "admin/memberships-and-patrons",
-    },
-    {
-      label: "Revenue share",
-      icon: faMoneyBillAlt,
-      href: "admin/revenue-share",
-    },
-    {
-      label: "Themes and layout",
-      icon: faPalette,
-      href: "admin/themes-and-layout",
-    },
-    {
-      label: "Plugins",
-      icon: faTools,
-      href: "admin/plugins",
-    },
-  ];
-
-  const novelNavLink = [
-    {
-      label: "Novel Configurations",
-      icon: faBookmark,
-      href: "admin/novel-configurations",
-    },
-  ];
 </script>
 
 <section>
@@ -72,7 +28,7 @@
   <div class="novel-header">
     <strong>Novels </strong>
     {#if $isAdminGUIConnected}
-      <button on:click={() => (newNovelTitle = "")}><Icon icon={faPlus} /></button>
+      <button on:click={() => ($newNovelTitle = "")}><Icon icon={faPlus} /></button>
     {/if}
   </div>
   <!-- {#each novelNavLink as link}
@@ -119,21 +75,8 @@
     >
   {/if}
 
-  <Modal showModal={newNovelTitle !== null} on:close={() => (newNovelTitle = null)}>
-    <div class="new-novel-flex">
-      <strong>Enter ID for your new novel</strong>
-      <em>only digits, lowcase letters, and dash (-) allowed</em>
-      <input bind:value={newNovelTitle} type="text" name="new-novel" id="new-novel" />
-      <button
-        on:click={() => {
-          createNovel(newNovelTitle);
-          newNovelTitle = null;
-        }}
-        disabled={!validNovelTitle}
-        class="submit">Create novel</button
-      >
-    </div>
-  </Modal>
+  <CreateNewNovel />
+  <AlertEnv />
 </section>
 
 <style lang="scss">
@@ -297,30 +240,6 @@
     }
     .btn-publish {
       background-color: #27ae60;
-    }
-  }
-
-  :global(.new-novel-flex) {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-
-    strong {
-      margin-bottom: 0;
-    }
-
-    em {
-      margin-top: -4px;
-      opacity: 0.7;
-      font-weight: 300;
-    }
-
-    input {
-      padding: 4px;
-    }
-
-    button {
-      align-self: end;
     }
   }
 </style>
