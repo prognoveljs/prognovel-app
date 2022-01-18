@@ -16,8 +16,7 @@
   import { deepEqual } from "utils/misc";
 
   export let novel;
-  // $: novelTitle = $adminNovelsData?.[novel]?.title || novel;
-  $: novelTitle = null;
+  $: novelTitle = $adminNovelsData?.[novel]?.title || novel;
   let isActive;
 
   let dataSnapshot = {};
@@ -59,7 +58,7 @@
 
   $: if (isBrowser && novel) onStart();
   async function onStart() {
-    // await isGUIWebSocketReady;
+    await isGUIWebSocketReady;
     const [data_snapshot, synospsis_snapshot, contributors_snapshot] = await Promise.all([
       getDataFromFile(`${novel}/info`),
       getDataFromFile(`${novel}/synopsis`),
@@ -87,7 +86,7 @@
     contributors = contributorsSnapshot || {};
 
     (async () => {
-      // await isGUIWebSocketReady;
+      await isGUIWebSocketReady;
       isActive = $activeNovels.includes(novel);
     })();
   }
