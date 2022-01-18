@@ -2,7 +2,7 @@
   import SectionHeader from "../body/SectionHeader.svelte";
   import { Slider } from "carbon-components-svelte";
   import { fontWeight, fontSize } from "utils/fonts";
-  import { showAdjustFont } from "src/store/read-page/read-page-state";
+  import { showAdjustFont } from "store/read-page/read-page-state";
   import { MenuState, menuState } from "components/mobile/menu/_store";
 
   export let standalone: boolean = false;

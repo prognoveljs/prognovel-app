@@ -1,7 +1,7 @@
 <script>
   import Icon from "components/Icon.svelte";
   import { faFire } from "@fortawesome/free-solid-svg-icons";
-  import { siteMetadata } from "src/store/states";
+  import { siteMetadata } from "store/states";
   // import { novelUpdatesMock } from "./_mock";
 
   export let grid = "";

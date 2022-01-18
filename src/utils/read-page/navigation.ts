@@ -1,4 +1,4 @@
-import { currentChapterCursor, toc } from "src/store/read-page";
+import { currentChapterCursor, toc } from "store/read-page";
 import { get as getStore } from "svelte/store";
 import { novelsData } from "store/states";
 

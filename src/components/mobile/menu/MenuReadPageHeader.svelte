@@ -3,7 +3,7 @@
   import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
   import Icon from "components/Icon.svelte";
   import { getCoverURLPath, isWEBP } from "utils/images";
-  import { currentNovel, novelsData, path } from "src/store/states";
+  import { currentNovel, novelsData, path } from "store/states";
 
   $: novelTitle = $novelsData?.[$currentNovel]?.title;
   $: backURL = $path.startsWith("/read") ? `novel/${$currentNovel}` : "";

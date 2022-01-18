@@ -2,7 +2,7 @@
   import { revShareUsersLite } from "utils/web-monetization";
   import RevShareUser from "components/web-monetization/RevShareUser.svelte";
   import RevShareUserDetails from "components/web-monetization/RevShareUserDetails.svelte";
-  import { showRevshareStats } from "src/store/novel-page";
+  import { showRevshareStats } from "store/novel-page";
   import { windowLock, windowUnlock } from "utils/window/lock";
   import { fade } from "svelte/transition";
 

@@ -23,9 +23,9 @@
     faListAlt,
     faQuestionCircle,
   } from "@fortawesome/free-solid-svg-icons";
-  import { showDownload } from "src/store/novel-page";
-  import { path, showNovelPageWindow, showReadPageWindow, showSettings } from "src/store/states";
-  import { readPageLink } from "src/store/read-page/read-page-navigation";
+  import { showDownload } from "store/novel-page";
+  import { path, showNovelPageWindow, showReadPageWindow, showSettings } from "store/states";
+  import { readPageLink } from "store/read-page/read-page-navigation";
   $: readPageActive = $showAdjustFont || $showStatsAndOptions || $showTOC || $showComments;
   $: buttonsLength = function () {
     switch ($menuVariance) {

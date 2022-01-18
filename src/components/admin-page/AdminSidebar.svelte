@@ -1,7 +1,7 @@
 <script lang="ts">
   import { faCloudUploadAlt, faCogs, faPlus } from "@fortawesome/free-solid-svg-icons";
   import Icon from "components/Icon.svelte";
-  import { path } from "src/store/states";
+  import { path } from "store/states";
   import { navLink, novelNavLink, runTask } from "utils/admin/utils";
   import {
     activeNovels,

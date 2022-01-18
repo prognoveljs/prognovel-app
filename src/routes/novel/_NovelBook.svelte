@@ -19,8 +19,8 @@
   import Share from "components/novel-page/Share.svelte";
   import Bookmark from "components/novel-page/BookmarkSave.svelte";
   import GenreTags from "components/novel-page/GenreTags.svelte";
-  import { showTOC } from "src/store/read-page/read-page-state";
-  import { showAffiliateReferrer, showRevshareStats } from "src/store/novel-page";
+  import { showTOC } from "store/read-page/read-page-state";
+  import { showAffiliateReferrer, showRevshareStats } from "store/novel-page";
   import DownloadWindow from "components/download/DownloadWindow.svelte";
   import { getContext } from "svelte";
   import type { NovelMetadata } from "typings";

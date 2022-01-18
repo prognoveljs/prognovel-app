@@ -1,7 +1,7 @@
 <script lang="ts">
   import Modal from "components/Modal.svelte";
 
-  import { showAffiliateReferrer } from "src/store/novel-page";
+  import { showAffiliateReferrer } from "store/novel-page";
   import { fade } from "svelte/transition";
   import { isMobileScreen } from "utils/mobile";
 

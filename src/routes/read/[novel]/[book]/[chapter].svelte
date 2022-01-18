@@ -15,7 +15,7 @@
   import Options from "../../_Options.svelte";
   import { currentNovel, novelsData } from "store/states";
   import { fetchNovelMetadata } from "utils/fetch-metadata";
-  import { currentChapter, currentBook, currentContent } from "src/store/read-page";
+  import { currentChapter, currentBook, currentContent } from "store/read-page";
   import { replacePageTitleBookAndChapter } from "utils/read-page/history";
   // import { prefetchNextChapter } from "utils/read-page/fetch-content";
 

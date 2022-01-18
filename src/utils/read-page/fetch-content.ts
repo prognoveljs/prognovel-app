@@ -2,7 +2,7 @@ import { get as getStore } from "svelte/store";
 // import { tick } from "svelte";
 // import { prefetch } from "@sapper/app";
 import { offlineDB } from "utils/offline-reading/db";
-import { chaptersLoaded, chaptersAppended, toc, currentChapterCursor } from "src/store/read-page";
+import { chaptersLoaded, chaptersAppended, toc, currentChapterCursor } from "store/read-page";
 import { getLoadingPlaceholder, getErrorPlaceholder, getChapterUrlFromList } from "./index";
 import { connectionErrorPlaceholder } from "./errors";
 import { currentNovel } from "store/states";
@@ -43,7 +43,11 @@ export async function prefetchNextChapter() {
   // if (next && novel && cursor < tableOfContent.length - 1) prefetch(`read/${novel}/${next}`);
 }
 
-export async function prefetchChapter(novel: string, book: string, chapter: string): Promise<Chapter | null> {
+export async function prefetchChapter(
+  novel: string,
+  book: string,
+  chapter: string,
+): Promise<Chapter | null> {
   let dataLoaded = getStore(chaptersLoaded);
   let thisChapter = `${book}/${chapter}`;
   let data;
@@ -66,7 +70,12 @@ export async function prefetchChapter(novel: string, book: string, chapter: stri
   if (!list.length) return;
   for (const chIndex of list) {
     const [thisBook, thisChapter] = chIndex.split("/");
-    appendChapter(novel, thisBook, thisChapter, getLoadingPlaceholder(novel, thisBook, thisChapter));
+    appendChapter(
+      novel,
+      thisBook,
+      thisChapter,
+      getLoadingPlaceholder(novel, thisBook, thisChapter),
+    );
   }
 
   try {

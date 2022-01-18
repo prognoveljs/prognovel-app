@@ -2,7 +2,7 @@ import { novelsData, siteMetadata } from "store/states";
 import { get as getStore } from "svelte/store";
 import type { NovelsMetadata, SiteMetadata } from "typings";
 import { fetchNovelMetadata } from "utils/fetch-metadata";
-import { toc } from "src/store/read-page";
+import { toc } from "store/read-page";
 import { goto } from "@sapper/app";
 import { getCoverURLPath } from "utils/images";
 

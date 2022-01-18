@@ -1,6 +1,6 @@
 <script lang="ts">
   import BookCover from "components/BookCover.svelte";
-  import { genreFilter } from "src/store/novel-page";
+  import { genreFilter } from "store/novel-page";
   import { novelsData } from "states";
 
   import { siteMetadata } from "store/states";

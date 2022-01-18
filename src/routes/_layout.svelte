@@ -13,7 +13,7 @@
   import { currentNovel, page as currentPage } from "store/states";
   import { updatePaymentPointers } from "utils/web-monetization";
   import ServiceWorkerUpdate from "components/misc/ServiceWorkerUpdate.svelte";
-  import { FORBIDDEN_NOVEL_ID } from "src/store/novel-page";
+  import { FORBIDDEN_NOVEL_ID } from "store/novel-page";
   import Analytics from "components/analytics/Analytics.svelte";
 
   export let segment;

@@ -1,4 +1,4 @@
-import { isBrowser } from "src/store/states";
+import { isBrowser } from "store/states";
 import { listenWS } from "./data";
 import { isAdminGUIConnected } from "./_store";
 
@@ -11,9 +11,7 @@ export let isGUIWebSocketReady: Promise<any> = isBrowser
 
 export async function initializeAdminGUI() {
   ws = new WebSocket(`ws://127.0.0.1:${WEB_SOCKET_PORT}`);
-
   listenWS(ws);
-
   ws.onclose = async (event) => {
     isAdminGUIConnected.set(false);
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -26,7 +24,7 @@ export function destroyAdminGUI() {
 }
 
 export function finishConnecting() {
-  // isGUIWebSocketReady = Promise.resolve("");
+  isGUIWebSocketReady = Promise.resolve("");
 }
 
 export { getDataFromFile } from "./data";

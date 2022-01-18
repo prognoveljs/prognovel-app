@@ -1,5 +1,5 @@
 import { BACKEND_API } from "settings";
-import { chaptersAppended, toc } from "src/store/read-page";
+import { chaptersAppended, toc } from "store/read-page";
 import { get as getStore } from "svelte/store";
 
 export function getSlug(page, options = {}) {
@@ -30,7 +30,12 @@ export function readSlug(slug: string) {
 }
 
 // TODO convert to new API
-export function getChapterUrl(novel: string, book: string, chapter: string, prefetch: number = 0): string {
+export function getChapterUrl(
+  novel: string,
+  book: string,
+  chapter: string,
+  prefetch: number = 0,
+): string {
   let chapterList = getStore(toc) as string[];
   const start = chapterList.findIndex((ch) => ch === `${book}/${chapter}`);
   const end = start + prefetch + 1;

@@ -1,6 +1,6 @@
 <script>
   import Stacks from "components/footer/FooterStacks";
-  import { path } from "src/store/states";
+  import { path } from "store/states";
 
   const COPYRIGHT_YEAR = new Date().getFullYear();
 </script>

@@ -6,7 +6,7 @@
   import { currentNovel, novelsData } from "store/states";
   import { windowLock, windowUnlock } from "utils/window/lock";
   import { isMobileScreen } from "utils/mobile";
-  import { showTOC } from "src/store/read-page/read-page-state";
+  import { showTOC } from "store/read-page/read-page-state";
   import { getCoverURLPath } from "utils/images";
 
   let width = 400;

@@ -1,7 +1,7 @@
 import { downloadProgress, downloadCount, downloadNovel, downloadErrors } from "./store";
 import { get as getStore } from "svelte/store";
 import { getChapterUrl } from "utils/read-page";
-import { toc } from "src/store/read-page";
+import { toc } from "store/read-page";
 import { offlineDB } from "./db";
 import type { Chapter } from "typings";
 

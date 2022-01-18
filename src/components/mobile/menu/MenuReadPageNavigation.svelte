@@ -9,7 +9,7 @@
     nextChapterLink,
     prevChapterLink,
   } from "store/read-page";
-  import { currentNovel } from "src/store/states";
+  import { currentNovel } from "store/states";
   import { replacePageTitleBookAndChapter } from "utils/read-page/history";
 
   $: nextBookAndChapter = $nextChapterLink.split($currentNovel + "/")[1];
