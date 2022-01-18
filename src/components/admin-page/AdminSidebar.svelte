@@ -1,22 +1,22 @@
 <script lang="ts">
-  // import { faCloudUploadAlt, faCogs, faPlus } from "@fortawesome/free-solid-svg-icons";
-  // import Icon from "components/Icon.svelte";
-  // import { path } from "src/store/states";
-  // import { navLink, novelNavLink, runTask } from "utils/admin/utils";
-  // import {
-  //   activeNovels,
-  //   adminNovelsData,
-  //   isAdminGUIConnected,
-  //   newNovelTitle,
-  // } from "utils/admin/_store";
-  // import AlertEnv from "./sidebar/AlertENV.svelte";
-  // import CreateNewNovel from "./sidebar/CreateNewNovel.svelte";
+  import { faCloudUploadAlt, faCogs, faPlus } from "@fortawesome/free-solid-svg-icons";
+  import Icon from "components/Icon.svelte";
+  import { path } from "src/store/states";
+  import { navLink, novelNavLink, runTask } from "utils/admin/utils";
+  import {
+    activeNovels,
+    adminNovelsData,
+    isAdminGUIConnected,
+    newNovelTitle,
+  } from "utils/admin/_store";
+  import AlertEnv from "./sidebar/AlertENV.svelte";
+  import CreateNewNovel from "./sidebar/CreateNewNovel.svelte";
 
-  // $: novels = Object.keys($adminNovelsData);
-  // $: novelsData = $adminNovelsData || {};
+  $: novels = Object.keys($adminNovelsData);
+  $: novelsData = $adminNovelsData || {};
 </script>
 
-<!-- <section>
+<section>
   <a href="admin" class="overview" class:selected={$path === "/admin"}>Overview</a>
   <strong>Global configuration</strong>
   {#each navLink as link}
@@ -71,7 +71,8 @@
 
   <CreateNewNovel />
   <AlertEnv />
-</section> -->
+</section>
+
 <style lang="scss">
   $section-header-margin-top: 1.5em;
   section {
