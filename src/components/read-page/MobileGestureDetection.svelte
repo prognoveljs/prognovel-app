@@ -9,7 +9,7 @@
     disablePrevChapter,
     nextChapterLink,
     prevChapterLink,
-  } from "src/store/read-page";
+  } from "store/read-page";
   import { onMount, onDestroy } from "svelte";
 
   let mc;

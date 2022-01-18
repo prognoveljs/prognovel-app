@@ -9,7 +9,7 @@
 <script lang="ts">
   import { faSave } from "@fortawesome/free-solid-svg-icons";
   import Icon from "components/Icon.svelte";
-  import { isBrowser } from "src/store/states";
+  import { isBrowser } from "store/states";
   import { getDataFromFile, isGUIWebSocketReady } from "utils/admin";
   import { saveDataForFile } from "utils/admin/data";
   import { activeNovels, adminNovelsData, isAdminGUIConnected } from "utils/admin/_store";

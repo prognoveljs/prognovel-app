@@ -11,7 +11,7 @@ import { verifyWebMonetizationReceipt } from "./verify-receipt";
 import { WEB_MONETIZATION_VERIFY } from "settings";
 import type { RevShareProfile, RevShareUser } from "typings/novel";
 import { getPoolWeightSum } from "webfunding/src/fund/utils";
-import { FORBIDDEN_NOVEL_ID } from "src/store/novel-page";
+import { FORBIDDEN_NOVEL_ID } from "store/novel-page";
 
 interface WMPointer {
   address: string;

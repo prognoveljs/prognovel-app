@@ -1,4 +1,4 @@
-import { isBrowser } from "src/store/states";
+import { isBrowser } from "store/states";
 import { get as getStore } from "svelte/store";
 import { finishConnecting, ws } from "./index";
 import { adminNovelsData, adminPageErrors, adminSiteData, isAdminGUIConnected } from "./_store";

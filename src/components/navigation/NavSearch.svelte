@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { siteMetadata } from "src/store/states";
+  import { siteMetadata } from "store/states";
   import { tick } from "svelte";
   import { fly } from "svelte/transition";
   import { getCoverURLPath } from "utils/images";

@@ -1,4 +1,4 @@
-import { isBrowser } from "src/store/states";
+import { isBrowser } from "store/states";
 import { listenWS } from "./data";
 import { isAdminGUIConnected } from "./_store";
 

@@ -22,7 +22,7 @@
   import { pannable } from "utils/actions";
   import HasReadLotsOfContents from "components/misc/promotion/HasReadLotsOfContents.svelte";
   import ChapterLock from "components/read-page/ChapterLock.svelte";
-  import { showTOC } from "src/store/read-page/read-page-state";
+  import { showTOC } from "store/read-page/read-page-state";
   export let novel: string;
   export let book: string;
   export let chapter: string;
