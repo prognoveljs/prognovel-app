@@ -1,9 +1,10 @@
+import { isBrowser } from "src/store/states";
 import { get as getStore } from "svelte/store";
 import { finishConnecting, ws } from "./index";
 import { adminNovelsData, adminPageErrors, adminSiteData, isAdminGUIConnected } from "./_store";
 
 export const dataQueue = {};
-const fetchEvent = new EventTarget();
+const fetchEvent = isBrowser ? new EventTarget() : null;
 
 export async function getDataFromFile(fileName: string) {
   dataQueue[fileName] = new Promise(() => {});
