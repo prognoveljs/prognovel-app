@@ -58,12 +58,12 @@ specifiers:
   postcss-load-config: ^3.0.0
   prettier: 2.3.0
   prettier-plugin-svelte: ^2.3.0
-  sapper: ^0.28.10
+  sapper: 0.28.10
   sass: ^1.30.0
   sharp: ^0.29.2
   sirv: ^1.0.10
   speed-measure-webpack-plugin: ^1.3.3
-  svelte: ^3.38.2
+  svelte: 3.38.2
   svelte-forms: ^2.0.7
   svelte-loader: ^2.13.6
   svelte-preprocess: ^4.6.1
