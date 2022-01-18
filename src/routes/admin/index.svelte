@@ -2,7 +2,6 @@
   import AdminDashboardBody from "components/admin-page/AdminDashboardBody.svelte";
 </script>
 
-<AdminDashboardBody />
-
+<!-- <AdminDashboardBody /> -->
 <style lang="scss">
 </style>
