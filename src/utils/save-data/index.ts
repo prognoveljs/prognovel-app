@@ -1,4 +1,4 @@
-import { saveData } from "store/states";
+import { isSaveData } from "store/states";
 import { get } from "idb-keyval";
 // import { get as getStore } from "svelte/store";
 
@@ -11,5 +11,5 @@ export async function saveDataInit() {
     preference = navigator.cookieEnabled || false; // cookie enabled??
   }
 
-  saveData.set(preference);
+  isSaveData.set(preference);
 }

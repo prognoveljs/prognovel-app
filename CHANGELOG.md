@@ -1,5 +1,9 @@
 # ProgNovel Changelog
 
+## 0.6.0
+
+Very early support of admin dashboard.
+
 ## 0.5.1
 
 - improve(ui): novel covers and fonts now properly cached so that it loads much faster and no longer disabled when offline.

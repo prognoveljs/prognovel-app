@@ -1,11 +1,12 @@
 {
 	"name": "@prognovel/frontend",
 	"description": "Next-Generation WebNovel platform.",
-	"version": "0.5.1",
+	"version": "0.6.0",
 	"scripts": {
 		"populate": "node plugins/build/populate/assets && node plugins/build/populate/copy-assets",
 		"export": "sapper export --ext \".svelte .svx\" --timeout 60000",
 		"dev": "sapper dev --no-hot --ext \".svelte .svx\"",
+		"dev:cfpages": "wrangler pages dev ./__sapper__/export --kv BUCKET=1ec290c449c642a1abddbde04caee660",
 		"build": "npm run populate && npm run export && node plugins/build/finish",
 		"test": "cypress run",
 		"test:cy": "cypress open",
@@ -38,7 +39,8 @@
 		"sirv": "^1.0.10",
 		"svelte-forms": "^2.0.7",
 		"web-vitals": "^1.0.1",
-		"webfunding": "latest"
+		"webfunding": "latest",
+		"ws": "^8.4.0"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.12.10",
@@ -52,6 +54,7 @@
 		"@beyonk/svelte-google-analytics": "^2.2.0",
 		"@cloudflare/workers-types": "^3.3.0",
 		"@types/aws-lambda": "^8.10.67",
+		"@types/ws": "^8.2.2",
 		"@typescript-eslint/parser": "^4.0.0",
 		"assets-webpack-plugin": "^6.1.2",
 		"autoprefixer": "^10.1.0",

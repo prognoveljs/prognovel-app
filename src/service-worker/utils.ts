@@ -25,7 +25,7 @@ export function validAssets(value: string): boolean {
     !value.endsWith(".svg")
   );
   const notNetworkFolder = !(value.includes("network/") && true); // true boolean prevent linter
-  const notApiRoutes = !(value.includes("/api/") && true); // true boolean prevent linter
+  const notApiRoutes = !(value.startsWith("/api/") && true); // true boolean prevent linter
   const notImageResizeService = !(value.includes("image-resize/") && true);
   return notApiRoutes && notNetlifyConfigs && notNetworkFolder && notImageResizeService;
 }

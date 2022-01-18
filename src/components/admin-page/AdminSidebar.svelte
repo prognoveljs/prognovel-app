@@ -1,38 +1,19 @@
 <script lang="ts">
-  import { faMoneyBillAlt, faPalette, faStar, faTools } from "@fortawesome/free-solid-svg-icons";
+  import { faCloudUploadAlt, faCogs, faPlus } from "@fortawesome/free-solid-svg-icons";
   import Icon from "components/Icon.svelte";
   import { path } from "src/store/states";
+  import { navLink, novelNavLink, runTask } from "utils/admin/utils";
+  import {
+    activeNovels,
+    adminNovelsData,
+    isAdminGUIConnected,
+    newNovelTitle,
+  } from "utils/admin/_store";
+  import AlertEnv from "./sidebar/AlertENV.svelte";
+  import CreateNewNovel from "./sidebar/CreateNewNovel.svelte";
 
-  let novels = ["yashura-legacy"];
-  let novelsData = {
-    "yashura-legacy": {
-      title: "Yashura Legacy",
-      cover: "publish/yashura-legacy/cover-64.webp",
-    },
-  };
-
-  const navLink = [
-    {
-      label: "Site configurations",
-      icon: faTools,
-      href: "admin/site-configurations",
-    },
-    {
-      label: "Themes and layout",
-      icon: faPalette,
-      href: "admin/themes-and-layout",
-    },
-    {
-      label: "Memberships and patrons",
-      icon: faStar,
-      href: "admin/memberships-and-patrons",
-    },
-    {
-      label: "Revenue share",
-      icon: faMoneyBillAlt,
-      href: "admin/revenue-share",
-    },
-  ];
+  $: novels = Object.keys($adminNovelsData);
+  $: novelsData = $adminNovelsData || {};
 </script>
 
 <section>
@@ -44,9 +25,25 @@
       {link.label}</a
     >
   {/each}
-  <strong>Novels</strong>
+  <div class="novel-header">
+    <strong>Novels </strong>
+    {#if $isAdminGUIConnected}
+      <button on:click={() => ($newNovelTitle = "")}><Icon icon={faPlus} /></button>
+    {/if}
+  </div>
+  <!-- {#each novelNavLink as link}
+    <a href={link.href} class:selected={$path.includes(link.href)}>
+      <Icon icon={link.icon} />
+      {link.label}</a
+    >
+  {/each}
+  <hr /> -->
   {#each novels as novel}
-    <a class:selected={$path.includes("admin/novel/" + novel)} href="admin/novel/{novel}">
+    <a
+      class:disabled={!$activeNovels.includes(novel)}
+      class:selected={$path.includes("admin/novel/" + novel)}
+      href="admin/novel/{novel}"
+    >
       <img
         src={((novelsData || {})[novel] || {}).cover}
         alt={((novelsData || {})[novel] || {}).title}
@@ -54,9 +51,36 @@
       {((novelsData || {})[novel] || {}).title || "--"}</a
     >
   {/each}
+
+  <hr />
+
+  {#if novels.length}
+    <button disabled={!$activeNovels.length} class="btn-build" on:click={() => runTask("build")}>
+      <Icon icon={faCogs} size="1.4em" marginRight=".75em" marginLeft=".25em" paddingBottom="2px" />
+      BUILD CONTENT</button
+    >
+    <button
+      disabled={!$activeNovels.length}
+      class="btn-publish"
+      on:click={() => runTask("publish")}
+    >
+      <Icon
+        icon={faCloudUploadAlt}
+        size="1.4em"
+        marginRight=".75em"
+        marginLeft=".25em"
+        paddingBottom="4px"
+      />
+      PUBLISH CONTENT</button
+    >
+  {/if}
+
+  <CreateNewNovel />
+  <AlertEnv />
 </section>
 
 <style lang="scss">
+  $section-header-margin-top: 1.5em;
   section {
     background-color: #0002;
     min-height: 100%;
@@ -68,12 +92,12 @@
     }
 
     strong {
-      margin-top: 1.5em;
+      margin-top: $section-header-margin-top;
       font-size: 1.15em;
       position: relative;
 
       &::before {
-        $size: 0.7em;
+        $size: 0.9em;
         position: absolute;
         content: "";
         width: $size;
@@ -81,8 +105,8 @@
         border-radius: 50%;
         background-color: var(--primary-color);
         opacity: 0.6;
-        top: -0.05em;
-        left: -0.5em;
+        top: -0.03em;
+        left: -0.4em;
         z-index: -1;
       }
     }
@@ -99,6 +123,11 @@
       display: flex;
       align-items: center;
       overflow: hidden;
+
+      &.disabled {
+        filter: grayscale(0.4);
+        opacity: 0.6;
+      }
 
       img {
         height: 2.5em;
@@ -151,6 +180,66 @@
         font-size: 1.5em;
         font-weight: 700;
       }
+    }
+
+    hr {
+      width: 5em;
+      border-color: #fff6;
+      margin: 1em 0 1.5em;
+    }
+
+    .novel-header {
+      margin-top: $section-header-margin-top;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      strong {
+        margin: 0;
+      }
+      button {
+        background-color: hsla(#{$hsl}, 0.1);
+        outline: none;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        user-select: none;
+        padding: 4px 6px;
+
+        &:hover {
+          background-color: hsla(#{$hsl}, 0.3);
+        }
+      }
+    }
+
+    .btn-build,
+    .btn-publish {
+      display: block;
+      padding: 0.5em;
+      width: 100%;
+      font-weight: 700;
+      margin-bottom: 0.5em;
+      color: #fff;
+      border-radius: 4px;
+      outline: none;
+      border: none;
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+
+      &[disabled] {
+        opacity: 0.6;
+        filter: grayscale(0.4);
+        cursor: auto;
+      }
+    }
+
+    .btn-build {
+      background-color: #e67e22;
+    }
+    .btn-publish {
+      background-color: #27ae60;
     }
   }
 </style>

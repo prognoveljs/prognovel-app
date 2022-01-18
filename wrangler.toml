@@ -1,0 +1,3 @@
+kv_namespaces = [
+  { binding = "BUCKET", id = "", preview_id = "1ec290c449c642a1abddbde04caee660" }
+]
