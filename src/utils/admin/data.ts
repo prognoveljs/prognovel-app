@@ -1,5 +1,5 @@
 import { get as getStore } from "svelte/store";
-import { finishConnecting, ws } from ".";
+import { finishConnecting, ws } from "./index";
 import { adminNovelsData, adminPageErrors, adminSiteData, isAdminGUIConnected } from "./_store";
 
 export const dataQueue = {};

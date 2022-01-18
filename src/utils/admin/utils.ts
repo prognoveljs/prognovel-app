@@ -1,4 +1,4 @@
-import { ws } from ".";
+import { ws } from "./index";
 import {
   faBookmark,
   faCog,
