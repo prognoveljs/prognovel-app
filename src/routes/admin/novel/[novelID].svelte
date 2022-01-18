@@ -16,7 +16,8 @@
   import { deepEqual } from "utils/misc";
 
   export let novel;
-  $: novelTitle = $adminNovelsData?.[novel]?.title || novel;
+  // $: novelTitle = $adminNovelsData?.[novel]?.title || novel;
+  $: novelTitle = null;
   let isActive;
 
   let dataSnapshot = {};
