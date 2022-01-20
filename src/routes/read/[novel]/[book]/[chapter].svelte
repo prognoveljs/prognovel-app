@@ -92,5 +92,5 @@
 </div>
 
 <style lang="scss">
-  @import "../../_slug.scss";
+  @import "../../slug";
 </style>
