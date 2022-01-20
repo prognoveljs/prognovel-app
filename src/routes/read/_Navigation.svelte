@@ -22,7 +22,7 @@
   <hr />
   <section>
     {#if !($disablePrevChapter || !$toc.length || !$currentChapterCursor)}
-      <a style="grid-area: prev;" href={$prevChapterLink}> Prev Chapter </a>
+      <a id="prev-chapter" style="grid-area: prev;" href={$prevChapterLink}> Prev Chapter </a>
     {:else}<em style="grid-area: prev;">Prev Chapter</em>{/if}
 
     <button style="grid-area: toc;" disabled={!$toc.length} on:click={tableOfContent}
@@ -30,6 +30,7 @@
     >
     {#if !($disableNextChapter || !$toc.length)}
       <a
+        id="next-chapter"
         style="grid-area: next;"
         class:disabled={$disableNextChapter || !$toc.length}
         href={$nextChapterLink}

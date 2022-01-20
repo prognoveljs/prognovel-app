@@ -56,7 +56,22 @@
   });
 
   onDestroy(leavePage);
+
+  function keyboardPressNavigation(e) {
+    switch (e.key) {
+      case "ArrowRight":
+        document.getElementById("next-chapter").click();
+        break;
+      case "ArrowLeft":
+        document.getElementById("prev-chapter").click();
+        break;
+      default:
+        break;
+    }
+  }
 </script>
+
+<svelte:window on:keyup={keyboardPressNavigation} />
 
 <svelte:head>
   <title>
