@@ -16,7 +16,7 @@
   import { FONT_SIZE, LINE_HEIGHT, ChapterState } from "utils/read-page/vars";
   import { getChapterStoreKey, getLoadingPlaceholder } from "utils/read-page";
   import { onMount, tick } from "svelte";
-  import { readPageFontSettingsInit } from "utils/fonts";
+  import { readPageSettingsInit } from "utils/fonts";
   import { enablePremiumContent, isCurrentChapterLocked } from "utils/web-monetization";
   import { contentRenderer, createContentDelay } from "utils/read-page";
   import { pannable } from "utils/actions";
@@ -51,7 +51,7 @@
   $: contentDelay = isValidChapterLoaded
     ? tick().then(() => createContentDelay(novel, $currentChapterIndex))
     : Promise.resolve();
-  onMount(readPageFontSettingsInit);
+  onMount(readPageSettingsInit);
 
   $: locked = !$enablePremiumContent && $isCurrentChapterMonetized;
 </script>
@@ -108,6 +108,8 @@
     --contentMaxWidth: #{$contentMaxWidth};
     --contentPadding: #{$contentPadding};
     --fontFamily: Garamond;
+    background-color: var(--background-color);
+    filter: contrast(var(--readPageColorContrast, 1));
 
     section {
       position: relative;
