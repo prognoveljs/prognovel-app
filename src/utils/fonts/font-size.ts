@@ -1,7 +1,7 @@
 import { writable, Writable } from "svelte/store";
 import { set, get } from "idb-keyval";
 
-const IDB_FONT_SIZE: string = "font-size";
+const IDB_FONT_SIZE: string = "reader-font-size";
 export const fontSize: Writable<number> = writable(100);
 
 export async function fontSizeInit(): Promise<void> {

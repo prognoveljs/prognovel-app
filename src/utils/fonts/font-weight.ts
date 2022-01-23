@@ -1,7 +1,7 @@
 import { get, set } from "idb-keyval";
 import { writable, Writable } from "svelte/store";
 
-const IDB_FONT_WEIGHT = "font-weight";
+const IDB_FONT_WEIGHT = "reader-font-weight";
 export const fontWeight: Writable<number> = writable(100);
 
 export async function fontWeightInit(): Promise<void> {
