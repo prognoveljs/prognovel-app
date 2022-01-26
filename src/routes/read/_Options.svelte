@@ -155,6 +155,7 @@
     display: grid;
     grid-template-rows: auto 1fr;
     padding-top: 2em;
+    z-index: 447;
 
     .header {
       position: relative;
