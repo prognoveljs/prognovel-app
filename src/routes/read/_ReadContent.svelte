@@ -23,6 +23,7 @@
   import HasReadLotsOfContents from "components/misc/promotion/HasReadLotsOfContents.svelte";
   import ChapterLock from "components/read-page/ChapterLock.svelte";
   import { showTOC } from "store/read-page/read-page-state";
+  import { colorizedBackground } from "utils/fonts/background-hue";
   export let novel: string;
   export let book: string;
   export let chapter: string;
@@ -56,7 +57,11 @@
   $: locked = !$enablePremiumContent && $isCurrentChapterMonetized;
 </script>
 
-<article id="chapter" style="--fontSizeBase: {FONT_SIZE}px; --lineHeight: {LINE_HEIGHT};">
+<article
+  id="chapter"
+  class:colorizedbackground={$colorizedBackground}
+  style="--fontSizeBase: {FONT_SIZE}px; --lineHeight: {LINE_HEIGHT};"
+>
   <Header title={chapterTitle} on:toc={() => ($showTOC = true)} />
 
   <section class:monetized={locked}>
@@ -110,6 +115,10 @@
     --fontFamily: Garamond;
     background-color: var(--background-color);
     filter: contrast(var(--readPageColorContrast, 1));
+
+    &.colorizedbackground {
+      background-color: hsl(var(--readPageColorHue, 15), 25%, 15%);
+    }
 
     section {
       position: relative;

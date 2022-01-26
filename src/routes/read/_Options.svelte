@@ -66,16 +66,19 @@
       const moveX = x1 - x2;
       const MAX_MOVE_X = window.innerWidth * 0.08;
       const MIN_MOVE_X = window.innerWidth * -0.1;
-      if (moveX > MAX_MOVE_X || moveX < -60 || !x1 || !x2) return;
+      if (moveX > MAX_MOVE_X || moveX < MIN_MOVE_X || !x1 || !x2) return;
 
       const parentStyle = node.parentElement.parentElement.style;
       parentStyle.setProperty("--sidebarOptionOffset", `${moveX}px`);
     }
     function dragStart(e) {
       x = parseInt(lastX || e.pageX);
+      console.log(x);
     }
     function dragEnd(e) {
       x = parseInt(lastX || e.pageX);
+      lastX = x;
+      console.log(x);
     }
 
     return {

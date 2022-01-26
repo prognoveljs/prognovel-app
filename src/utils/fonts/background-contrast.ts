@@ -5,11 +5,11 @@ const IDB_COLOR_CONTRAST: string = "reader-background-contrast";
 export const colorContrast: Writable<number> = writable(100);
 
 export async function colorContrastInit(): Promise<void> {
-  const size = (await get(IDB_COLOR_CONTRAST)) as number;
+  const contrast = (await get(IDB_COLOR_CONTRAST)) as number;
 
-  if (!size) return;
+  if (!contrast) return;
   // TODO throttle save to IndexedDB
-  colorContrast.set(size);
+  colorContrast.set(contrast);
 }
 
 if ((process as any).browser) {
