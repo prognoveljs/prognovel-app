@@ -18,7 +18,7 @@
     <SettingsLayout />
   </div>
   <span
-    style="height: 100%; font-weight: 500; width: 100%; top: 35%; font-size: 1.25em;position: absolute; text-align: center;"
+    style="height: 100%; font-weight: 500; width: 100%; top: 35%; font-size: 1em;position: absolute; text-align: center;"
     >🚧 some features under construction 🚧
   </span>
 </div>
