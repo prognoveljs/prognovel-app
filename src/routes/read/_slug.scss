@@ -14,7 +14,9 @@ $gap: 0;
   width: 100%;
   display: grid;
   grid-gap: $gap * 4;
-  grid-template-columns: $content-width var(--sidebarOptionWidth);
+  grid-template-columns: $content-width calc(
+      var(--sidebarOptionWidth) + var(--sidebarOptionOffset, 0px)
+    );
 
   @include screen("tablet") {
     // --sidebarOptionWidthVariant: 0;

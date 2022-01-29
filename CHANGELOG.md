@@ -1,5 +1,14 @@
 # ProgNovel Changelog
 
+## 0.6.1
+
+- feat(ux): enable navigating with keyboard arrow left and arrow right (previously disabled due to bugs)
+- feat(ui): "adjust background contrast", new settings in chapter reading page
+- feat(ui): "adjust background hue", new settings in chapter page (noticable in low contrast)
+- feat(ui): allow dragging width of options/settings sidebar in chapter page
+- fix(ui): fix bug on tablet where chapter settings not interactable
+- breaking/minor: change IndexedDB keys of font-weight and font-size in chapter reading page settings (this purge previously saved of users' font size and weight preferences)
+
 ## 0.6.0
 
 Very early support of admin dashboard.

@@ -51,6 +51,53 @@
   onDestroy(() => {
     $showStatsAndOptions = false;
   });
+
+  function draglayout(node: HTMLElement) {
+    const MIN_WIDTH_BEFORE_HIDE = 300;
+    const parentEl = node.parentElement;
+    let x: number, y: number, lastX: number, lastY: number;
+    let width: number = parseInt(
+      getComputedStyle(parentEl).getPropertyValue("--sidebarOptionWidth"),
+    );
+    node.addEventListener("drag", dragging);
+    node.addEventListener("dragstart", dragStart);
+    node.addEventListener("dragend", dragEnd);
+
+    function dragging(e) {
+      const x1 = x;
+      const x2 = parseInt(e.pageX);
+      lastX = x2;
+      // el. = y;
+      const moveX = x1 - x2;
+      const MAX_MOVE_X = window.innerWidth * 0.08;
+      const MIN_MOVE_X = window.innerWidth * -0.1;
+      if (moveX > MAX_MOVE_X || moveX < MIN_MOVE_X || !x1 || !x2) return;
+
+      const parentStyle = node.parentElement.parentElement.style;
+      parentStyle.setProperty("--sidebarOptionOffset", `${moveX}px`);
+      // if (parentEl.clientWidth < MIN_WIDTH_BEFORE_HIDE) {
+      //   parentEl.style.opacity = ".5";
+      // } else {
+      //   parentEl.style.opacity = "1";
+      // }
+      // if ()
+    }
+    function dragStart(e) {
+      x = parseInt(lastX || e.pageX);
+    }
+    function dragEnd(e) {
+      x = parseInt(lastX || e.pageX);
+      lastX = x;
+    }
+
+    return {
+      destroy() {
+        node.removeEventListener("drag", dragging);
+        node.removeEventListener("dragstart", dragStart);
+        node.removeEventListener("dragover", dragEnd);
+      },
+    };
+  }
 </script>
 
 <div
@@ -99,6 +146,7 @@
       </section>
     {/if}
   </div>
+  <div use:draglayout draggable="true" class="layout-drag" />
 </article>
 
 <AdjustFont standalone={true} />
@@ -111,11 +159,12 @@
     position: fixed;
     top: var(--header-height);
     right: 0;
-    width: var(--sidebarOptionWidth);
+    width: calc(var(--sidebarOptionWidth) + var(--sidebarOptionOffset, 0px));
     height: calc(100vh - var(--header-height));
     display: grid;
     grid-template-rows: auto 1fr;
     padding-top: 2em;
+    z-index: 447;
 
     .header {
       position: relative;
@@ -255,6 +304,27 @@
   @include screen("mobile") {
     .focus-btn {
       display: none !important;
+    }
+  }
+
+  .layout-drag {
+    --width: 3px;
+    width: var(--width);
+    height: 100%;
+    position: absolute;
+    left: calc(var(--width) / -2);
+    cursor: col-resize;
+    z-index: 10;
+    background-color: var(--primary-color);
+    opacity: 0;
+    // transition: all 0.125s ease-in;
+
+    // &:hover {
+    //   opacity: 0.8;
+    // }
+
+    @include screen("tablet") {
+      display: none;
     }
   }
 </style>

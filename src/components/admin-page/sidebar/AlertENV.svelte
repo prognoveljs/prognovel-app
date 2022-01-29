@@ -1,8 +1,17 @@
 <script lang="ts">
+  import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+  import Icon from "components/Icon.svelte";
   import Modal from "components/Modal.svelte";
   import { saveDataForFile } from "utils/admin/data";
   import { adminPageErrors } from "utils/admin/_store";
   import { deepEqual } from "utils/misc";
+  import { fly } from "svelte/transition";
+
+  const popperOptions = {
+    modifiers: [{ name: "offset", options: { offset: [8, 2] } }],
+  };
+
+  let showAccountIDTooltip = false;
 
   $: error = $adminPageErrors.find(
     (error) => error.type === "COMMANDERROR" && error.task === "publish",
@@ -35,7 +44,7 @@ CF_API_TOKEN=${document.getElementById("api-token").value}`,
     >
   </div>
   <div class="flex">
-    <label for="account-id">Account ID:</label>
+    <label for="account-id">Account ID: </label>
     <input value={error.env.CF_ACCOUNT_ID} type="text" name="account-id" id="account-id" />
     <label for="namespace-id">Cloudflare Workers KV Namespace ID:</label>
     <input value={error.env.CF_NAMESPACE_ID} type="text" name="namespace-id" id="namespace-id" />
@@ -102,4 +111,10 @@ CF_API_TOKEN=${document.getElementById("api-token").value}`,
       }
     }
   }
+
+  // .tooltip {
+  //   background-color: var(--foreground-color);
+  //   padding: 5px 10px;
+  //   border-radius: 4px;
+  // }
 </style>
