@@ -53,7 +53,12 @@
   });
 
   function draglayout(node: HTMLElement) {
+    const MIN_WIDTH_BEFORE_HIDE = 300;
+    const parentEl = node.parentElement;
     let x: number, y: number, lastX: number, lastY: number;
+    let width: number = parseInt(
+      getComputedStyle(parentEl).getPropertyValue("--sidebarOptionWidth"),
+    );
     node.addEventListener("drag", dragging);
     node.addEventListener("dragstart", dragStart);
     node.addEventListener("dragend", dragEnd);
@@ -70,15 +75,19 @@
 
       const parentStyle = node.parentElement.parentElement.style;
       parentStyle.setProperty("--sidebarOptionOffset", `${moveX}px`);
+      // if (parentEl.clientWidth < MIN_WIDTH_BEFORE_HIDE) {
+      //   parentEl.style.opacity = ".5";
+      // } else {
+      //   parentEl.style.opacity = "1";
+      // }
+      // if ()
     }
     function dragStart(e) {
       x = parseInt(lastX || e.pageX);
-      console.log(x);
     }
     function dragEnd(e) {
       x = parseInt(lastX || e.pageX);
       lastX = x;
-      console.log(x);
     }
 
     return {
