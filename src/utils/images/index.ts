@@ -140,7 +140,7 @@ export function imageBase64Encode(uint8: Uint8Array, type: string) {
 export function getCoverURLPath(
   novel: string,
   size: { width: number; height: number },
-  type?: "png" | "webp" | "jpg" | "jpeg",
+  type?: "png" | "webp" | "jpg" | "jpeg" | "avif",
 ) {
   if (!type) type = isWEBP ? "webp" : "jpeg";
   const sizeString = size.width !== size.height ? `${size.width}x${size.height}` : size.width;
