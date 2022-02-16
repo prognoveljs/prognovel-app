@@ -1,5 +1,11 @@
 # ProgNovel Changelog
 
+## 0.6.2
+
+- perf: deliver AVIF images for novel cover for supported browser
+- fix(ui/read page): remove gap below comment section when enabling colorized background
+- fix(ui/read page): corrected reading page colorized background
+
 ## 0.6.1
 
 - feat(ux): enable navigating with keyboard arrow left and arrow right (previously disabled due to bugs)
