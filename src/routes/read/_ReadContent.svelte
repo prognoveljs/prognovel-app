@@ -115,6 +115,7 @@
     --fontFamily: Garamond;
     background-color: var(--background-color);
     filter: contrast(var(--readPageColorContrast, 1));
+    padding-bottom: 3em;
 
     &.colorizedbackground {
       background-color: hsl(var(--readPageColorHue, 15), 25%, 15%);
