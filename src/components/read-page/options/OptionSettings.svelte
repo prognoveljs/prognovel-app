@@ -28,8 +28,7 @@
   <input type="checkbox" id="colorized-background" bind:checked={$colorizedBackground} />
 </div>
 <div class="option__desc colorized-background-desc">
-  Experimental feature: render chapter text chunk by chunk, reducing performance bottleneck
-  rendering long chapters on slower devices.
+  Add color to reading page body. Affected when adjusting contrast and background hue slider.
 </div>
 <div class="disabled" class:enabled={$colorizedBackground}>
   <Slider labelText="Adjust background hue" min={0} max={360} bind:value={$colorHue} step={1} />
