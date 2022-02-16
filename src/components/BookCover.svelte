@@ -34,6 +34,18 @@
       srcset="{getCoverURLPath(
         novel,
         { width: sizeRatio() * 256, height: sizeRatio() * 256 },
+        'avif',
+      )} 1x, {getCoverURLPath(
+        novel,
+        { width: sizeRatio() * 512, height: sizeRatio() * 512 },
+        'avif',
+      )} 2x"
+      type="image/avif"
+    />
+    <source
+      srcset="{getCoverURLPath(
+        novel,
+        { width: sizeRatio() * 256, height: sizeRatio() * 256 },
         'webp',
       )} 1x, {getCoverURLPath(
         novel,

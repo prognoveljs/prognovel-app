@@ -27,7 +27,7 @@ if (apiEndpoint.slice(-1) === "/") apiEndpoint = apiEndpoint.slice(0, -1);
         { width: 256, height: 256 },
         { width: 512, height: 512 },
       ],
-      ext: ["webp", "jpeg"],
+      ext: ["webp", "avif", "jpeg"],
     });
   }
 
@@ -115,6 +115,8 @@ function getTransformImageType(transform, type) {
       return transform.jpeg();
     case "webp":
       return transform.webp();
+    case "avif":
+      return transform.avif();
     default:
       return transform.png();
   }
