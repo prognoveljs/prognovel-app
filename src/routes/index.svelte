@@ -1,10 +1,11 @@
 <script context="module" lang="ts">
-  import { SITE_TITLE, BACKEND_API } from "settings";
+  import { SITE_TITLE, BACKEND_API } from "$lib/_setting.ts";
   import { get } from "idb-keyval";
-  import { fetchSiteMetadata, getMetadataStore } from "utils/fetch-metadata";
-  import { loadNovelTitles, loadPartialNovelsMetadata } from "utils/novel-page";
-  import { loadBookmark } from "utils/bookmark";
-  import type { NovelMetadata, NovelsMetadata, SiteMetadata, Bookmark } from "typings";
+  import { fetchSiteMetadata, getMetadataStore } from "$lib/utils/fetch-metadata";
+  import { loadNovelTitles, loadPartialNovelsMetadata } from "$lib/utils/novel-page";
+  import { loadBookmark } from "$lib/utils/bookmark";
+  import { isBrowser } from "$lib/store/states";
+  import type { NovelMetadata, NovelsMetadata, SiteMetadata, Bookmark } from "$typings";
 
   interface PreloadData {
     status: number;
@@ -14,7 +15,8 @@
     bookmarkData?: Bookmark[];
   }
 
-  export async function preload({ params, query }) {
+  /** @type {import('@sveltejs/kit').Load} */
+  export async function load({ params, query }) {
     let url;
     let res;
     let data: PreloadData = { status: 200 };
@@ -23,7 +25,7 @@
     let bookmarkData: Bookmark[];
 
     url = `${BACKEND_API}`;
-    if ((process as any).browser) {
+    if (isBrowser) {
       const store = getMetadataStore();
       data = await get("homepage", store);
 
@@ -41,10 +43,14 @@
       const path = await import("path");
       const fs = await import("fs");
       const readJson = (filePath) => {
-        return JSON.parse(fs.readFileSync(path.join(process.env.CACHE_FOLDER, filePath), "utf-8"));
+        return JSON.parse(fs.readFileSync(path.join(".cache", filePath), "utf-8"));
       };
       try {
-        data = readJson("assets/publish/sitemetadata.json");
+        try {
+          data = readJson("assets/publish/sitemetadata.json");
+        } catch (error) {
+          data.message = error;
+        }
         data.novels.forEach((novel) => {
           const novelTemp: NovelMetadata = readJson(`assets/publish/${novel}/metadata.json`);
 
@@ -54,40 +60,44 @@
           novelsMetadata[novel] = novelTemp;
         });
         data.status = 200;
-      } catch (error) {
+      } catch (err) {
         console.log("Error reading site metadata!");
         data.status = 500;
-        data.message = "Error when reading website metadata from build cache.";
-        console.error(error);
+        data.message = data.message || "Error when reading website metadata from build cache.";
+        console.error(err);
       }
     }
 
     if (data.status === 200) {
       return {
-        sitemetadata: data,
-        novelList: data.novels,
-        bookmarkData,
-        novelsMetadata,
-        novelTitles,
+        status: data.status,
+        props: {
+          sitemetadata: data,
+          novelList: data.novels,
+          bookmarkData,
+          novelsMetadata,
+          novelTitles,
+        },
       };
     } else {
-      console.log("Error!");
-      console.log("--", data.message);
-      this.error(data.status, data.message);
+      return {
+        status: data.status,
+        error: data.message,
+      };
     }
   }
 </script>
 
 <script lang="ts">
-  // import {} from "settings";
+  // import {} from "$lib/_setting.ts";
   import { onMount, setContext } from "svelte";
-  import GenerateHTML from "components/_HTML.svelte";
-  import { HomeHero } from "style/homepage/components";
-  import HomeShortcut from "components/home-page/HomeShortcut.svelte";
-  import LazyComponentsSkeletonShell from "components/home-page/_LazyComponentsSkeletonShell.svelte";
-  import { loadHomepageLazyComponents } from "utils/preload";
-  import { page, siteMetadata } from "states";
-  import NavMobile from "components/NavMobile.svelte";
+  import GenerateHTML from "$lib/components/_HTML.svelte";
+  import HomeNovels from "$lib/components/home-page/HomeNovels.svelte";
+  import HomeShortcut from "$lib/components/home-page/HomeShortcut.svelte";
+  import LazyComponentsSkeletonShell from "$lib/components/home-page/_LazyComponentsSkeletonShell.svelte";
+  import { loadHomepageLazyComponents } from "$lib/utils/preload.js";
+  import { page, siteMetadata } from "$lib/store/states";
+  import NavMobile from "$lib/components/NavMobile.svelte";
 
   export let novelList: string[];
   export let novelTitles: string[];
@@ -115,7 +125,7 @@
     <div class="hero-container">
       <section class="hero">
         <h1>{SITE_TITLE}</h1>
-        <HomeHero titles={novelTitles} {novelList} {novelsMetadata} grid={"novels"} />
+        <HomeNovels titles={novelTitles} {novelList} {novelsMetadata} grid={"novels"} />
       </section>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"
         ><path

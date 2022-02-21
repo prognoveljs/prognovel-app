@@ -1,6 +1,6 @@
 <script>
   import { scale } from "svelte/transition";
-  import ComingSoon from "../components/ComingSoon.svelte";
+  import ComingSoon from "$lib/components/ComingSoon.svelte";
   const mockNovels = [
     "--primary-color-darken-1",
     "--primary-color-darken-2",

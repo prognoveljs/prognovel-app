@@ -1,5 +1,5 @@
 <script lang="ts">
-  import NavMobile from "components/NavMobile.svelte";
+  import NavMobile from "$lib/components/NavMobile.svelte";
   import IndexNovelBody from "./_IndexNovelBody.svelte";
   import IndexNovelHead from "./_IndexNovelHead.svelte";
 </script>

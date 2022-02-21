@@ -1,7 +1,8 @@
-const { ncp } = require("ncp");
-const { assetsFolder } = require("./_shared");
+import ncpModule from "ncp";
+import { assetsFolder } from "./_shared.js";
+import { start } from "./compile-novels-placeholder.js";
 
 const destinationFolder = "static";
 
-ncp(assetsFolder, destinationFolder, () => {});
-require("./compile-novels-placeholder").start();
+ncpModule.ncp(assetsFolder, destinationFolder, () => {});
+start();

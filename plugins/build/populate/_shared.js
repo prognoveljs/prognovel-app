@@ -1,5 +1,1 @@
-const assetsFolder = ".cache/assets";
-
-module.exports = {
-  assetsFolder,
-};
+export const assetsFolder = ".cache/assets";

@@ -38,7 +38,7 @@ const alias = {
   typings: path.resolve(__dirname, "typings/"),
   // main files js
   states$: path.resolve(__dirname, "src/store/states.ts"),
-  settings$: path.resolve(__dirname, "src/_setting.ts"),
+  settings$: path.resolve(__dirname, "$src/_setting.ts"),
   init$: path.resolve(__dirname, "src/_app-init.ts"),
   monetization$: path.resolve(__dirname, "src/_web-monetization.ts"),
 };

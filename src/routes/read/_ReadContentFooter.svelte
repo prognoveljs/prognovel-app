@@ -1,9 +1,9 @@
 <script lang="ts">
   import Navigation from "./_Navigation.svelte";
   import { createEventDispatcher, onMount, tick } from "svelte";
-  import { isMobileScreen } from "utils/mobile";
-  import { menuReadPageShow } from "components/mobile/menu/_store";
-  import Comments from "components/read-page/comments/Comments.svelte";
+  import { isMobileScreen } from "$lib/utils/mobile";
+  import { menuReadPageShow } from "$lib/components/mobile/menu/_store";
+  import Comments from "$lib/components/read-page/comments/Comments.svelte";
   // TODO migrate mobile menu to _layout
   const dispatch = createEventDispatcher();
 

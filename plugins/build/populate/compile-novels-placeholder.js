@@ -1,9 +1,9 @@
-const fs = require("fs");
-const { CACHE_FOLDER } = require("../_shared");
-const chalk = require("chalk");
-const { join } = require("path");
+import fs from "fs";
+import { CACHE_FOLDER } from "../_shared.js";
+import chalk from "chalk";
+import { join } from "path";
 
-function start() {
+export async function start() {
   if (process.env.NODE_ENV === "development") {
     console.log(
       chalk.bold.green("[ProgNovel]:"),
@@ -23,12 +23,16 @@ function start() {
     console.log("");
     return;
   }
-  const siteMeta = require(join(CACHE_FOLDER, "assets/publish/sitemetadata.json"));
+  const siteMeta = JSON.parse(
+    fs.readFileSync(join(CACHE_FOLDER, "assets/publish/sitemetadata.json"), "utf-8"),
+  );
   const novels = siteMeta.novels;
   let js = `export const placeholders = JSON.parse('{`;
 
   for (const novel of novels) {
-    const metadata = require(join(CACHE_FOLDER, "assets/publish", novel, "metadata.json"));
+    const metadata = JSON.parse(
+      fs.readFileSync(join(CACHE_FOLDER, `assets/publish/${novel}/metadata.json`)),
+    );
     const placeholder = metadata.cover.placeholder;
 
     js += `"${novel}": "${placeholder}"`;
@@ -41,5 +45,3 @@ function start() {
 
   fs.writeFileSync(CACHE_FOLDER + "/novel-placeholders.js", js);
 }
-
-module.exports = { start };

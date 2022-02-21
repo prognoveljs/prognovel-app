@@ -12,7 +12,7 @@ let pages = globby
   .filter((page) => page.endsWith(".svx") && !page.startsWith("index."));
 
 const pagesOrder = pages.map((page: string): number => {
-  const frontmatter = fm(readFileSync(resolve(process.env.BASEPATH, thisDir, page), "utf-8"));
+  const frontmatter = fm(readFileSync(resolve(import.meta.env.BASEPATH, thisDir, page), "utf-8"));
 
   return (frontmatter.attributes as any)?.order ?? 99999;
 });
@@ -31,7 +31,7 @@ export function get(req, res) {
       prev.parent[id] = {
         href: `help/${id}`,
         title:
-          (fm(readFileSync(resolve(process.env.BASEPATH, thisDir, cur), "utf-8")).attributes as any).title ||
+          (fm(readFileSync(resolve(import.meta.env.BASEPATH, thisDir, cur), "utf-8")).attributes as any).title ||
           id,
       };
       return prev;
@@ -49,7 +49,7 @@ export function get(req, res) {
       const childSlug = child.split("routes/")[1].split(".svx")[0];
       prev[slug][childSlug.split("/").slice(-1)] = {
         title:
-          (fm(readFileSync(resolve(process.env.BASEPATH, child), "utf-8")).attributes as any).title ||
+          (fm(readFileSync(resolve(import.meta.env.BASEPATH, child), "utf-8")).attributes as any).title ||
           childSlug.split("/").slice(-1),
         href: childSlug,
       };

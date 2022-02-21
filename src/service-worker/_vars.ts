@@ -1,8 +1,8 @@
-import { timestamp, files, shell, routes } from "@sapper/service-worker";
+import { timestamp, files, build } from "$service-worker";
 //@ts-ignore
 import { validInstallAssets, validAssets } from "./utils";
 //@ts-ignore
-// import siteMetadata from "cache/sitemetadata.json";
+// import siteMetadata from "$cache/sitemetadata.json";
 
 export const ASSETS: string = `prognovel${timestamp}`;
 const routesToCache: string[] = [
@@ -17,7 +17,7 @@ const routesToCache: string[] = [
 
 export const SW_HOST: string = "";
 export const cachedRoutes = routesToCache.concat(NOVEL_LIST.map((novel) => `/novel/${novel}/`));
-const cachedFiles = shell.concat(files).concat(cachedRoutes);
+const cachedFiles = build.concat(files).concat(cachedRoutes);
 
 let filesCache: string[];
 export const cacheFileFiltered = (): string[] => {
@@ -40,6 +40,6 @@ export const assets = {
 
 export const preload = {
   home: (): string[] => {
-    return shell.filter((value) => value.includes("home"));
+    return build.filter((value) => value.includes("home"));
   },
 };

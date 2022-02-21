@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Updates from "components/updates-page/UpdatesModule.svelte";
+  import Updates from "$lib/components/updates-page/UpdatesModule.svelte";
 </script>
 
 <svelte:head>

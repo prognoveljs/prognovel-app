@@ -1,16 +1,16 @@
 <script context="module" lang="ts">
-  import { getLocalNovelMetadataCache, fetchNovelMetadata } from "utils/fetch-metadata";
-  import { getCoverURLPath, prefetchBannerImage } from "utils/images";
+  import { getLocalNovelMetadataCache, fetchNovelMetadata } from "$lib/utils/fetch-metadata";
+  import { getCoverURLPath, prefetchBannerImage } from "$lib/utils/images";
+  import { isBrowser } from "$lib/store/states";
 
-  const __SAPPER__PRELOAD_INDEX = 2;
-
-  export async function preload({ params, query }) {
+  /** @type {import('@sveltejs/kit').Load} */
+  export async function load({ params }) {
     const { novel } = params;
     let data: any = {};
     let url;
 
     url = `/publish/${novel}/metadata.json`;
-    if ((process as any).browser) {
+    if (isBrowser) {
       prefetchBannerImage(novel);
       data = await getLocalNovelMetadataCache(novel);
 
@@ -22,7 +22,7 @@
     } else {
       const path = await import("path");
       const fs = await import("fs");
-      url = process.env.CACHE_FOLDER + `/assets/publish/${novel}/metadata.json`;
+      url = import.meta.env.CACHE_FOLDER + `/assets/publish/${novel}/metadata.json`;
       try {
         data = JSON.parse(fs.readFileSync(url, "utf-8"));
         data.status = 200;
@@ -45,19 +45,18 @@
   import { setContext } from "svelte";
   // import { novels } from "../../mock";
   import { fetchSuggestions } from "./_suggestions";
-  import { stores } from "@sapper/app";
-  import InstantAffiliate from "components/web-monetization/InstantAffiliate.svelte";
+  import { page } from "$app/stores";
+  import InstantAffiliate from "$lib/components/web-monetization/InstantAffiliate.svelte";
   import Banner from "./_NovelBanner.svelte";
   import Book from "./_NovelBook.svelte";
-  import Affiliate from "components/novel-page/Affiliate.svelte";
-  import RevenueSharingStats from "components/novel-page/RevenueSharingStats.svelte";
-  import { toc, chaptersLoaded } from "store/read-page";
-  import { getChapterStoreKey, prefetchChapter } from "utils/read-page";
-  import type { NovelMetadata } from "typings";
+  import Affiliate from "$lib/components/novel-page/Affiliate.svelte";
+  import RevenueSharingStats from "$lib/components/novel-page/RevenueSharingStats.svelte";
+  import { toc, chaptersLoaded } from "$lib/store/read-page";
+  import { getChapterStoreKey, prefetchChapter } from "$lib/utils/read-page";
+  import type { NovelMetadata } from "$typings";
 
   export let id;
   export let novelMetadata: NovelMetadata;
-  const { page } = stores() as any;
   let affiliate = $page.query.affiliate || "";
   let affiliateName = $page.query.affiliateName || "";
 
@@ -78,7 +77,7 @@
 
   function getSiteURL(): string {
     if (this && this.location) return new URL(this.location).origin;
-    return process.env.URL || process.env.VERCEL_URL || "";
+    return import.meta.env.URL || import.meta.env.VERCEL_URL || "";
   }
 </script>
 

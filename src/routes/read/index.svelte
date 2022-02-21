@@ -1,16 +1,18 @@
 <script context="module">
-  let load;
-  export async function preload(page) {
-    const { query } = page;
-
-    load = query.load;
+  /** @type {import('@sveltejs/kit').Load} */
+  export async function load({query}) {
+    return {
+      load: query.load
+    }
   }
 </script>
 
 <script>
   import { onMount } from "svelte";
-  import { goto } from "@sapper/app";
-  import { getLoadingPlaceholder } from "utils/read-page";
+  import { goto } from "$app/navigation";
+  import { getLoadingPlaceholder } from "$lib/utils/read-page";
+
+  export let load
 
   onMount(async () => {
     console.log("🚀 redirecting to", load);

@@ -5,7 +5,7 @@
 <div class="container-center">
   <h1>404 - Not found</h1>
   <p>Looks like the page you're looking for doesn't exist... maybe look again from homepage?</p>
-  <a href="." rel="prefetch">Go back home</a>
+  <a href="." sveltekit:prefetch>Go back home</a>
 </div>
 
 <style>

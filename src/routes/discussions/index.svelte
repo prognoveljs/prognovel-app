@@ -1,7 +1,8 @@
 <script context="module" lang="ts">
-  import { goto } from "@sapper/app";
+  import { goto } from "$app/navigation";
 
-  export async function preload() {
-    goto("/discussions/all");
+  /** @type {import('@sveltejs/kit').Load} */
+  export async function load() {
+    // goto("/discussions/all");
   }
 </script>

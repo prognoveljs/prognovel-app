@@ -1,8 +1,8 @@
 <script lang="ts">
-  import ComingSoon from "components/ComingSoon.svelte";
-  import Cover from "components/BookCover.svelte";
-  import { loadBookmark } from "utils/bookmark";
-  import { siteMetadata } from "store/states";
+  import ComingSoon from "$lib/components/ComingSoon.svelte";
+  import Cover from "$lib/components/BookCover.svelte";
+  import { loadBookmark } from "$lib/utils/bookmark";
+  import { siteMetadata } from "$lib/store/states";
 </script>
 
 <svelte:head>

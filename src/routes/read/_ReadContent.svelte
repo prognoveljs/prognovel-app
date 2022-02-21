@@ -1,10 +1,10 @@
 <script lang="ts">
   import Header from "./_ReadContentHeader.svelte";
   import Footer from "./_ReadContentFooter.svelte";
-  import TOC from "components/read-page/ReadTableOfContent.svelte";
-  import ErrorPlaceholder from "components/read-page/body/ReadBodyErrorPlaceholder.svelte";
+  import TOC from "$lib/components/read-page/ReadTableOfContent.svelte";
+  import ErrorPlaceholder from "$lib/components/read-page/body/ReadBodyErrorPlaceholder.svelte";
   import NativePlugins from "./_NativePlugins.svelte";
-  import AdsDelay from "components/read-page/ContentAdsDelay.svelte";
+  import AdsDelay from "$lib/components/read-page/ContentAdsDelay.svelte";
   import {
     currentContent,
     currentChapterIndex,
@@ -12,18 +12,18 @@
     chaptersLoaded,
     chapterTitles,
     isCurrentChapterMonetized,
-  } from "store/read-page";
-  import { FONT_SIZE, LINE_HEIGHT, ChapterState } from "utils/read-page/vars";
-  import { getChapterStoreKey, getLoadingPlaceholder } from "utils/read-page";
+  } from "$lib/store/read-page";
+  import { FONT_SIZE, LINE_HEIGHT, ChapterState } from "$lib/utils/read-page/vars";
+  import { getChapterStoreKey, getLoadingPlaceholder } from "$lib/utils/read-page";
   import { onMount, tick } from "svelte";
-  import { readPageSettingsInit } from "utils/fonts";
-  import { enablePremiumContent, isCurrentChapterLocked } from "utils/web-monetization";
-  import { contentRenderer, createContentDelay } from "utils/read-page";
-  import { pannable } from "utils/actions";
-  import HasReadLotsOfContents from "components/misc/promotion/HasReadLotsOfContents.svelte";
-  import ChapterLock from "components/read-page/ChapterLock.svelte";
-  import { showTOC } from "store/read-page/read-page-state";
-  import { colorizedBackground } from "utils/fonts/background-hue";
+  import { readPageSettingsInit } from "$lib/utils/fonts";
+  import { enablePremiumContent, isCurrentChapterLocked } from "$lib/utils/web-monetization";
+  import { contentRenderer, createContentDelay } from "$lib/utils/read-page";
+  import { pannable } from "$lib/utils/actions";
+  import HasReadLotsOfContents from "$lib/components/misc/promotion/HasReadLotsOfContents.svelte";
+  import ChapterLock from "$lib/components/read-page/ChapterLock.svelte";
+  import { showTOC } from "$lib/store/read-page/read-page-state";
+  import { colorizedBackground } from "$lib/utils/fonts/background-hue";
   export let novel: string;
   export let book: string;
   export let chapter: string;

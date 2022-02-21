@@ -7,7 +7,7 @@
     disablePrevChapter,
     nextChapterLink,
     prevChapterLink,
-  } from "store/read-page";
+  } from "$lib/store/read-page";
 
   const dispatch = createEventDispatcher();
 

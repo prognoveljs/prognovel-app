@@ -1,51 +1,24 @@
-<script>
-  import { registeredPlugins } from "store/read-page";
+<script lang="ts">
+  import { registeredPlugins } from "$lib/store/read-page";
+  import { isBrowser } from "$lib/store/states";
   import { onMount } from "svelte";
 
   onMount(() => {
-    if (!process.browser) return;
+    if (!isBrowser) return;
 
-    registerAuthorNote();
-    registerNovelTrivia();
-    registerUnlockBonus();
+    registerNativePlugins();
   });
 
-  const registerAuthorNote = () => {
-    const tag = "author-note";
+  const registerNativePlugins = () => {
+    const tag = "native";
     if ($registeredPlugins.has(tag)) return;
-    import(/* webpackChunkName: "native-plugins" */ "plugins/web-components/authors-note")
-      .then((plugin) => plugin.default())
+    import("../../../plugins/web-components/prognovel-native-plugins.ts")
+      .then((plugin) => plugin.register())
       .catch((err) => {
         console.error("Error on establishing plugin authors-note");
         console.error(err);
       });
 
     $registeredPlugins.add(tag);
-  };
-
-  const registerNovelTrivia = () => {
-    const tag = "novel-trivia";
-    if ($registeredPlugins.has(tag)) return;
-    import(/* webpackChunkName: "native-plugins" */ "plugins/web-components/novel-trivia")
-      .then((plugin) => plugin.default())
-      .catch((err) => {
-        console.error("Error on establishing plugin novel-trivia");
-        console.error(err);
-      });
-    $registeredPlugins.add(tag);
-  };
-
-  const registerUnlockBonus = () => {
-    const tag1 = "unlock-bonus";
-    const tag2 = "unlock-window";
-    if ($registeredPlugins.has(tag1) && $registeredPlugins.has(tag2)) return;
-    import(/* webpackChunkName: "native-plugins" */ "plugins/web-components/unlock-bonus")
-      .then((plugin) => plugin.default())
-      .catch((err) => {
-        console.error("Error on establishing plugin unlock-bonus");
-        console.error(err);
-      });
-    $registeredPlugins.add(tag1);
-    $registeredPlugins.add(tag2);
   };
 </script>

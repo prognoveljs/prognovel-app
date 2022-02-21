@@ -1,6 +1,6 @@
-import { DEFAULT_PRIMARY_COLOR, colorRegex } from "utils/color/_vars";
+import { DEFAULT_PRIMARY_COLOR, colorRegex } from "$lib/utils/color/_vars";
 import { get } from "idb-keyval";
-import type { Color } from "typings";
+import type { Color } from "$typings";
 
 export const rewriteHTML = async (response: Response, preload = {}) => {
   try {

@@ -1,10 +1,11 @@
-require("dotenv").config();
-const sharp = require("sharp");
-const fetch = require("node-fetch");
-const { createWriteStream, existsSync, mkdirSync, writeFileSync } = require("fs");
-const { assetsFolder } = require("./_shared");
-const { join } = require("path");
-const { on } = require("events");
+import dotenv from "dotenv";
+dotenv.config();
+import sharp from "sharp";
+import fetch from "node-fetch";
+import { createWriteStream, existsSync, mkdirSync, writeFileSync } from "fs";
+import { assetsFolder } from "./_shared.js";
+import { join } from "path";
+import { on } from "events";
 
 if (!existsSync(assetsFolder)) mkdirSync(assetsFolder, { recursive: true });
 let apiEndpoint = process.env.BACKEND_API;
@@ -141,7 +142,7 @@ function downloadStaticAPIs(siteMetadata) {
 
 async function downloadComponentsZip() {
   const zipFile = ".cache/components.zip";
-  const out = join(process.cwd(), "src/node_modules/");
+  const out = join(process.cwd(), "src/lib/.generated");
   console.log(out);
   if (!existsSync(out)) mkdirSync(out, { recursive: true });
   const res = await fetch(apiEndpoint + "/fetchData?file=components.zip");
@@ -150,7 +151,8 @@ async function downloadComponentsZip() {
 
   stream.on("close", async () => {
     try {
-      await require("extract-zip")(zipFile, { dir: out });
+      const extract = (await import("extract-zip")).default;
+      extract(zipFile, { dir: out });
     } catch (error) {
       throw error;
     }
