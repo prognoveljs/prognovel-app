@@ -186,7 +186,7 @@
 <p>
   Feature to edit chapters in admin dashboard is under construction. In the meantime, you can create
   and edit chapter markdown files manually. Please read <a
-    href="https://github.com/prognoveljs/prognovel-cli"
+    href="/https://github.com/prognoveljs/prognovel-cli"
   >
     this instruction</a
   > to do so.

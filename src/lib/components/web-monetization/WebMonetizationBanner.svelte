@@ -8,10 +8,10 @@
     <h2>Part of Web Monetization API</h2>
     <p>Subscribe once, enjoy VIP experiences across all ProgNovel-based sites.</p>
     <div class="flex">
-      <a href="https://coil.com/learn-more" target="_blank" rel="noopener" class="learn-more"
+      <a href="/https://coil.com/learn-more" target="_blank" rel="noopener" class="learn-more"
         >What's this?</a
       >
-      <a href="https://coil.com" target="_blank" rel="noopener" class="subscribe"
+      <a href="/https://coil.com" target="_blank" rel="noopener" class="subscribe"
         >Subscribe for $5/month</a
       >
     </div>

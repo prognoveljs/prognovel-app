@@ -17,16 +17,16 @@ export const nextChapterLink: Readable<string> = derived(
   [disableNextChapter, currentChapterCursor, toc, currentNovel, currentBook, currentChapter],
   ([disabled, cursor, tableOfContent, novel, book, chapter]) => {
     return !disabled
-      ? `read/${novel}/${(tableOfContent || [])[cursor + 1]}`
-      : `read/${novel}/${book}/${chapter}`;
+      ? `/read/${novel}/${(tableOfContent || [])[cursor + 1]}`
+      : `/read/${novel}/${book}/${chapter}`;
   },
 );
 export const prevChapterLink: Readable<string> = derived(
   [disablePrevChapter, currentChapterCursor, toc, currentNovel, currentBook, currentChapter],
   ([disabled, cursor, tableOfContent, novel, book, chapter]) => {
     return !disabled
-      ? `read/${novel}/${(tableOfContent || [])[cursor - 1]}`
-      : `read/${novel}/${book}/${chapter}`;
+      ? `/read/${novel}/${(tableOfContent || [])[cursor - 1]}`
+      : `/read/${novel}/${book}/${chapter}`;
   },
 );
 

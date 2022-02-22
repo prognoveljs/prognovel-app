@@ -55,7 +55,7 @@
         sveltekit:prefetch
         in:fly={{ duration: 125, y: 12, delay: 50 * index }}
         out:fly={{ duration: 80, y: -20, delay: 30 * index }}
-        href="novel/{novel.id}"
+        href="/novel/{novel.id}"
         on:click={onClickItem}
       >
         <picture>

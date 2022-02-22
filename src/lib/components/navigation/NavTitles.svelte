@@ -18,7 +18,7 @@
   $: isAtReadPage = page.path ? page.path.startsWith("/read") : false;
   $: segments = page.path ? getBreadcrumbSegments(page.path) : [];
 
-  let backButtonHref = "."; // period means current relative url on sapper.
+  let backButtonHref = "/"; // period means current relative url on sapper.
   $: if (page.path && isBrowser) {
     tick().then((r) => {
       getPreviousBreadcrumbLink().then((href) => (backButtonHref = href));

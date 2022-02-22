@@ -25,29 +25,29 @@
     <a
       sveltekit:prefetch
       class={segment === undefined || homePageChildren.includes(segment) ? "selected" : ""}
-      href="."
+      href="/"
     >
       <Icon icon={faHome} size={"24px"} />
       <span class="tooltip" aria-hidden="true">home</span>
     </a>
-    <a sveltekit:prefetch class={segment === "updates" ? "selected" : ""} href="updates">
+    <a sveltekit:prefetch class={segment === "updates" ? "selected" : ""} href="/updates">
       <Icon icon={faBolt} size={"24px"} />
       <span class="tooltip" aria-hidden="true">all updates</span>
     </a>
     <a
       sveltekit:prefetch
       class={segment === "discussions" ? "selected" : ""}
-      href="discussions/all"
+      href="/discussions/all"
     >
       <Icon icon={faCommentAlt} size={"24px"} />
       <span class="tooltip" aria-hidden="true">discussions</span>
     </a>
-    <a sveltekit:prefetch class={segment === "novel" ? "selected" : ""} href="novel">
+    <a sveltekit:prefetch class={segment === "novel" ? "selected" : ""} href="/novel">
       <Icon icon={faBook} size={"24px"} />
       <span class="tooltip" aria-hidden="true">all novels</span>
     </a>
     <hr />
-    <a sveltekit:prefetch class={segment === "help" ? "selected" : ""} href="help">
+    <a sveltekit:prefetch class={segment === "help" ? "selected" : ""} href="/help">
       <Icon icon={faQuestion} size={"24px"} />
       <span class="tooltip" aria-hidden="true">help </span>
     </a>

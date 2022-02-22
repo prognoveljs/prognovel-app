@@ -14,7 +14,7 @@
   <section class="grid">
     {#each novels as novel}
       {#if !$genreFilter.length || $genreFilter.some( (genre) => $novelsData[novel].genre.includes(genre), )}
-        <a href="novel/{novel}">
+        <a href="/novel/{novel}">
           <BookCover
             title={novelTitles[novel]}
             {novel}

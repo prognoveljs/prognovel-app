@@ -22,7 +22,8 @@
     } else {
       const path = await import("path");
       const fs = await import("fs");
-      url = import.meta.env.CACHE_FOLDER + `/assets/publish/${novel}/metadata.json`;
+      console.log(novel);
+      url = `.cache/assets/publish/${novel}/metadata.json`;
       try {
         data = JSON.parse(fs.readFileSync(url, "utf-8"));
         data.status = 200;
@@ -34,9 +35,12 @@
     }
 
     if (data.status === 200) {
-      return { novelMetadata: data, id: novel };
+      return { status: data.status, props: { novelMetadata: data, id: novel } };
     } else {
-      this.error(data.status, data.message);
+      return {
+        error: data.message,
+        status: data.status,
+      };
     }
   }
 </script>
@@ -57,8 +61,8 @@
 
   export let id;
   export let novelMetadata: NovelMetadata;
-  let affiliate = $page.query.affiliate || "";
-  let affiliateName = $page.query.affiliateName || "";
+  let affiliate = $page.url.searchParams.affiliate || "";
+  let affiliateName = $page.url.searchParams.affiliateName || "";
 
   setContext("id", id);
   setContext("novelMetadata", novelMetadata);

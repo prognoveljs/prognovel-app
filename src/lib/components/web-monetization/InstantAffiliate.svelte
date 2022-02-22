@@ -45,7 +45,7 @@
 
 <article bind:this={body} id="instant-affiliate-link" class:show={$showAffiliateReferrer}>
   <div>
-    <img src="img/svg/laptop.svg" width="100%" height="auto" alt="Instant affiliate link." />
+    <img src="/img/svg/laptop.svg" width="100%" height="auto" alt="Instant affiliate link." />
   </div>
   <section>
     <h3>Instant affiliate link</h3>

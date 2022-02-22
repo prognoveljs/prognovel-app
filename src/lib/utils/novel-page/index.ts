@@ -87,7 +87,7 @@ export function handleReadButton(novel: string): string {
   if (!tableOfContent.length) return;
 
   const chapterDestination = tableOfContent[0];
-  return `read/${novel}/${chapterDestination}`;
+  return `/read/${novel}/${chapterDestination}`;
 }
 
 export function getNovelCoverSubtitle(

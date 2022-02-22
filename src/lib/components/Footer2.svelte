@@ -18,11 +18,11 @@
           <strong class="email-address">prognovel@gmail.com</strong>
         </p>
         <div>
-          &#x1F5A5; <a href="https://community.webmonetization.org/prognovel">Dev Logs</a>
+          &#x1F5A5; <a href="/https://community.webmonetization.org/prognovel">Dev Logs</a>
         </div>
-        <div>&#x1F6A9; <a href="roadmap" sveltekit:prefetch>Roadmaps</a></div>
+        <div>&#x1F6A9; <a href="/roadmap" sveltekit:prefetch>Roadmaps</a></div>
         <div>
-          🚀 <a href="https://github.com/prognoveljs/prognovel-app">Self-host ProgNovel</a>
+          🚀 <a href="/https://github.com/prognoveljs/prognovel-app">Self-host ProgNovel</a>
         </div>
         <img
           loading="lazy"
@@ -53,9 +53,9 @@
       <Stacks grid={"stack"} />
     </div>
     <div class="misc">
-      <a sveltekit:prefetch href="https://www.twitter.com/prognovel">twitter</a>
-      <a sveltekit:prefetch href="https://www.github.com/prognoveljs">github</a>
-      <a sveltekit:prefetch href="https://community.webmonetization.org/prognovel"
+      <a sveltekit:prefetch href="/https://www.twitter.com/prognovel">twitter</a>
+      <a sveltekit:prefetch href="/https://www.github.com/prognoveljs">github</a>
+      <a sveltekit:prefetch href="/https://community.webmonetization.org/prognovel"
         >WM API community</a
       >
       <strong style="display: block;">

@@ -48,5 +48,5 @@ export async function getPreviousBreadcrumbLink(): Promise<string> {
       }
     }
   }
-  return ".";
+  return "/";
 }

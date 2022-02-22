@@ -9,7 +9,7 @@
 
 <article class:show={$showIndex}>
   <a
-    href="help"
+    href="/help"
     class="link-parent"
     class:currentPage={store.path ? store.path.split("help/").filter((s) => !!s).length < 2 : false}
     >What is ProgNovel?</a

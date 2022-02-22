@@ -41,7 +41,7 @@
 
   <h4>Google:</h4>
 
-  <a href="https://policies.google.com/technologies/ads" rel="nofollow" target="_blank">
+  <a href="/https://policies.google.com/technologies/ads" rel="nofollow" target="_blank">
     https://policies.google.com/technologies/ads
   </a>
 

@@ -1,7 +1,7 @@
 <script lang="ts">
   import Download from "$lib/components/download/Download.svelte";
   import Cover from "$lib/components/BookCover.svelte";
-  import Description from "$novel/_NovelBookDescription.svelte";
+  import Description from "./_NovelBookDescription.svelte";
   import {
     downloadProgress as progress,
     downloadCount as count,

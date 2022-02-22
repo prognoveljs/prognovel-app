@@ -5,6 +5,8 @@
     const { novel, book, chapter } = params;
     checkTableOfContentExists(novel);
     prefetchChapter(novel, book, chapter);
+
+    return {};
   }
 </script>
 
@@ -33,7 +35,7 @@
     if (currentPage === JSON.stringify(page)) return;
     currentPage = JSON.stringify(page);
 
-    if (!page.path.startsWith("/read/")) return tick().then(() => mountPage(page));
+    if (!page.url.pathname.startsWith("/read/")) return tick().then(() => mountPage(page));
     if (!novel || !book || !chapter) return tick().then(() => mountPage(page));
     // [novel, chapter] = parseSlug(page.params.slug);
     const slug = page.params;

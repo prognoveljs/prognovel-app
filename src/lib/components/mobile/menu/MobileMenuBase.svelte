@@ -47,16 +47,16 @@
     out:fly={{ y: 30, duration: 300 }}
   >
     {#if $menuVariance === MenuVariance.General}
-      <a class:active={!$showSettings && $path === "/"} href="."
+      <a class:active={!$showSettings && $path === "/"} href="/"
         ><Icon icon={faHome} /><small>Home</small>
       </a>
-      <a class:active={!$showSettings && $path === "/novel"} href="novel"
+      <a class:active={!$showSettings && $path === "/novel"} href="/novel"
         ><Icon icon={faCompass} /><small>Explore</small>
       </a>
-      <a class:active={!$showSettings && $path.startsWith("/discussions/")} href="discussions/all"
+      <a class:active={!$showSettings && $path.startsWith("/discussions/")} href="/discussions/all"
         ><Icon icon={faGlobe} /><small>Community</small>
       </a>
-      <a class:active={!$showSettings && $path.startsWith("/help")} href="help">
+      <a class:active={!$showSettings && $path.startsWith("/help")} href="/help">
         <Icon icon={faQuestionCircle} />
         <small>Help</small>
       </a>
@@ -65,7 +65,7 @@
       </button>
     {/if}
     {#if $menuVariance === MenuVariance.NovelPage}
-      <a class:active={!$showSettings && $path === "/"} href="."
+      <a class:active={!$showSettings && $path === "/"} href="/"
         ><Icon icon={faHome} /><small>Home</small>
       </a>
       <button class:active={$showTOC} on:click={() => showNovelPageWindow(showTOC)}
@@ -82,7 +82,7 @@
       </a>
     {/if}
     {#if $menuVariance === MenuVariance.ReadPage}
-      <a class:active={!$showSettings && $path === "/"} href="."
+      <a class:active={!$showSettings && $path === "/"} href="/"
         ><Icon icon={faHome} /><small>Home</small>
       </a>
       <button class:active={$showTOC} on:click={() => showReadPageWindow(showTOC)}

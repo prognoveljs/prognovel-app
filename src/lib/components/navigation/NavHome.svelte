@@ -11,8 +11,8 @@
 </script>
 
 <section>
-  <a href=".">
-    <img src="logo-64.png" srcset="logo-64.png 1x, logo-128.png 2x" alt={SITE_TITLE} />
+  <a href="/">
+    <img src="/logo-64.png" srcset="/logo-64.png 1x, /logo-128.png 2x" alt={SITE_TITLE} />
   </a>
   {#if !nolabel}
     <strong>

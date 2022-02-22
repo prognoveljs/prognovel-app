@@ -28,13 +28,13 @@
   <article>
     <section class="novel-dir">
       <div class="wrapper">
-        <a class="general" href="discussions/all" class:selected={novel === GENERAL_SLUG}>
+        <a class="general" href="/discussions/all" class:selected={novel === GENERAL_SLUG}>
           <strong>General</strong></a
         >
         {#each novels as novelID}
           <a
             style="--bg: {getNovelBookCoverSrc(novelID)};"
-            href="discussions/{novelID}"
+            href="/discussions/{novelID}"
             class:selected={novelID === novel}
           >
             <img src={getNovelBookCoverSrc(novelID)} alt={titles[novelID]} />

@@ -39,10 +39,10 @@
       or tip them to show your support in exchange of their hardwork!
     </p>
     <div class="cta">
-      <a href="https://coil.com">Subscribe to Coil</a>
-      <a href="https://coil.com">Become a Patron</a>
+      <a href="/https://coil.com">Subscribe to Coil</a>
+      <a href="/https://coil.com">Become a Patron</a>
       <div class="or">or</div>
-      <a href="https://coil.com">Tip with Interledger</a>
+      <a href="/https://coil.com">Tip with Interledger</a>
     </div>
   </article>
 {/if}

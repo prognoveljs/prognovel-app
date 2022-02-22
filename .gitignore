@@ -14,3 +14,4 @@ build
 
 # Local Netlify folder
 .netlify
+src/app.html

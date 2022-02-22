@@ -5,6 +5,7 @@ import { join, resolve } from "path";
 import { dynamicImport } from "vite-plugin-dynamic-import";
 import { mdsvex } from "mdsvex";
 import { searchForWorkspaceRoot } from "vite";
+import { optimizeCss, optimizeImports } from "carbon-preprocess-svelte";
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
@@ -18,9 +19,20 @@ export default {
   ],
   kit: {
     adapter: adapter(),
-    // extensions: ['.svelte', '.svx']
     vite: {
-      plugins: [dynamicImport(), ProgNovelCSS()],
+      plugins: [
+        dynamicImport(),
+        ProgNovelCSS(),
+        optimizeImports(),
+        process.env.NODE_ENV === "production" && optimizeCss(),
+      ],
+      optimizeDeps: {
+        include: [
+          "flatpickr",
+          "flatpickr/dist/l10n/index.js",
+          "flatpickr/dist/plugins/rangePlugin",
+        ],
+      },
       ssr: {
         noExternal: ["plugins/web-components/prognovel-native-plugins.ts"],
       },

@@ -60,7 +60,7 @@
   </div>
   {#if novelList.length > MAX_NOVEL_LISTED}
     <div class="flex">
-      <a class="see-all" href="novel"
+      <a class="see-all" href="/novel"
         >see all
 
         <Icon icon={faChevronRight} size="1.25em" paddingBottom="3px" marginLeft="4px" />

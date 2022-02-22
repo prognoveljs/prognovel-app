@@ -17,7 +17,7 @@
 </script>
 
 <section>
-  <a href="admin" class="overview" class:selected={$path === "/admin"}>Overview</a>
+  <a href="/admin" class="overview" class:selected={$path === "/admin"}>Overview</a>
   <strong>Global configuration</strong>
   {#each navLink as link}
     <a href={link.href} class:selected={$path.includes(link.href)}>
@@ -36,7 +36,7 @@
     <a
       class:disabled={!$activeNovels.includes(novel)}
       class:selected={$path.includes("admin/novel/" + novel)}
-      href="admin/novel/{novel}"
+      href="/admin/novel/{novel}"
     >
       <img
         src={((novelsData || {})[novel] || {}).cover}

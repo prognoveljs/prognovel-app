@@ -22,7 +22,7 @@
     <div class="paypal">
       <Icon icon={faPaypal} size={"120px"} />
     </div>
-    <a href="https://www.paypal.me/prognovel" target="_blank"> Donate to our Paypal Account </a>
+    <a href="/https://www.paypal.me/prognovel" target="_blank"> Donate to our Paypal Account </a>
   </div>
 {/if}
 

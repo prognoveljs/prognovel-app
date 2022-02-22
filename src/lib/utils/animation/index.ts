@@ -9,12 +9,18 @@ export async function frameTick() {
 }
 
 export const loadWorklet = (): Promise<any> => {
-  return new Promise(async (resolve) => {
+  return new Promise(async (resolve, reject) => {
     if ("animationWorklet" in CSS && "paintWorklet" in CSS) {
-      await Promise.all([
-        (CSS as any).paintWorklet.addModule("worklet/paint-worklet.js"),
-        (CSS as any).animationWorklet.addModule("worklet/animation-worklet.js"),
-      ]);
+      try {
+        await Promise.all([
+          (CSS as any).paintWorklet.addModule("worklet/paint-worklet.js"),
+          (CSS as any).animationWorklet.addModule("worklet/animation-worklet.js"),
+        ]);
+      } catch (error) {
+        console.error("Error loading worklets...");
+        // console.error(error);
+        reject(error);
+      }
     }
 
     resolve("");

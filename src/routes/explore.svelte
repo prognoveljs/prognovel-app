@@ -22,13 +22,13 @@
   <button>Ongoing</button>
   <button>Completed</button>
   <div class="hr" />
-  <a href="explore">Xianxia</a>
-  <a href="explore">Magical Realism</a>
-  <a href="explore">Trope</a>
-  <a href="explore">Ancient</a>
-  <a href="explore">Politics</a>
-  <a href="explore">Don't Know</a>
-  <a href="explore">Somekinnd of Genre</a>
+  <a href="/explore">Xianxia</a>
+  <a href="/explore">Magical Realism</a>
+  <a href="/explore">Trope</a>
+  <a href="/explore">Ancient</a>
+  <a href="/explore">Politics</a>
+  <a href="/explore">Don't Know</a>
+  <a href="/explore">Somekinnd of Genre</a>
   <div class="grid">
     {#each mockNovels as novel, i}
       <div
