@@ -1,6 +1,5 @@
 import { get as getStore } from "svelte/store";
 import { siteMetadata, novelsData } from "$lib/store/states";
-import { BACKEND_API } from "$lib/_setting.ts";
 import { set, get, createStore } from "idb-keyval";
 import type { SiteMetadata, NovelMetadata } from "$typings";
 
@@ -11,7 +10,7 @@ const IDB_HOMEPAGE_PREFIX = "homepage";
 export async function fetchSiteMetadata(): Promise<SiteMetadata> {
   let data: SiteMetadata;
   try {
-    const response = await fetch(BACKEND_API);
+    const response = await fetch(import.meta.env.BACKEND_API);
     data = await response.json();
     await set(IDB_HOMEPAGE_PREFIX, data, getMetadataStore());
   } catch (err) {
@@ -40,7 +39,7 @@ export async function fetchSiteMetadata(): Promise<SiteMetadata> {
 
 // TODO add loading status to NovelMetadata
 export async function fetchNovelMetadata(id: string): Promise<NovelMetadata> {
-  const url = `${BACKEND_API}/novel?name=${id}`;
+  const url = `${import.meta.env.BACKEND_API}/novel?name=${id}`;
   let data: NovelMetadata;
   try {
     const response = await fetch(url);

@@ -8,7 +8,7 @@ yarn-error.log
 build
 /__build-stats__/
 /workers/node_modules/
-.env
+src/lib/.generated
 .cache
 .svelte
 

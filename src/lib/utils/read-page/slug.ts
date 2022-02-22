@@ -1,4 +1,3 @@
-import { BACKEND_API } from "$lib/_setting.ts";
 import { chaptersAppended, toc } from "$lib/store/read-page";
 import { get as getStore } from "svelte/store";
 
@@ -40,9 +39,9 @@ export function getChapterUrl(
   const start = chapterList.findIndex((ch) => ch === `${book}/${chapter}`);
   const end = start + prefetch + 1;
   let list = chapterList.slice(start, end);
-  return `${BACKEND_API}/chapter?fetch=${list.join(",")}&novel=${novel}`;
+  return `${import.meta.env.BACKEND_API}/chapter?fetch=${list.join(",")}&novel=${novel}`;
 }
 
 export function getChapterUrlFromList(novel: string, list: string[]) {
-  return `${BACKEND_API}/chapter?fetch=${list.join(",")}&novel=${novel}`;
+  return `${import.meta.env.BACKEND_API}/chapter?fetch=${list.join(",")}&novel=${novel}`;
 }

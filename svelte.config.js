@@ -6,12 +6,19 @@ import { dynamicImport } from "vite-plugin-dynamic-import";
 import { mdsvex } from "mdsvex";
 import { searchForWorkspaceRoot } from "vite";
 import { optimizeCss, optimizeImports } from "carbon-preprocess-svelte";
+// import ProgNovelENV from "./prognovel.env.js";
+
+// ProgNovelENV();
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
   extensions: [".svelte", ".svx"],
   preprocess: [
-    mdsvex(),
+    mdsvex({
+      layout: {
+        help_child: "./src/routes/help/_child_layout.svelte",
+      },
+    }),
     preprocess({
       scss: { prependData: `@import "style/scss/global.scss";` },
       // scss: {},
@@ -24,7 +31,7 @@ export default {
         dynamicImport(),
         ProgNovelCSS(),
         optimizeImports(),
-        process.env.NODE_ENV === "production" && optimizeCss(),
+        // process.env.NODE_ENV === "production" && optimizeCss(),
       ],
       optimizeDeps: {
         include: [

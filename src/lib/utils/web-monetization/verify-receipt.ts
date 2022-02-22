@@ -1,7 +1,8 @@
-import { BACKEND_API } from "$lib/_setting.ts";
 import { isReceiptVerified } from ".";
 
-const RECEIPT_VERIFIER_SERVER: string = `${new URL(BACKEND_API).href}verify`;
+const RECEIPT_VERIFIER_SERVER: string = `${
+  new URL(import.meta.env.BACKEND_API || "http://localhost").href
+}verify`;
 
 export async function verifyWebMonetizationReceipt(receipt: any): Promise<boolean> {
   const res = await fetch(RECEIPT_VERIFIER_SERVER, {

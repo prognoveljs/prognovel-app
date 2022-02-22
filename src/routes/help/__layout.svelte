@@ -2,10 +2,10 @@
   /** @type {import('@sveltejs/kit').Load} */
   export async function load({ params, fetch }) {
     const { slug } = params;
-    let res = await fetch(`help.json`);
+    let res = await fetch(`/help.json`);
     // let res = await this.fetch(`${path.split("/").slice(0, -1).join("/") || path}.json`);
     let { parent, children } = await res.json();
-    return { parent, children };
+    return { props: { parent, children } };
   }
 </script>
 
@@ -16,7 +16,7 @@
   import { onDestroy } from "svelte";
   import { customBreadcrumbTitle } from "$lib/utils/navigation/custom-title";
   import { SITE_TITLE } from "$lib/_setting.ts";
-  import { childData, showIndex } from "./_store";
+  import { childData, showIndex } from "./_store.ts";
   import Icon from "$lib/components/Icon.svelte";
   import { faList } from "@fortawesome/free-solid-svg-icons";
   import { fade } from "svelte/transition";

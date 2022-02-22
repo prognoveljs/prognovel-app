@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import { SITE_TITLE, BACKEND_API } from "$lib/_setting.ts";
+  import { SITE_TITLE } from "$lib/_setting.ts";
   import { get } from "idb-keyval";
   import { fetchSiteMetadata, getMetadataStore } from "$lib/utils/fetch-metadata";
   import { loadNovelTitles, loadPartialNovelsMetadata } from "$lib/utils/novel-page";
@@ -24,7 +24,7 @@
     let novelTitles = {};
     let bookmarkData: Bookmark[];
 
-    url = `${BACKEND_API}`;
+    url = `${import.meta.env.BACKEND_API}`;
     if (isBrowser) {
       const store = getMetadataStore();
       data = await get("homepage", store);

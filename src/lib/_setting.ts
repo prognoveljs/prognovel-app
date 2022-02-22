@@ -13,13 +13,10 @@ export const NOVEL_COVER_HEIGHT = 250;
 // novel banner
 export const NOVEL_BANNER_HEIGHT = 350;
 
-export const SITE_TITLE = parse(import.meta.env.SITE_TITLE) || "A ProgNovel App";
-
-export const BACKEND_API =
-  parse(import.meta.env.BACKEND_API) || "https://api-v2.prognovel.workers.dev/";
-export const IMAGE_RESIZER_SERVICE = parse(import.meta.env.IMAGE_RESIZER_SERVICE) || "";
 export const WEB_MONETIZATION_VERIFY: boolean | undefined =
   parse(import.meta.env.WEB_MONETIZATION_VERIFY, false) || false;
+export const IMAGE_RESIZER_SERVICE: string = "";
+export const SITE_TITLE: string = "";
 
 /** Parsing process.env variable safely. Set true for string variables. */
 function parse(env, isString = true): any {

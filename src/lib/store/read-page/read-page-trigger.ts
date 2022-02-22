@@ -2,7 +2,6 @@ import { novelsData, currentNovel } from "$lib/store/states";
 import { get as getStore } from "svelte/store";
 import { tick } from "svelte";
 import { fetchNovelMetadata } from "$lib/utils/fetch-metadata";
-import { BACKEND_API } from "$lib/_setting.ts";
 import { fireDebounceFetchChapter } from "$lib/utils/read-page/fetch-content";
 import { toc, chapterTitles } from "./index";
 import type { ChapterTitles } from "./index";
@@ -32,7 +31,9 @@ async function updateChapterTitles(novel: string, freshChapterTitles?: ChapterTi
   if (freshChapterTitles) {
     data = freshChapterTitles;
   } else {
-    const response = await fetch(`${BACKEND_API}/novel?name=${novel}&titles_only=true`);
+    const response = await fetch(
+      `${import.meta.env.BACKEND_API}/novel?name=${novel}&titles_only=true`,
+    );
     if (response.status > 299) {
       return;
     }

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { showIndex } from "$routes/help/_store.ts";
+  import { showIndex } from "../../../routes/help/_store.ts";
 
   export let pages = {};
   export let childPages = {};
@@ -11,15 +11,16 @@
   <a
     href="/help"
     class="link-parent"
-    class:currentPage={store.path ? store.path.split("help/").filter((s) => !!s).length < 2 : false}
-    >What is ProgNovel?</a
+    class:currentPage={store.url.pathname
+      ? store.url.pathname.split("help/").filter((s) => !!s).length < 2
+      : false}>What is ProgNovel?</a
   >
   <div class="pages">
     {#each Object.keys(pages) as slug}
       <a
         href={pages[slug].href}
-        class:currentPage={store.path.startsWith("/" + pages[slug].href) && store.path
-          ? store.path.split("help/").filter((s) => !!s).length >= 2
+        class:currentPage={store.url.pathname.startsWith(pages[slug].href) && store.url.pathname
+          ? store.url.pathname.split("help/").filter((s) => !!s).length >= 2
           : false}
       >
         {pages[slug].title}
@@ -31,7 +32,7 @@
               <a
                 href={childPages[slug][child].href}
                 class="children"
-                class:currentPage={store.path.startsWith("/" + childPages[slug][child].href)}
+                class:currentPage={store.url.pathname.startsWith(childPages[slug][child].href)}
                 title={childPages[slug][child].title}>{childPages[slug][child].title}</a
               >
             </li>

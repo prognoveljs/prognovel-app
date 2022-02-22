@@ -1,4 +1,4 @@
-import { NOVEL_BANNER_HEIGHT, BACKEND_API, IMAGE_RESIZER_SERVICE } from "$lib/_setting.ts";
+import { NOVEL_BANNER_HEIGHT, IMAGE_RESIZER_SERVICE } from "$lib/_setting.ts";
 
 export let isWEBP: boolean;
 const BANNER_IMAGE_FETCH_TIMEOUT = 10000; // in ms
@@ -26,11 +26,11 @@ const imageEndpoint = (
 ) => {
   // return imageResizerService
   //   ? `${imageResizerService}/resize?width=${width}&height=${height}&type=${type}&nocrop=false&stripmeta=true&url=${encodeURIComponent(
-  //       BACKEND_API + `/fetchImage?novel=${novel}&file=banner`,
+  //       import.meta.env.BACKEND_API + `/fetchImage?novel=${novel}&file=banner`,
   //     )}`
-  //   : BACKEND_API + `/fetchImage?novel=${novel}&file=banner`;
+  //   : import.meta.env.BACKEND_API + `/fetchImage?novel=${novel}&file=banner`;
   return (
-    BACKEND_API +
+    import.meta.env.BACKEND_API +
     `/fetchImage?novel=${novel}&file=banner${
       imageResizerService
         ? `&width=${width}&height=${height}&type=${type}&imageresizeservice=${imageResizerService}`

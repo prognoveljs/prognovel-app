@@ -4,5 +4,6 @@
   /** @type {import('@sveltejs/kit').Load} */
   export async function load() {
     // goto("/discussions/all");
+    return {};
   }
 </script>
