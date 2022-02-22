@@ -12,8 +12,8 @@
   import Icon from "$lib/components/Icon.svelte";
   import NavOptions from "./navigation/NavOptions.svelte";
   import { page, showSettings } from "$lib/store/states";
+  import { path } from "$lib/store/states";
 
-  export let segment;
   let preload;
   onMount(() => {
     preload = false;
@@ -24,30 +24,30 @@
   {#if !preload}
     <a
       sveltekit:prefetch
-      class={segment === undefined || homePageChildren.includes(segment) ? "selected" : ""}
+      class={$path === undefined || homePageChildren.includes($path) ? "selected" : ""}
       href="/"
     >
       <Icon icon={faHome} size={"24px"} />
       <span class="tooltip" aria-hidden="true">home</span>
     </a>
-    <a sveltekit:prefetch class={segment === "updates" ? "selected" : ""} href="/updates">
+    <a sveltekit:prefetch class={$path === "/updates" ? "selected" : ""} href="/updates">
       <Icon icon={faBolt} size={"24px"} />
       <span class="tooltip" aria-hidden="true">all updates</span>
     </a>
     <a
       sveltekit:prefetch
-      class={segment === "discussions" ? "selected" : ""}
+      class={$path.startsWith("/discussions") ? "selected" : ""}
       href="/discussions/all"
     >
       <Icon icon={faCommentAlt} size={"24px"} />
       <span class="tooltip" aria-hidden="true">discussions</span>
     </a>
-    <a sveltekit:prefetch class={segment === "novel" ? "selected" : ""} href="/novel">
+    <a sveltekit:prefetch class={$path === "/novel" ? "selected" : ""} href="/novel">
       <Icon icon={faBook} size={"24px"} />
       <span class="tooltip" aria-hidden="true">all novels</span>
     </a>
     <hr />
-    <a sveltekit:prefetch class={segment === "help" ? "selected" : ""} href="/help">
+    <a sveltekit:prefetch class={$path === "/help" ? "selected" : ""} href="/help">
       <Icon icon={faQuestion} size={"24px"} />
       <span class="tooltip" aria-hidden="true">help </span>
     </a>
