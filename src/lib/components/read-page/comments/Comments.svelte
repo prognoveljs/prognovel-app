@@ -18,7 +18,7 @@
   {/if}
   {#key $currentChapterCursor}
     <section class="contain" class:show={$showComments}>
-      <Disqus src={$siteMetadata.disqus_id} identifier="comments" />
+      <!-- <Disqus src={$siteMetadata.disqus_id} identifier="comments" /> -->
     </section>
   {/key}
 {/if}

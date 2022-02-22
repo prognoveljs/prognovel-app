@@ -13,8 +13,8 @@ export const loadWorklet = (): Promise<any> => {
     if ("animationWorklet" in CSS && "paintWorklet" in CSS) {
       try {
         await Promise.all([
-          (CSS as any).paintWorklet.addModule("worklet/paint-worklet.js"),
-          (CSS as any).animationWorklet.addModule("worklet/animation-worklet.js"),
+          (CSS as any).paintWorklet.addModule("/worklet/paint-worklet.js"),
+          (CSS as any).animationWorklet.addModule("/worklet/animation-worklet.js"),
         ]);
       } catch (error) {
         console.error("Error loading worklets...");

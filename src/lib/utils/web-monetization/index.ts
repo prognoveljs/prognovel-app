@@ -88,7 +88,6 @@ export const revShareUsersLite: Readable<RevShareUser[]> = derived(
   [webfundingPool, revShareStats],
   ([pool, stats]) => {
     if (!pool.length || JSON.stringify(stats) === "{}") return [];
-    console.log(stats);
     const poolWithChance: RevShareUser[] = pool.map((p) => {
       const chance = ((stats?.[p?.name]?.chance || 0) * 100).toFixed(2);
       return {

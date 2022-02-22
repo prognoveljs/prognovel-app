@@ -13,13 +13,13 @@
   import { currentNovel, siteMetadata } from "$lib/store/states";
   import { customBreadcrumbTitle } from "$lib/utils/navigation/custom-title";
   import { isBrowser } from "$lib/store/states";
+  import { path } from "$lib/store/states";
 
-  export let page = {};
-  $: isAtReadPage = page.path ? page.path.startsWith("/read") : false;
-  $: segments = page.path ? getBreadcrumbSegments(page.path) : [];
+  $: isAtReadPage = $path && $path.startsWith("/read");
+  $: segments = $path ? getBreadcrumbSegments($path) : [];
 
   let backButtonHref = "/"; // period means current relative url on sapper.
-  $: if (page.path && isBrowser) {
+  $: if ($path && isBrowser) {
     tick().then((r) => {
       getPreviousBreadcrumbLink().then((href) => (backButtonHref = href));
     });
@@ -43,10 +43,11 @@
       {#if !isAtReadPage}
         <!-- sad face :( -->
         {#if i + 1 < segments.length}
-          <a href={segments.filter((s) => segments.indexOf(s) <= i).join("/")} sveltekit:prefetch
-            >{getBreadcrumbParentLabel(segment)}</a
+          <a
+            href={"/" + segments.filter((s) => segments.indexOf(s) <= i).join("/")}
+            sveltekit:prefetch>{getBreadcrumbParentLabel(segment)}</a
           >
-        {:else if segments[0] === "novel" && i !== 0}
+        {:else if segments[0] === "/novel" && i !== 0}
           <span class:single={segments.length === 1}>{getNovelTitle(segment)}</span>
         {:else}
           <span class:single={segments.length === 1}
@@ -58,7 +59,7 @@
       {#if isAtReadPage}
         <!-- on read page -->
         {#if i === 0}
-          <a href={"novel/" + $currentNovel} sveltekit:prefetch>{getNovelTitle($currentNovel)}</a>
+          <a href={"/novel/" + $currentNovel} sveltekit:prefetch>{getNovelTitle($currentNovel)}</a>
         {:else if i === segments.length - 1}
           <span class:single={segments.length === 1}>
             Chapter

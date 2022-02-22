@@ -3,9 +3,9 @@
   import { currentContent } from "$lib/store/read-page";
   import { tick } from "svelte";
   import { ChapterState } from "$lib/utils/read-page/vars";
+  import { path } from "$lib/store/states";
 
   export let isNavigatingBetweenPages = false;
-  export let segment = "";
 
   async function startLoading() {
     const loading: HTMLElement = document.createElement("div");
@@ -34,7 +34,7 @@
       );
     });
   }
-  $: onReadPage = typeof segment === "string" && segment.startsWith("read");
+  $: onReadPage = $path.startsWith("/read");
   $: isLoading =
     ($currentContent?.meta?.status === ChapterState.Loading && onReadPage) ||
     (isNavigatingBetweenPages && !onReadPage);

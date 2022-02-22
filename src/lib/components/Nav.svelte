@@ -1,17 +1,15 @@
-<script>
+<script lang="ts">
   import NavTitles from "$lib/components/navigation/NavTitles.svelte";
   import NavHome from "$lib/components/navigation/NavHome.svelte";
   import NavSearch from "./navigation/NavSearch.svelte";
-
-  export let page;
-  export let segment;
+  import { path } from "$lib/store/states";
 </script>
 
 <header>
-  {#if segment === undefined || segment === "announcement" || segment === "updates"}
-    <NavHome {segment} />
+  {#if $path === "/" || $path.startsWith("/announcement") || $path.startsWith("/updates")}
+    <NavHome />
   {:else}
-    <NavTitles {page} />
+    <NavTitles />
   {/if}
   <section class="top-right">
     <NavSearch />

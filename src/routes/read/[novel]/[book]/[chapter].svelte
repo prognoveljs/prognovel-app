@@ -3,8 +3,10 @@
   /** @type {import('@sveltejs/kit').Load} */
   export async function load({ params }) {
     const { novel, book, chapter } = params;
-    checkTableOfContentExists(novel);
-    prefetchChapter(novel, book, chapter);
+    if (isBrowser) {
+      checkTableOfContentExists(novel);
+      prefetchChapter(novel, book, chapter);
+    }
 
     return {};
   }
@@ -21,7 +23,7 @@
   } from "$lib/utils/read-page";
   import Content from "../../_ReadContent.svelte";
   import Options from "../../_Options.svelte";
-  import { currentNovel, novelsData } from "$lib/store/states";
+  import { currentNovel, novelsData, isBrowser } from "$lib/store/states";
   import { fetchNovelMetadata } from "$lib/utils/fetch-metadata";
   import { currentChapter, currentBook, currentContent } from "$lib/store/read-page";
   import { replacePageTitleBookAndChapter } from "$lib/utils/read-page/history";
