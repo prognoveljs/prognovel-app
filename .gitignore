@@ -16,4 +16,3 @@ src/lib/.generated
 .netlify
 src/app.html
 .env
-.env
