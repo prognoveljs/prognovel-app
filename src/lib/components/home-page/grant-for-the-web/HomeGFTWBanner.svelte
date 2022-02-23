@@ -12,7 +12,7 @@
   <div class="text">
     As a spark grantee of <a
       class="gftw"
-      href="/https://www.grantfortheweb.org"
+      href="https://www.grantfortheweb.org"
       rel="noreferrer"
       target="_blank"
     >
@@ -24,7 +24,7 @@
     <div class="cta">
       <a
         class="read-announcement"
-        href="/https://www.grantfortheweb.org/blog/announcing-our-second-grantee-cohort"
+        href="https://www.grantfortheweb.org/blog/announcing-our-second-grantee-cohort"
         >Grant for the Web Announcement</a
       >
       <a class="learn-more" href="/help/monetization"

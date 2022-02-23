@@ -7,7 +7,7 @@
   <ol>
     <li>
       Install NodeJS in your computer if you haven't already. Download link: <a
-        href="/https://nodejs.org/en/">https://nodejs.org</a
+        href="https://nodejs.org/en/">https://nodejs.org</a
       >
     </li>
     <li>

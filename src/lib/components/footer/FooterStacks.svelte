@@ -2,7 +2,7 @@
   export let grid;
 </script>
 
-<a href="/https://community.webmonetization.org/prognovel" aria-label="GftW">
+<a href="https://community.webmonetization.org/prognovel" aria-label="GftW">
   <div class="body" style="grid-area:{grid};">
     <h3>ProgNovel is <span>Grant for the Web</span> Spark Grantee</h3>
     <section>

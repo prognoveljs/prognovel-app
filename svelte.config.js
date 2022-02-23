@@ -6,7 +6,7 @@ import { dynamicImport } from "vite-plugin-dynamic-import";
 import { mdsvex } from "mdsvex";
 import { searchForWorkspaceRoot } from "vite";
 import { optimizeCss, optimizeImports } from "carbon-preprocess-svelte";
-// import ProgNovelENV from "./prognovel.env.js";
+import ProgNovelENV from "./prognovel.env.js";
 
 // ProgNovelENV();
 
@@ -28,6 +28,7 @@ export default {
     adapter: adapter(),
     vite: {
       plugins: [
+        ProgNovelENV(),
         dynamicImport(),
         ProgNovelCSS(),
         optimizeImports(),

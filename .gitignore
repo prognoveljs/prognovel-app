@@ -15,3 +15,5 @@ src/lib/.generated
 # Local Netlify folder
 .netlify
 src/app.html
+.env
+.env

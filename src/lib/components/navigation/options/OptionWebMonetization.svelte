@@ -15,7 +15,7 @@
   {:else}
     <div class="please-subscribe">
       Subscribe $5/month on Coil to unlock color themes and other goodies!
-      <a target="_blank" href="/https://coil.com">Subscribe now!</a>
+      <a target="_blank" href="https://coil.com">Subscribe now!</a>
     </div>
   {/if}
 </div>

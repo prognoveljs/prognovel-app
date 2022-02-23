@@ -2,7 +2,7 @@
   <em> disqus haven't been set yet </em>
   <small>
     if you are site administrator, set value of discus_id in site-settings.yml to <a
-      href="/https://help.disqus.com/en/articles/1717111-what-s-a-shortname">Disqus shortname</a
+      href="https://help.disqus.com/en/articles/1717111-what-s-a-shortname">Disqus shortname</a
     >
     you get from your Disqus admin account.
   </small>

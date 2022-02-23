@@ -15,8 +15,8 @@ export const NOVEL_BANNER_HEIGHT = 350;
 
 export const WEB_MONETIZATION_VERIFY: boolean | undefined =
   parse(import.meta.env.WEB_MONETIZATION_VERIFY, false) || false;
-export const IMAGE_RESIZER_SERVICE: string = "";
-export const SITE_TITLE: string = "";
+export const IMAGE_RESIZER_SERVICE: string = import.meta.env.IMAGE_RESIZER_SERVICE;
+export const SITE_TITLE: string = import.meta.env.SITE_TITLE;
 
 /** Parsing process.env variable safely. Set true for string variables. */
 function parse(env, isString = true): any {

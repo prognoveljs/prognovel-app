@@ -39,7 +39,7 @@ CF_API_TOKEN=${document.getElementById("api-token").value}`,
   <div class="reminder">
     To publish to Cloudflare network, ProgNovel need sensitive information and your credential to be
     used as key to access your Cloudflare account remotely as environment secrets. Learn how to set
-    environment secrets at <a href="/https://github.com/prognoveljs/prognovel-cli"
+    environment secrets at <a href="https://github.com/prognoveljs/prognovel-cli"
       >https://github.com/prognoveljs/prognovel-cli</a
     >
   </div>
@@ -64,7 +64,7 @@ CF_API_TOKEN=${document.getElementById("api-token").value}`,
       <p>
         If you believe your credentials have been compromised, you can protect access to your
         account by following this guide: <a
-          href="/https://developers.cloudflare.com/api/tokens/create#roll-api-token"
+          href="https://developers.cloudflare.com/api/tokens/create#roll-api-token"
           >https://developers.cloudflare.com/api/tokens/create#roll-api-token</a
         >
       </p>

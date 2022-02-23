@@ -47,7 +47,7 @@
       <span class="tooltip" aria-hidden="true">all novels</span>
     </a>
     <hr />
-    <a sveltekit:prefetch class={$path === "/help" ? "selected" : ""} href="/help">
+    <a sveltekit:prefetch class={$path.startsWith("/help") ? "selected" : ""} href="/help">
       <Icon icon={faQuestion} size={"24px"} />
       <span class="tooltip" aria-hidden="true">help </span>
     </a>

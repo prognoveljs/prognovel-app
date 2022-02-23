@@ -43,7 +43,9 @@
       const path = await import("path");
       const fs = await import("fs");
       const readJson = (filePath) => {
-        return JSON.parse(fs.readFileSync(path.join(".cache", filePath), "utf-8"));
+        return JSON.parse(
+          fs.readFileSync(path.join(import.meta.env.CACHE_PATH, filePath), "utf-8"),
+        );
       };
       try {
         try {

@@ -1,11 +1,22 @@
 import { readFileSync } from "fs";
 import { join } from "path";
+import EnvironmentPlugin from "vite-plugin-environment";
 
 export default () => {
-  import.meta.env.BASEPATH = process.cwd();
-  import.meta.env.CACHEPATH = ".cache";
   const metadata = JSON.parse(
-    readFileSync(join(import.meta.env.CACHEPATH, "assets/publish/sitemetadata.json"), "utf-8"),
+    readFileSync(join(".cache/assets/publish/sitemetadata.json"), "utf-8"),
   );
-  import.meta.env.SITE_TITLE = metadata?.title;
+
+  return EnvironmentPlugin(
+    {
+      BASE_PATH: process.cwd(),
+      CACHE_PATH: join(process.cwd(), ".cache"),
+      SITE_TITLE: metadata?.site_title || "ProgNovel App",
+      IMAGE_RESIZER_SERVICE: metadata?.image_resizer_service || "http://localhost",
+      BACKEND_API: process.env.BACKEND_API || "http://localhost",
+    },
+    {
+      defineOn: "import.meta.env",
+    },
+  );
 };
