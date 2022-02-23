@@ -4,11 +4,11 @@
 	"version": "0.6.3",
 	"type": "module",
 	"scripts": {
-		"populate": "node plugins/onbuild/populate/assets && node plugins/build/populate/copy-assets",
+		"populate": "node plugins/onbuild/populate/assets && node plugins/onbuild/populate/copy-assets",
 		"export": "svelte-kit build",
 		"dev": "svelte-kit dev",
 		"dev:cfpages": "wrangler pages dev ./__sapper__/export --kv BUCKET=1ec290c449c642a1abddbde04caee660",
-		"build": "npm run populate && npm run export && node plugins/build/finish",
+		"build": "npm run populate && npm run export && node plugins/onbuild/finish",
 		"test": "cypress run",
 		"test:cy": "cypress open",
 		"format": "prettier --write src/**/*.{ts,js,svelte} --plugin-search-dir=."
