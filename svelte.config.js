@@ -39,6 +39,7 @@ export default {
           "flatpickr",
           "flatpickr/dist/l10n/index.js",
           "flatpickr/dist/plugins/rangePlugin",
+          "crypto-js/md5.js",
         ],
         esbuildOptions: {
           plugins: [esbuildCommonjs()],
