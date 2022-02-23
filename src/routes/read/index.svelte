@@ -1,9 +1,10 @@
 <script context="module">
+  import { isBrowser } from "$lib/store/states";
   /** @type {import('@sveltejs/kit').Load} */
-  export async function load({query}) {
+  export async function load({}) {
     return {
-      load: query.load
-    }
+      props: { load: isBrowser ? new URL(location.href).searchParams.get("load") : "" },
+    };
   }
 </script>
 
@@ -12,7 +13,7 @@
   import { goto } from "$app/navigation";
   import { getLoadingPlaceholder } from "$lib/utils/read-page";
 
-  export let load
+  export let load;
 
   onMount(async () => {
     console.log("🚀 redirecting to", load);

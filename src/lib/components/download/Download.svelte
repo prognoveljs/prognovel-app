@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { faDownload } from "@fortawesome/free-solid-svg-icons/faDownload";
+  import { faDownload } from "@fortawesome/free-solid-svg-icons";
   import Icon from "$lib/components/Icon.svelte";
   import DownloadLoadingSVG from "./DownloadLoadingSVG.svelte";
   import { startDownload } from "$lib/utils/offline-reading/download";

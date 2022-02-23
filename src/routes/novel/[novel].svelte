@@ -61,8 +61,8 @@
 
   export let id;
   export let novelMetadata: NovelMetadata;
-  let affiliate = $page.url.searchParams.affiliate || "";
-  let affiliateName = $page.url.searchParams.affiliateName || "";
+  let affiliate = $page.url.searchParams.get("affiliate") || "";
+  let affiliateName = $page.url.searchParams.get("affiliateName") || "";
 
   setContext("id", id);
   setContext("novelMetadata", novelMetadata);
