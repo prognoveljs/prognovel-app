@@ -1,8 +1,8 @@
-import md5 from "md5";
 import { GravatarProfile } from "$typings";
+import { MD5 } from "crypto-es/lib/md5.js";
 
 export function getGravatarURL(email: string, size?: number): string {
-  return `https://www.gravatar.com/avatar/${md5(email)}`;
+  return `https://www.gravatar.com/avatar/${MD5(email).toString()}`;
 }
 
 export function getUser(email?: string) {
