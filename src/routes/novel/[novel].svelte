@@ -47,9 +47,6 @@
 
 <script lang="ts">
   import { setContext } from "svelte";
-  // import { novels } from "../../mock";
-  import { fetchSuggestions } from "./_suggestions";
-  import { page } from "$app/stores";
   import InstantAffiliate from "$lib/components/web-monetization/InstantAffiliate.svelte";
   import Banner from "./_NovelBanner.svelte";
   import Book from "./_NovelBook.svelte";
@@ -58,11 +55,14 @@
   import { toc, chaptersLoaded } from "$lib/store/read-page";
   import { getChapterStoreKey, prefetchChapter } from "$lib/utils/read-page";
   import type { NovelMetadata } from "$typings";
+  // import { isBrowser } from "$lib/store/states";
 
   export let id;
   export let novelMetadata: NovelMetadata;
-  let affiliate = $page.url.searchParams.get("affiliate") || "";
-  let affiliateName = $page.url.searchParams.get("affiliateName") || "";
+  let affiliate = isBrowser ? new URL(location.href).searchParams.get("affiliate") || "" : "";
+  let affiliateName = isBrowser
+    ? new URL(location.href).searchParams.get("affiliateName") || ""
+    : "";
 
   setContext("id", id);
   setContext("novelMetadata", novelMetadata);
