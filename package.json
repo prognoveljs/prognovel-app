@@ -4,7 +4,7 @@
 	"version": "0.6.3",
 	"type": "module",
 	"scripts": {
-		"populate": "node plugins/build/populate/assets && node plugins/build/populate/copy-assets",
+		"populate": "node plugins/onbuild/populate/assets && node plugins/build/populate/copy-assets",
 		"export": "svelte-kit build",
 		"dev": "svelte-kit dev",
 		"dev:cfpages": "wrangler pages dev ./__sapper__/export --kv BUCKET=1ec290c449c642a1abddbde04caee660",

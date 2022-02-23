@@ -1,6 +1,6 @@
 import adapter from "@sveltejs/adapter-static";
 import preprocess from "svelte-preprocess";
-import ProgNovelCSS from "./plugins/build/themes/css-global.js";
+import ProgNovelCSS from "./plugins/onbuild/themes/css-global.js";
 import { join, resolve } from "path";
 import { dynamicImport } from "vite-plugin-dynamic-import";
 import { mdsvex } from "mdsvex";
@@ -35,25 +35,8 @@ export default {
         // process.env.NODE_ENV === "production" && optimizeCss(),
       ],
       optimizeDeps: {
-        include: [
-          "flatpickr",
-          "flatpickr/dist/l10n/index.js",
-          "flatpickr/dist/plugins/rangePlugin",
-          "crypto-js/md5.js",
-        ],
-        esbuildOptions: {
-          plugins: [esbuildCommonjs()],
-        },
-      },
-      build: {
-        commonjsOptions: {
-          include: [
-            "flatpickr",
-            "flatpickr/dist/l10n/index.js",
-            "flatpickr/dist/plugins/rangePlugin",
-            "crypto-js/md5.js",
-          ],
-        },
+        include: [],
+        esbuildOptions: {},
       },
       ssr: {
         noExternal: ["plugins/web-components/prognovel-native-plugins.ts"],
