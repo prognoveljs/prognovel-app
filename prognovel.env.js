@@ -12,7 +12,7 @@ export default () => {
       BASE_PATH: process.cwd(),
       CACHE_PATH: join(process.cwd(), ".cache"),
       SITE_TITLE: metadata?.site_title || "ProgNovel App",
-      IMAGE_RESIZER_SERVICE: metadata?.image_resizer_service || "http://localhost",
+      IMAGE_RESIZER_SERVICE: metadata?.image_resizer_service || "",
       BACKEND_API: process.env.BACKEND_API || "http://localhost",
     },
     {
