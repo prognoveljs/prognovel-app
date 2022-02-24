@@ -40,7 +40,7 @@ ProgNovel works best when hosted on Jamstack platforms for performance and effie
 5. Fill the build configuration with something like these:
 
 - Build command: `npm run build`
-- Publish/output directory: `__sapper__/export/`
+- Publish/output directory: `build`
 - Under secret environment section, create new variable with key `BACKEND_API` and value of URL of your backend API you create previously (usually is `https://api.{your-cloudflare-account}.workers.dev`).
 
 6. Wait for your hosting platforms building your ProgNovel App, which might takes 2~10 minutes depending on the hosting platform you used. Usually you'll be notified in the dashboard with the link of your newly created site once the build is complete.

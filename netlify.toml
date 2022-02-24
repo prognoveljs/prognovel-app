@@ -1,5 +1,5 @@
 [build]
-publish = "__sapper__/export/"
+publish = "build"
 command = "npm run build"
 
 [functions]
@@ -8,4 +8,3 @@ directory = "functions-netlify"
 [template.environment]
 SITE_TITLE = "Site title"
 BACKEND_API = "Your Cloudflare Workers backend URL"
-
