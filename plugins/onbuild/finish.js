@@ -1,1 +1,1 @@
-import "./redirects/jamstack-redirects";
+import "./redirects/jamstack-redirects.js";
