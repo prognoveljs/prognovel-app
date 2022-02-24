@@ -5,7 +5,7 @@
   import { tick } from "svelte";
   import { isBrowser } from "$lib/store/states";
   export let page;
-  export let propertyId = "G-M5KXSRL0P4";
+  export let propertyId = import.meta.env.GA_TRACKING_ID;
 
   $: if (page) {
     (async function () {

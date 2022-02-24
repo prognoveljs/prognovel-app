@@ -14,6 +14,7 @@ export default () => {
       SITE_TITLE: metadata?.site_title || "ProgNovel App",
       IMAGE_RESIZER_SERVICE: metadata?.image_resizer_service || "",
       BACKEND_API: process.env.BACKEND_API || "http://localhost",
+      GA_TRACKING_ID: process.env.GA_TRACKING_ID || "",
     },
     {
       defineOn: "import.meta.env",
