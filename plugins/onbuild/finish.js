@@ -1,1 +1,1 @@
-require("./redirects/jamstack-redirects");
+import "./redirects/jamstack-redirects";

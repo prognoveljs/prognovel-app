@@ -1,10 +1,7 @@
-const { readFileSync, writeFileSync } = require("fs");
-const { join } = require("path");
+import { readFileSync, writeFileSync } from "fs";
+import { join } from "path";
 
-const siteMetadata = require("../../../.cache/assets/publish/sitemetadata.json");
-const { backend_api } = siteMetadata;
-const buildFolder = "__sapper__/export";
-
+const buildFolder = "build";
 let BACKEND_API = process.env.BACKEND_API || "";
 
 console.log("ENV Netlify", process.env.NETLIFY);
