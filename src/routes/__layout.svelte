@@ -17,7 +17,7 @@
   import Analytics from "$lib/components/analytics/Analytics.svelte";
   import { appStart } from "$lib/utils/app-start";
   import { isBrowser } from "$lib/store/states";
-  import "carbon-components-svelte/css/g90.css";
+  // import "carbon-components-svelte/css/g90.css";
 
   export let segment;
 
