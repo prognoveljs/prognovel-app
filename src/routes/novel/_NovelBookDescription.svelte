@@ -22,7 +22,7 @@
     {#if !showMore}<span class="show-more" on:click={() => (showMore = true)}>show more</span>{/if}
   </div>
   <div class="read-button-flex">
-    <a href={$readPageLink || "."} disabled={disableLink}>READ NOW</a>
+    <a href={$readPageLink || "/"} disabled={disableLink}>READ NOW</a>
   </div>
 </article>
 
