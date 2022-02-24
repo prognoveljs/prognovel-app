@@ -15,6 +15,7 @@ export default () => {
       IMAGE_RESIZER_SERVICE: metadata?.image_resizer_service || "",
       BACKEND_API: process.env.BACKEND_API || "http://localhost",
       GA_TRACKING_ID: process.env.GA_TRACKING_ID || "",
+      NOVEL_LIST: metadata?.novels || [],
     },
     {
       defineOn: "import.meta.env",
