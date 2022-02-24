@@ -61,5 +61,8 @@ export default {
         },
       },
     },
+    files: {
+      serviceWorker: "src/service-worker.ts",
+    },
   },
 };
