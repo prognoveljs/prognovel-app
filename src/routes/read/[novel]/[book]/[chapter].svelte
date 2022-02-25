@@ -1,25 +1,34 @@
 <script context="module">
-  import { checkTableOfContentExists, prefetchChapter } from "utils/read-page";
-  export async function preload({ params }) {
+  import { checkTableOfContentExists, prefetchChapter } from "$lib/utils/read-page";
+  /** @type {import('@sveltejs/kit').Load} */
+  export async function load({ params }) {
     const { novel, book, chapter } = params;
-    checkTableOfContentExists(novel);
-    prefetchChapter(novel, book, chapter);
+    if (isBrowser) {
+      checkTableOfContentExists(novel);
+      prefetchChapter(novel, book, chapter);
+    }
+
+    return {};
   }
 </script>
 
 <script lang="ts">
   import { onMount, tick, onDestroy } from "svelte";
-  import { stores } from "@sapper/app";
-  import { leavePage, enterPage, setChapterCursor, prefetchNextChapter } from "utils/read-page";
+  import { page } from "$app/stores";
+  import {
+    leavePage,
+    enterPage,
+    setChapterCursor,
+    prefetchNextChapter,
+  } from "$lib/utils/read-page";
   import Content from "../../_ReadContent.svelte";
   import Options from "../../_Options.svelte";
-  import { currentNovel, novelsData } from "store/states";
-  import { fetchNovelMetadata } from "utils/fetch-metadata";
-  import { currentChapter, currentBook, currentContent } from "store/read-page";
-  import { replacePageTitleBookAndChapter } from "utils/read-page/history";
-  // import { prefetchNextChapter } from "utils/read-page/fetch-content";
+  import { currentNovel, novelsData, isBrowser } from "$lib/store/states";
+  import { fetchNovelMetadata } from "$lib/utils/fetch-metadata";
+  import { currentChapter, currentBook, currentContent } from "$lib/store/read-page";
+  import { replacePageTitleBookAndChapter } from "$lib/utils/read-page/history";
+  // import { prefetchNextChapter } from "$lib/utils/read-page/fetch-content";
 
-  let { page } = stores() as any;
   let { novel, book, chapter } = $page.params;
   $: if ($novelsData[novel] && book && chapter) mountPage($page);
 
@@ -28,7 +37,7 @@
     if (currentPage === JSON.stringify(page)) return;
     currentPage = JSON.stringify(page);
 
-    if (!page.path.startsWith("/read/")) return tick().then(() => mountPage(page));
+    if (!page.url.pathname.startsWith("/read/")) return tick().then(() => mountPage(page));
     if (!novel || !book || !chapter) return tick().then(() => mountPage(page));
     // [novel, chapter] = parseSlug(page.params.slug);
     const slug = page.params;

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import AdminDashboardBody from "components/admin-page/AdminDashboardBody.svelte";
+  import AdminDashboardBody from "$lib/components/admin-page/AdminDashboardBody.svelte";
 </script>
 
 <AdminDashboardBody />

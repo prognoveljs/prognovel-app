@@ -4,12 +4,15 @@
 /static/publish/
 yarn-error.log
 /cypress/screenshots/
-/__sapper__/
+.svelte-kit
+build
 /__build-stats__/
 /workers/node_modules/
-.env
+src/lib/.generated
 .cache
 .svelte
 
 # Local Netlify folder
 .netlify
+src/app.html
+.env

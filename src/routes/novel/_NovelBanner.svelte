@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { bannerImages, updateBannerImage } from "utils/images";
-  import { NOVEL_BANNER_HEIGHT } from "settings";
+  import { bannerImages, updateBannerImage } from "$lib/utils/images";
+  import { NOVEL_BANNER_HEIGHT } from "$lib/_setting.ts";
   import { getContext, onMount } from "svelte";
-  import type { NovelMetadata } from "typings";
+  import type { NovelMetadata } from "$typings";
 
   export let novelMetadata: NovelMetadata = getContext("novelMetadata");
   export let id: string = getContext("id");

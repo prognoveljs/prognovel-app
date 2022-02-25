@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { entireSiteGenres, genreFilter } from "store/novel-page";
+  import { entireSiteGenres, genreFilter } from "$lib/store/novel-page";
   export let headerText = "All novels";
 
   function pickGenre(genre: string): any {

@@ -1,15 +1,15 @@
 <script>
-  import ComingSoon from "../components/ComingSoon.svelte";
+  import ComingSoon from "$lib/components/ComingSoon.svelte";
   // import { onMount } from "svelte";
 
   // let ActionBottom;
 
   // onMount(async () => {
-  //   if (process.env.TEST_INTERLEDGER === true) {
+  //   if (import.meta.env.TEST_INTERLEDGER === true) {
   //     ActionBottom = (await import(/* webpackChunkName: interledger-plugins */"components/read-page/ActionBottom.svelte")).default;
   //   }
   // });
-  // import ActionBottom from "components/read-page/ActionBottom.svelte";
+  // import ActionBottom from "$lib/components/read-page/ActionBottom.svelte";
 </script>
 
 <svelte:head>

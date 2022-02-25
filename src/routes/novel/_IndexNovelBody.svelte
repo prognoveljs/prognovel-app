@@ -1,10 +1,10 @@
 <script lang="ts">
-  import BookCover from "components/BookCover.svelte";
-  import { genreFilter } from "store/novel-page";
-  import { novelsData } from "states";
+  import BookCover from "$lib/components/BookCover.svelte";
+  import { genreFilter } from "$lib/store/novel-page";
+  import { novelsData } from "$lib/store/states";
 
-  import { siteMetadata } from "store/states";
-  import { getNovelCoverSubtitle, loadNovelTitles } from "utils/novel-page";
+  import { siteMetadata } from "$lib/store/states";
+  import { getNovelCoverSubtitle, loadNovelTitles } from "$lib/utils/novel-page";
 
   $: novels = ($siteMetadata?.novels || []) as string[];
   $: novelTitles = loadNovelTitles($siteMetadata);
@@ -14,7 +14,7 @@
   <section class="grid">
     {#each novels as novel}
       {#if !$genreFilter.length || $genreFilter.some( (genre) => $novelsData[novel].genre.includes(genre), )}
-        <a href="novel/{novel}">
+        <a href="/novel/{novel}">
           <BookCover
             title={novelTitles[novel]}
             {novel}

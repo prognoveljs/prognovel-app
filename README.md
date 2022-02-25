@@ -40,11 +40,15 @@ ProgNovel works best when hosted on Jamstack platforms for performance and effie
 5. Fill the build configuration with something like these:
 
 - Build command: `npm run build`
-- Publish/output directory: `__sapper__/export/`
+- Publish/output directory: `build`
 - Under secret environment section, create new variable with key `BACKEND_API` and value of URL of your backend API you create previously (usually is `https://api.{your-cloudflare-account}.workers.dev`).
 
 6. Wait for your hosting platforms building your ProgNovel App, which might takes 2~10 minutes depending on the hosting platform you used. Usually you'll be notified in the dashboard with the link of your newly created site once the build is complete.
 7. (Optional) If you need to upgrade your ProgNovel app version, simply click fetch upstream in your forked repo. Your hosting platforms will usually detects change in your repo and will rebuild the app with the latest codebase.
+
+## Notes
+
+- Technically, you can host ProgNovel frontend traditionally on a VPS (but not the backend). However it will be less optimized in term of performance and cost-value, and some pages will crash when directly entered their URL or reloading the page from their location. Therefore, ProgNovel will be limited on Jamstack and Serverless as its default hosting choice platform.
 
 ## Other links
 

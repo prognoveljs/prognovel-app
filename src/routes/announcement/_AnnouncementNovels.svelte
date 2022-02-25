@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Item from "components/home-page/announcement/AnnouncementNovelsItem.svelte";
+  import Item from "$lib/components/home-page/announcement/AnnouncementNovelsItem.svelte";
 
   const mockNovels = [
     "Yashura Legacy",

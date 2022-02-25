@@ -1,17 +1,68 @@
-const sveltePreprocess = require("svelte-preprocess");
-const { mdsvex } = require("mdsvex");
-const { join } = require("path");
+import adapter from "@sveltejs/adapter-static";
+import preprocess from "svelte-preprocess";
+import ProgNovelCSS from "./plugins/onbuild/themes/css-global.js";
+import { join, resolve } from "path";
+import { dynamicImport } from "vite-plugin-dynamic-import";
+import { mdsvex } from "mdsvex";
+import { esbuildCommonjs } from "@originjs/vite-plugin-commonjs";
+import { optimizeCss, optimizeImports } from "carbon-preprocess-svelte";
+import ProgNovelENV from "./prognovel.env.js";
 
-module.exports.preprocess = [
-  sveltePreprocess({
-    postcss: {
-      plugins: [require("autoprefixer")],
+// ProgNovelENV();
+
+/** @type {import('@sveltejs/kit').Config} */
+export default {
+  extensions: [".svelte", ".svx"],
+  preprocess: [
+    mdsvex({
+      layout: {
+        help_child: "./src/routes/help/_child_layout.svelte",
+      },
+    }),
+    preprocess({
+      scss: { prependData: `@import "style/scss/global.scss";` },
+      // scss: {},
+    }),
+  ],
+  kit: {
+    adapter: adapter(),
+    vite: {
+      plugins: [
+        ProgNovelENV(),
+        dynamicImport(),
+        ProgNovelCSS(),
+        optimizeImports(),
+        // process.env.NODE_ENV === "production" && optimizeCss(),
+      ],
+      optimizeDeps: {
+        include: [],
+        esbuildOptions: {},
+      },
+      ssr: {
+        noExternal: ["plugins/web-components/prognovel-native-plugins.ts"],
+      },
+      resolve: {
+        alias: {
+          $src: "src/",
+          "$style/": "style/",
+          "$cache/": "./.cache/",
+          "$routes/": "src/routes/",
+          "$novel/": "src/routes/novel/",
+          "$plugins/": "plugins/",
+          $typings: "typings",
+        },
+      },
+      server: {
+        fs: {
+          allow: [
+            // your custom rules
+            ".cache",
+          ],
+        },
+      },
     },
-    scss: { prependData: `@import "${join(__dirname, "./style/scss/global.scss")}";` },
-  }),
-  mdsvex({
-    layout: {
-      help_child: join(__dirname, "./src/routes/help/_child_layout.svelte"),
+    files: {
+      serviceWorker: "src/service-worker.ts",
     },
-  }),
-];
+  },
+};

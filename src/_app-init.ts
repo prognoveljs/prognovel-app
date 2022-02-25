@@ -8,16 +8,16 @@
  *
  */
 
-import { webMonetizationInit } from "utils/web-monetization";
-import { themeInit } from "utils/themes";
-import { storagePersist } from "utils/storage";
-import { mobileInit } from "utils/mobile";
-import { saveDataInit } from "utils/save-data";
-import { fetchSiteMetadata } from "utils/fetch-metadata";
-import { signInCredentialModeInit } from "utils/users";
-import { bookmarkInit } from "utils/bookmark";
-import "utils/navigation/app-preload";
-import { loadWorklet } from "utils/animation";
+import { webMonetizationInit } from "$lib/utils/web-monetization";
+import { themeInit } from "$lib/utils/themes";
+import { storagePersist } from "$lib/utils/storage";
+import { mobileInit } from "$lib/utils/mobile";
+import { saveDataInit } from "$lib/utils/save-data";
+import { fetchSiteMetadata } from "$lib/utils/fetch-metadata";
+import { signInCredentialModeInit } from "$lib/utils/users";
+import { bookmarkInit } from "$lib/utils/bookmark";
+import "$lib/utils/navigation/app-preload";
+import { loadWorklet } from "$lib/utils/animation";
 
 async function init() {
   const url = new URL(window.location.href);

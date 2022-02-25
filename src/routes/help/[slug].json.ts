@@ -20,7 +20,7 @@ export function get(req, res) {
     prev[id] = {
       href: `${thisSlug(slug) + id}`,
       title:
-        (fm(readFileSync(resolve(process.env.BASEPATH, thisDir(slug), cur), "utf-8")).attributes as any)
+        (fm(readFileSync(resolve(import.meta.env.BASEPATH, thisDir(slug), cur), "utf-8")).attributes as any)
           .title || id,
     };
     return prev;

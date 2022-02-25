@@ -1,5 +1,6 @@
 <script context="module" lang="ts">
-  export async function preload({ params }) {
+  /** @type {import('@sveltejs/kit').Load} */
+  export async function load({ params }) {
     return {
       novel: params.novelID,
     };
@@ -8,12 +9,12 @@
 
 <script lang="ts">
   import { faSave } from "@fortawesome/free-solid-svg-icons";
-  import Icon from "components/Icon.svelte";
-  import { isBrowser } from "store/states";
-  import { getDataFromFile, isGUIWebSocketReady } from "utils/admin";
-  import { saveDataForFile } from "utils/admin/data";
-  import { activeNovels, adminNovelsData, isAdminGUIConnected } from "utils/admin/_store";
-  import { deepEqual } from "utils/misc";
+  import Icon from "$lib/components/Icon.svelte";
+  import { isBrowser } from "$lib/store/states";
+  import { getDataFromFile, isGUIWebSocketReady } from "$lib/utils/admin";
+  import { saveDataForFile } from "$lib/utils/admin/data";
+  import { activeNovels, adminNovelsData, isAdminGUIConnected } from "$lib/utils/admin/_store";
+  import { deepEqual } from "$lib/utils/misc";
 
   export let novel;
   $: novelTitle = $adminNovelsData?.[novel]?.title || novel;

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import DescriptionInfo from "components/novel-page/DescriptionInfo.svelte";
-  import { readPageLink } from "store/read-page/read-page-navigation";
-  import { isBrowser } from "store/states";
+  import DescriptionInfo from "$lib/components/novel-page/DescriptionInfo.svelte";
+  import { readPageLink } from "$lib/store/read-page/read-page-navigation";
+  import { isBrowser } from "$lib/store/states";
   import { getContext } from "svelte";
-  import type { NovelMetadata } from "typings";
+  import type { NovelMetadata } from "$typings";
 
   export let novelMetadata: NovelMetadata = getContext("novelMetadata");
 
@@ -22,7 +22,7 @@
     {#if !showMore}<span class="show-more" on:click={() => (showMore = true)}>show more</span>{/if}
   </div>
   <div class="read-button-flex">
-    <a href={$readPageLink || "."} disabled={disableLink}>READ NOW</a>
+    <a href={$readPageLink || "/"} disabled={disableLink}>READ NOW</a>
   </div>
 </article>
 

@@ -1,10 +1,10 @@
 <script lang="ts">
   import { faSave } from "@fortawesome/free-solid-svg-icons";
-  import Icon from "components/Icon.svelte";
+  import Icon from "$lib/components/Icon.svelte";
   import { onMount } from "svelte";
-  import { saveDataForFile } from "utils/admin/data";
-  import { adminSiteData } from "utils/admin/_store";
-  import { deepEqual } from "utils/misc";
+  import { saveDataForFile } from "$lib/utils/admin/data";
+  import { adminSiteData } from "$lib/utils/admin/_store";
+  import { deepEqual } from "$lib/utils/misc";
 
   let dataSnapshot = {
     site_title: "",

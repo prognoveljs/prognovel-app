@@ -1,11 +1,11 @@
 <script lang="ts">
-  import Download from "components/download/Download.svelte";
-  import Cover from "components/BookCover.svelte";
-  import Description from "novel/_NovelBookDescription.svelte";
+  import Download from "$lib/components/download/Download.svelte";
+  import Cover from "$lib/components/BookCover.svelte";
+  import Description from "./_NovelBookDescription.svelte";
   import {
     downloadProgress as progress,
     downloadCount as count,
-  } from "utils/offline-reading/store";
+  } from "$lib/utils/offline-reading/store";
   import {
     faShareAlt,
     faBookmark,
@@ -13,17 +13,17 @@
     faChartArea,
     faMoneyBill,
   } from "@fortawesome/free-solid-svg-icons";
-  import { toc } from "store/read-page";
-  import TOC from "components/read-page/ReadTableOfContent.svelte";
-  import Icon from "components/Icon.svelte";
-  import Share from "components/novel-page/Share.svelte";
-  import Bookmark from "components/novel-page/BookmarkSave.svelte";
-  import GenreTags from "components/novel-page/GenreTags.svelte";
-  import { showTOC } from "store/read-page/read-page-state";
-  import { showAffiliateReferrer, showRevshareStats } from "store/novel-page";
-  import DownloadWindow from "components/download/DownloadWindow.svelte";
+  import { toc } from "$lib/store/read-page";
+  import TOC from "$lib/components/read-page/ReadTableOfContent.svelte";
+  import Icon from "$lib/components/Icon.svelte";
+  import Share from "$lib/components/novel-page/Share.svelte";
+  import Bookmark from "$lib/components/novel-page/BookmarkSave.svelte";
+  import GenreTags from "$lib/components/novel-page/GenreTags.svelte";
+  import { showTOC } from "$lib/store/read-page/read-page-state";
+  import { showAffiliateReferrer, showRevshareStats } from "$lib/store/novel-page";
+  import DownloadWindow from "$lib/components/download/DownloadWindow.svelte";
   import { getContext } from "svelte";
-  import type { NovelMetadata } from "typings";
+  import type { NovelMetadata } from "$typings";
 
   export let novelMetadata: NovelMetadata = getContext("novelMetadata");
   export let id: string = getContext("id");
