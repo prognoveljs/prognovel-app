@@ -11,13 +11,16 @@
     toc,
     chaptersLoaded,
     chapterTitles,
-    isCurrentChapterMonetized,
   } from "$lib/store/read-page";
   import { FONT_SIZE, LINE_HEIGHT, ChapterState } from "$lib/utils/read-page/vars";
   import { getChapterStoreKey, getLoadingPlaceholder } from "$lib/utils/read-page";
   import { onMount, tick } from "svelte";
   import { readPageSettingsInit } from "$lib/utils/fonts";
-  import { enablePremiumContent, isCurrentChapterLocked } from "$lib/utils/web-monetization";
+  import {
+    enablePremiumContent,
+    isCurrentChapterLocked,
+    isCurrentChapterMonetized,
+  } from "$lib/utils/web-monetization";
   import { contentRenderer, createContentDelay } from "$lib/utils/read-page";
   import { pannable } from "$lib/utils/actions";
   import HasReadLotsOfContents from "$lib/components/misc/promotion/HasReadLotsOfContents.svelte";

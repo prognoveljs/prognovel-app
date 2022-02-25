@@ -20,5 +20,3 @@ export const currentContent: Writable<Chapter> = writable(getLoadingPlaceholder(
 export const currentChapterTitle: Readable<string> = derived(currentContent, ($content) => {
   return $content && $content.title ? $content.title : "";
 });
-
-export const isCurrentChapterMonetized: Writable<boolean> = writable(false);

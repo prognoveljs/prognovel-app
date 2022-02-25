@@ -6,7 +6,6 @@ export {
   currentChapterIndex,
   currentChapterTitle,
   currentContent,
-  isCurrentChapterMonetized,
   chaptersLoaded,
 } from "./read-page-current-vars";
 export {

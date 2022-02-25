@@ -1,16 +1,15 @@
 import { derived, writable, readable, Readable, Writable, get as getStore } from "svelte/store";
-// import { isCurrentChapterMonetized } from "$lib/store/read-page/read-page-current-vars";
 import { currentNovel, novelsData, siteMetadata, isBrowser } from "$lib/store/states";
 import {
   getCurrentPointerPool,
   getPaymentPointerSharePercentage,
   WebMonetization,
 } from "webfunding";
-import { NovelMetadata, NovelsMetadata } from "$typings";
 import { verifyWebMonetizationReceipt } from "./verify-receipt";
 import { WEB_MONETIZATION_VERIFY } from "$lib/_setting.ts";
 import { getPoolWeightSum } from "webfunding/src/fund/utils";
 import { FORBIDDEN_NOVEL_ID } from "$lib/store/novel-page";
+import type { NovelMetadata, NovelsMetadata } from "$typings";
 import type { RevShareProfile, RevShareUser } from "$typings/novel";
 
 interface WMPointer {
@@ -53,18 +52,19 @@ export const supportMonetization: Readable<boolean> = readable<boolean | undefin
   },
 );
 
-export const isCurrentChapterLocked: Readable<boolean> = derived(
-  [enablePremiumContent],
-  ([hasPremiumContent]) => {
-    return !hasPremiumContent && Boolean(true);
-  },
-);
 // export const isCurrentChapterLocked: Readable<boolean> = derived(
-//   [enablePremiumContent, isCurrentChapterMonetized],
-//   ([hasPremiumContent, isChapterMonetized]) => {
-//     return !hasPremiumContent && Boolean(isChapterMonetized);
+//   [enablePremiumContent],
+//   ([hasPremiumContent]) => {
+//     return !hasPremiumContent && Boolean(true);
 //   },
 // );
+export const isCurrentChapterMonetized: Writable<boolean> = writable(false);
+export const isCurrentChapterLocked: Readable<boolean> = derived(
+  [enablePremiumContent, isCurrentChapterMonetized],
+  ([hasPremiumContent, isChapterMonetized]) => {
+    return !hasPremiumContent && Boolean(isChapterMonetized);
+  },
+);
 
 export const revShareStats: Readable<RevShareStats> = derived([webfundingPool], ([pool]) => {
   if (!pool.length) return {};
