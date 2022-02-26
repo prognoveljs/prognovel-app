@@ -6,5 +6,4 @@ command = "npm run build"
 directory = "functions-netlify"
 
 [template.environment]
-SITE_TITLE = "Site title"
 BACKEND_API = "Your Cloudflare Workers backend URL"

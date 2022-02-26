@@ -32,19 +32,15 @@ ProgNovel works best when hosted on Jamstack platforms for performance and effie
 
 > ❗ Before hosting the frontend, make sure you don't skip hosting your first ProgNovel backend on Cloudflare Workers and publishing content with ProgNovel CLI so that the frontend has something to build with.
 
-1. You need to get your backend hosted on Cloudflare Workers: [read how to host ProgNovel backend here.](https://github.com/prognoveljs/prognovel-workers)
-2. Publish your first content to your backend. Yes, publish first before even you have an actual website. This is because part of ProgNovel webapp are prebuilt static html pages and need to pull some content first to build web pages. Follow on [how to get your first content published with ProgNovel CLI here](https://github.com/prognoveljs/prognovel-cli).
-3. Have a Github account and fork this repo. You can find the fork button on the top right of this page.<br/>**NOTE:** Forked repo has the convenient of easier update, but you can't make them private. If you wished for your copy of ProgNovel repo to be private, you need to make it duplicate and upload it to Github. Follow [this](https://docs.github.com/en/repositories/creating-and-managing-repositories/duplicating-a-repository) if you don't want a public forked repo for your project.![Fork repo](images/fork-ss.png)
-4. You'll have have your own copy of prognovel frontend app in your Github account - use that to connect with Jamstack hosting platforms like [Netlify](https://www.netlify.com/), [Vercel](https://vercel.com/), or [Cloudflare Pages](https://pages.cloudflare.com/).
+[![Netlify deploy](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/prognoveljs/prognovel-app#BACKEND_API=https://prognovel-api.YOUR-CF-WORKERS-ACCOUNT.workers.dev)
 
-5. Fill the build configuration with something like these:
+1. You need to get your backend hosted on Cloudflare Workers with some content already online on Cloudflare Workers network. Follow [how to get your first content published with ProgNovel CLI here](https://github.com/prognoveljs/prognovel-cli), then [read how to host ProgNovel backend here.](https://github.com/prognoveljs/prognovel-workers)
+2. Click deploy button. Fill `BACKEND_API` with the backend URL you get from hosting your backend in the previous step.
+3. Wait for your hosting platforms building your ProgNovel App, which might takes 2~10 minutes depending on the hosting platform you used. Usually you'll be notified in the dashboard with the link of your newly created site once the build is complete.
 
-- Build command: `npm run build`
-- Publish/output directory: `build`
-- Under secret environment section, create new variable with key `BACKEND_API` and value of URL of your backend API you create previously (usually is `https://api.{your-cloudflare-account}.workers.dev`).
+### Upgrade your ProgNovel app
 
-6. Wait for your hosting platforms building your ProgNovel App, which might takes 2~10 minutes depending on the hosting platform you used. Usually you'll be notified in the dashboard with the link of your newly created site once the build is complete.
-7. (Optional) If you need to upgrade your ProgNovel app version, simply click fetch upstream in your forked repo. Your hosting platforms will usually detects change in your repo and will rebuild the app with the latest codebase.
+(WIP)
 
 ## Notes
 
