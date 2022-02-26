@@ -2,7 +2,7 @@
 
 ## 0.6.3
 
-- BREAKING: requires ProgNovel CLI v0.6.2
+- **BREAKING**: requires ProgNovel CLI v0.6.2
 - build: migrate from webpack to vite
 - migrate from sapper to sveltekit
 - perf: disable google analytic script if tracking id not provided
