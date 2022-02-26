@@ -1,5 +1,13 @@
 # ProgNovel Changelog
 
+## 0.6.3
+
+- build: migrate from webpack to vite
+- migrate from sapper to sveltekit
+- perf: disable google analytic script if tracking id not provided
+- perf: lazy loads carbon-component-css
+- chore: remove unnecessary packages from old build
+
 ## 0.6.2
 
 - perf: deliver AVIF images for novel cover for supported browser
