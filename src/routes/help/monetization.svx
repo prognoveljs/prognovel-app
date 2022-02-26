@@ -9,8 +9,11 @@ Web Monetization API works directly via browsers' JavaScript API, allowing ProgN
 
 ## 📌 Interesting articles
 
-To get payment for website owners and website staffs, head to [Setup Web Monetization for Website Staffs](help/monetization/2-setup-web-monetization-website-staff).
+To get payment for website owners and website staffs, head to [Setup Web Monetization for Website Staffs](/help/
+](/help/monetization/2-setup-web-monetization-website-staff).
 ßß
-To get payment for novel authors and contributors (editors, proofreaders, etc), head to [Setup Web Monetization for Novel Staffs](help/monetization/3-setup-web-monetization-novel-staff)
+To get payment for novel authors and contributors (editors, proofreaders, etc), head to [Setup Web Monetization for Novel Staffs](/help/
+](/help/monetization/3-setup-web-monetization-novel-staff)
 
-To get payment for readers and influencers who helps promoting novels, ead to [ProgNovel's Affiliate Marketing](help/monetization/4-affiliate-marketing)
+To get payment for readers and influencers who helps promoting novels, ead to [ProgNovel's Affiliate Marketing](/help/
+](/help/monetization/4-affiliate-marketing)

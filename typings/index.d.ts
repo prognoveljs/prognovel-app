@@ -9,7 +9,7 @@ export { Bookmark } from "./bookmark";
 export { HistoryRecent } from "./bookmark/history";
 
 // users
-export type { CredentialMode } from "utils/users/store";
+export type { CredentialMode } from "$lib/utils/users/store";
 export { GravatarProfile } from "./user";
 
 // misc

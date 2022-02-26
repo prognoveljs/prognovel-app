@@ -1,5 +1,5 @@
 <script>
-  import Avatar from "components/user/Avatar.svelte";
+  import Avatar from "$lib/components/user/Avatar.svelte";
   import Todos1 from "./_Card1Todos.svelte";
   import Todos2 from "./_Card2Todos.svelte";
   import InProgress from "./_CardInProgress.svelte";
@@ -27,10 +27,13 @@
       <span class:checked={enableFeatures} on:click={() => (enableFeatures = !enableFeatures)}
         >🎉 Features</span
       >
-      <span class:checked={enableImprovements} on:click={() => (enableImprovements = !enableImprovements)}
-        >🔨 Improvements</span
+      <span
+        class:checked={enableImprovements}
+        on:click={() => (enableImprovements = !enableImprovements)}>🔨 Improvements</span
       >
-      <span class:checked={enablePlugins} on:click={() => (enablePlugins = !enablePlugins)}>🔌 Plugins</span>
+      <span class:checked={enablePlugins} on:click={() => (enablePlugins = !enablePlugins)}
+        >🔌 Plugins</span
+      >
       <span class:checked={enableMiscs} on:click={() => (enableMiscs = !enableMiscs)}>Miscs</span>
     </section>
   </div>

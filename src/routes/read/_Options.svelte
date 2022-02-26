@@ -1,15 +1,16 @@
 <script lang="ts">
-  import Stats from "components/read-page/options/OptionStats.svelte";
-  import Community from "components/read-page/options/OptionCommunity.svelte";
-  import Settings from "components/read-page/options/OptionSettings.svelte";
+  import Stats from "$lib/components/read-page/options/OptionStats.svelte";
+  import Community from "$lib/components/read-page/options/OptionCommunity.svelte";
+  import Settings from "$lib/components/read-page/options/OptionSettings.svelte";
   import { faCogs, faChartArea, faGlobe, faUsersCog } from "@fortawesome/free-solid-svg-icons";
-  import Icon from "components/Icon.svelte";
-  import { Panel } from "utils/read-page/vars";
+  import Icon from "$lib/components/Icon.svelte";
+  import { Panel } from "$lib/utils/read-page/vars";
   import { fly, fade } from "svelte/transition";
   import { onDestroy, tick } from "svelte";
-  import { showStatsAndOptions } from "store/read-page/read-page-state";
-  import { windowLock, windowUnlock } from "utils/window/lock";
-  import AdjustFont from "components/read-page/options/settings/AdjustFont.svelte";
+  import { showStatsAndOptions } from "$lib/store/read-page/read-page-state";
+  import { windowLock, windowUnlock } from "$lib/utils/window/lock";
+  import AdjustFont from "$lib/components/read-page/options/settings/AdjustFont.svelte";
+  import { isBrowser } from "$lib/store/states";
 
   let body;
   let panel = Panel.Stats;
@@ -40,7 +41,7 @@
   };
 
   showStatsAndOptions.subscribe((show: boolean) => {
-    if (!(process as any).browser) return;
+    if (!isBrowser) return;
     if (show) {
       windowLock(body);
     } else {

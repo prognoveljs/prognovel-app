@@ -1,6 +1,6 @@
-import { DEFAULT_PRIMARY_COLOR, colorRegex } from "utils/color/_vars";
+import { DEFAULT_PRIMARY_COLOR, colorRegex } from "$lib/utils/color/_vars";
 import { get } from "idb-keyval";
-import type { Color } from "typings";
+import type { Color } from "$typings";
 
 export const rewriteHTML = async (response: Response, preload = {}) => {
   try {
@@ -41,7 +41,7 @@ function appendPreload(preload): string {
 
   // TODO append preload scripts based on url path
   for (const i in preload) {
-    urls += `<link rel="preload" href="${preload[i]}" as="script">`;
+    urls += `<link rel="preload" href="/${preload[i]}" as="script">`;
   }
 
   return urls;

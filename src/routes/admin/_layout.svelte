@@ -1,9 +1,9 @@
 <script lang="ts">
-  import AdminPageNotConnected from "components/admin-page/AdminPageNotConnected.svelte";
-  import AdminSidebar from "components/admin-page/AdminSidebar.svelte";
+  import AdminPageNotConnected from "$lib/components/admin-page/AdminPageNotConnected.svelte";
+  import AdminSidebar from "$lib/components/admin-page/AdminSidebar.svelte";
   import { onDestroy, onMount } from "svelte";
-  import { destroyAdminGUI, initializeAdminGUI } from "utils/admin";
-  import { isAdminGUIConnected } from "utils/admin/_store";
+  import { destroyAdminGUI, initializeAdminGUI } from "$lib/utils/admin";
+  import { isAdminGUIConnected } from "$lib/utils/admin/_store";
 
   onMount(() => {
     initializeAdminGUI();

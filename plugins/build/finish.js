@@ -1,1 +1,0 @@
-require("./redirects/jamstack-redirects");

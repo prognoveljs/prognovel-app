@@ -1,20 +1,20 @@
 <script context="module" lang="ts">
-  export async function preload({ params }) {
+  /** @type {import('@sveltejs/kit').Load} */
+  export async function load({ params }) {
     const { novel } = params;
     return { novel };
   }
 </script>
 
 <script lang="ts">
-  import { siteMetadata } from "states";
-  import { getNovelBookCoverSrc, loadNovelTitles } from "utils/novel-page";
-  import Comments from "components/comments/disqus/Disqus.svelte";
+  import { siteMetadata, isBrowser } from "$lib/store/states";
+  import { getNovelBookCoverSrc, loadNovelTitles } from "$lib/utils/novel-page";
+  import Comments from "$lib/components/comments/disqus/Disqus.svelte";
   import NoDisqus from "./_NoDisqus.svelte";
   $: novels = $siteMetadata?.novels ?? [];
   // $: novels = ["yashura-legacy", "yashura-legacy", "yashura-legacy"];
   $: titles = loadNovelTitles($siteMetadata) ?? [];
   $: hasDisqus = Boolean($siteMetadata?.disqus_id);
-  const isBrowser = (process as any).browser;
   const GENERAL_SLUG = "all";
 
   export let novel;
@@ -28,13 +28,13 @@
   <article>
     <section class="novel-dir">
       <div class="wrapper">
-        <a class="general" href="discussions/all" class:selected={novel === GENERAL_SLUG}>
+        <a class="general" href="/discussions/all" class:selected={novel === GENERAL_SLUG}>
           <strong>General</strong></a
         >
         {#each novels as novelID}
           <a
             style="--bg: {getNovelBookCoverSrc(novelID)};"
-            href="discussions/{novelID}"
+            href="/discussions/{novelID}"
             class:selected={novelID === novel}
           >
             <img src={getNovelBookCoverSrc(novelID)} alt={titles[novelID]} />

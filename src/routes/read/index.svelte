@@ -1,16 +1,19 @@
 <script context="module">
-  let load;
-  export async function preload(page) {
-    const { query } = page;
-
-    load = query.load;
+  import { isBrowser } from "$lib/store/states";
+  /** @type {import('@sveltejs/kit').Load} */
+  export async function load({}) {
+    return {
+      props: { load: isBrowser ? new URL(location.href).searchParams.get("load") : "" },
+    };
   }
 </script>
 
 <script>
   import { onMount } from "svelte";
-  import { goto } from "@sapper/app";
-  import { getLoadingPlaceholder } from "utils/read-page";
+  import { goto } from "$app/navigation";
+  import { getLoadingPlaceholder } from "$lib/utils/read-page";
+
+  export let load;
 
   onMount(async () => {
     console.log("🚀 redirecting to", load);

@@ -12,7 +12,7 @@ Below are steps to get started on hosting ProgNovel webapp:<br />
 
 ### Questions and Answers
 
-<script>import Collapse from "components/Collapse.svelte";</script>
+<script>import Collapse from "$lib/components/Collapse.svelte";</script>
 
 <Collapse title="Is it really free? How come?">
 
