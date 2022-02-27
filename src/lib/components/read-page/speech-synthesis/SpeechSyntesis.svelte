@@ -1,41 +1,49 @@
 <script lang="ts">
-  import { currentContent } from "$lib/store/read-page";
   import { path } from "$lib/store/states";
-  import {
-    faAudioDescription,
-    faFileAudio,
-    faPause,
-    faPlay,
-    faStop,
-    faVolumeUp,
-  } from "@fortawesome/free-solid-svg-icons";
+  import { faPause, faPlay, faStop, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
   import { onDestroy, onMount } from "svelte";
-  import Icon from "$lib/components/Icon.svelte";
-  import { faAudible } from "@fortawesome/free-brands-svg-icons";
+  import SpeechSynthesisButton from "./SpeechSynthesisButton.svelte";
+  import { currentChapterIndex, currentChapterTitle } from "$lib/store/read-page";
+  import { goto } from "$app/navigation";
 
   let speech: SpeechSynthesis;
+  let utterance: SpeechSynthesisUtterance;
   let speechState: "playing" | "pause" | "stop" = "stop";
   onMount(() => {
     speech = speechSynthesis;
   });
 
-  $: if ($path && speech) cancel();
+  $: if ($path && speech) stop();
 
   function play() {
-    speechState = "playing";
     let text = "";
+    speechState = "playing";
     document
       .querySelectorAll("#chapter-state-success > p")
       .forEach((para: HTMLParagraphElement) => {
         text += para.innerText + "\n";
       });
 
-    console.log(text);
+    if (!text) return;
+    text =
+      `${document.querySelector("#chapter-index").textContent}. ${
+        document.querySelector("#chapter-title").textContent
+      }\n\n\n` + text;
 
-    const utterance = new SpeechSynthesisUtterance(text);
+    utterance = new SpeechSynthesisUtterance(text);
     utterance.pitch = 0.75;
     utterance.rate = 0.9;
     speech.speak(utterance);
+    utterance.addEventListener("end", onSpeechEnd, { once: true });
+  }
+
+  async function onSpeechEnd() {
+    stop();
+    const nextChapter: HTMLAnchorElement = document.querySelector("a#next-chapter");
+    if (!nextChapter) return;
+    goto(nextChapter.href);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    play();
   }
 
   function pause() {
@@ -43,7 +51,7 @@
     speech.pause();
   }
 
-  function cancel() {
+  function stop() {
     speechState = "stop";
     speech.cancel();
   }
@@ -53,38 +61,25 @@
   }
 
   onDestroy(() => {
-    if (speech) cancel();
+    if (speech) stop();
   });
 </script>
 
 <div class="flex">
   {#if speechState === "stop"}
-    <div class="btn" on:click={play}><Icon paddingBottom="3px" icon={faVolumeUp} /> Play audio</div>
+    <SpeechSynthesisButton icon={faVolumeUp} on:click={play}>Play audio</SpeechSynthesisButton>
   {:else}
-    <div class="btn" on:click={cancel}><Icon paddingBottom="3px" icon={faStop} /></div>
+    <SpeechSynthesisButton icon={faStop} on:click={stop} />
     {#if speechState === "pause"}
-      <div class="btn" on:click={resume}><Icon paddingBottom="3px" icon={faPlay} /> Resume</div>
+      <SpeechSynthesisButton icon={faPlay} on:click={resume}>Resume</SpeechSynthesisButton>
     {:else}
-      <div class="btn" on:click={pause}><Icon paddingBottom="3px" icon={faPause} /> Pause</div>
+      <SpeechSynthesisButton icon={faPause} on:click={pause}>Pause</SpeechSynthesisButton>
     {/if}
   {/if}
 </div>
 
 <style lang="scss">
   .flex {
-    .btn {
-      padding: 4px 8px;
-      border-radius: 1em;
-      border: 1px solid var(--primary-color);
-      display: inline-block;
-
-      &:active {
-        outline: none;
-      }
-
-      :globl(path) {
-        color: #0005;
-      }
-    }
+    display: flex;
   }
 </style>

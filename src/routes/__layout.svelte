@@ -117,7 +117,8 @@
     margin: 0 auto;
   }
 
-  :global(a:focus) {
+  :global(a:focus),
+  :global(.btn-focusable:focus) {
     /* font-weight: 700; */
     outline: 2px dashed var(--primary-color);
   }

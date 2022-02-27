@@ -11,11 +11,13 @@
 <section class="title">
   <SpeechSyntesis />
   <div class="index" data-cy="chapter-number">
-    CHAPTER
-    {chapter}
+    <span id="chapter-index">
+      CHAPTER {chapter}
+    </span>
     {#if $isCurrentChapterLocked}🔒{/if}
   </div>
   <h1
+    id="chapter-title"
     class:chapterError={$currentContent.meta && $currentContent.meta.status === ChapterState.Error}
   >
     {title}
