@@ -23,6 +23,7 @@
     }
 
     const redirect = document.head.querySelector('meta[name="redirect"]');
+    console.log(redirect.content);
     if (redirect) goto(redirect.content);
   });
 </script>
