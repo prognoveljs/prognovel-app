@@ -16,6 +16,6 @@
 
   onMount(async () => {
     console.log("🚀 redirecting to", load);
-    goto(load);
+    goto("/discussions/" + load);
   });
 </script>

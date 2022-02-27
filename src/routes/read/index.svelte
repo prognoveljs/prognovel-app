@@ -17,7 +17,7 @@
 
   onMount(async () => {
     console.log("🚀 redirecting to", load);
-    goto(load);
+    goto("/read/" + load);
   });
 </script>
 
