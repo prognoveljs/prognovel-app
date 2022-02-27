@@ -26,12 +26,6 @@
     ? ""
     : $page?.params?.novel || "";
 
-  if (isBrowser) {
-    currentNovel.subscribe((novel) => {
-      updatePaymentPointers(novel);
-    });
-  }
-
   const transition = {
     In: () => {
       return { x: 12, duration: isMobileScreen() ? 300 : 0 };
@@ -43,6 +37,9 @@
 
   onMount(async () => {
     appStart();
+    currentNovel.subscribe((novel) => {
+      updatePaymentPointers(novel);
+    });
   });
 </script>
 

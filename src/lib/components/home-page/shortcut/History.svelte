@@ -7,8 +7,8 @@
   import { loadNovelTitles } from "$lib/utils/novel-page";
   import Icon from "$lib/components/Icon.svelte";
   import { faClock } from "@fortawesome/free-regular-svg-icons";
-  import type { HistoryRecent } from "$typings";
   import { getCoverURLPath, isWEBP } from "$lib/utils/images";
+  import type { HistoryRecent } from "$typings";
 
   let history: HistoryRecent[] = [];
   $: titles = loadNovelTitles($siteMetadata);

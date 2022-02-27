@@ -1,9 +1,9 @@
 import { novelsData, siteMetadata } from "$lib/store/states";
 import { get as getStore } from "svelte/store";
-import type { NovelsMetadata, SiteMetadata } from "$typings";
 import { fetchNovelMetadata } from "$lib/utils/fetch-metadata";
 import { toc } from "$lib/store/read-page";
 import { getCoverURLPath } from "$lib/utils/images";
+import type { NovelsMetadata, SiteMetadata } from "$typings";
 
 export function getNovelBookCoverSrc(
   novel: string,
