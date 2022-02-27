@@ -16,12 +16,6 @@
   export let load;
 
   onMount(async () => {
-    if (load) {
-      load = "/read/" + load;
-    } else {
-      const redirect = document.head.querySelector('meta[name="redirect"]');
-      load = redirect.content;
-    }
     console.log("🚀 redirecting to", load);
     goto(load);
   });
