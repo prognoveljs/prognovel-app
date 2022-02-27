@@ -16,14 +16,14 @@
   export let load;
 
   onMount(async () => {
-    console.log("🚀 redirecting to", load);
     if (load) {
-      goto("/read/" + load);
+      load = "/read/" + load;
     } else {
       const redirect = document.head.querySelector('meta[name="redirect"]');
-      console.log(redirect.content);
-      goto(redirect.content);
+      load = redirect.content;
     }
+    console.log("🚀 redirecting to", load);
+    goto(load);
   });
 </script>
 
