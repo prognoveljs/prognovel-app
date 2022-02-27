@@ -19,12 +19,11 @@
     console.log("🚀 redirecting to", load);
     if (load) {
       goto("/read/" + load);
-      return;
+    } else {
+      const redirect = document.head.querySelector('meta[name="redirect"]');
+      console.log(redirect.content);
+      goto(redirect.content);
     }
-
-    const redirect = document.head.querySelector('meta[name="redirect"]');
-    console.log(redirect.content);
-    if (redirect) goto(redirect.content);
   });
 </script>
 
