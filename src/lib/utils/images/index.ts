@@ -1,4 +1,4 @@
-import { NOVEL_BANNER_HEIGHT, IMAGE_RESIZER_SERVICE } from "$lib/_setting.ts";
+import { NOVEL_BANNER_HEIGHT, IMAGE_RESIZER_SERVICE } from "$lib/_setting";
 
 export let isWEBP: boolean;
 const BANNER_IMAGE_FETCH_TIMEOUT = 10000; // in ms

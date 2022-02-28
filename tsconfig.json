@@ -1,15 +1,40 @@
 {
-  "include": ["src/**/*", "node_modules/idb-keyval/dist/esm/index.d.ts", "static/worklet", "style"],
+  "include": ["src/**/*.d.ts", 
+    "src/**/*.ts",
+    "src/**/*.js", 
+    "src/**/*.svelte", 
+    "plugins/**/*.ts",
+    "plugins/**/*.js",
+    "plugins/**/*.svelte",
+    "static/worklet", 
+    "style"
+  ],
   "exclude": ["node_modules/*"],
   "compilerOptions": {
     "lib": ["DOM", "ES2015", "ESNext"],
     "target": "es2017",
     "module": "esnext",
-    "types": ["node", "@cloudflare/workers-types", "./typings/global"],
+    "types": [
+      "node", 
+      "@cloudflare/workers-types", 
+      "./typings/global", 
+      "@sveltejs/kit/types/ambient"
+    ],
     "typeRoots": ["typings"],
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     // "strict": true,
+    "importsNotUsedAsValues": "error",
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "baseUrl": "./",
+    "paths": {
+      "$lib/*": ["src/lib/*"],
+      "$typings": ["typings/index"],
+    }
   }
 }
