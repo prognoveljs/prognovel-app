@@ -15,9 +15,6 @@
   });
 </script>
 
-{#if standalone && $showAdjustFont}
-  <div class="overlay" on:click={() => ($showAdjustFont = false)} />
-{/if}
 <section on:blur={onBlur} class:standalone class:show={$showAdjustFont}>
   <SectionHeader>Adjust font</SectionHeader>
   <Slider labelText="Font size (in %)" min={75} max={150} bind:value={$fontSize} step={5} />
@@ -25,7 +22,6 @@
 </section>
 
 <style lang="scss">
-  // @import "../option-body.scss";
   .standalone {
     display: none;
     $rad: 12px;
