@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { SITE_TITLE } from "$lib/_setting.ts";
+  import { SITE_TITLE } from "$lib/_setting";
   import { novelsData, currentNovel } from "$lib/store/states";
   import { parseContributorsNames } from "$lib/utils/string";
 

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { siteMetadata } from "$lib/store/states";
   import { getNovelCoverSubtitle, loadNovelTitles } from "$lib/utils/novel-page";
-  import { NOVEL_COVER_WIDTH, NOVEL_COVER_HEIGHT } from "$lib/_setting.ts";
+  import { NOVEL_COVER_WIDTH, NOVEL_COVER_HEIGHT } from "$lib/_setting";
   import Cover from "$lib/components/BookCover.svelte";
   import Icon from "$lib/components/Icon.svelte";
   import { faChevronRight } from "@fortawesome/free-solid-svg-icons";

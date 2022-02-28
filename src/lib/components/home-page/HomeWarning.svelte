@@ -1,5 +1,5 @@
 <script>
-  import { SITE_TITLE } from "$lib/_setting.ts";
+  import { SITE_TITLE } from "$lib/_setting";
 </script>
 
 <div class="container contain">

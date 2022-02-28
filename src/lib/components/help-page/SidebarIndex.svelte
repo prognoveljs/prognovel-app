@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { showIndex } from "../../../routes/help/_store.ts";
+  import { showIndex } from "../../../routes/help/_store";
 
   export let pages = {};
   export let childPages = {};

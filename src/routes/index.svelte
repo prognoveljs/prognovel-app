@@ -1,9 +1,8 @@
 <script context="module" lang="ts">
-  import { SITE_TITLE } from "$lib/_setting.ts";
+  import { SITE_TITLE } from "$lib/_setting";
   import { get } from "idb-keyval";
   import { fetchSiteMetadata, getMetadataStore } from "$lib/utils/fetch-metadata";
   import { loadNovelTitles, loadPartialNovelsMetadata } from "$lib/utils/novel-page";
-  import { loadBookmark } from "$lib/utils/bookmark";
   import { isBrowser } from "$lib/store/states";
   import type { NovelMetadata, NovelsMetadata, SiteMetadata, Bookmark } from "$typings";
 
@@ -91,7 +90,6 @@
 </script>
 
 <script lang="ts">
-  // import {} from "$lib/_setting.ts";
   import { onMount, setContext } from "svelte";
   import GenerateHTML from "$lib/components/_HTML.svelte";
   import HomeNovels from "$lib/components/home-page/HomeNovels.svelte";
@@ -100,6 +98,7 @@
   import { loadHomepageLazyComponents } from "$lib/utils/preload.js";
   import { page, siteMetadata } from "$lib/store/states";
   import NavMobile from "$lib/components/NavMobile.svelte";
+  import HomeHero from "$lib/components/home-page/HomeHero.svelte";
 
   export let novelList: string[];
   export let novelTitles: string[];
@@ -127,6 +126,7 @@
     <div class="hero-container">
       <section class="hero">
         <h1>{SITE_TITLE}</h1>
+        <HomeHero />
         <HomeNovels titles={novelTitles} {novelList} {novelsMetadata} grid={"novels"} />
       </section>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"

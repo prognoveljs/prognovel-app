@@ -24,17 +24,18 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     // "strict": true,
-    "importsNotUsedAsValues": "error",
-    "isolatedModules": true,
+    // "importsNotUsedAsValues": "error",
+    // "isolatedModules": true,
     "resolveJsonModule": true,
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
+    // "sourceMap": true,
+    // "esModuleInterop": true,
+    // "skipLibCheck": true,
+    // "forceConsistentCasingInFileNames": true,
     "baseUrl": "./",
     "paths": {
       "$lib/*": ["src/lib/*"],
       "$typings": ["typings/index"],
+      "$typings/*": ["typings/*"],
     }
   }
 }
