@@ -1,14 +1,14 @@
 <script>
+  import { getGravatarURL } from "$lib/utils/users";
   import { onMount } from "svelte";
   // import Placeholder from "./AvatarPlaceholder.svelte";
 
-  export let gender = "male";
   export let name = "User";
   export let size = 32;
   export let round = true;
-  export let src = "";
+  export let email = "";
   let visible = false;
-  $: img = src || `/img/svg/avatar-${gender}.svg`;
+  $: img = email ? getGravatarURL(email, size) : "";
 
   const fetchImage = async () => {
     const res = await fetch(img);
@@ -21,7 +21,6 @@
 </script>
 
 <div class="avatar" style="width: {size}px; height: {size}px;" class:round>
-  <!-- <Placeholder /> -->
   {#if img && visible}
     {#await fetchImage() then src}<img {src} alt={name} />{/await}
   {/if}
