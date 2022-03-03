@@ -10,8 +10,9 @@
 
 <style lang="scss">
   article {
+    width: 100%;
     display: grid;
-    grid-template-columns: 7fr 3fr;
+    grid-template-columns: 660px 1fr;
     gap: 16px;
 
     @include screen("desktop") {

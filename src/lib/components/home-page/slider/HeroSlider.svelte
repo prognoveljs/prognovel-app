@@ -11,7 +11,6 @@
   let container;
   let timer;
   $: data = $novelsData[highlight[cursor]];
-  $: console.log(timer);
 
   onMount(() => {
     timer = setInterval(autoNavigate, AUTO_NAVIGATE_DELAY);

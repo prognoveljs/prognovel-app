@@ -1,5 +1,8 @@
 <script lang="ts">
+  // import Icon from "$lib/components/Icon.svelte";
+  // import { faCalendar, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
   import Avatar from "$lib/components/user/Avatar.svelte";
+  import { formatDistance } from "date-fns";
 
   let mockNews = [
     {
@@ -15,7 +18,7 @@
       date: "2021-01-01",
       title: "ProgNovel is now have a new hero in its home page",
       author: {
-        name: "Radhy",
+        name: "Suara sepatu kuda wa wa waw awawa awa",
         email: "radhy.nodix@gmail.com",
       },
       url: "/news/my-first-news-1",
@@ -49,9 +52,15 @@
         <div class="horizontal-line" />
       {/if}
       <h3>{news.title}</h3>
-      <div class="author">
-        <Avatar email={news?.author?.email} size={32} />
-        <span>{news?.author?.name || "Admin"}</span>
+      <div class="item-wrapper">
+        <div class="author">
+          <Avatar email={news?.author?.email} size={32} />
+          <span>{news?.author?.name || "Admin"}</span>
+        </div>
+        <div class="date">
+          <!-- <Icon icon={faCalendarAlt} size="1.15em" paddingBottom="2px" marginRight="4px" /> -->
+          {formatDistance(new Date(news.date), new Date(), { addSuffix: true })}
+        </div>
       </div>
     </a>
   {/each}
@@ -92,12 +101,36 @@
         margin-bottom: 0.4em;
       }
 
-      .author {
-        display: flex;
+      .item-wrapper {
+        display: grid;
+        justify-content: space-between;
         align-items: center;
+        position: relative;
+        grid-template-columns: 1fr 120px;
 
-        :global(.avatar) {
-          margin-right: 6px;
+        .author {
+          display: flex;
+          align-items: center;
+
+          span {
+            width: 200px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+
+          :global(.avatar) {
+            margin-right: 6px;
+          }
+        }
+
+        .date {
+          display: flex;
+          justify-content: end;
+          opacity: 0.8;
+          font-style: italic;
+          font-size: 0.8em;
+          align-items: center;
         }
       }
     }
@@ -114,6 +147,10 @@
     .more-news {
       margin-top: 4px;
       align-self: flex-end;
+
+      &:hover {
+        font-weight: 700;
+      }
     }
   }
 </style>
