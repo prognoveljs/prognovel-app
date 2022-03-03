@@ -8,7 +8,7 @@
   export let round = true;
   export let email = "";
   let visible = false;
-  $: img = email ? getGravatarURL(email, size) : "";
+  $: img = email ? getGravatarURL(email, size) : "/img/avatar-placeholder.jpg";
 
   const fetchImage = async () => {
     const res = await fetch(img);

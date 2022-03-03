@@ -1,16 +1,17 @@
 <script lang="ts">
+  import HeroNews from "./news/HeroNews.svelte";
   import HeroSlider from "./slider/HeroSlider.svelte";
 </script>
 
 <article>
   <HeroSlider />
-  <section class="news"><h2>News</h2></section>
+  <HeroNews />
 </article>
 
 <style lang="scss">
   article {
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 7fr 3fr;
     gap: 16px;
 
     @include screen("desktop") {
