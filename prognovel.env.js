@@ -4,20 +4,30 @@ import sass from "sass";
 import EnvironmentPlugin from "vite-plugin-environment";
 
 export default () => {
-  const metadata = JSON.parse(
-    readFileSync(join(".cache/assets/publish/sitemetadata.json"), "utf-8"),
+  const CACHE_PATH = ".cache";
+  const SITE_METADATA = JSON.parse(
+    readFileSync(join(CACHE_PATH, "/assets/publish/sitemetadata.json"), "utf-8"),
   );
+  const NOVELS_METADATA = (SITE_METADATA?.novels || []).reduce((result, novel) => {
+    result[novel] = JSON.parse(
+      readFileSync(join(CACHE_PATH, "/assets/publish", novel, "metadata.json"), "utf-8"),
+    );
+    return result;
+  }, {});
+  console.log(NOVELS_METADATA);
   return EnvironmentPlugin(
     {
       BASE_PATH: process.cwd(),
-      CACHE_PATH: join(process.cwd(), ".cache"),
-      SITE_TITLE: metadata?.site_title || "ProgNovel App",
-      IMAGE_RESIZER_SERVICE: metadata?.image_resizer_service || "",
+      CACHE_PATH,
+      SITE_TITLE: SITE_METADATA?.site_title || "ProgNovel App",
+      IMAGE_RESIZER_SERVICE: SITE_METADATA?.image_resizer_service || "",
       BACKEND_API: process.env.BACKEND_API || "http://localhost",
       GA_TRACKING_ID: process.env.GA_TRACKING_ID || "",
-      NOVEL_LIST: metadata?.novels || [],
+      NOVEL_LIST: SITE_METADATA?.novels || [],
 
       // app vars from build time
+      SITE_METADATA,
+      NOVELS_METADATA,
       CSS_VARIABLES: readCSSVariables(),
     },
     {

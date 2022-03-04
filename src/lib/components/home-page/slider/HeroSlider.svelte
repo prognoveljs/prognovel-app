@@ -1,16 +1,26 @@
 <script lang="ts">
-  import { novelsData, siteMetadata } from "$lib/store/states";
+  import { novelsData } from "$lib/store/states";
   import { getCoverURLPath } from "$lib/utils/images";
   import { getNovelCoverSubtitle, getNovelTitle } from "$lib/utils/novel-page";
   import { onMount } from "svelte";
   import { scale } from "svelte/transition";
+  import { goto } from "$app/navigation";
 
-  export let highlight = ["yashura-legacy", "yashura-legacy"];
   const AUTO_NAVIGATE_DELAY = 5000;
   let cursor = 0;
   let container;
   let timer;
-  $: data = $novelsData[highlight[cursor]];
+  let cachedSynopsis = {};
+  $: highlightNovels = import.meta.env.NOVEL_LIST as string;
+  $: novel_data = $novelsData?.[highlightNovels[cursor]]
+    ? $novelsData
+    : import.meta.env.NOVELS_METADATA;
+  $: highlightData = novel_data[highlightNovels[cursor]];
+  $: console.log(import.meta.env.NOVEL_LIST);
+
+  $: if (highlightData?.synopsis && !cachedSynopsis[highlightNovels[cursor]]) {
+    cachedSynopsis[cursor] = highlightData.synopsis;
+  }
 
   onMount(() => {
     timer = setInterval(autoNavigate, AUTO_NAVIGATE_DELAY);
@@ -29,65 +39,72 @@
     timer = setInterval(autoNavigate, AUTO_NAVIGATE_DELAY);
   }
   function autoNavigate() {
-    cursor = highlight.length - 1 !== cursor ? cursor + 1 : 0;
+    cursor = highlightNovels.length - 1 !== cursor ? cursor + 1 : 0;
   }
 
   function mouseEnter() {
     clearInterval(timer);
   }
   function mouseLeave() {
+    if (timer) clearInterval(timer);
     timer = setInterval(autoNavigate, AUTO_NAVIGATE_DELAY);
   }
 </script>
 
-<section bind:this={container} on:mouseleave={mouseLeave} on:mouseenter={mouseEnter}>
-  <a href="/novel/{highlight[cursor]}" on:click={removeOverflow}>
-    {#key cursor}
-      <div
-        class="wrapper"
-        out:scale={{
-          start: 1.4,
-          duration: 125,
-        }}
-        in:scale={{
-          start: 1.2,
-          opacity: 0,
-          duration: 200,
-          // delay: 150,
-        }}
-      >
-        <img
-          class="bg-image"
-          src={getCoverURLPath(highlight[cursor], {
-            width: 64,
-            height: 64,
-          })}
-          alt={getNovelTitle(highlight[cursor])}
-        />
-        <div class="content-wrapper">
-          <div class="left">
-            <img
-              class="novel-cover"
-              src={getCoverURLPath(highlight[cursor], {
-                width: 256,
-                height: 256,
-              })}
-              alt={getNovelTitle(highlight[cursor])}
-            />
-            <span>{getNovelCoverSubtitle(highlight[cursor])}</span>
-          </div>
-          <div class="right">
-            <h2>{data?.title || ""}</h2>
-            <div class="blurb">
-              {@html data?.synopsis || ""}
-            </div>
+<section
+  bind:this={container}
+  on:click={() => goto("/novel/{highlightNovels[cursor]}")}
+  on:mouseleave={mouseLeave}
+  on:mouseenter={mouseEnter}
+>
+  <!-- {JSON.stringify(data)} -->
+  {#key cursor}
+    <div
+      class="wrapper"
+      out:scale={{
+        start: 0.9,
+        duration: 200,
+        opacity: 1,
+      }}
+      in:scale={{
+        start: 1.1,
+        opacity: 0,
+        duration: 425,
+        // delay: 65,
+      }}
+    >
+      <img
+        class="bg-image"
+        src={getCoverURLPath(highlightNovels[cursor], {
+          width: 64,
+          height: 64,
+        })}
+        alt={getNovelTitle(highlightNovels[cursor])}
+      />
+      <div class="content-wrapper">
+        <div class="left">
+          <img
+            class="novel-cover"
+            src={getCoverURLPath(highlightNovels[cursor], {
+              width: 256,
+              height: 256,
+            })}
+            alt={getNovelTitle(highlightNovels[cursor])}
+          />
+          <span>{getNovelCoverSubtitle(highlightNovels[cursor])}</span>
+        </div>
+        <div class="right">
+          <h2>{highlightData?.title}</h2>
+          <div class="blurb">
+            {@html highlightData?.synopsis ||
+              import.meta.env.NOVELS_METADATA[highlightNovels[cursor]].synopsis}
           </div>
         </div>
       </div>
-    {/key}
-  </a>
+    </div>
+  {/key}
   <div class="navigate-buttons">
-    {#each highlight as novel, i}
+    {#each highlightNovels as novel, i}
       <span on:click={() => navigate(i)} class:selected={cursor === i} />
       <!-- content here -->
     {/each}
@@ -111,19 +128,21 @@
 
     .bg-image {
       width: 100%;
-      filter: blur(16px);
       position: absolute;
-      transform: scale(1.6);
+      transform: scale(1.2);
       z-index: 1;
-      opacity: 0.6;
+      // opacity: 0.6;
       user-select: none;
       pointer-events: none;
+      filter: brightness(70%) blur(16px);
     }
 
     .content-wrapper {
       display: flex;
       padding: 0 10%;
       flex-direction: row;
+      z-index: 2;
+      position: relative;
       .left {
         display: flex;
         width: 225px;

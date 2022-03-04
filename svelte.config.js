@@ -44,11 +44,6 @@ export default {
       resolve: {
         alias: {
           $src: "src/",
-          "$style/": "style/",
-          "$cache/": "./.cache/",
-          "$routes/": "src/routes/",
-          "$novel/": "src/routes/novel/",
-          "$plugins/": "plugins/",
           $typings: "typings",
         },
       },

@@ -90,16 +90,10 @@ export function handleReadButton(novel: string): string {
   return `/read/${novel}/${chapterDestination}`;
 }
 
-export function getNovelCoverSubtitle(
-  novel: string,
-  opts?: {
-    novelsMetadata: NovelsMetadata;
-  },
-): string {
-  const genres: string[] =
-    (opts?.novelsMetadata?.[novel] || getStore(novelsData)?.[novel])?.genre || [];
-  const demographic: string =
-    (opts?.novelsMetadata?.[novel] || getStore(novelsData)?.[novel])?.demographic || "";
+export function getNovelCoverSubtitle(novel: string): string {
+  const data = getStore(novelsData)?.[novel] || import.meta.env.NOVELS_METADATA[novel];
+  const genres: string[] = data.genre || [];
+  const demographic: string = data.demographic || "";
   const result = demographic ? `#${demographic}` : "";
 
   return (

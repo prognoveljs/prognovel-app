@@ -106,6 +106,11 @@
   export let novelsMetadata: NovelsMetadata;
   export let bookmarkData: Bookmark[];
 
+  setContext("data_static", {
+    siteMetadata: sitemetadata,
+    novelsMetadata: novelsMetadata,
+  });
+
   $: setContext("data", {
     siteMetadata: $siteMetadata,
     page: $page,
