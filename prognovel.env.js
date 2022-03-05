@@ -14,7 +14,6 @@ export default () => {
     );
     return result;
   }, {});
-  console.log(NOVELS_METADATA);
   return EnvironmentPlugin(
     {
       BASE_PATH: process.cwd(),
@@ -27,7 +26,31 @@ export default () => {
 
       // app vars from build time
       SITE_METADATA,
-      NOVELS_METADATA,
+      // chunks of novels metadata
+      NOVEL_TITLES: Object.keys(NOVELS_METADATA).reduce((list, novel) => {
+        list[novel] = NOVELS_METADATA[novel].title;
+        return list;
+      }, {}),
+      NOVEL_GENRES: Object.keys(NOVELS_METADATA).reduce((list, novel) => {
+        list[novel] = NOVELS_METADATA[novel].genre;
+        return list;
+      }, {}),
+      NOVEL_DEMOGRAPHICS: Object.keys(NOVELS_METADATA).reduce((list, novel) => {
+        list[novel] = NOVELS_METADATA[novel].demographic;
+        return list;
+      }, {}),
+      NOVEL_AUTHORS: Object.keys(NOVELS_METADATA).reduce((list, novel) => {
+        list[novel] = NOVELS_METADATA[novel].author;
+        return list;
+      }, {}),
+      NOVEL_TAGS: Object.keys(NOVELS_METADATA).reduce((list, novel) => {
+        list[novel] = NOVELS_METADATA[novel].tags;
+        return list;
+      }, {}),
+      NOVEL_SYNOPSISES: Object.keys(NOVELS_METADATA).reduce((list, novel) => {
+        list[novel] = NOVELS_METADATA[novel].synopsis;
+        return list;
+      }, {}),
       CSS_VARIABLES: readCSSVariables(),
     },
     {

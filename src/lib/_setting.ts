@@ -17,6 +17,7 @@ export const WEB_MONETIZATION_VERIFY: boolean | undefined =
   parse(import.meta.env.WEB_MONETIZATION_VERIFY, false) || false;
 export const IMAGE_RESIZER_SERVICE: string = import.meta.env.IMAGE_RESIZER_SERVICE;
 export const SITE_TITLE: string = import.meta.env.SITE_TITLE;
+export const STATIC_SITE_METADATA = import.meta.env.SITE_METADATA;
 
 /** Parsing process.env variable safely. Set true for string variables. */
 function parse(env, isString = true): any {

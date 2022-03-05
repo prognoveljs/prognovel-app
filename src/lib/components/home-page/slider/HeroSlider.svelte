@@ -1,5 +1,6 @@
 <script lang="ts">
   import { isBrowser, novelsData } from "$lib/store/states";
+  import { novelList, novelSynopsises } from "$lib/utils/novel-page";
 
   import { onMount } from "svelte";
   import HeroSliderItem from "./HeroSliderItem.svelte";
@@ -9,11 +10,9 @@
   let hasSlide = false;
   let container;
   let timer;
-  // $: highlightNovels = import.meta.env.NOVEL_LIST as string;
-  $: highlightNovels = ["yashura-legacy", "yashura-legacy"];
-  $: novel_data = $novelsData?.[highlightNovels[cursor]]
-    ? $novelsData
-    : import.meta.env.NOVELS_METADATA;
+  $: highlightNovels = novelList;
+  // $: highlightNovels = ["yashura-legacy", "yashura-legacy"];
+  $: novelDataWithSynopsis = $novelsData?.[highlightNovels[cursor]] ? $novelsData : novelSynopsises;
 
   onMount(() => {
     timer = setInterval(autoNavigate, AUTO_NAVIGATE_DELAY);
@@ -45,8 +44,6 @@
     timer = setInterval(autoNavigate, AUTO_NAVIGATE_DELAY);
   }
 
-  $: console.log(sliderGroup);
-
   let sliderIndex = 0;
   $: sliderGroup = Array(sliderIndex ? 2 : 1)
     .fill(0)
@@ -63,7 +60,7 @@
         novel={highlightNovels[cursor]}
         {sliderIndex}
         index={sliderIndex}
-        data={novel_data[highlightNovels[cursor]]}
+        data={novelDataWithSynopsis[highlightNovels[cursor]]}
       />
     {/key}
   </div>

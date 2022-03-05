@@ -2,8 +2,7 @@
   import { scale } from "svelte/transition";
   import { goto } from "$app/navigation";
   import { getCoverURLPath } from "$lib/utils/images";
-  import { novelCoverSubtitle, novelTitles } from "$lib/utils/novel-page";
-  import type { NovelsMetadata } from "$typings";
+  import { novelCoverSubtitle, novelSynopsises, novelTitles } from "$lib/utils/novel-page";
   import { onMount } from "svelte";
 
   export let novel: string;
@@ -12,32 +11,7 @@
   export let data: any;
   let node;
 
-  onMount(async () => {
-    // console.log(index);
-    // if (index >= sliderIndex) {
-    //   if (index) {
-    //     node.style.transition = "all 0.33s ease-in";
-    //     node.style.opacity = "0";
-    //     node.style.transform = "scale(1.1)";
-    //     node.style.zIndex = `3`;
-    //     requestAnimationFrame(() =>
-    //       requestAnimationFrame(() => {
-    //         node.style.opacity = "1";
-    //         node.style.transform = "scale(1)";
-    //       }),
-    //     );
-    //   }
-    // } else {
-    //   node.style.transition = "all 0.6s ease-out";
-    //   node.style.zIndex = `2`;
-    //   requestAnimationFrame(() =>
-    //     requestAnimationFrame(() => {
-    //       node.style.opacity = "0";
-    //       node.style.transform = "scale(.9)";
-    //     }),
-    //   );
-    // }
-  });
+  onMount(async () => {});
 </script>
 
 <div
@@ -76,9 +50,9 @@
       <span>{$novelCoverSubtitle[novel]}</span>
     </div>
     <div class="right">
-      <h2>{data?.title}</h2>
+      <h2>{novelTitles[novel]}</h2>
       <div class="blurb">
-        {@html data?.synopsis || import.meta.env.NOVELS_METADATA[novel].synopsis}
+        {@html data?.synopsis || novelSynopsises[novel]}
       </div>
     </div>
   </div>
