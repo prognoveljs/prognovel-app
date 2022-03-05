@@ -16,15 +16,12 @@
   $: if ($path && speech) stop();
 
   function play() {
-    let i = 1;
     let text = "";
     speechState = "playing";
     document
       .querySelectorAll("#chapter-state-success > p")
       .forEach((para: HTMLParagraphElement) => {
-        if (i === 0) return;
         text += para.innerText + "\n";
-        i--;
       });
     console.log(text);
     if (!text) return;
@@ -37,18 +34,18 @@
     utterance.pitch = 0.75;
     utterance.rate = 0.9;
     speech.speak(utterance);
-    // utterance.addEventListener("end", onSpeechEnd, { once: true });
+    utterance.addEventListener("end", onSpeechEnd, { once: true });
   }
 
   async function onSpeechEnd(e: SpeechSynthesisEvent) {
     console.log(e);
 
-    stop();
-    const nextChapter: HTMLAnchorElement = document.querySelector("a#next-chapter");
-    if (!nextChapter) return;
-    goto(nextChapter.href);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    play();
+    // stop();
+    // const nextChapter: HTMLAnchorElement = document.querySelector("a#next-chapter");
+    // if (!nextChapter) return;
+    // goto(nextChapter.href);
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
+    // play();
   }
 
   function pause() {
