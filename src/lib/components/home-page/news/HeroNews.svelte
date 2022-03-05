@@ -12,7 +12,7 @@
         name: "Radhy",
         email: "radhy.nodix@gmail.com",
       },
-      url: "/news/my-first-news-1",
+      url: "/",
     },
     {
       date: "2021-01-01",
@@ -21,12 +21,12 @@
         name: "Suara sepatu kuda wa wa waw awawa awa",
         email: "radhy.nodix@gmail.com",
       },
-      url: "/news/my-first-news-1",
+      url: "/",
     },
     {
       date: "2022-01-01",
       title: "Here's 2022",
-      url: "/news/my-first-news-1",
+      url: "/",
     },
     {
       date: "2023-01-01",
@@ -35,7 +35,7 @@
         name: "Radhy",
         email: "radhy.nodix@gmail.com",
       },
-      url: "/news/my-first-news-1",
+      url: "/",
     },
   ];
 
@@ -66,7 +66,7 @@
   {/each}
   <div class="horizontal-line" style="position:relative !important;" />
 
-  <a class="more-news" href="/news">more news</a>
+  <a class="more-news" href="/">more news</a>
 </article>
 
 <style lang="scss">
