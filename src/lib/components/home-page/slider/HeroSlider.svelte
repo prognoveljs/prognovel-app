@@ -1,26 +1,19 @@
 <script lang="ts">
-  import { novelsData } from "$lib/store/states";
-  import { getCoverURLPath } from "$lib/utils/images";
-  import { novelCoverSubtitle, novelTitles } from "$lib/utils/novel-page";
+  import { isBrowser, novelsData } from "$lib/store/states";
+
   import { onMount } from "svelte";
-  import { scale } from "svelte/transition";
-  import { goto } from "$app/navigation";
+  import HeroSliderItem from "./HeroSliderItem.svelte";
 
   const AUTO_NAVIGATE_DELAY = 5000;
   let cursor = 0;
+  let hasSlide = false;
   let container;
   let timer;
-  let cachedSynopsis = {};
-  $: highlightNovels = import.meta.env.NOVEL_LIST as string;
-  // $: highlightNovels = ["yashura-legacy", "yashura-legacy"];
+  // $: highlightNovels = import.meta.env.NOVEL_LIST as string;
+  $: highlightNovels = ["yashura-legacy", "yashura-legacy"];
   $: novel_data = $novelsData?.[highlightNovels[cursor]]
     ? $novelsData
     : import.meta.env.NOVELS_METADATA;
-  $: highlightData = novel_data[highlightNovels[cursor]];
-
-  $: if (highlightData?.synopsis && !cachedSynopsis[highlightNovels[cursor]]) {
-    cachedSynopsis[cursor] = highlightData.synopsis;
-  }
 
   onMount(() => {
     timer = setInterval(autoNavigate, AUTO_NAVIGATE_DELAY);
@@ -37,9 +30,11 @@
     cursor = cr;
     clearInterval(timer);
     timer = setInterval(autoNavigate, AUTO_NAVIGATE_DELAY);
+    sliderIndex++;
   }
   function autoNavigate() {
     cursor = highlightNovels.length - 1 !== cursor ? cursor + 1 : 0;
+    sliderIndex++;
   }
 
   function mouseEnter() {
@@ -49,60 +44,29 @@
     if (timer) clearInterval(timer);
     timer = setInterval(autoNavigate, AUTO_NAVIGATE_DELAY);
   }
+
+  $: console.log(sliderGroup);
+
+  let sliderIndex = 0;
+  $: sliderGroup = Array(sliderIndex ? 2 : 1)
+    .fill(0)
+    .map((slider, index) => {
+      return index + sliderIndex;
+    });
 </script>
 
-<section
-  bind:this={container}
-  on:click={() => goto("/novel/" + highlightNovels[cursor])}
-  on:mouseleave={mouseLeave}
-  on:mouseenter={mouseEnter}
->
+<section bind:this={container} on:mouseleave={mouseLeave} on:mouseenter={mouseEnter}>
   <!-- {JSON.stringify(data)} -->
-  {#key cursor}
-    <div
-      class="wrapper"
-      out:scale={{
-        start: 0.9,
-        duration: 600,
-        opacity: 1,
-      }}
-      in:scale={{
-        start: 1.1,
-        opacity: 0,
-        duration: 425,
-        // delay: 65,
-      }}
-    >
-      <img
-        class="bg-image"
-        src={getCoverURLPath(highlightNovels[cursor], {
-          width: 64,
-          height: 64,
-        })}
-        alt={novelTitles[highlightNovels[cursor]]}
+  <div>
+    {#key cursor}
+      <HeroSliderItem
+        novel={highlightNovels[cursor]}
+        {sliderIndex}
+        index={sliderIndex}
+        data={novel_data[highlightNovels[cursor]]}
       />
-      <div class="content-wrapper">
-        <div class="left">
-          <img
-            class="novel-cover"
-            src={getCoverURLPath(highlightNovels[cursor], {
-              width: 256,
-              height: 256,
-            })}
-            alt={novelTitles[highlightNovels[cursor]]}
-          />
-          <span>{$novelCoverSubtitle[highlightNovels[cursor]]}</span>
-        </div>
-        <div class="right">
-          <h2>{highlightData?.title}</h2>
-          <div class="blurb">
-            {@html highlightData?.synopsis ||
-              import.meta.env.NOVELS_METADATA[highlightNovels[cursor]].synopsis}
-          </div>
-        </div>
-      </div>
-    </div>
-  {/key}
+    {/key}
+  </div>
   <div class="navigate-buttons">
     {#each highlightNovels as novel, i}
       <span on:click={() => navigate(i)} class:selected={cursor === i} />
@@ -121,67 +85,6 @@
     background-color: hsla(var(--primary-color-h), var(--primary-color-s), 0.32, 0.9);
     cursor: pointer;
     user-select: none;
-    .wrapper {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-    }
-
-    .bg-image {
-      width: 100%;
-      position: absolute;
-      transform: scale(1.2);
-      z-index: 1;
-      // opacity: 0.6;
-      user-select: none;
-      pointer-events: none;
-      filter: brightness(70%) blur(16px);
-    }
-
-    .content-wrapper {
-      display: grid;
-      padding: 0 10%;
-      grid-template-columns: 200px 1fr;
-      z-index: 2;
-      position: relative;
-      .left {
-        display: flex;
-        width: 100%;
-        flex-direction: column;
-        margin-top: 25%;
-        .novel-cover {
-          z-index: 2;
-          position: relative;
-          width: 100%;
-          height: auto;
-          border-radius: 2px;
-          padding: 12px;
-        }
-
-        span {
-          text-align: center;
-        }
-      }
-      .right {
-        width: fit-content;
-        margin-top: 5%;
-        margin-left: 1em;
-
-        h2 {
-          font-weight: 700;
-        }
-
-        .blurb {
-          max-height: 200px;
-          overflow: hidden;
-        }
-
-        :global(p) {
-          margin-top: 0;
-          margin-bottom: 1.4em;
-        }
-      }
-    }
 
     .navigate-buttons {
       position: absolute;

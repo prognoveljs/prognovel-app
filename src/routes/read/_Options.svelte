@@ -134,15 +134,15 @@
   </div>
   <div class="body">
     {#if panel === Panel.Stats}
-      <section in:fly={Animation.In()} out:fly={Animation.Out()}>
+      <section in:fly|local={Animation.In()} out:fly|local={Animation.Out()}>
         <Stats />
       </section>
     {:else if panel === Panel.Community}
-      <section in:fly={Animation.In()} out:fly={Animation.Out()}>
+      <section in:fly|local={Animation.In()} out:fly|local={Animation.Out()}>
         <Community />
       </section>
     {:else if panel === Panel.Settings}
-      <section in:fly={Animation.In()} out:fly={Animation.Out()}>
+      <section in:fly|local={Animation.In()} out:fly|local={Animation.Out()}>
         <Settings />
       </section>
     {/if}
