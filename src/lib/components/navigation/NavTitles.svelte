@@ -1,7 +1,7 @@
 <script>
   import Icon from "$lib/components/Icon.svelte";
   import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-  import { getNovelTitle } from "$lib/utils/novel-page";
+  import { novelTitles } from "$lib/utils/novel-page";
   import { chaptersAppended, currentChapter, currentChapterTitle } from "$lib/store/read-page";
   import {
     getBreadcrumbSegments,
@@ -48,7 +48,7 @@
             sveltekit:prefetch>{getBreadcrumbParentLabel(segment)}</a
           >
         {:else if segments[0] === "/novel" && i !== 0}
-          <span class:single={segments.length === 1}>{getNovelTitle(segment)}</span>
+          <span class:single={segments.length === 1}>{novelTitles[segment]}</span>
         {:else}
           <span class:single={segments.length === 1}
             >{$customBreadcrumbTitle || getBreadcrumbParentLabel(segment)}</span
@@ -59,7 +59,7 @@
       {#if isAtReadPage}
         <!-- on read page -->
         {#if i === 0}
-          <a href={"/novel/" + $currentNovel} sveltekit:prefetch>{getNovelTitle($currentNovel)}</a>
+          <a href={"/novel/" + $currentNovel} sveltekit:prefetch>{novelTitles[$currentNovel]}</a>
         {:else if i === segments.length - 1}
           <span class:single={segments.length === 1}>
             Chapter

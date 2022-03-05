@@ -1,6 +1,6 @@
 <script lang="ts">
   import { siteMetadata } from "$lib/store/states";
-  import { getNovelCoverSubtitle, loadNovelTitles } from "$lib/utils/novel-page";
+  import { novelCoverSubtitle } from "$lib/utils/novel-page";
   import { NOVEL_COVER_WIDTH, NOVEL_COVER_HEIGHT } from "$lib/_setting";
   import Cover from "$lib/components/BookCover.svelte";
   import Icon from "$lib/components/Icon.svelte";
@@ -51,7 +51,7 @@
         <Cover
           showTitle={true}
           showSub={true}
-          sub={getNovelCoverSubtitle(novel, { novelsMetadata })}
+          sub={$novelCoverSubtitle[novel]}
           title={titles ? titles[novel] : novel}
           {novel}
         />

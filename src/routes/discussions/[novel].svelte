@@ -10,12 +10,11 @@
 
 <script lang="ts">
   import { siteMetadata, isBrowser } from "$lib/store/states";
-  import { getNovelBookCoverSrc, loadNovelTitles } from "$lib/utils/novel-page";
+  import { getNovelBookCoverSrc, novelTitles } from "$lib/utils/novel-page";
   import Comments from "$lib/components/comments/disqus/Disqus.svelte";
   import NoDisqus from "./_NoDisqus.svelte";
   $: novels = $siteMetadata?.novels ?? [];
   // $: novels = ["yashura-legacy", "yashura-legacy", "yashura-legacy"];
-  $: titles = loadNovelTitles($siteMetadata) ?? [];
   $: hasDisqus = Boolean($siteMetadata?.disqus_id);
   const GENERAL_SLUG = "all";
 
@@ -23,7 +22,7 @@
 </script>
 
 <svelte:head>
-  <title>Discussion{titles[novel] ? ` - ${titles[novel]}` : ""}</title>
+  <title>Discussion{novelTitles[novel] ? ` - ${novelTitles[novel]}` : ""}</title>
 </svelte:head>
 
 {#if hasDisqus}
@@ -39,10 +38,10 @@
             href="/discussions/{novelID}"
             class:selected={novelID === novel}
           >
-            <img src={getNovelBookCoverSrc(novelID)} alt={titles[novelID]} />
+            <img src={getNovelBookCoverSrc(novelID)} alt={novelTitles[novelID]} />
             <div class="metadata">
               <strong>
-                {titles[novelID] || ""}
+                {novelTitles[novelID] || ""}
               </strong>
             </div>
           </a>
@@ -50,7 +49,7 @@
       </div>
     </section>
     <section class="body">
-      <h1><small>#</small> {novel === GENERAL_SLUG ? "General" : titles[novel] || novel}</h1>
+      <h1><small>#</small> {novel === GENERAL_SLUG ? "General" : novelTitles[novel] || novel}</h1>
       <div class="comments">
         {#key novel}
           {#if isBrowser}

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { novelsData } from "$lib/store/states";
   import { getCoverURLPath } from "$lib/utils/images";
-  import { getNovelCoverSubtitle, getNovelTitle } from "$lib/utils/novel-page";
+  import { novelCoverSubtitle, novelTitles } from "$lib/utils/novel-page";
   import { onMount } from "svelte";
   import { scale } from "svelte/transition";
   import { goto } from "$app/navigation";
@@ -12,11 +12,11 @@
   let timer;
   let cachedSynopsis = {};
   $: highlightNovels = import.meta.env.NOVEL_LIST as string;
+  // $: highlightNovels = ["yashura-legacy", "yashura-legacy"];
   $: novel_data = $novelsData?.[highlightNovels[cursor]]
     ? $novelsData
     : import.meta.env.NOVELS_METADATA;
   $: highlightData = novel_data[highlightNovels[cursor]];
-  $: console.log(import.meta.env.NOVEL_LIST);
 
   $: if (highlightData?.synopsis && !cachedSynopsis[highlightNovels[cursor]]) {
     cachedSynopsis[cursor] = highlightData.synopsis;
@@ -53,7 +53,7 @@
 
 <section
   bind:this={container}
-  on:click={() => goto("/novel/{highlightNovels[cursor]}")}
+  on:click={() => goto("/novel/" + highlightNovels[cursor])}
   on:mouseleave={mouseLeave}
   on:mouseenter={mouseEnter}
 >
@@ -63,7 +63,7 @@
       class="wrapper"
       out:scale={{
         start: 0.9,
-        duration: 200,
+        duration: 600,
         opacity: 1,
       }}
       in:scale={{
@@ -79,7 +79,7 @@
           width: 64,
           height: 64,
         })}
-        alt={getNovelTitle(highlightNovels[cursor])}
+        alt={novelTitles[highlightNovels[cursor]]}
       />
       <div class="content-wrapper">
         <div class="left">
@@ -89,9 +89,9 @@
               width: 256,
               height: 256,
             })}
-            alt={getNovelTitle(highlightNovels[cursor])}
+            alt={novelTitles[highlightNovels[cursor]]}
           />
-          <span>{getNovelCoverSubtitle(highlightNovels[cursor])}</span>
+          <span>{$novelCoverSubtitle[highlightNovels[cursor]]}</span>
         </div>
         <div class="right">
           <h2>{highlightData?.title}</h2>
@@ -119,7 +119,8 @@
     overflow: hidden;
     position: relative;
     background-color: hsla(var(--primary-color-h), var(--primary-color-s), 0.32, 0.9);
-
+    cursor: pointer;
+    user-select: none;
     .wrapper {
       position: absolute;
       width: 100%;
@@ -138,18 +139,16 @@
     }
 
     .content-wrapper {
-      display: flex;
+      display: grid;
       padding: 0 10%;
-      flex-direction: row;
+      grid-template-columns: 200px 1fr;
       z-index: 2;
       position: relative;
       .left {
         display: flex;
-        width: 225px;
+        width: 100%;
         flex-direction: column;
-        width: max-content;
-        margin-right: 2em;
-        margin-top: 10%;
+        margin-top: 25%;
         .novel-cover {
           z-index: 2;
           position: relative;
@@ -166,6 +165,7 @@
       .right {
         width: fit-content;
         margin-top: 5%;
+        margin-left: 1em;
 
         h2 {
           font-weight: 700;

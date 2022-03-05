@@ -1,5 +1,5 @@
 import { novelsData, siteMetadata } from "$lib/store/states";
-import { get as getStore } from "svelte/store";
+import { derived, get as getStore } from "svelte/store";
 import { fetchNovelMetadata } from "$lib/utils/fetch-metadata";
 import { toc } from "$lib/store/read-page";
 import { getCoverURLPath } from "$lib/utils/images";
@@ -22,15 +22,10 @@ export async function getNovelFirstChapter(novel: string): Promise<string> {
   return novelsMetadata[novel].chapters?.[0] ?? "";
 }
 
-const novelTitles = new Map();
-export function getNovelTitle(novel) {
-  if (!novelTitles.size) loadNovelTitles(getStore(siteMetadata));
-  if (novelTitles.has(novel)) {
-    return novelTitles.get(novel);
-  } else {
-    return novel;
-  }
-}
+export const novelTitles = import.meta.env.NOVEL_LIST.reduce((prev, cur) => {
+  prev[cur] = import.meta.env.NOVELS_METADATA[cur].title;
+  return prev;
+}, {});
 
 /**
  * Load novels metadata from memory. If a novel data hasn't been fetched from API, it will
@@ -50,25 +45,6 @@ export function loadPartialNovelsMetadata(siteMetadata: SiteMetadata): NovelsMet
   });
 
   return novelsMetadata;
-}
-/**
- * loadNovelTitles() behaves the same as getNovelTitles(),
- * but loads novel titles bulk at once to avoid unnecessary
- * operation when getting novel title individually.
- *
- * Useful when used within Svelte's for each loop bracket.
- *
- * @param meta NovelsMetadata
- * @returns Array<string>
- */
-export function loadNovelTitles(meta) {
-  let titles = {};
-  if (!meta.novelsMetadata) return titles;
-  meta.novelsMetadata.forEach((novel) => {
-    titles[novel.id] = novel.title;
-    novelTitles.set(novel.id, novel.title);
-  });
-  return titles;
 }
 
 export function createDerivedNovelsMetadata($meta: SiteMetadata) {
@@ -90,17 +66,33 @@ export function handleReadButton(novel: string): string {
   return `/read/${novel}/${chapterDestination}`;
 }
 
-export function getNovelCoverSubtitle(novel: string): string {
-  const data = getStore(novelsData)?.[novel] || import.meta.env.NOVELS_METADATA[novel];
-  const genres: string[] = data.genre || [];
-  const demographic: string = data.demographic || "";
-  const result = demographic ? `#${demographic}` : "";
+export const novelCoverSubtitle = derived([novelsData], (novel_data) => {
+  return import.meta.env.NOVEL_LIST.reduce((result: string[], novel: string) => {
+    const data = novel_data?.[novel] || import.meta.env.NOVELS_METADATA[novel];
+    const genres: string[] = data.genre || [];
+    const demographic: string = data.demographic || "";
+    const subtitle = demographic ? `#${demographic}` : "";
+    result[novel] =
+      subtitle +
+      genres.slice(0, 2).reduce((prev: string, cur: string): string => {
+        prev += ` #${cur}`;
+        return prev;
+      }, "");
 
-  return (
-    result +
-    genres.slice(0, 2).reduce((prev: string, cur: string): string => {
-      prev += ` #${cur}`;
-      return prev;
-    }, "")
-  );
-}
+    return result;
+  }, {});
+});
+// export function getNovelCoverSubtitle(novel: string): string {
+//   const data = getStore(novelsData)?.[novel] || import.meta.env.NOVELS_METADATA[novel];
+//   const genres: string[] = data.genre || [];
+//   const demographic: string = data.demographic || "";
+//   const result = demographic ? `#${demographic}` : "";
+
+//   return (
+//     result +
+//     genres.slice(0, 2).reduce((prev: string, cur: string): string => {
+//       prev += ` #${cur}`;
+//       return prev;
+//     }, "")
+//   );
+// }

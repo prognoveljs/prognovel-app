@@ -2,7 +2,7 @@
   import { SITE_TITLE } from "$lib/_setting";
   import { get } from "idb-keyval";
   import { fetchSiteMetadata, getMetadataStore } from "$lib/utils/fetch-metadata";
-  import { loadNovelTitles, loadPartialNovelsMetadata } from "$lib/utils/novel-page";
+  import { loadPartialNovelsMetadata, novelTitles } from "$lib/utils/novel-page";
   import { isBrowser } from "$lib/store/states";
   import type { NovelMetadata, NovelsMetadata, SiteMetadata, Bookmark } from "$typings";
 
@@ -20,7 +20,6 @@
     let res;
     let data: PreloadData = { status: 200 };
     let novelsMetadata: NovelsMetadata = {};
-    let novelTitles = {};
     let bookmarkData: Bookmark[];
 
     url = `${import.meta.env.BACKEND_API}`;
@@ -33,7 +32,6 @@
         data = await fetchSiteMetadata();
         data.fresh = true;
       }
-      novelTitles = loadNovelTitles(data);
       //@ts-ignore
       novelsMetadata = loadPartialNovelsMetadata(data as SiteMetadata);
       // bookmarkData = await loadBookmark();
@@ -54,8 +52,6 @@
         }
         data.novels.forEach((novel) => {
           const novelTemp: NovelMetadata = readJson(`assets/publish/${novel}/metadata.json`);
-
-          novelTitles[novel] = novelTemp.title;
           // TODO check if adding all option of metadata is overkill
           // TODO strip synopsis and other metadata from novels
           novelsMetadata[novel] = novelTemp;
@@ -77,7 +73,6 @@
           novelList: data.novels,
           bookmarkData,
           novelsMetadata,
-          novelTitles,
         },
       };
     } else {
@@ -101,7 +96,6 @@
   import HomeHero from "$lib/components/home-page/HomeHero.svelte";
 
   export let novelList: string[];
-  export let novelTitles: string[];
   export let sitemetadata: SiteMetadata & PreloadData;
   export let novelsMetadata: NovelsMetadata;
   export let bookmarkData: Bookmark[];

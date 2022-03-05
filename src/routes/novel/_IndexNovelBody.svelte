@@ -4,10 +4,9 @@
   import { novelsData } from "$lib/store/states";
 
   import { siteMetadata } from "$lib/store/states";
-  import { getNovelCoverSubtitle, loadNovelTitles } from "$lib/utils/novel-page";
+  import { novelCoverSubtitle, novelTitles } from "$lib/utils/novel-page";
 
   $: novels = ($siteMetadata?.novels || []) as string[];
-  $: novelTitles = loadNovelTitles($siteMetadata);
 </script>
 
 <article>
@@ -20,7 +19,7 @@
             {novel}
             showTitle={true}
             showSub={true}
-            sub={getNovelCoverSubtitle(novel, { novelsMetadata: $novelsData })}
+            sub={novelCoverSubtitle[novel]}
           />
         </a>
       {/if}
