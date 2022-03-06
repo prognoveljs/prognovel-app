@@ -19,8 +19,6 @@
   import { isBrowser } from "$lib/store/states";
   // import "carbon-components-svelte/css/g90.css";
 
-  export let segment;
-
   $: $currentPage = $page;
   $: $currentNovel = FORBIDDEN_NOVEL_ID.includes($page?.params?.novel)
     ? ""
@@ -43,8 +41,8 @@
   });
 </script>
 
-<Nav {segment} page={$page} />
-<Sidebar {segment} />
+<Nav />
+<Sidebar />
 
 <div class="layout__grid">
   <main in:fly={transition.In()} out:fly={transition.Out()}>
@@ -55,7 +53,7 @@
 
 <OnVisit />
 <DownloadProgress />
-<Loading isNavigatingBetweenPages={$navigating} {segment} />
+<Loading isNavigatingBetweenPages={$navigating} />
 <ServiceWorkerUpdate />
 <Analytics page={$page} />
 <MobileMenuBase />

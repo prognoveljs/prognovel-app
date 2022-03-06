@@ -5,7 +5,7 @@
   import { ChapterState } from "$lib/utils/read-page/vars";
   import { path } from "$lib/store/states";
 
-  export let isNavigatingBetweenPages = false;
+  export let isNavigatingBetweenPages: any = false;
 
   async function startLoading() {
     const loading: HTMLElement = document.createElement("div");

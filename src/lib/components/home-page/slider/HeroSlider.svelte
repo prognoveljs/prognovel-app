@@ -7,8 +7,6 @@
 
   const AUTO_NAVIGATE_DELAY = 5000;
   let cursor = 0;
-  let hasSlide = false;
-  let container;
   let timer;
   $: highlightNovels = novelList;
   // $: highlightNovels = ["yashura-legacy", "yashura-legacy"];
@@ -20,10 +18,6 @@
       clearInterval(timer);
     };
   });
-
-  function removeOverflow() {
-    // container.style.overflow = "auto";
-  }
 
   function navigate(cr: number) {
     cursor = cr;
@@ -52,7 +46,7 @@
     });
 </script>
 
-<section bind:this={container} on:mouseleave={mouseLeave} on:mouseenter={mouseEnter}>
+<section on:mouseleave={mouseLeave} on:mouseenter={mouseEnter}>
   <!-- {JSON.stringify(data)} -->
   <div>
     {#key cursor}
