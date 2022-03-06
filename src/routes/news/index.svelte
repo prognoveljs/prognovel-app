@@ -6,7 +6,7 @@
   import { onMount } from "svelte";
 
   const fetchLoading: Promise<any> = new Promise(async (resolve) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     resolve([
       {
         date: "2020-01-01",
