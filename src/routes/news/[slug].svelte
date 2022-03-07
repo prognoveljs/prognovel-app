@@ -16,7 +16,8 @@
   import Icon from "$lib/components/Icon.svelte";
   import Avatar from "$lib/components/user/Avatar.svelte";
   import { isBrowser } from "$lib/store/states";
-  import { faDiscord, faFacebook, faReddit, faTwitter } from "@fortawesome/free-brands-svg-icons";
+  import { SITE_TITLE } from "$lib/_setting";
+  import { faFacebook, faReddit, faTwitter, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
   let mock = [
     {
@@ -69,20 +70,43 @@
       </div>
     </div>
     <div class="share">
-      <a target="_blank" href="/">
+      <span>share</span>
+      <a
+        target="_blank"
+        href={data?.url}
+        on:click|preventDefault={() => {
+          window.open(
+            "https://www.facebook.com/sharer/sharer.php?u=" + $page.url,
+            "facebook-share-dialog",
+            "width=626, height=436",
+          );
+        }}
+      >
         <Icon size="1.25em" icon={faFacebook} />
-      </a>
-      <a target="_blank" href="/">
-        <Icon size="1.25em" icon={faTwitter} />
-      </a>
-      <a target="_blank" href="/">
-        <Icon size="1.25em" icon={faDiscord} />
       </a>
       <a
         target="_blank"
-        href="https://www.reddit.com/submit?url={$page?.url?.href}&title={isBrowser
-          ? decodeURIComponent(data?.title)
-          : ''}"
+        href="https://twitter.com/intent/tweet?text={'[' +
+          SITE_TITLE +
+          ' news] ' +
+          data?.title +
+          ' ' +
+          $page?.url}"
+      >
+        <Icon size="1.25em" icon={faTwitter} />
+      </a>
+      <a
+        target="_blank"
+        href="https://api.whatsapp.com/send?text={$page?.url
+          ?.href}&title=[{SITE_TITLE} news] {data?.title}"
+        data-action="share/whatsapp/share"
+      >
+        <Icon size="1.5em" icon={faWhatsapp} />
+      </a>
+      <a
+        target="_blank"
+        href="https://www.reddit.com/submit?url={$page?.url
+          ?.href}&title=[{SITE_TITLE} news] {data?.title}"
       >
         <Icon size="1.25em" icon={faReddit} />
       </a>
@@ -159,9 +183,13 @@
       .share {
         display: flex;
         flex-direction: column;
-        top: 12px;
+        top: 4px;
         right: -64px;
         position: absolute;
+        span {
+          opacity: 0.6;
+          margin-bottom: 8px;
+        }
         a {
           $size: 42px;
           height: $size;
