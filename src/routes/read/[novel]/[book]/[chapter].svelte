@@ -1,5 +1,7 @@
 <script context="module">
   import { checkTableOfContentExists, prefetchChapter } from "$lib/utils/read-page";
+  export const prerender = false;
+
   /** @type {import('@sveltejs/kit').Load} */
   export async function load({ params }) {
     const { novel, book, chapter } = params;

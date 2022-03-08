@@ -1,4 +1,5 @@
 <script lang="ts" context="module">
+  export const prerender = false;
   /** @type {import('@sveltejs/kit').Load} */
   export async function load({ params }) {
     const { slug } = params;
