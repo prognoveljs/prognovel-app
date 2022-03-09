@@ -2,7 +2,10 @@
   // import Icon from "$lib/components/Icon.svelte";
   // import { faCalendar, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
   import Avatar from "$lib/components/user/Avatar.svelte";
+  import { delay } from "$lib/utils/misc";
   import { formatDistance } from "date-fns";
+  import { onMount } from "svelte";
+  import NewsSkeletonShell from "./NewsSkeletonShell.svelte";
 
   let mockNews = [
     {
@@ -38,38 +41,51 @@
       url: "/news/test-14",
     },
   ];
+  let news_data = [];
 
-  $: news = mockNews.sort((a, b) => {
+  $: news = news_data.sort((a, b) => {
     return Date.parse(b.date) - Date.parse(a.date);
+  });
+
+  onMount(async () => {
+    await delay(1000);
+    news_data = mockNews;
   });
 </script>
 
 <article id="news">
   <h2>News</h2>
-  {#each news.slice(0, 3) as news, i}
-    <a class="news-item" href={news.url}>
-      {#if i}
-        <div class="horizontal-line" />
-      {/if}
-      <h3>{news.title}</h3>
-      <div class="item-wrapper">
-        <div class="author">
-          <Avatar email={news?.author?.email} size={32} />
-          <span>{news?.author?.name || "Admin"}</span>
+  {#if news.length}
+    {#each news.slice(0, 3) as news, i}
+      <a class="news-item" href={news.url}>
+        {#if i}
+          <div class="horizontal-line" />
+        {/if}
+        <h3>{news.title}</h3>
+        <div class="item-wrapper">
+          <div class="author">
+            <Avatar email={news?.author?.email} size={32} />
+            <span>{news?.author?.name || "Admin"}</span>
+          </div>
+          <div class="date">
+            <!-- <Icon icon={faCalendarAlt} size="1.15em" paddingBottom="2px" marginRight="4px" /> -->
+            {formatDistance(new Date(news.date), new Date(), { addSuffix: true })}
+          </div>
         </div>
-        <div class="date">
-          <!-- <Icon icon={faCalendarAlt} size="1.15em" paddingBottom="2px" marginRight="4px" /> -->
-          {formatDistance(new Date(news.date), new Date(), { addSuffix: true })}
-        </div>
-      </div>
-    </a>
-  {/each}
+      </a>
+    {/each}
+  {:else}
+    <NewsSkeletonShell --width="60%" horizontalLine={false} />
+    <NewsSkeletonShell />
+    <NewsSkeletonShell --width="80%" />
+  {/if}
   <div class="horizontal-line" style="position:relative !important;" />
 
   <a class="more-news" href="/news">more news</a>
 </article>
 
 <style lang="scss">
+  @import "shared";
   #news {
     display: flex;
     flex-direction: column;
@@ -80,7 +96,6 @@
       }
     }
 
-    $news-bleed-padding: 0.5em;
     .news-item {
       position: relative;
       text-decoration: none;
@@ -106,7 +121,8 @@
         justify-content: space-between;
         align-items: center;
         position: relative;
-        grid-template-columns: 1fr 120px;
+        grid-template-columns: minmax(0, 1fr) max-content;
+        gap: 8px;
 
         .author {
           display: flex;
@@ -133,15 +149,6 @@
           align-items: center;
         }
       }
-    }
-
-    .horizontal-line {
-      position: absolute;
-      width: calc(100% - #{$news-bleed-padding * -2});
-      left: 0;
-      top: 0;
-      height: 2px;
-      background: linear-gradient(to right, #fff0 0%, #fff7 10%, #fff0);
     }
 
     .more-news {

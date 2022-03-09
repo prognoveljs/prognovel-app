@@ -1,1 +1,1 @@
-export { deepEqual } from "./object";
+export { deepEqual, delay } from "./object";

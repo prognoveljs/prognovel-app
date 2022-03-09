@@ -1,0 +1,9 @@
+$news-bleed-padding: 0.5em;
+.horizontal-line {
+  position: absolute;
+  width: calc(100% - #{$news-bleed-padding * -2});
+  left: 0;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(to right, #fff0 0%, #fff7 10%, #fff0);
+}

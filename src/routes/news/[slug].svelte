@@ -56,7 +56,6 @@
   ];
   const DEFAULT_IMAGE = "";
   let slug;
-  console.log($page);
   $: data = mock[mock.findIndex((news) => news.url.split("/").slice(-1))];
 </script>
 
