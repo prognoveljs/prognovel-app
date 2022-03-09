@@ -12,6 +12,7 @@ h1 {
   display: flex;
   width: 100%;
   min-height: 100vh;
+  overflow: hidden;
   // max-width: var(--max-width);
 
   --shortcut-width: 270px;

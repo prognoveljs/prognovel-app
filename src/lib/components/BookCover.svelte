@@ -1,6 +1,7 @@
 <script lang="ts">
   import { placeholders } from "../../../.cache/novel-placeholders.js";
   import { getCoverURLPath } from "$lib/utils/images";
+  import { NOVEL_COVER_ASPECT_RATIO, NOVEL_COVER_HEIGHT, NOVEL_COVER_WIDTH } from "$lib/_setting";
 
   export let novel: string;
   export let title: string = "";
@@ -9,6 +10,9 @@
   export let showSub: boolean = false;
   export let isNovelPageCover: boolean = false;
   export let size: "medium" | "small" | "" = "";
+  export let width: number | string = NOVEL_COVER_WIDTH + "px";
+  export let preload = false;
+  $: height = width === "100%" ? `${100 / NOVEL_COVER_ASPECT_RATIO}%` : NOVEL_COVER_HEIGHT + "px";
 
   $: sizeRatio = function () {
     switch (size) {
@@ -26,8 +30,16 @@
   };
 </script>
 
-<div class="image {size}" class:isNovelPageCover>
-  <div class="preload" style="background: url('{placeholders[novel]}');" />
+<div
+  class="image {size}"
+  class:isNovelPageCover
+  style="--width: {width};--aspect-ratio: {NOVEL_COVER_ASPECT_RATIO}; {width === '100%'
+    ? 'padding-top:' + height + ';height:0;'
+    : 'height: ' + height}"
+>
+  {#if preload}
+    <div class="preload" style="background: url('{placeholders[novel]}');" />
+  {/if}
   ​
   <picture>
     <source
@@ -69,21 +81,22 @@
     <img
       src={getCoverURLPath(novel, { width: sizeRatio() * 256, height: sizeRatio() * 256 }, "jpeg")}
       alt={title}
+      width="100%"
     />
   </picture>
 
-  <div class="text">
-    {#if showTitle}
-      <div
-        class="title"
-        style="color: hsl({titleColor.hue}, {titleColor.saturate}, {titleColor.light});"
-      >
-        {title}
-      </div>
-    {/if}
-    {#if showSub}<span class="sub">{sub}</span>{/if}
-  </div>
   {#if showTitle || showSub}
+    <div class="text">
+      {#if showTitle}
+        <div
+          class="title"
+          style="color: hsl({titleColor.hue}, {titleColor.saturate}, {titleColor.light});"
+        >
+          {title}
+        </div>
+      {/if}
+      {#if showSub}<span class="sub">{sub}</span>{/if}
+    </div>
     <div class="overlay" />
   {/if}
 </div>
@@ -94,10 +107,10 @@
 
   .image {
     position: relative;
-    background-color: var(--foreground-color);
+    // background-color: var(--foreground-color);
     box-shadow: 0 4px 12px #0003;
-    width: $cover-width;
-    height: $cover-height;
+    width: var(--width);
+    max-width: auto;
     margin: 0 auto;
     contain: content;
     overflow: hidden;
@@ -107,7 +120,8 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
+      height: auto;
+      // aspect-ratio: var(--aspect-ratio);
       z-index: $zIndex - 1;
       background-size: 100% 100% !important;
       background-repeat: no-repeat !important;

@@ -4,6 +4,7 @@
   import { getCoverURLPath } from "$lib/utils/images";
   import { novelCoverSubtitle, novelSynopsises, novelTitles } from "$lib/utils/novel-page";
   import { onMount } from "svelte";
+  import BookCover from "$lib/components/BookCover.svelte";
 
   export let novel: string;
   export let index: number;
@@ -39,14 +40,15 @@
   />
   <div class="content-wrapper">
     <div class="left">
-      <img
+      <BookCover {novel} width="100%" />
+      <!-- <img
         class="novel-cover"
         src={getCoverURLPath(novel, {
           width: 256,
           height: 256,
         })}
         alt={novelTitles[novel]}
-      />
+      /> -->
       <span>{$novelCoverSubtitle[novel]}</span>
     </div>
     <div class="right">
@@ -88,6 +90,7 @@
       width: 100%;
       flex-direction: column;
       margin-top: 25%;
+      position: relative;
       .novel-cover {
         z-index: 2;
         position: relative;
