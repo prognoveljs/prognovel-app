@@ -18,6 +18,7 @@
   import { appStart } from "$lib/utils/app-start";
   import { isBrowser } from "$lib/store/states";
   // import "carbon-components-svelte/css/g90.css";
+  import "@skeleton-elements/svelte/skeleton-elements.css";
 
   $: $currentPage = $page;
   $: $currentNovel = FORBIDDEN_NOVEL_ID.includes($page?.params?.novel)
@@ -55,7 +56,7 @@
 <DownloadProgress />
 <Loading isNavigatingBetweenPages={$navigating} />
 <ServiceWorkerUpdate />
-<Analytics page={$page} />
+<Analytics />
 <MobileMenuBase />
 
 <style lang="scss">

@@ -1,47 +1,11 @@
 <script lang="ts">
   import Icon from "$lib/components/Icon.svelte";
   import Avatar from "$lib/components/user/Avatar.svelte";
+  import { newsData } from "$lib/store/news-page";
   import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
   import { formatDistance } from "date-fns";
   import { onMount } from "svelte";
 
-  const fetchLoading: Promise<any> = new Promise(async (resolve) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    resolve([
-      {
-        date: "2020-01-01",
-        title: "My first news",
-        author: {
-          name: "Radhy",
-          email: "radhy.nodix@gmail.com",
-        },
-        url: "/news/test-1",
-      },
-      {
-        date: "2021-01-01",
-        title: "ProgNovel is now have a new hero in its home page",
-        author: {
-          name: "Suara sepatu kuda wa wa waw awawa awa",
-          email: "radhy.nodix@gmail.com",
-        },
-        url: "/news/test-2",
-      },
-      {
-        date: "2022-01-01",
-        title: "Here's 2022",
-        url: "/news/test-3",
-      },
-      {
-        date: "2023-01-01",
-        title: "ProgNovel is now testing",
-        author: {
-          name: "Radhy",
-          email: "radhy.nodix@gmail.com",
-        },
-        url: "/news/test-14",
-      },
-    ]);
-  });
   onMount(async () => {
     //
   });
@@ -49,12 +13,9 @@
 
 <article class="container">
   <h1>📰 News</h1>
-  {#await fetchLoading}
-    <h2>Loading...</h2>
-    <!-- promise is pending -->
-  {:then allNews}
-    {#each allNews as news}
-      <a href={news.url}>
+  {#if $newsData.length}
+    {#each $newsData as news}
+      <a href="/news/{news.id}">
         <h2>{news?.title}</h2>
         <div class="author-and-date">
           <div class="author">
@@ -67,11 +28,7 @@
           </div>
         </div>
         <div class="content-break">
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto tenetur maiores, quaerat
-            perferendis expedita amet, labore officiis autem dolorum eveniet voluptates? Itaque,
-            aperiam deserunt modi error nulla libero. Nostrum, sunt?
-          </p>
+          {@html news.content}
         </div>
         <div class="go-icon">
           <Icon icon={faArrowRight} size="2em" />
@@ -79,9 +36,10 @@
         <div class="horizontal-line" />
       </a>
     {/each}
-  {:catch error}
+  {:else}
+    <h2>Loading...</h2>
     <!-- promise was rejected -->
-  {/await}
+  {/if}
 </article>
 
 <style lang="scss">

@@ -2,54 +2,16 @@
   // import Icon from "$lib/components/Icon.svelte";
   // import { faCalendar, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
   import Avatar from "$lib/components/user/Avatar.svelte";
+  import { siteMetadata } from "$lib/store/states";
   import { delay } from "$lib/utils/misc";
   import { formatDistance } from "date-fns";
   import { onMount } from "svelte";
   import NewsSkeletonShell from "./NewsSkeletonShell.svelte";
 
-  let mockNews = [
-    {
-      date: "2020-01-01",
-      title: "My first news",
-      author: {
-        name: "Radhy",
-        email: "radhy.nodix@gmail.com",
-      },
-      url: "/news/test-1",
-    },
-    {
-      date: "2021-01-01",
-      title: "ProgNovel is now have a new hero in its home page",
-      author: {
-        name: "Suara sepatu kuda wa wa waw awawa awa",
-        email: "radhy.nodix@gmail.com",
-      },
-      url: "/news/test-2",
-    },
-    {
-      date: "2022-01-01",
-      title: "Here's 2022",
-      url: "/news/test-3",
-    },
-    {
-      date: "2023-01-01",
-      title: "ProgNovel is now testing",
-      author: {
-        name: "Radhy",
-        email: "radhy.nodix@gmail.com",
-      },
-      url: "/news/test-14",
-    },
-  ];
-  let news_data = [];
-
-  $: news = news_data.sort((a, b) => {
-    return Date.parse(b.date) - Date.parse(a.date);
-  });
+  $: news = $siteMetadata.news || [];
 
   onMount(async () => {
     await delay(1000);
-    news_data = mockNews;
   });
 </script>
 
@@ -57,7 +19,7 @@
   <h2>News</h2>
   {#if news.length}
     {#each news.slice(0, 3) as news, i}
-      <a class="news-item" href={news.url}>
+      <a class="news-item" href="/news/{news.id}">
         {#if i}
           <div class="horizontal-line" />
         {/if}

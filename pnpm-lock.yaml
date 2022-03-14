@@ -6,7 +6,9 @@ specifiers:
   '@fortawesome/free-brands-svg-icons': ^5.15.3
   '@fortawesome/free-regular-svg-icons': ^5.15.3
   '@fortawesome/free-solid-svg-icons': ^5.15.3
+  '@fullhuman/postcss-purgecss': ^4.1.3
   '@originjs/vite-plugin-commonjs': ^1.0.3
+  '@skeleton-elements/svelte': ^2.0.0
   '@sveltejs/adapter-static': next
   '@sveltejs/kit': next
   '@types/aws-lambda': ^8.10.67
@@ -32,7 +34,7 @@ specifiers:
   node-fetch: ^2.6.1
   npm-run-all: ^4.1.5
   optimize-plugin: ^1.0.0
-  postcss: ^8.2.1
+  postcss: ^8.2.15
   postcss-load-config: ^3.0.0
   sass: ^1.32.13
   sharp: ^0.29.2
@@ -53,6 +55,7 @@ dependencies:
   '@fortawesome/free-brands-svg-icons': 5.15.3
   '@fortawesome/free-regular-svg-icons': 5.15.3
   '@fortawesome/free-solid-svg-icons': 5.15.3
+  '@skeleton-elements/svelte': 2.0.0
   carbon-components-svelte: 0.59.0
   chalk: 4.1.1
   crypto-es: 1.2.7
@@ -77,9 +80,10 @@ dependencies:
 devDependencies:
   '@beyonk/svelte-google-analytics': 2.2.0
   '@cloudflare/workers-types': 3.3.0
+  '@fullhuman/postcss-purgecss': 4.1.3_postcss@8.2.15
   '@originjs/vite-plugin-commonjs': 1.0.3
-  '@sveltejs/adapter-static': 1.0.0-next.28
-  '@sveltejs/kit': 1.0.0-next.287_sass@1.32.13+svelte@3.46.4
+  '@sveltejs/adapter-static': 1.0.0-next.29
+  '@sveltejs/kit': 1.0.0-next.296_sass@1.32.13+svelte@3.46.4
   '@types/aws-lambda': 8.10.76
   '@types/ws': 8.2.2
   autoprefixer: 10.2.5_postcss@8.2.15
@@ -331,6 +335,15 @@ packages:
       '@fortawesome/fontawesome-common-types': 0.2.35
     dev: false
 
+  /@fullhuman/postcss-purgecss/4.1.3_postcss@8.2.15:
+    resolution: {integrity: sha512-jqcsyfvq09VOsMXxJMPLRF6Fhg/NNltzWKnC9qtzva+QKTxerCO4esG6je7hbnmkpZtaDyPTwMBj9bzfWorsrw==}
+    peerDependencies:
+      postcss: ^8.0.0
+    dependencies:
+      postcss: 8.2.15
+      purgecss: 4.1.3
+    dev: true
+
   /@nodelib/fs.scandir/2.1.4:
     resolution: {integrity: sha512-33g3pMJk3bg5nXbL/+CY6I2eJDzZAni49PfJnL5fghPTggPvBd/pFNSgJsdAgWptuFu7qq/ERvOYFlhvsLTCKA==}
     engines: {node: '>= 8'}
@@ -408,14 +421,18 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@sveltejs/adapter-static/1.0.0-next.28:
-    resolution: {integrity: sha512-c4xLyeSwnbGQxe4f1SLpHTbxZDm3TEr43scR3tOlVgQN+mnAL9aDdl3nTtdzWmrUDmDEmY4GriAwLyFLZuINLw==}
+  /@skeleton-elements/svelte/2.0.0:
+    resolution: {integrity: sha512-l8C3HIa7QocPsXo1WO0Qjr+/nknrmp+PPOTUe3/hHbSduz321uG6hFxVZRiM3G6Qee57vW4CVpdHL/Ix+bJjhw==}
+    dev: false
+
+  /@sveltejs/adapter-static/1.0.0-next.29:
+    resolution: {integrity: sha512-0hjGnfT3BRyoHnzJ2w0/xL+xICRpKneDTm45ZzggiRrc0r71WJfF6toGeg8N4QUQnj8EJ3Itm453gsS1kt7VUQ==}
     dependencies:
       tiny-glob: 0.2.9
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.287_sass@1.32.13+svelte@3.46.4:
-    resolution: {integrity: sha512-aiCCuSpE9U8tX+29fnPfh9qHzWm8dBP7hkWvzcb1SZqbij8WXHyntUg/LXmhqlb8zKflEMLWa8iS+coqYDPmPQ==}
+  /@sveltejs/kit/1.0.0-next.296_sass@1.32.13+svelte@3.46.4:
+    resolution: {integrity: sha512-mZM3vYSg1VPpgL2QHa+My+KviOuSgP4e5JRO9/T/5XLe3o2tsrRnSpjuzZeVdcY3B4+OrUb5JV7B1UPkHISrLA==}
     engines: {node: '>=14.13'}
     hasBin: true
     peerDependencies:

@@ -16,47 +16,13 @@
   import { page } from "$app/stores";
   import Icon from "$lib/components/Icon.svelte";
   import Avatar from "$lib/components/user/Avatar.svelte";
+  import { newsData } from "$lib/store/news-page";
   import { isBrowser } from "$lib/store/states";
   import { SITE_TITLE } from "$lib/_setting";
   import { faFacebook, faReddit, faTwitter, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
-  let mock = [
-    {
-      date: "2020-01-01",
-      title: "My first news",
-      author: {
-        name: "Radhy",
-        email: "radhy.nodix@gmail.com",
-      },
-      url: "/news/test-1",
-    },
-    {
-      date: "2021-01-01",
-      title: "ProgNovel is now have a new hero in its home page",
-      author: {
-        name: "Suara sepatu kuda wa wa waw awawa awa",
-        email: "radhy.nodix@gmail.com",
-      },
-      url: "/news/test-2",
-    },
-    {
-      date: "2022-01-01",
-      title: "Here's 2022",
-      url: "/news/test-3",
-    },
-    {
-      date: "2023-01-01",
-      title: "ProgNovel is now testing",
-      author: {
-        name: "Radhy",
-        email: "radhy.nodix@gmail.com",
-      },
-      url: "/news/test-14",
-    },
-  ];
-  const DEFAULT_IMAGE = "";
-  let slug;
-  $: data = mock[mock.findIndex((news) => news.url.split("/").slice(-1))];
+  export let slug;
+  $: data = $newsData.find((news) => news.id === slug);
 </script>
 
 <article>
@@ -113,36 +79,7 @@
     </div>
   </div>
   <div class="content">
-    <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse rem earum facilis quis
-      accusamus ipsam quos! Eligendi ex nam eum consequatur, fugiat laboriosam itaque quas maxime
-      maiores, totam distinctio odit.
-    </p>
-    <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse rem earum facilis quis
-      accusamus ipsam quos! Eligendi ex nam eum consequatur, fugiat laboriosam itaque quas maxime
-      maiores, totam distinctio odit.
-    </p>
-    <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse rem earum facilis quis
-      accusamus ipsam quos! Eligendi ex nam eum consequatur, fugiat laboriosam itaque quas maxime
-      maiores, totam distinctio odit.
-    </p>
-    <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse rem earum facilis quis
-      accusamus ipsam quos! Eligendi ex nam eum consequatur, fugiat laboriosam itaque quas maxime
-      maiores, totam distinctio odit.
-    </p>
-    <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse rem earum facilis quis
-      accusamus ipsam quos! Eligendi ex nam eum consequatur, fugiat laboriosam itaque quas maxime
-      maiores, totam distinctio odit.
-    </p>
-    <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse rem earum facilis quis
-      accusamus ipsam quos! Eligendi ex nam eum consequatur, fugiat laboriosam itaque quas maxime
-      maiores, totam distinctio odit.
-    </p>
+    {@html data?.content}
   </div>
 </article>
 
@@ -210,7 +147,7 @@
       }
     }
 
-    p {
+    :global(p) {
       font-size: 1.2em;
     }
 
