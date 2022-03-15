@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { SITE_TITLE } from "$lib/_setting.ts";
+  import { SITE_TITLE } from "$lib/_setting";
   import { path } from "$lib/store/states";
 
   export let nolabel: boolean = false;

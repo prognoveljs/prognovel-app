@@ -17,13 +17,7 @@
 
   onMount(async () => {
     console.log("🚀 redirecting to", load);
-    if (load) {
-      goto("/read/" + load);
-      return;
-    }
-
-    const redirect = document.head.querySelector('meta[name="redirect"]');
-    if (redirect) goto(redirect.content);
+    goto("/read/" + load);
   });
 </script>
 

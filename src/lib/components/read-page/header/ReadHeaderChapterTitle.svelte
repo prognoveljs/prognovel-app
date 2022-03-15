@@ -2,18 +2,22 @@
   import { isCurrentChapterLocked } from "$lib/utils/web-monetization";
   import { ChapterState } from "$lib/utils/read-page/vars";
   import { currentChapter, currentContent } from "$lib/store/read-page";
+  import SpeechSyntesis from "$lib/components/read-page/speech-synthesis/SpeechSyntesis.svelte";
 
   export let title: string;
   $: chapter = $currentChapter.slice(8).replace(/-/, ".");
 </script>
 
 <section class="title">
+  <SpeechSyntesis />
   <div class="index" data-cy="chapter-number">
-    CHAPTER
-    {chapter}
+    <span id="chapter-index">
+      CHAPTER {chapter}
+    </span>
     {#if $isCurrentChapterLocked}🔒{/if}
   </div>
   <h1
+    id="chapter-title"
     class:chapterError={$currentContent.meta && $currentContent.meta.status === ChapterState.Error}
   >
     {title}
@@ -41,7 +45,7 @@
     }
 
     .index {
-      margin-top: 2.5em;
+      margin-top: 0.5em;
       letter-spacing: 0.125em;
       color: var(--primary-color);
       font-weight: 300;

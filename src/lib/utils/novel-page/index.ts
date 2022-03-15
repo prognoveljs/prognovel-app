@@ -1,9 +1,9 @@
 import { novelsData, siteMetadata } from "$lib/store/states";
-import { get as getStore } from "svelte/store";
-import type { NovelsMetadata, SiteMetadata } from "$typings";
+import { derived, get as getStore, Readable } from "svelte/store";
 import { fetchNovelMetadata } from "$lib/utils/fetch-metadata";
 import { toc } from "$lib/store/read-page";
 import { getCoverURLPath } from "$lib/utils/images";
+import type { NovelsMetadata, SiteMetadata } from "$typings";
 
 export function getNovelBookCoverSrc(
   novel: string,
@@ -22,16 +22,11 @@ export async function getNovelFirstChapter(novel: string): Promise<string> {
   return novelsMetadata[novel].chapters?.[0] ?? "";
 }
 
-const novelTitles = new Map();
-export function getNovelTitle(novel) {
-  if (!novelTitles.size) loadNovelTitles(getStore(siteMetadata));
-  if (novelTitles.has(novel)) {
-    return novelTitles.get(novel);
-  } else {
-    return novel;
-  }
-}
-
+export const novelList = import.meta.env.NOVEL_LIST;
+export const novelTitles = import.meta.env.NOVEL_TITLES;
+export const novelGenres = import.meta.env.NOVEL_GENRES;
+export const novelDemographics = import.meta.env.NOVEL_DEMOGRAPHICS;
+export const novelSynopsises = import.meta.env.NOVEL_SYNOPSISES;
 /**
  * Load novels metadata from memory. If a novel data hasn't been fetched from API, it will
  * returns the short version from parent site metadata that contains novel title, author, chapter numbers,
@@ -50,25 +45,6 @@ export function loadPartialNovelsMetadata(siteMetadata: SiteMetadata): NovelsMet
   });
 
   return novelsMetadata;
-}
-/**
- * loadNovelTitles() behaves the same as getNovelTitles(),
- * but loads novel titles bulk at once to avoid unnecessary
- * operation when getting novel title individually.
- *
- * Useful when used within Svelte's for each loop bracket.
- *
- * @param meta NovelsMetadata
- * @returns Array<string>
- */
-export function loadNovelTitles(meta) {
-  let titles = {};
-  if (!meta.novelsMetadata) return titles;
-  meta.novelsMetadata.forEach((novel) => {
-    titles[novel.id] = novel.title;
-    novelTitles.set(novel.id, novel.title);
-  });
-  return titles;
 }
 
 export function createDerivedNovelsMetadata($meta: SiteMetadata) {
@@ -90,23 +66,20 @@ export function handleReadButton(novel: string): string {
   return `/read/${novel}/${chapterDestination}`;
 }
 
-export function getNovelCoverSubtitle(
-  novel: string,
-  opts?: {
-    novelsMetadata: NovelsMetadata;
-  },
-): string {
-  const genres: string[] =
-    (opts?.novelsMetadata?.[novel] || getStore(novelsData)?.[novel])?.genre || [];
-  const demographic: string =
-    (opts?.novelsMetadata?.[novel] || getStore(novelsData)?.[novel])?.demographic || "";
-  const result = demographic ? `#${demographic}` : "";
+export const novelCoverSubtitle: Readable<{
+  [novel: string]: string;
+}> = derived([novelsData], (novel_data) => {
+  return novelList.reduce((result, novel: string) => {
+    const genres: string[] = novel_data?.[novel] || novelGenres[novel] || [];
+    const demographic: string = novel_data?.[novel] || novelDemographics[novel] || "";
+    const subtitle = demographic ? `#${demographic}` : "";
+    result[novel] =
+      subtitle +
+      genres.slice(0, 2).reduce((prev: string, cur: string): string => {
+        prev += ` #${cur}`;
+        return prev;
+      }, "");
 
-  return (
-    result +
-    genres.slice(0, 2).reduce((prev: string, cur: string): string => {
-      prev += ` #${cur}`;
-      return prev;
-    }, "")
-  );
-}
+    return result;
+  }, {});
+});

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { bannerImages, updateBannerImage } from "$lib/utils/images";
-  import { NOVEL_BANNER_HEIGHT } from "$lib/_setting.ts";
+  import { NOVEL_BANNER_HEIGHT } from "$lib/_setting";
   import { getContext, onMount } from "svelte";
   import type { NovelMetadata } from "$typings";
 

@@ -2,7 +2,7 @@
 import { prerender } from "./prerender";
 import { preload } from "./_vars";
 import { validFetchEvent, pickCache, normalizeURL } from "./utils";
-import { isReadPage, redirect } from "./redirect";
+import { pageNotPrerendered, redirect } from "./redirect";
 
 self.addEventListener("fetch", eventHandler);
 
@@ -44,10 +44,8 @@ async function offlineResponse(event: FetchEvent, cache: Cache): Promise<Respons
       return offlineResponse;
     }
   } else {
-    if (path.startsWith(isReadPage)) {
-      console.log("⚙️⚙️ redirect >>", path);
-      const split = path.split(isReadPage);
-      if (/[a-zA-Z]/.test(split[1])) return await redirect(cache, path);
+    if (pageNotPrerendered.includes(path.split("/")[1])) {
+      return await redirect(path);
     }
   }
 

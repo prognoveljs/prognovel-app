@@ -11,6 +11,16 @@ export interface SiteMetadata {
   novelsMetadata: any[];
   stale?: boolean;
   disqus_id?: string;
+  news: {
+    id: string;
+    title: string;
+    date: number;
+    content: string;
+    author: {
+      name: string;
+      email?: string;
+    };
+  }[];
 }
 export interface Component {
   src: string;

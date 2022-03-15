@@ -5,6 +5,7 @@
   import { faSync, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
   import { get, set } from "idb-keyval";
   import Icon from "./Icon.svelte";
+  import { dev } from "$app/env";
 
   let isUpdate;
   let overlayIn;
@@ -33,7 +34,7 @@
       // await enableCookies();
     }
 
-    if (import.meta.env.NODE_ENV === "development") {
+    if (dev) {
       // if (!CookiesPrompt) await enableCookies();
     } else {
       const cookiesAccept = await get("cookies-accept");

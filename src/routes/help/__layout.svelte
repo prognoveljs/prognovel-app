@@ -15,8 +15,8 @@
   import { page } from "$app/stores";
   import { onDestroy } from "svelte";
   import { customBreadcrumbTitle } from "$lib/utils/navigation/custom-title";
-  import { SITE_TITLE } from "$lib/_setting.ts";
-  import { childData, showIndex } from "./_store.ts";
+  import { SITE_TITLE } from "$lib/_setting";
+  import { childData, showIndex } from "./_store";
   import Icon from "$lib/components/Icon.svelte";
   import { faList } from "@fortawesome/free-solid-svg-icons";
   import { fade } from "svelte/transition";

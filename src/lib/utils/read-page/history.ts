@@ -78,8 +78,8 @@ export function setBrowserHistory(
 
 export function replacePageTitleBookAndChapter(str: string, capitalize: boolean = false): string {
   if (!str) return "";
-  const Volume = capitalize ? "Vol " : "vol";
-  const Chapter = capitalize ? "Ch " : "ch";
+  const Volume = capitalize ? "Vol " : "vol ";
+  const Chapter = capitalize ? "Ch " : "ch ";
   return str
     .replace("volume-", Volume)
     .replace("book-", str)

@@ -1,5 +1,16 @@
 # ProgNovel Changelog
 
+## 0.6.4
+
+- **BREAKING**: requires ProgNovel CLI v0.6.4
+- **BREAKING**: requires ProgNovel Workers Backend v0.6.4
+- feat: early version of news pages
+- feat: text-to-speech synthesis feature
+- ui: new novel highlight slider component in homepage hero
+- fix: reading page and discussions page page redirect not working
+- fix: revshare gravatar profile not working
+- fix(ui/readpage): adjust max-width for checkbox options in settings tab
+
 ## 0.6.3
 
 - **BREAKING**: requires ProgNovel CLI v0.6.2

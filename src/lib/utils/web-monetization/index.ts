@@ -6,7 +6,7 @@ import {
   WebMonetization,
 } from "webfunding";
 import { verifyWebMonetizationReceipt } from "./verify-receipt";
-import { WEB_MONETIZATION_VERIFY } from "$lib/_setting.ts";
+import { WEB_MONETIZATION_VERIFY } from "$lib/_setting";
 import { getPoolWeightSum } from "webfunding/src/fund/utils";
 import { FORBIDDEN_NOVEL_ID } from "$lib/store/novel-page";
 import type { NovelMetadata, NovelsMetadata } from "$typings";

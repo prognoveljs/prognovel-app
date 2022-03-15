@@ -7,6 +7,9 @@ import { mdsvex } from "mdsvex";
 import { esbuildCommonjs } from "@originjs/vite-plugin-commonjs";
 import { optimizeCss, optimizeImports } from "carbon-preprocess-svelte";
 import ProgNovelENV from "./prognovel.env.js";
+import postcss from "postcss";
+import autoprefixer from "autoprefixer";
+import purgeCSS from "@fullhuman/postcss-purgecss";
 
 // ProgNovelENV();
 
@@ -21,8 +24,13 @@ export default {
     }),
     preprocess({
       scss: { prependData: `@import "style/scss/global.scss";` },
-      // scss: {},
     }),
+    postcss([
+      autoprefixer(),
+      purgeCSS({
+        content: ["./build/**/*.html", "./build/**/*.js", "./build/**/*.css"],
+      }),
+    ]),
   ],
   kit: {
     adapter: adapter(),
@@ -44,11 +52,6 @@ export default {
       resolve: {
         alias: {
           $src: "src/",
-          "$style/": "style/",
-          "$cache/": "./.cache/",
-          "$routes/": "src/routes/",
-          "$novel/": "src/routes/novel/",
-          "$plugins/": "plugins/",
           $typings: "typings",
         },
       },

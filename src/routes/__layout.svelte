@@ -18,19 +18,12 @@
   import { appStart } from "$lib/utils/app-start";
   import { isBrowser } from "$lib/store/states";
   // import "carbon-components-svelte/css/g90.css";
-
-  export let segment;
+  import "@skeleton-elements/svelte/skeleton-elements.css";
 
   $: $currentPage = $page;
   $: $currentNovel = FORBIDDEN_NOVEL_ID.includes($page?.params?.novel)
     ? ""
     : $page?.params?.novel || "";
-
-  if (isBrowser) {
-    currentNovel.subscribe((novel) => {
-      updatePaymentPointers(novel);
-    });
-  }
 
   const transition = {
     In: () => {
@@ -43,11 +36,14 @@
 
   onMount(async () => {
     appStart();
+    currentNovel.subscribe((novel) => {
+      updatePaymentPointers(novel);
+    });
   });
 </script>
 
-<Nav {segment} page={$page} />
-<Sidebar {segment} />
+<Nav />
+<Sidebar />
 
 <div class="layout__grid">
   <main in:fly={transition.In()} out:fly={transition.Out()}>
@@ -58,9 +54,9 @@
 
 <OnVisit />
 <DownloadProgress />
-<Loading isNavigatingBetweenPages={$navigating} {segment} />
+<Loading isNavigatingBetweenPages={$navigating} />
 <ServiceWorkerUpdate />
-<Analytics page={$page} />
+<Analytics />
 <MobileMenuBase />
 
 <style lang="scss">
@@ -120,7 +116,8 @@
     margin: 0 auto;
   }
 
-  :global(a:focus) {
+  :global(a:focus),
+  :global(.btn-focusable:focus) {
     /* font-weight: 700; */
     outline: 2px dashed var(--primary-color);
   }

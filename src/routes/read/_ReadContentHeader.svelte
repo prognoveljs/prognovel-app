@@ -1,8 +1,8 @@
 <script lang="ts">
   import Navigation from "./_Navigation.svelte";
   import { createEventDispatcher } from "svelte";
-  import { isMobileScreen } from "$lib/utils/mobile";
   import ReadHeader from "$lib/components/read-page/header/ReadHeader.svelte";
+  import SpeechSyntesis from "$lib/components/read-page/speech-synthesis/SpeechSyntesis.svelte";
   const dispatch = createEventDispatcher();
 
   function tableOfContent() {

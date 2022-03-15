@@ -8,7 +8,6 @@
 
 import { derived, writable, Writable, Readable, get as getStore } from "svelte/store";
 import { createDerivedNovelsMetadata } from "$lib/utils/novel-page";
-import type { SiteMetadata, CredentialMode, NovelsMetadata } from "$typings";
 import {
   showAdjustFont,
   showComments,
@@ -17,6 +16,7 @@ import {
 } from "./read-page/read-page-state";
 import { showAffiliateReferrer, showDownload, showRevshareStats } from "./novel-page";
 import { browser } from "$app/env";
+import type { SiteMetadata, CredentialMode, NovelsMetadata } from "$typings";
 
 // metadata
 //@ts-ignore

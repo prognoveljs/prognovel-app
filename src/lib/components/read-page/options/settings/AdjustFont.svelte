@@ -25,6 +25,7 @@
 </section>
 
 <style lang="scss">
+  // @import "../option-body.scss";
   .standalone {
     display: none;
     $rad: 12px;

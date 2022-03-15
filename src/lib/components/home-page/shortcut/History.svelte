@@ -4,14 +4,13 @@
   import { IDB_PREFIX_HISTORY_RECENT } from "$lib/utils/history";
   import { formatDistanceToNow } from "date-fns";
   import { siteMetadata } from "$lib/store/states";
-  import { loadNovelTitles } from "$lib/utils/novel-page";
+  import { novelTitles } from "$lib/utils/novel-page";
   import Icon from "$lib/components/Icon.svelte";
   import { faClock } from "@fortawesome/free-regular-svg-icons";
-  import type { HistoryRecent } from "$typings";
   import { getCoverURLPath, isWEBP } from "$lib/utils/images";
+  import type { HistoryRecent } from "$typings";
 
   let history: HistoryRecent[] = [];
-  $: titles = loadNovelTitles($siteMetadata);
 
   onMount(async () => {
     const saved: HistoryRecent[] = await get(IDB_PREFIX_HISTORY_RECENT);
@@ -22,14 +21,14 @@
 </script>
 
 <section>
-  {#if titles && history.length}
+  {#if novelTitles && history.length}
     {#each history as novel}
       <a class="novel" rel="preload" href="/read/{novel.id}/{novel.lastChapterRead}">
         <img
           src={getCoverURLPath(novel.id, { width: 128, height: 128 }, isWEBP ? "webp" : "jpeg")}
           alt={novel.id}
         />
-        <span class="title">{titles[novel.id] || novel.id}</span>
+        <span class="title">{novelTitles[novel.id] || novel.id}</span>
         <span class="chapter"
           >Ch
           {novel.lastChapterRead

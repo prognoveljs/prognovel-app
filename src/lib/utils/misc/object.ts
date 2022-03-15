@@ -6,3 +6,7 @@ export function deepEqual(x, y) {
     ? ok(x).length === ok(y).length && ok(x).every((key) => deepEqual(x[key], y[key]))
     : x === y;
 }
+
+export async function delay(time: number) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}

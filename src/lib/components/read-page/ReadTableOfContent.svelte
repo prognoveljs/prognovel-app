@@ -84,7 +84,7 @@
     {#each $toc as chapter}
       <a
         on:click={() => ($showTOC = false)}
-        href={`read/${$currentNovel}/${chapter}`}
+        href={`/read/${$currentNovel}/${chapter}`}
         id={chapter.replace("/", "-")}
       >
         <div>

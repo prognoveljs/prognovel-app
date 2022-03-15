@@ -1,16 +1,5 @@
-export const isReadPage = "/read/";
+export const pageNotPrerendered = ["read", "discussions"];
 
-export async function redirect(cache: Cache, path: string) {
-  const response = await cache.match("/read/");
-  if (!response) return;
-  const html = await response.text();
-  const init = {
-    headers: {
-      "Content-Type": "text/html",
-    },
-  };
-  return new Response(
-    html.replace("</head>", `<meta name="redirect" content="${path}" /></head>`),
-    init,
-  );
+export async function redirect(path: string) {
+  return Response.redirect("/" + path.slice(1).replace("/", "?load="));
 }
