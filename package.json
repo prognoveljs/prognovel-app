@@ -1,7 +1,7 @@
 {
 	"name": "@prognovel/frontend",
 	"description": "Next-Generation WebNovel platform.",
-	"version": "0.6.3",
+	"version": "0.6.4",
 	"type": "module",
 	"scripts": {
 		"populate": "node plugins/onbuild/populate/assets && node plugins/onbuild/populate/copy-assets",
