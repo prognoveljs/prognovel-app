@@ -34,7 +34,7 @@
 </script>
 
 <div class="container" style="grid-area: {grid}; min-height: {NOVEL_COVER_HEIGHT + 50}px;">
-  <div class="demo-novels">demo novels 👇</div>
+  <!-- <div class="demo-novels">demo novels 👇</div> -->
   <div
     class="grid"
     style="grid-template-columns: repeat(auto-fill, {NOVEL_COVER_WIDTH}px); grid-template-rows: {NOVEL_COVER_HEIGHT}px;"

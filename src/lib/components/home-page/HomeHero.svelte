@@ -23,5 +23,14 @@
         right: $bleed * -1;
       }
     }
+
+    @include screen("tablet") {
+      grid-template-columns: 100%;
+      grid-template-rows: repeat(2, auto);
+      padding: 18px;
+    }
+    @include screen("mobile") {
+      padding: 12px;
+    }
   }
 </style>

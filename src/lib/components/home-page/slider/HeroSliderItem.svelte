@@ -41,14 +41,6 @@
   <div class="content-wrapper">
     <div class="left">
       <BookCover {novel} width="100%" />
-      <!-- <img
-        class="novel-cover"
-        src={getCoverURLPath(novel, {
-          width: 256,
-          height: 256,
-        })}
-        alt={novelTitles[novel]}
-      /> -->
       <span>{$novelCoverSubtitle[novel]}</span>
     </div>
     <div class="right">
@@ -85,20 +77,36 @@
     grid-template-columns: 200px 1fr;
     z-index: 2;
     position: relative;
+    @include screen("mobile") {
+      grid-template-columns: 1fr;
+      grid-template-rows: 150px 1fr;
+      padding: 0 2%;
+
+      :global(.book-cover) {
+        max-width: 150px;
+        --padding-top: 150px !important;
+      }
+    }
     .left {
       display: flex;
       width: 100%;
       flex-direction: column;
       margin-top: 25%;
       position: relative;
-      .novel-cover {
-        z-index: 2;
-        position: relative;
-        width: 100%;
-        height: auto;
-        border-radius: 2px;
-        padding: 12px;
+
+      @include screen("mobile") {
+        margin-top: 5%;
       }
+      // transform: translateY(-48px);
+
+      // .novel-cover {
+      //   z-index: 2;
+      //   position: relative;
+      //   width: 100%;
+      //   height: auto;
+      //   border-radius: 2px;
+      //   padding: 12px;
+      // }
 
       span {
         text-align: center;
@@ -107,11 +115,15 @@
     }
     .right {
       width: fit-content;
-      margin-top: 5%;
-      margin-left: 1em;
+      margin: {
+        top: 5%;
+        left: 1em;
+        right: 1em;
+      }
 
       h2 {
         font-weight: 700;
+        font-size: 2em;
       }
 
       .blurb {
@@ -122,6 +134,15 @@
       :global(p) {
         margin-top: 0;
         margin-bottom: 1.4em;
+        font-size: 1em;
+      }
+      @include screen("mobile") {
+        text-align: center;
+        font-size: 14px;
+
+        h2 {
+          margin-bottom: 0;
+        }
       }
     }
   }
