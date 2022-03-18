@@ -97,16 +97,6 @@
       @include screen("mobile") {
         margin-top: 5%;
       }
-      // transform: translateY(-48px);
-
-      // .novel-cover {
-      //   z-index: 2;
-      //   position: relative;
-      //   width: 100%;
-      //   height: auto;
-      //   border-radius: 2px;
-      //   padding: 12px;
-      // }
 
       span {
         text-align: center;
