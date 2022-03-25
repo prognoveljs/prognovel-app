@@ -30,7 +30,7 @@ const html = (id) => `
   </article>
 `;
 
-class AuthorsNote extends HTMLElement {
+export class AuthorsNote extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -38,7 +38,3 @@ class AuthorsNote extends HTMLElement {
     this.shadowRoot.innerHTML = html(id);
   }
 }
-
-export default () => {
-  window.customElements.define("authors-note", AuthorsNote);
-};

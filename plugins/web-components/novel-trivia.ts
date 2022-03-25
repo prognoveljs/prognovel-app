@@ -69,7 +69,7 @@ const html = (label) => `
   </article>
 `;
 
-class NovelTrivia extends HTMLElement {
+export class NovelTrivia extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -77,7 +77,3 @@ class NovelTrivia extends HTMLElement {
     this.shadowRoot.innerHTML = html(label);
   }
 }
-
-export default () => {
-  window.customElements.define("novel-trivia", NovelTrivia);
-};
