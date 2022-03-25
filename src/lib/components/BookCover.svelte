@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { placeholders } from "../../../.cache/novel-placeholders.js";
   import { getCoverURLPath } from "$lib/utils/images";
   import { NOVEL_COVER_ASPECT_RATIO, NOVEL_COVER_HEIGHT, NOVEL_COVER_WIDTH } from "$lib/_setting";
+  import { novelCoverPlaceholders } from "$lib/utils/novel-page";
 
   export let novel: string;
   export let title: string = "";
@@ -11,7 +11,7 @@
   export let isNovelPageCover: boolean = false;
   export let size: "medium" | "small" | "" = "";
   export let width: number | string = NOVEL_COVER_WIDTH + "px";
-  export let preload = false;
+  export let preload = true;
   $: height = width === "100%" ? `${100 / NOVEL_COVER_ASPECT_RATIO}%` : NOVEL_COVER_HEIGHT + "px";
 
   $: sizeRatio = function () {
@@ -38,7 +38,7 @@
     : 'height: ' + height}"
 >
   {#if preload}
-    <div class="preload" style="background: url('{placeholders[novel]}');" />
+    <div class="preload" style="background: url('{novelCoverPlaceholders[novel]}');" />
   {/if}
   ​
   <picture>
@@ -121,7 +121,7 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: auto;
+      height: 100%;
       // aspect-ratio: var(--aspect-ratio);
       z-index: $zIndex - 1;
       background-size: 100% 100% !important;

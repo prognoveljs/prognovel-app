@@ -68,7 +68,7 @@ if (apiEndpoint.slice(-1) === "/") apiEndpoint = apiEndpoint.slice(0, -1);
   downloadComponentsZip();
 })();
 
-function downloadAsset(file, novel = "", opts = {}) {
+async function downloadAsset(file, novel = "", opts = {}) {
   let path = assetsFolder;
 
   let url = `${apiEndpoint}/fetchImage?file=${file}`;

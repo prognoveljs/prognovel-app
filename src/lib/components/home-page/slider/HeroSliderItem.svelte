@@ -2,7 +2,12 @@
   import { scale } from "svelte/transition";
   import { goto } from "$app/navigation";
   import { getCoverURLPath } from "$lib/utils/images";
-  import { novelCoverSubtitle, novelSynopsises, novelTitles } from "$lib/utils/novel-page";
+  import {
+    novelCoverPlaceholders,
+    novelCoverSubtitle,
+    novelSynopsises,
+    novelTitles,
+  } from "$lib/utils/novel-page";
   import { onMount } from "svelte";
   import BookCover from "$lib/components/BookCover.svelte";
 
@@ -30,14 +35,7 @@
   on:click={() => goto("/novel/" + novel)}
   class="wrapper"
 >
-  <img
-    class="bg-image"
-    src={getCoverURLPath(novel, {
-      width: 64,
-      height: 64,
-    })}
-    alt={novelTitles[novel]}
-  />
+  <img class="bg-image" src={novelCoverPlaceholders[novel]} alt={novelTitles[novel]} />
   <div class="content-wrapper">
     <div class="left">
       <BookCover {novel} width="100%" />
@@ -118,6 +116,9 @@
 
       .blurb {
         max-height: 200px;
+        display: -webkit-box;
+        -webkit-line-clamp: 6;
+        -webkit-box-orient: vertical;
         overflow: hidden;
       }
 

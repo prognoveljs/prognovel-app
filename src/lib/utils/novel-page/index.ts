@@ -27,6 +27,8 @@ export const novelTitles = import.meta.env.NOVEL_TITLES;
 export const novelGenres = import.meta.env.NOVEL_GENRES;
 export const novelDemographics = import.meta.env.NOVEL_DEMOGRAPHICS;
 export const novelSynopsises = import.meta.env.NOVEL_SYNOPSISES;
+export const novelCoverPlaceholders = import.meta.env.NOVEL_COVER_PLACEHOLDERS;
+console.log(novelCoverPlaceholders);
 /**
  * Load novels metadata from memory. If a novel data hasn't been fetched from API, it will
  * returns the short version from parent site metadata that contains novel title, author, chapter numbers,
