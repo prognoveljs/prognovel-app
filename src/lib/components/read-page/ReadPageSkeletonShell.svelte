@@ -5,7 +5,7 @@
 </script>
 
 <section>
-  {#each Array(8).fill(0) as shell, width}
+  {#each Array(8).fill(0) as shells, width}
     <SkeletonShell primaryColor="#EBECEF55" secondaryColor="#F5F5F766" height="9em">
       {#each Array(4).fill(0) as svg, i}
         <rect
