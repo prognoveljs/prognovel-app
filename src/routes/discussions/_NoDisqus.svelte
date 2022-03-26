@@ -1,3 +1,6 @@
+<script lang="ts">
+</script>
+
 <article>
   <em> disqus haven't been set yet </em>
   <small>
