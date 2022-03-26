@@ -2,7 +2,7 @@
   export let secondaryColor = "#F5F5F7"; // do not use rgba() - not working in Safari on iOS 11
   export let primaryColor = "#EBECEF";
   export let height: number | string = 200;
-  export let width: number | string = 400;
+  export let width: number | string = "100%";
   export let speed = 2;
   export let animate = true;
   export let secondaryColorPercentWidth = 100;
