@@ -27,6 +27,7 @@
   import ChapterLock from "$lib/components/read-page/ChapterLock.svelte";
   import { showTOC } from "$lib/store/read-page/read-page-state";
   import { colorizedBackground } from "$lib/utils/fonts/background-hue";
+  import ReadPageSkeletonShell from "$lib/components/read-page/ReadPageSkeletonShell.svelte";
   export let novel: string;
   export let book: string;
   export let chapter: string;
@@ -86,7 +87,7 @@
       {:else if chapterStatus === ChapterState.Error}
         <ErrorPlaceholder />
       {:else}
-        {@html getLoadingPlaceholder().html}
+        <ReadPageSkeletonShell />
       {/if}
     </div>
     {#if locked}
