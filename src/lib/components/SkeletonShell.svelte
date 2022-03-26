@@ -48,3 +48,9 @@
     </linearGradient>
   </defs>
 </svg>
+
+<style lang="scss">
+  svg {
+    opacity: var(--opacity, 1);
+  }
+</style>
