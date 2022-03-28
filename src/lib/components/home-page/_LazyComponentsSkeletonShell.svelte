@@ -1,14 +1,19 @@
-<article>loading...</article>
+<script lang="ts">
+  import SkeletonShell from "$lib/components/SkeletonShell.svelte";
+</script>
+
+<section class="contain">
+  <SkeletonShell primaryColor="#3f3f3f" secondaryColor="#5a5a5a" width="100%" height="750">
+    <rect width="100%" height="284" x="0" y="0" rx="6" ry="6" />
+    <rect width="100%" height="400" x="0" y="350" rx="6" ry="6" />
+  </SkeletonShell>
+</section>
 
 <style lang="scss">
-  article {
-    min-height: 400px;
-    display: flex;
-    font-size: 3em;
-    letter-spacing: 0.125em;
-    justify-content: center;
-    align-items: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
-      "Helvetica Neue", sans-serif;
+  section {
+    position: relative;
+    z-index: 2;
+    padding-bottom: 5em;
+    padding-top: 24px;
   }
 </style>

@@ -8,7 +8,7 @@
   const AUTO_NAVIGATE_DELAY = 5000;
   let cursor = 0;
   let timer;
-  $: highlightNovels = novelList;
+  $: highlightNovels = novelList as string;
   // $: highlightNovels = ["yashura-legacy", "yashura-legacy"];
   $: novelDataWithSynopsis = $novelsData?.[highlightNovels[cursor]] ? $novelsData : novelSynopsises;
 
@@ -78,30 +78,50 @@
     user-select: none;
 
     .navigate-buttons {
+      $bottom: 12px;
       position: absolute;
       display: flex;
-      bottom: 12px;
+      bottom: $bottom;
       width: 100%;
       justify-content: center;
       z-index: 5;
       pointer-events: none;
 
+      @include screen("mobile") {
+        &::before {
+          content: "";
+          position: absolute;
+          bottom: $bottom * -1;
+          left: 0;
+          width: 100%;
+          height: 100px;
+          background: linear-gradient(to top, #000, #0005, #0000);
+          pointer-events: none;
+          opacity: 0.7;
+        }
+      }
+
       span {
         pointer-events: all;
-        $size: 8px;
+        --size: 8px;
         background-color: #fffd;
         opacity: 0.5;
         cursor: pointer;
-        width: $size;
-        height: $size;
+        width: var(--size);
+        height: var(--size);
         border-radius: 50%;
+
+        @include screen("mobile") {
+          --size: 16px;
+          opacity: 0.8;
+        }
 
         &.selected {
           background-color: var(--primary-color);
         }
 
         &:not(:last-child) {
-          margin-right: 8px;
+          margin-right: var(--size);
         }
 
         &:hover {

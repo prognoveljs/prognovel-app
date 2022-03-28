@@ -4,21 +4,18 @@
   import { onMount } from "svelte";
 
   onMount(() => {
-    if (!isBrowser) return;
-
     registerNativePlugins();
   });
 
-  const registerNativePlugins = () => {
+  const registerNativePlugins = async () => {
     const tag = "native";
     if ($registeredPlugins.has(tag)) return;
-    import("../../../plugins/web-components/prognovel-native-plugins.ts")
-      .then((plugin) => plugin.register())
-      .catch((err) => {
-        console.error("Error on establishing plugin authors-note");
-        console.error(err);
-      });
-
+    const { AuthorsNote, NovelTrivia } = await import(
+      "../../../plugins/web-components/prognovel-native-plugins"
+    );
+    window.customElements.define("novel-trivia", NovelTrivia);
+    window.customElements.define("authors-note", AuthorsNote);
+    console.log(NovelTrivia);
     $registeredPlugins.add(tag);
   };
 </script>

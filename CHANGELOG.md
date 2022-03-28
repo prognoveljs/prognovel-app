@@ -1,5 +1,13 @@
 # ProgNovel Changelog
 
+## 0.6.5
+
+- ui: loading skeleton shell now has wave animation
+- ui(homepage): lazy components below hero section now use new skeleton shell instead of just "Loading..."
+- performance(homepage): improve perceived loading speed by adding small static image placeholder to HTML
+- fix(ui/homepage): novel highlight slider and news layout fix on mobile
+- fix: reading page plugins such as `novel-trivia` and `authors-note` (Web Component) not loading
+
 ## 0.6.4
 
 - **BREAKING**: requires ProgNovel CLI v0.6.4

@@ -10,7 +10,6 @@ import ProgNovelENV from "./prognovel.env.js";
 import postcss from "postcss";
 import autoprefixer from "autoprefixer";
 import purgeCSS from "@fullhuman/postcss-purgecss";
-
 // ProgNovelENV();
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -40,6 +39,7 @@ export default {
         dynamicImport(),
         ProgNovelCSS(),
         optimizeImports(),
+        dynamicImport(),
         // process.env.NODE_ENV === "production" && optimizeCss(),
       ],
       optimizeDeps: {
@@ -60,6 +60,7 @@ export default {
           allow: [
             // your custom rules
             ".cache",
+            "plugins",
           ],
         },
       },

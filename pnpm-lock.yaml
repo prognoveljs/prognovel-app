@@ -83,7 +83,7 @@ devDependencies:
   '@fullhuman/postcss-purgecss': 4.1.3_postcss@8.2.15
   '@originjs/vite-plugin-commonjs': 1.0.3
   '@sveltejs/adapter-static': 1.0.0-next.29
-  '@sveltejs/kit': 1.0.0-next.296_sass@1.32.13+svelte@3.46.4
+  '@sveltejs/kit': 1.0.0-next.303_sass@1.32.13+svelte@3.46.4
   '@types/aws-lambda': 8.10.76
   '@types/ws': 8.2.2
   autoprefixer: 10.2.5_postcss@8.2.15
@@ -431,8 +431,8 @@ packages:
       tiny-glob: 0.2.9
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.296_sass@1.32.13+svelte@3.46.4:
-    resolution: {integrity: sha512-mZM3vYSg1VPpgL2QHa+My+KviOuSgP4e5JRO9/T/5XLe3o2tsrRnSpjuzZeVdcY3B4+OrUb5JV7B1UPkHISrLA==}
+  /@sveltejs/kit/1.0.0-next.303_sass@1.32.13+svelte@3.46.4:
+    resolution: {integrity: sha512-WdxDc8OiF1WEd/bEza7CBdzA+3qIcCi1GKBj/gieKX9I3N8iDJt/Cg2POrLo9wQoJ47nZcAd1eOhfr7XEX1aIQ==}
     engines: {node: '>=14.13'}
     hasBin: true
     peerDependencies:

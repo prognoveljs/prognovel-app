@@ -2,4 +2,11 @@
   --maxWidth: 56em;
   max-width: var(--maxWidth);
   margin: 0 auto;
+
+  @include screen("tablet") {
+    padding: 18px;
+  }
+  @include screen("mobile") {
+    padding: 12px;
+  }
 }

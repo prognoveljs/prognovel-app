@@ -107,11 +107,7 @@
     margin-top: 3em;
 
     @include screen("tablet") {
-      padding: 20px;
-    }
-
-    @include screen("mobile") {
-      padding: 12px;
+      padding: 0;
     }
 
     .grid {

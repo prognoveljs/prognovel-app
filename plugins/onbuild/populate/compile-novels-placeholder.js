@@ -2,6 +2,7 @@ import fs from "fs";
 import { CACHE_FOLDER } from "../_shared.js";
 import chalk from "chalk";
 import { join } from "path";
+import sharp from "sharp";
 
 export async function start() {
   if (process.env.NODE_ENV === "development") {
@@ -26,22 +27,10 @@ export async function start() {
   const siteMeta = JSON.parse(
     fs.readFileSync(join(CACHE_FOLDER, "assets/publish/sitemetadata.json"), "utf-8"),
   );
-  const novels = siteMeta.novels;
-  let js = `export const placeholders = JSON.parse('{`;
-
-  for (const novel of novels) {
-    const metadata = JSON.parse(
-      fs.readFileSync(join(CACHE_FOLDER, `assets/publish/${novel}/metadata.json`)),
-    );
-    const placeholder = metadata.cover.placeholder;
-
-    js += `"${novel}": "${placeholder}"`;
-    if (novels.reverse()[0] !== novel) js += ",";
-  }
-
-  js += `}');`;
-
-  if (!fs.existsSync(CACHE_FOLDER)) fs.mkdirSync(CACHE_FOLDER);
-
-  fs.writeFileSync(CACHE_FOLDER + "/novel-placeholders.js", js);
+  siteMeta.novels.forEach((novel) => {
+    sharp(join(CACHE_FOLDER, `/assets/publish/${novel}/cover-64.webp`))
+      .resize(32, 32)
+      .jpeg({ quality: 30 })
+      .toFile(join(CACHE_FOLDER, `/assets/publish/${novel}/placeholder.jpeg`));
+  });
 }

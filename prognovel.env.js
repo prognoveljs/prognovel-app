@@ -1,6 +1,7 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 import sass from "sass";
+import sharp from "sharp";
 import EnvironmentPlugin from "vite-plugin-environment";
 
 export default () => {
@@ -52,7 +53,17 @@ export default () => {
         return list;
       }, {}),
       CSS_VARIABLES: readCSSVariables(),
+      // misc
+      NOVEL_COVER_PLACEHOLDERS: Object.keys(NOVELS_METADATA)
+        .slice(0, 10)
+        .reduce((placeholder, novel) => {
+          const data = readFileSync(`${CACHE_PATH}/assets/publish/${novel}/placeholder.jpeg`);
+          placeholder[novel] = `data:image/jpeg;base64,${data.toString("base64")}`;
+          console.log(placeholder[novel]);
+          return placeholder;
+        }, {}),
     },
+
     {
       defineOn: "import.meta.env",
     },
