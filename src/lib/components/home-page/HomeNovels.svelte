@@ -141,10 +141,6 @@
           box-shadow: 0 4px 24px 8px #0002, 0 6px 16px #0003;
         }
 
-        // &:focus {
-        //   outline: none;
-        // }
-
         &:active {
           outline: none;
           transform: translateY(0);
