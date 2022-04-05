@@ -126,7 +126,7 @@
       <section class="hero">
         <h1>{SITE_TITLE}</h1>
         <HomeHero />
-        <HomeNovels titles={novelTitles} {novelList} {novelsMetadata} grid={"novels"} />
+        <HomeNovels {novelsMetadata} grid={"novels"} />
       </section>
       <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"
         ><path
