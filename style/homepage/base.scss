@@ -57,7 +57,7 @@ h1 {
     padding: var(--padding-top) var(--padding-side) var(--padding-bottom) var(--padding-side);
     
     &::before {
-      $size: 60%;
+      $size: 40%;
       content:'';
       position: absolute;
       width: 100% + $size;
@@ -65,7 +65,7 @@ h1 {
       top: $size / -2;
       left: $size / -2;
       z-index: -1;
-      background: radial-gradient(circle at top , var(--primary-color) 0%,  var(--background-color) 70%);
+      background: radial-gradient(circle at top , var(--primary-color-lighten-2) 0%,  var(--background-color) 70%);
     }
   }
 
@@ -82,6 +82,7 @@ h1 {
   font-size: 4em;
   margin-top: 1.5em;
   margin-bottom: 0.8em;
+  text-shadow: 2px 2px 8px #0004;
 
   @include screen("tablet") {
     margin-left: 24px;
