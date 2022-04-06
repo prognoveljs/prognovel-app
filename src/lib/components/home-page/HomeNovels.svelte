@@ -4,15 +4,16 @@
   import DisplayGrid from "./novel-list/DisplayGrid.svelte";
   import iconGrid from "$lib/assets/feather-icons/grid.svg?raw";
   import iconList from "$lib/assets/feather-icons/menu.svg?raw";
+  import DisplayList from "./novel-list/DisplayList.svelte";
 
   export let grid;
   type DisplayMode = "grid" | "list";
-  let mode: DisplayMode = "grid";
+  let displayMode: DisplayMode = "grid";
 
   const SELECTED_COLOR = "var(--primary-color-lighten-2)";
 
-  function selectMode(m: DisplayMode) {
-    mode = m;
+  function selectMode(mode: DisplayMode) {
+    displayMode = mode;
   }
 </script>
 
@@ -26,17 +27,23 @@
     <div class="options">
       <IconSvg
         on:click={() => selectMode("grid")}
-        --color={mode === "grid" ? SELECTED_COLOR : "currentColor"}
+        --color={displayMode === "grid" ? SELECTED_COLOR : "currentColor"}
         data={iconGrid}
       />
       <IconSvg
         on:click={() => selectMode("list")}
-        --color={mode === "list" ? SELECTED_COLOR : "currentColor"}
+        --color={displayMode === "list" ? SELECTED_COLOR : "currentColor"}
         data={iconList}
       />
     </div>
   </div>
-  <DisplayGrid />
+  <section class="list">
+    {#if displayMode === "grid"}
+      <DisplayGrid />
+    {:else if displayMode === "list"}
+      <DisplayList />
+    {/if}
+  </section>
 </div>
 
 <style lang="scss">
@@ -45,6 +52,42 @@
     padding-top: 3em;
     // background-color: #0002;
     position: relative;
+
+    .list {
+      position: relative;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 500%;
+      min-height: 500px;
+      height: 100%;
+      background-color: var(--background-color);
+      top: 2px;
+      left: -200%;
+      opacity: 0.6;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      width: 500%;
+      height: 100px;
+      background: linear-gradient(to bottom, #0002 20%, #0000);
+      top: 2px;
+      left: -200%;
+      opacity: 0.6;
+    }
+    .horizontal-line {
+      $thickness: 2.5px;
+      position: absolute;
+      width: 180%;
+      left: -40%;
+      top: 0;
+      height: $thickness;
+      background: linear-gradient(to right, #fff0, #fff5, #fff0);
+      border-radius: $thickness / 2;
+    }
   }
 
   .flex {

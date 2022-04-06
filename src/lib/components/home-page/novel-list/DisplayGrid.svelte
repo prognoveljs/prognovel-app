@@ -129,37 +129,5 @@
         }
       }
     }
-
-    &::before {
-      content: "";
-      position: absolute;
-      width: 500%;
-      height: 500px;
-      background-color: var(--background-color);
-      top: 2px;
-      left: -200%;
-      opacity: 0.6;
-    }
-    &::after {
-      content: "";
-      position: absolute;
-      width: 500%;
-      height: 100px;
-      background: linear-gradient(to bottom, #0002 20%, #0000);
-      top: 2px;
-      left: -200%;
-      opacity: 0.6;
-    }
-  }
-
-  .horizontal-line {
-    $thickness: 2.5px;
-    position: absolute;
-    width: 180%;
-    left: -40%;
-    top: 0;
-    height: $thickness;
-    background: linear-gradient(to right, #fff0, #fff5, #fff0);
-    border-radius: $thickness / 2;
   }
 </style>
