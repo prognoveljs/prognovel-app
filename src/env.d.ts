@@ -3,6 +3,7 @@
 import type { SiteMetadata } from "$typings";
 
 interface ImportMetaEnv {
+  readonly IS_DEMO: boolean;
   readonly BACKEND_API: string;
   readonly SITE_TITLE: string;
   readonly BASE_PATH: string;

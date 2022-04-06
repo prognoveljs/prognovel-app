@@ -1,3 +1,5 @@
+@import 'style/scss/color';
+
 $primary-color-hue: 15;
 $primary-color-saturate: 100%;
 $primary-color-light: 50%;
@@ -46,6 +48,11 @@ $primary-color: hsl($primary-color-hue, $primary-color-saturate, $primary-color-
   // layout
   --mobile-body-side-margin: 18px;
   --mobile-menu-height: 56px;
+
+  // color
+  @each $color, $value in $theme-colors {
+    --#{$color}: #{$value};
+  }
 }
 
 html.light {

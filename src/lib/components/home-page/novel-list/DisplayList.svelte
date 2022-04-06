@@ -7,8 +7,7 @@
     tagColorizer,
   } from "$lib/utils/novel-page";
 
-  // const list = novelList
-  const list = Array(6).fill("yashura-legacy");
+  const list = import.meta.env.IS_DEMO ? Array(6).fill("yashura-legacy") : novelList;
 </script>
 
 <ol class="list">
@@ -44,19 +43,24 @@
       padding: 8px;
       border-radius: 4px;
       background-color: var(--foreground-color);
-      transition: all 0.225s ease-in;
+      transition: all 0.16s ease-in;
       position: relative;
       filter: grayscale(50%);
       counter-increment: section;
       z-index: var(--index);
       border: 2px solid var(--primary-color-lighten-2);
+      transform-origin: bottom center;
 
       h3 {
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
         font-weight: 700;
         margin: 0;
       }
 
       .subtitle {
+        width: max-content;
         span {
           $delay-factor: 0.225s;
           transition: all 0.3s calc(var(--delay) * #{$delay-factor}) ease-in;
@@ -83,6 +87,7 @@
 
       &:hover {
         filter: grayscale(0);
+        transform: scale(1.0125);
         h3 {
           color: var(--primary-color-lighten-2);
         }

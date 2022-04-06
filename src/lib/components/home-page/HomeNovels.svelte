@@ -17,7 +17,10 @@
   }
 </script>
 
-<div class="container" style="grid-area: {grid}; min-height: {NOVEL_COVER_HEIGHT + 50}px;">
+<section
+  class="container contain"
+  style="grid-area: {grid}; min-height: {NOVEL_COVER_HEIGHT + 50}px;"
+>
   <div class="horizontal-line" />
   <div class="flex">
     <h2>
@@ -44,7 +47,7 @@
       <DisplayList />
     {/if}
   </section>
-</div>
+</section>
 
 <style lang="scss">
   .container {

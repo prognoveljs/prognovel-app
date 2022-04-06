@@ -103,17 +103,31 @@ export const novelCoverSubtitle: Readable<{
 
 export function tagColorizer(tag: string): string {
   if (tag.includes("seinen") || tag.includes("mature")) {
-    return "green";
+    return "var(--green-1)";
   } else if (tag.includes("shounen") || tag.includes("younglit")) {
+    return "var(--blue-1)";
   } else if (tag.includes("fantasy")) {
+    return "var(--orange-2)";
   } else if (tag.includes("action")) {
-  } else if (tag.includes("adventure")) {
-  } else if (tag.includes("mystery")) {
-  } else if (tag.includes("drama")) {
+    return "var(--red-2)";
   } else if (tag.includes("romance")) {
-  } else if (tag.includes("scifi")) {
+    return "var(--red-1)";
+  } else if (tag.includes("adventure")) {
+    return "var(--green-2)";
+  } else if (tag.includes("mystery")) {
+    return "var(--grey-1)";
   } else if (tag.includes("thriller")) {
+    return "var(--grey-2)";
+  } else if (tag.includes("drama")) {
+    return "var(--teal-2)";
+  } else if (tag.includes("scifi") || tag.includes("sci-fi")) {
+    return "var(--silver-2)";
   } else if (tag.includes("historical")) {
+    return "var(--orange-1)";
+  } else if (tag.includes("psychological")) {
+    return "var(--darkblue-2)";
+  } else if (tag.includes("sliceoflife")) {
+    return "var(--teal-1)";
   }
 
   return "currentColor";
