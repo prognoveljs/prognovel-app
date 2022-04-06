@@ -1,15 +1,30 @@
 <script lang="ts">
-  import { getNovelBookCoverSrc, novelList, novelTitles } from "$lib/utils/novel-page";
+  import {
+    getNovelBookCoverSrc,
+    novelCoverSubtitle,
+    novelList,
+    novelTitles,
+    tagColorizer,
+  } from "$lib/utils/novel-page";
 
   // const list = novelList
   const list = Array(6).fill("yashura-legacy");
 </script>
 
 <ol class="list">
-  {#each list as novel, i}
-    <li style="--index: {i ? i : i + 1};">
+  {#each list as novel, listIndex}
+    <li style="--index: {listIndex ? listIndex : listIndex + 1};">
       <img src={getNovelBookCoverSrc(novel)} alt={novelTitles[novel]} width="64" height="64" />
-      <h3>{novelTitles[novel]}</h3>
+      <div>
+        <div class="subtitle">
+          {#each $novelCoverSubtitle[novel].split(" ") as tag, tagIndex}
+            <span style="--delay: {tagIndex}; color:{tagColorizer(tag)};">
+              {tag}
+            </span>
+          {/each}
+        </div>
+        <h3>{novelTitles[novel]}</h3>
+      </div>
     </li>
   {/each}
 </ol>
@@ -29,31 +44,41 @@
       padding: 8px;
       border-radius: 4px;
       background-color: var(--foreground-color);
-      transition: all 0.25s ease-in-out;
+      transition: all 0.225s ease-in;
       position: relative;
       filter: grayscale(50%);
       counter-increment: section;
       z-index: var(--index);
+      border: 2px solid var(--primary-color-lighten-2);
 
       h3 {
         font-weight: 700;
+        margin: 0;
+      }
+
+      .subtitle {
+        span {
+          $delay-factor: 0.225s;
+          transition: all 0.3s calc(var(--delay) * #{$delay-factor}) ease-in;
+          opacity: 0.6;
+        }
+      }
+
+      &::after {
+        $height: 48px;
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: $height;
+        background: linear-gradient(to top, #0006, #0000);
+        transition: all 0.3s ease-out;
+        z-index: calc(var(--index));
       }
 
       &:not(:first-child) {
         margin-top: -$offset;
-
-        &::before {
-          $height: 32px;
-          content: "";
-          position: absolute;
-          left: 0;
-          top: -$height;
-          width: 100%;
-          height: $height;
-          background: linear-gradient(to top, #0006, #0000);
-          transition: all 0.3s ease-out;
-          z-index: calc(var(--index) -1);
-        }
       }
 
       &:hover {
@@ -66,8 +91,15 @@
           transform: translateY($offset);
         }
         & + li {
-          &::before {
-            transform: translateY(24px);
+        }
+        &::after {
+          // transform: translateY(24px);
+          opacity: 0.2;
+        }
+
+        .subtitle {
+          span {
+            opacity: 1;
           }
         }
       }

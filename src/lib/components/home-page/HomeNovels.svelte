@@ -8,7 +8,7 @@
 
   export let grid;
   type DisplayMode = "grid" | "list";
-  let displayMode: DisplayMode = "grid";
+  let displayMode: DisplayMode = "list";
 
   const SELECTED_COLOR = "var(--primary-color-lighten-2)";
 

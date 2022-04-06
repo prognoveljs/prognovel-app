@@ -100,3 +100,21 @@ export const novelCoverSubtitle: Readable<{
     return result;
   }, {});
 });
+
+export function tagColorizer(tag: string): string {
+  if (tag.includes("seinen") || tag.includes("mature")) {
+    return "green";
+  } else if (tag.includes("shounen") || tag.includes("younglit")) {
+  } else if (tag.includes("fantasy")) {
+  } else if (tag.includes("action")) {
+  } else if (tag.includes("adventure")) {
+  } else if (tag.includes("mystery")) {
+  } else if (tag.includes("drama")) {
+  } else if (tag.includes("romance")) {
+  } else if (tag.includes("scifi")) {
+  } else if (tag.includes("thriller")) {
+  } else if (tag.includes("historical")) {
+  }
+
+  return "currentColor";
+}
