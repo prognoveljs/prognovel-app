@@ -60,7 +60,6 @@ export default () => {
         .reduce((placeholder, novel) => {
           const data = readFileSync(`${CACHE_PATH}/assets/publish/${novel}/placeholder.jpeg`);
           placeholder[novel] = `data:image/jpeg;base64,${data.toString("base64")}`;
-          console.log(placeholder[novel]);
           return placeholder;
         }, {}),
     },

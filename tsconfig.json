@@ -33,9 +33,11 @@
     // "forceConsistentCasingInFileNames": true,
     "baseUrl": "./",
     "paths": {
-      "$lib/*": ["src/lib/*"],
+      "$lib":["src/lib"],
+      "$lib/*":["src/lib/*"],
       "$typings": ["typings/index"],
       "$typings/*": ["typings/*"],
-    }
-  }
+    },
+  }, 
+  // "extends": "./.svelte-kit/tsconfig.json"
 }
