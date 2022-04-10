@@ -22,13 +22,28 @@ export async function getNovelFirstChapter(novel: string): Promise<string> {
   return novelsMetadata[novel].chapters?.[0] ?? "";
 }
 
-export const novelList = import.meta.env.NOVEL_LIST;
-export const novelTitles = import.meta.env.NOVEL_TITLES;
-export const novelGenres = import.meta.env.NOVEL_GENRES;
-export const novelDemographics = import.meta.env.NOVEL_DEMOGRAPHICS;
-export const novelSynopsises = import.meta.env.NOVEL_SYNOPSISES;
-export const novelCoverPlaceholders = import.meta.env.NOVEL_COVER_PLACEHOLDERS;
-console.log(novelCoverPlaceholders);
+// @ts-expect-error
+export const novelList: string[] = import.meta.env.NOVEL_LIST;
+// @ts-expect-error
+export const novelTitles: {
+  [novel: string]: string;
+} = import.meta.env.NOVEL_TITLES;
+// @ts-expect-error
+export const novelGenres: {
+  [novel: string]: string[];
+} = import.meta.env.NOVEL_GENRES;
+// @ts-expect-error
+export const novelDemographics: {
+  [novel: string]: string;
+} = import.meta.env.NOVEL_DEMOGRAPHICS;
+// @ts-expect-error
+export const novelSynopsises: {
+  [novel: string]: string;
+} = import.meta.env.NOVEL_SYNOPSISES;
+// @ts-expect-error
+export const novelCoverPlaceholders: {
+  [novel: string]: string;
+} = import.meta.env.NOVEL_COVER_PLACEHOLDERS;
 /**
  * Load novels metadata from memory. If a novel data hasn't been fetched from API, it will
  * returns the short version from parent site metadata that contains novel title, author, chapter numbers,
@@ -85,3 +100,35 @@ export const novelCoverSubtitle: Readable<{
     return result;
   }, {});
 });
+
+export function tagColorizer(tag: string): string {
+  if (tag.includes("seinen") || tag.includes("mature")) {
+    return "var(--green-1)";
+  } else if (tag.includes("shounen") || tag.includes("younglit")) {
+    return "var(--blue-1)";
+  } else if (tag.includes("fantasy")) {
+    return "var(--orange-2)";
+  } else if (tag.includes("action")) {
+    return "var(--red-2)";
+  } else if (tag.includes("romance")) {
+    return "var(--red-1)";
+  } else if (tag.includes("adventure")) {
+    return "var(--green-2)";
+  } else if (tag.includes("mystery")) {
+    return "var(--grey-1)";
+  } else if (tag.includes("thriller")) {
+    return "var(--grey-2)";
+  } else if (tag.includes("drama")) {
+    return "var(--teal-2)";
+  } else if (tag.includes("scifi") || tag.includes("sci-fi")) {
+    return "var(--silver-2)";
+  } else if (tag.includes("historical")) {
+    return "var(--orange-1)";
+  } else if (tag.includes("psychological")) {
+    return "var(--darkblue-2)";
+  } else if (tag.includes("sliceoflife")) {
+    return "var(--teal-1)";
+  }
+
+  return "currentColor";
+}

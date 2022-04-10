@@ -3,3 +3,27 @@ $h: var(--primary-color-h);
 $s: var(--primary-color-s);
 $l: var(--primary-color-l);
 $hsl: $h, $s, $l;
+
+// colors
+$theme-colors: (
+	"yellow-1": #f6e58d,
+	"yellow-2": #f9ca24,
+	"orange-1": #ffbe76,
+	"orange-2": #f0932b,
+	"red-1": #ff7979,
+	"red-2": #eb4d4b,
+	"green-1": #badc58,
+	"green-2": #6ab04c,
+	"silver-1": #dff9fb,
+	"silver-2": #c7ecee,
+	"teal-1": #7ed6df,
+	"teal-2": #22a6b3,
+	"purple-1": #e056fd,
+	"purple-2": #be2edd,
+	"blue-1": #686de0,
+	"blue-2": #4834d4,
+	"darkblue-1": #30336b,
+	"darkblue-2": #130f40,
+	"grey-1": #95afc0,
+	"grey-2": #535c68
+);

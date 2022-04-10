@@ -5,7 +5,6 @@ h1 {
   font-size: 1.5em;
   letter-spacing: 0.025em;
   font-weight: 700;
-  margin: -8px 0 18px 0;
 }
 
 .container {
@@ -55,8 +54,19 @@ h1 {
     // overflow: auto;
     // overflow-x: auto;
     width: auto;
-    background-color: var(--hero-bg);
     padding: var(--padding-top) var(--padding-side) var(--padding-bottom) var(--padding-side);
+    
+    &::before {
+      $size: 40%;
+      content:'';
+      position: absolute;
+      width: 100% + $size;
+      height: 100% + $size;
+      top: $size / -2;
+      left: $size / -2;
+      z-index: -1;
+      background: radial-gradient(circle at top , var(--primary-color-lighten-2) 0%,  var(--background-color) 70%);
+    }
   }
 
   @include screen("large-desktop") {
@@ -70,7 +80,9 @@ h1 {
 
 h1 {
   font-size: 4em;
-  margin-top: 56px;
+  margin-top: 1.5em;
+  margin-bottom: 0.8em;
+  text-shadow: 2px 2px 8px #0004;
 
   @include screen("tablet") {
     margin-left: 24px;
@@ -82,12 +94,15 @@ h1 {
   }
 
   @include screen("mobile") {
-    margin-left: 24px;
+    margin-top: 1em;
+    margin-bottom: 0;
     font-size: 2.25em;
+    text-align: center;
+    padding: 1em;
+    padding-bottom: 0em;
   }
   @include screen("small-mobile") {
-    margin-left: 24px;
-    font-size: 1.8em;
+    // font-size: 1.8em;
   }
 }
 

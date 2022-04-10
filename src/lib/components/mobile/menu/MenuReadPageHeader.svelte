@@ -4,9 +4,10 @@
   import Icon from "$lib/components/Icon.svelte";
   import { getCoverURLPath, isWEBP } from "$lib/utils/images";
   import { currentNovel, novelsData, path } from "$lib/store/states";
+  import { novelCoverPlaceholders } from "$lib/utils/novel-page";
 
   $: novelTitle = $novelsData?.[$currentNovel]?.title;
-  $: backURL = $path.startsWith("/read") ? `novel/${$currentNovel}` : "";
+  $: backURL = $path.startsWith("/read") ? `/novel/${$currentNovel}` : "/";
 </script>
 
 {#if $currentNovel}
@@ -38,12 +39,7 @@
       }}
       class="novel-info"
     >
-      <img
-        width="40"
-        height="40"
-        src={getCoverURLPath($currentNovel, { width: 64, height: 64 }, isWEBP ? "webp" : "jpeg")}
-        alt={novelTitle}
-      />
+      <img width="40" height="40" src={novelCoverPlaceholders[$currentNovel]} alt={novelTitle} />
       <strong>{novelTitle || ""}</strong>
     </div>
   </article>

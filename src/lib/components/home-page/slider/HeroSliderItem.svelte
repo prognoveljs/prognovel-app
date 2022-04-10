@@ -7,6 +7,7 @@
     novelCoverSubtitle,
     novelSynopsises,
     novelTitles,
+    tagColorizer,
   } from "$lib/utils/novel-page";
   import { onMount } from "svelte";
   import BookCover from "$lib/components/BookCover.svelte";
@@ -39,7 +40,13 @@
   <div class="content-wrapper">
     <div class="left">
       <BookCover {novel} width="100%" />
-      <span>{$novelCoverSubtitle[novel]}</span>
+      <div class="subtitle">
+        {#each $novelCoverSubtitle[novel].split(" ") as tag, tagIndex}
+          <span style="--delay: {tagIndex}; color:{tagColorizer(tag)};">
+            {tag}
+          </span>
+        {/each}
+      </div>
     </div>
     <div class="right">
       <h2>{novelTitles[novel]}</h2>
@@ -94,6 +101,12 @@
 
       @include screen("mobile") {
         margin-top: 5%;
+      }
+
+      .subtitle {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
       }
 
       span {

@@ -4,8 +4,14 @@
 </script>
 
 <article>
-  <HeroSlider />
-  <HeroNews />
+  <section>
+    <h2>👌 <span> Handpicked novels </span></h2>
+    <HeroSlider />
+  </section>
+  <section>
+    <h2>📰 <span>News</span></h2>
+    <HeroNews />
+  </section>
 </article>
 
 <style lang="scss">
@@ -15,6 +21,22 @@
     grid-template-columns: minmax(560px, 650px) 1fr;
     gap: 16px;
     width: 100%;
+
+    section {
+      h2 {
+        position: relative;
+        // margin: 0;
+        font-weight: 700;
+        color: var(--primary-color-lighten-4);
+        span {
+          text-decoration: underline;
+          text-underline-offset: -8px;
+          text-decoration-skip-ink: none;
+          text-decoration-thickness: 8px;
+          text-decoration-color: var(--primary-color);
+        }
+      }
+    }
 
     @include screen("desktop") {
       width: calc(100% + #{$bleed * 2});

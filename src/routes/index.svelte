@@ -126,15 +126,15 @@
       <section class="hero">
         <h1>{SITE_TITLE}</h1>
         <HomeHero />
-        <HomeNovels titles={novelTitles} {novelList} {novelsMetadata} grid={"novels"} />
+        <HomeNovels {novelsMetadata} grid={"novels"} />
       </section>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"
+      <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"
         ><path
           fill="var(--hero-bg)"
           fill-opacity="1"
           d="M0,224L40,224C80,224,160,224,240,192C320,160,400,96,480,69.3C560,43,640,53,720,69.3C800,85,880,107,960,144C1040,181,1120,235,1200,224C1280,213,1360,139,1400,101.3L1440,64L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z"
         /></svg
-      >
+      > -->
     </div>
 
     <!-- load lazy components -->

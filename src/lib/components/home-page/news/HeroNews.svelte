@@ -16,7 +16,6 @@
 </script>
 
 <article id="news">
-  <h2>News</h2>
   {#if news.length}
     {#each news.slice(0, 3) as news, i}
       <a class="news-item" href="/news/{news.id}">
@@ -51,12 +50,6 @@
   #news {
     display: flex;
     flex-direction: column;
-    h2 {
-      margin: {
-        top: 0;
-        bottom: 0;
-      }
-    }
 
     .news-item {
       position: relative;

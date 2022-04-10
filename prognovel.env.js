@@ -23,6 +23,7 @@ export default () => {
       IMAGE_RESIZER_SERVICE: SITE_METADATA?.image_resizer_service || "",
       BACKEND_API: process.env.BACKEND_API || "http://localhost",
       GA_TRACKING_ID: process.env.GA_TRACKING_ID || "",
+      IS_DEMO: process.env.IS_DEMO || false,
       NOVEL_LIST: SITE_METADATA?.novels || [],
 
       // app vars from build time
@@ -59,7 +60,6 @@ export default () => {
         .reduce((placeholder, novel) => {
           const data = readFileSync(`${CACHE_PATH}/assets/publish/${novel}/placeholder.jpeg`);
           placeholder[novel] = `data:image/jpeg;base64,${data.toString("base64")}`;
-          console.log(placeholder[novel]);
           return placeholder;
         }, {}),
     },

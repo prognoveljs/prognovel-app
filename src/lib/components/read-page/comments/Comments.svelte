@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { browser } from "$app/env";
+
   import Disqus from "$lib/components/comments/disqus/Disqus.svelte";
   import { currentChapterCursor } from "$lib/store/read-page";
   import { showComments } from "$lib/store/read-page/read-page-state";
@@ -7,7 +9,7 @@
   $: hasDisqus = Boolean($siteMetadata?.disqus_id);
 </script>
 
-{#if hasDisqus}
+{#if hasDisqus && browser}
   {#if $showComments}
     <div
       in:fade={{ duration: 400 }}
@@ -18,7 +20,7 @@
   {/if}
   {#key $currentChapterCursor}
     <section class="contain" class:show={$showComments}>
-      <!-- <Disqus src={$siteMetadata.disqus_id} identifier="comments" /> -->
+      <Disqus src={$siteMetadata.disqus_id} identifier="comments" />
     </section>
   {/key}
 {/if}
