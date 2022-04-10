@@ -13,22 +13,26 @@
 </script>
 
 <script lang="ts">
+  import { browser } from "$app/env";
+
   import { page } from "$app/stores";
+  import Disqus from "$lib/components/comments/disqus/Disqus.svelte";
   import Icon from "$lib/components/Icon.svelte";
   import Avatar from "$lib/components/user/Avatar.svelte";
   import { newsData } from "$lib/store/news-page";
-  import { isBrowser } from "$lib/store/states";
+  import { isBrowser, siteMetadata } from "$lib/store/states";
   import { SITE_TITLE } from "$lib/_setting";
   import { faFacebook, faReddit, faTwitter, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
   export let slug;
   $: data = $newsData.find((news) => news.id === slug);
+  $: hasDisqus = Boolean($siteMetadata?.disqus_id);
 </script>
 
 <article>
   <h1>{data?.title}</h1>
   <div class="cover">
-    <img src="" alt="" />
+    <!-- <img src="" alt="" /> -->
     <div class="author">
       <Avatar size={42} email={data?.author?.email} />
       <div>
@@ -81,6 +85,9 @@
   <div class="content">
     {@html data?.content}
   </div>
+  {#if hasDisqus && browser}
+    <Disqus src={$siteMetadata.disqus_id} identifier="news/{slug}" />
+  {/if}
 </article>
 
 <style lang="scss">
@@ -98,9 +105,9 @@
     .cover {
       width: 120%;
       margin: 2em -4em;
-      background-color: #0004;
+      // background-color: #0004;
+      // min-height: 400px;
       border-radius: 12px;
-      min-height: 400px;
       position: relative;
 
       .author {

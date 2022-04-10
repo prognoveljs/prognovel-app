@@ -4,6 +4,7 @@
   import { isMobileScreen } from "$lib/utils/mobile";
   import { menuReadPageShow } from "$lib/components/mobile/menu/_store";
   import Comments from "$lib/components/read-page/comments/Comments.svelte";
+  import { browser } from "$app/env";
   // TODO migrate mobile menu to _layout
   const dispatch = createEventDispatcher();
 
@@ -31,7 +32,9 @@
     <Navigation on:toc={() => dispatch("toc")} isFooter={true} />
   </section>
 {/if}
-<Comments />
+{#if browser}
+  <Comments />
+{/if}
 
 <style lang="scss">
   @import "_vars.scss";

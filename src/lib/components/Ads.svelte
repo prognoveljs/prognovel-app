@@ -1,5 +1,5 @@
 <script>
-  import { isWebMonetizationActive } from "$lib/utils/web-monetization";
+  import { enablePremiumContent, isWebMonetizationActive } from "$lib/utils/web-monetization";
 
   export let width = "100%";
   export let height = "190px";
@@ -7,10 +7,14 @@
 
   let adsenseClient = "";
   export let adSlot = "";
+
+  $: canLoadAds = () => {
+    return document.monetization ? !$enablePremiumContent && $isWebMonetizationActive : true;
+  };
 </script>
 
 <div class="ads" style="width: {width}; height: {height}; grid-area: {grid}">
-  {#if adsenseClient && $isWebMonetizationActive !== undefined}
+  {#if adsenseClient && canLoadAds()}
     <div class="ads-widget-container">
       <ins
         class="adsbygoogle"

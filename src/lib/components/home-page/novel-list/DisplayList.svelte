@@ -13,9 +13,9 @@
   const list = import.meta.env.IS_DEMO ? Array(6).fill("yashura-legacy") : novelList;
 </script>
 
-<ol class="list">
+<section class="list">
   {#each list as novel, listIndex}
-    <li style="--index: {listIndex ? listIndex : listIndex + 1};">
+    <div class="item" style="--index: {listIndex ? listIndex : listIndex + 1};">
       <a href="/novel/{novel}">
         <img src={getNovelBookCoverSrc(novel)} alt={novelTitles[novel]} width="64" height="64" />
         <div class="title">
@@ -39,18 +39,18 @@
         11chs
         </div> -->
       </a>
-    </li>
+    </div>
   {/each}
-</ol>
+</section>
 
 <style lang="scss">
-  ol {
+  .list {
     $offset: 16px;
     display: flex;
     flex-direction: column;
     padding-top: 24px;
 
-    li {
+    .item {
       a {
         display: grid;
         grid-template-columns: 64px 4fr 1fr 1fr;
