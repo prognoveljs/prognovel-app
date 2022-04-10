@@ -1,10 +1,10 @@
-import { timestamp, files, build } from "$service-worker";
+import { version, files, build } from "$service-worker";
 //@ts-ignore
 import { validInstallAssets, validAssets } from "./utils";
 //@ts-ignore
 // import siteMetadata from "$cache/sitemetadata.json";
 
-export const ASSETS: string = `prognovel${timestamp}`;
+export const ASSETS: string = `prognovel${version}`;
 const routesToCache: string[] = [
   "/",
   "/explore/",

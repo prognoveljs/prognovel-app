@@ -1,11 +1,15 @@
 # ProgNovel Changelog
 
+# 0.7.1
+
+- fix(service worker): fix crashing due to SvelteKit new breaking update
+
 # 0.7.0
 
 - ui(homepage): rework UI for homepage hero
 - ui(homepage): new alternative novel list as default
 - fix(mobile): fix bug where back button on reading page not working on mobile
-  -fix: fatal issue where build not generating HTML due to new sveltekit adapter breaking update
+- fix: fatal issue where build not generating HTML due to new sveltekit adapter breaking update
 
 ## 0.6.5
 
