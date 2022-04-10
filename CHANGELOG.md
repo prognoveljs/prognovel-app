@@ -2,6 +2,7 @@
 
 # 0.7.1
 
+- ui(homepage): novel list hover animation now works as intended
 - fix(service worker): fix crashing due to SvelteKit new breaking update
 
 # 0.7.0
