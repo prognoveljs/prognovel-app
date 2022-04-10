@@ -125,11 +125,10 @@
           color: var(--primary-color-lighten-2);
         }
 
-        & ~ li {
+        & ~ .item {
           transform: translateY($offset);
         }
-        & + li {
-        }
+
         &::after {
           // transform: translateY(24px);
           opacity: 0.2;
