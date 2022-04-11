@@ -2,8 +2,10 @@
 
 # 0.7.1
 
+- ui(options): slightly add black gradient in the bottom of option modal
 - ui(homepage): novel list hover animation now works as intended
 - fix(service worker): fix crashing due to SvelteKit new breaking update
+- lock SvelteKit and its adapter version in ProgNovel's dependency package to prevent installing updates with breaking changes (at least until SvelteKit version 1.0.0)
 
 # 0.7.0
 

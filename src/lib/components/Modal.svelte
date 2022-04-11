@@ -43,6 +43,7 @@
   />
 
   <article
+    class="modal"
     class:borderTop
     in:scale={{ duration: 225, start: 0.8, opacity: 0, easing: cubicOut }}
     out:scale={{ duration: 325, start: 0.9, opacity: 0, easing: cubicIn }}
