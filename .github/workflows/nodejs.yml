@@ -23,3 +23,4 @@ jobs:
       - run: npm run build
         env:
           CI: true
+          BACKEND_API: https://api.prognovel.workers.dev
