@@ -28,7 +28,7 @@
     // "isolatedModules": true,
     "resolveJsonModule": true,
     // "sourceMap": true,
-    // "esModuleInterop": true,
+    "esModuleInterop": true,
     // "skipLibCheck": true,
     // "forceConsistentCasingInFileNames": true,
     "baseUrl": "./",

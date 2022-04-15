@@ -1,13 +1,12 @@
-import globby from "globby";
+import { globbySync } from "globby";
 import fm from "front-matter";
 import { readFileSync } from "fs";
 import { join, resolve } from "path";
 
 const thisDir = "src/routes/help";
 const thisDirSlug = (slug: string) => "src/routes/help/" + slug;
-const folders = globby.sync(thisDirSlug("") + "*", { onlyDirectories: true });
-let pages = globby
-  .sync(thisDir + "/*.svx")
+const folders = globbySync(thisDirSlug("") + "*", { onlyDirectories: true });
+let pages = globbySync(thisDir + "/*.svx")
   .map((s) => s.split("/help/")[1])
   .filter((page) => page.endsWith(".svx") && !page.startsWith("index."));
 
@@ -45,7 +44,7 @@ export async function get() {
     },
   );
   result.children = folders.reduce((prev, cur) => {
-    const childMarkdowns = globby.sync(cur + "/*.svx");
+    const childMarkdowns = globbySync(cur + "/*.svx");
     const slug = cur.split("help/")[1];
     prev[slug] = {};
     childMarkdowns.forEach((child) => {
