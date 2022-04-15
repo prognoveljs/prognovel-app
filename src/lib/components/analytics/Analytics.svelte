@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { GoogleAnalytics, ga } from "@beyonk/svelte-google-analytics";
+  import { GoogleAnalytics, ga } from "./index";
   import { currentContent } from "$lib/store/read-page";
   import { currentNovel, novelsData } from "$lib/store/states";
   import { tick } from "svelte";

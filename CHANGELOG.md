@@ -1,11 +1,22 @@
 # ProgNovel Changelog
 
+# 0.7.1
+
+- ui(homepage): remember novel list display preference
+- ui(homepage): add slight gap for novel cover and subtitle in homepage slider
+- ui(homepage): novel list hover animation now works as intended
+- ui(options): slightly add black gradient in the bottom of option modal
+- a11y: adjust news more link tap target size for better mobile accessibility
+- fix(service worker): fix crashing due to SvelteKit new breaking update
+- fix(ui/homepage): prevent avatar in news item shrinking
+- lock SvelteKit and its adapter version in ProgNovel's dependency package to prevent installing updates with breaking changes (at least until SvelteKit version 1.0.0)
+
 # 0.7.0
 
 - ui(homepage): rework UI for homepage hero
 - ui(homepage): new alternative novel list as default
 - fix(mobile): fix bug where back button on reading page not working on mobile
-  -fix: fatal issue where build not generating HTML due to new sveltekit adapter breaking update
+- fix: fatal issue where build not generating HTML due to new sveltekit adapter breaking update
 
 ## 0.6.5
 

@@ -37,6 +37,11 @@ export default {
       default: true,
     },
     vite: {
+      build: {
+        rollupOptions: {
+          external: ["@beyonk/async-script-loader"],
+        },
+      },
       plugins: [
         ProgNovelENV(),
         dynamicImport(),

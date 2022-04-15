@@ -1,4 +1,4 @@
-import globby from "globby";
+import { globbySync } from "globby";
 import fm from "front-matter";
 import { readFileSync } from "fs";
 import { join, resolve } from "path";
@@ -8,8 +8,7 @@ const thisDir = (slug: string) => "src/routes/help/" + slug;
 const thisSlug = (slug: string) => thisDir(slug).split("routes/")[1] + "/";
 
 const pages = (slug: string) =>
-  globby
-    .sync(thisDir(slug) + "/*.svx")
+  globbySync(thisDir(slug) + "/*.svx")
     .map((s) => s.split(thisSlug(slug))[1])
     .filter((page) => page.endsWith(".svx") && !page.startsWith("index."));
 
@@ -20,8 +19,10 @@ export function get(req, res) {
     prev[id] = {
       href: `${thisSlug(slug) + id}`,
       title:
-        (fm(readFileSync(resolve(import.meta.env.BASEPATH, thisDir(slug), cur), "utf-8")).attributes as any)
-          .title || id,
+        (
+          fm(readFileSync(resolve(import.meta.env.BASEPATH, thisDir(slug), cur), "utf-8"))
+            .attributes as any
+        ).title || id,
     };
     return prev;
   }, {});

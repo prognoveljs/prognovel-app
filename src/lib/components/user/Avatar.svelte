@@ -8,7 +8,7 @@
   export let round = true;
   export let email = "";
   let visible = false;
-  $: img = email ? getGravatarURL(email, size) : "/img/avatar-placeholder.jpg";
+  $: img = email ? getGravatarURL(email, size) : "/img/avatar-placeholder.svg";
 
   const fetchImage = async () => {
     const res = await fetch(img);
@@ -32,6 +32,7 @@
     background-color: var(--foreground-color);
     display: inline-block;
     position: relative;
+    flex-shrink: 0;
   }
 
   .round {
@@ -43,5 +44,6 @@
     height: 100%;
     position: relative;
     z-index: 2;
+    aspect-ratio: 1;
   }
 </style>

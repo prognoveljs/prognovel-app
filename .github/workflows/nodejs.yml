@@ -20,5 +20,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
+      - run: npm run build
         env:
           CI: true
+          BACKEND_API: https://prognovel-api.prognovel.workers.dev
