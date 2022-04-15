@@ -107,7 +107,7 @@
     }
 
     .more-news {
-      margin-top: 4px;
+      margin-top: 8px;
       align-self: flex-end;
 
       &:hover {
