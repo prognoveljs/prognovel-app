@@ -14,7 +14,6 @@
 		"format": "prettier --write src/**/*.{ts,js,svelte} --plugin-search-dir=."
 	},
 	"dependencies": {
-		"@beyonk/async-script-loader": "^2.2.1",
 		"@fortawesome/free-brands-svg-icons": "^5.15.3",
 		"@fortawesome/free-regular-svg-icons": "^5.15.3",
 		"@fortawesome/free-solid-svg-icons": "^5.15.3",
@@ -40,7 +39,6 @@
 		"ws": "^8.5.0"
 	},
 	"devDependencies": {
-		"@beyonk/svelte-google-analytics": "^2.4.0",
 		"@cloudflare/workers-types": "^3.5.0",
 		"@fullhuman/postcss-purgecss": "^4.1.3",
 		"@originjs/vite-plugin-commonjs": "^1.0.3",
