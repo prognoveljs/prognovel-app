@@ -16,7 +16,6 @@
   import { FORBIDDEN_NOVEL_ID } from "$lib/store/novel-page";
   import Analytics from "$lib/components/analytics/Analytics.svelte";
   import { appStart } from "$lib/utils/app-start";
-  import { isBrowser } from "$lib/store/states";
   // import "carbon-components-svelte/css/g90.css";
   import "@skeleton-elements/svelte/skeleton-elements.css";
 

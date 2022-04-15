@@ -5,15 +5,24 @@
   import iconGrid from "$lib/assets/feather-icons/grid.svg?raw";
   import iconList from "$lib/assets/feather-icons/menu.svg?raw";
   import DisplayList from "./novel-list/DisplayList.svelte";
+  import { browser } from "$app/env";
+  import { set } from "idb-keyval";
+  import { onMount } from "svelte";
+  import SkeletonShell from "../SkeletonShell.svelte";
 
   export let grid;
   type DisplayMode = "grid" | "list";
-  let displayMode: DisplayMode = "list";
+  const DEFAULT_MODE = "list";
+  let displayMode: DisplayMode | "" = browser
+    ? ((document.querySelector('meta[name="novel-list-display"]') as HTMLMetaElement)
+        ?.content as DisplayMode) || DEFAULT_MODE
+    : "";
 
   const SELECTED_COLOR = "var(--primary-color-lighten-2)";
 
   function selectMode(mode: DisplayMode) {
     displayMode = mode;
+    set("novel-list-display", mode);
   }
 </script>
 
@@ -45,6 +54,13 @@
       <DisplayGrid />
     {:else if displayMode === "list"}
       <DisplayList />
+    {:else}
+      <SkeletonShell>
+        <!-- skeleton shell -->
+        {#each Array(4).fill("") as item, i}
+          <rect width="20%" height="80px" x="100%" y="{84 * (i + 1)}px" rx="4" ry="4" />
+        {/each}
+      </SkeletonShell>
     {/if}
   </section>
 </section>

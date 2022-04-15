@@ -4,8 +4,14 @@ import type { Color } from "$typings";
 
 export const rewriteHTML = async (response: Response, preload = {}) => {
   try {
-    let darkMode: boolean | undefined = (await get("darkMode")) ?? true;
-    let primaryColor: Color | undefined = await get("primary-color");
+    let [darkMode, primaryColor, novelListDisplay] = await Promise.all([
+      get("darkMode"),
+      get("primary-color"),
+      get("novel-list-display"),
+    ]);
+    // let darkMode: boolean | undefined = (await get("darkMode")) ?? true;
+    // let primaryColor: Color | undefined = await get("primary-color");
+    if (darkMode === undefined) darkMode = true;
     if (primaryColor === undefined) primaryColor = DEFAULT_PRIMARY_COLOR;
     const carbonCSS = darkMode ? "carbon-css/g90.css" : "carbon-css/g10.css";
 
@@ -18,7 +24,13 @@ export const rewriteHTML = async (response: Response, preload = {}) => {
         .replace("carbon-css/g90.css", carbonCSS)
         .replace(colorRegex.saturate, primaryColor.saturate)
         .replace(colorRegex.light, primaryColor.light)
-        .replace("</head>", `${appendPreload(preload)}</head>`),
+        .replace(
+          "</head>",
+          `${appendPreload(preload)}
+          ${
+            novelListDisplay ? `<meta name="novel-list-display" content="${novelListDisplay}">` : ""
+          }</head>`,
+        ),
       {
         headers: { "Content-Type": "text/html" },
       },
