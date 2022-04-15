@@ -107,6 +107,7 @@
         display: flex;
         justify-content: center;
         gap: 8px;
+        margin-top: 8px;
       }
 
       span {
@@ -133,6 +134,10 @@
         -webkit-line-clamp: 6;
         -webkit-box-orient: vertical;
         overflow: hidden;
+
+        :global(.anchor) {
+          display: none;
+        }
       }
 
       :global(p) {
