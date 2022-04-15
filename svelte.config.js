@@ -46,7 +46,7 @@ export default {
         // process.env.NODE_ENV === "production" && optimizeCss(),
       ],
       optimizeDeps: {
-        include: [],
+        include: ["@beyonk/async-script-loader"],
         esbuildOptions: {},
       },
       ssr: {
