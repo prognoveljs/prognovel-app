@@ -3,11 +3,13 @@ dotenv.config();
 import sharp from "sharp";
 import fetch from "node-fetch";
 import { createWriteStream, existsSync, mkdirSync, writeFileSync } from "fs";
-import { assetsFolder } from "./_shared.js";
+import { assetsFolder, isValidHttpUrl } from "./_shared.js";
 import { join } from "path";
 import { on } from "events";
 
 const IS_STATIC_API = (process.env.BACKEND_API || "").includes(".pages.dev");
+
+let STATIC_BANNER_IMAGES = false;
 
 if (!existsSync(assetsFolder)) mkdirSync(assetsFolder, { recursive: true });
 
@@ -18,13 +20,26 @@ if (IS_STATIC_API) siteMetadataURL.pathname = "sitemetadata.json";
 (async function () {
   const res = await fetch(siteMetadataURL.href);
   const siteMetadata = await res.json();
-  const { novels } = siteMetadata;
+  const { novels, image_resizer_service } = siteMetadata;
+  STATIC_BANNER_IMAGES = IS_STATIC_API || isValidHttpUrl(image_resizer_service);
 
   for (const novel of novels) {
     const opts = {
       path: "publish/" + novel,
     };
-    downloadAsset("banner", novel, opts);
+    downloadAsset("banner", novel, {
+      ...opts,
+      resize: STATIC_BANNER_IMAGES
+        ? [
+            { width: 480, height: 400 },
+            { width: 800, height: 400 },
+            { width: 1000, height: 400 },
+            { width: 1400, height: 400 },
+            { width: 1900, height: 400 },
+          ]
+        : null,
+      ext: ["webp", "avif", "jpeg"],
+    });
     downloadAsset("cover", novel, {
       ...opts,
       resize: [
@@ -105,7 +120,7 @@ async function downloadAsset(file, novel = "", opts = {}) {
               }`
             : "";
           getTransformImageType(transformerRaw.clone(), type)
-            .resize(size)
+            .resize({ ...size, withoutEnlargement: true })
             .pipe(createWriteStream(path + `/${file}${sizeLabel}.${type || "png"}`));
         });
       } else {
@@ -126,7 +141,10 @@ function getTransformImageType(transform, type) {
     case "png":
       return transform.png();
     case "jpg" || "jpeg":
-      return transform.jpeg();
+      return transform.jpeg({
+        quality: 70,
+        mozjpeg: true,
+      });
     case "webp":
       return transform.webp();
     case "avif":
