@@ -39,7 +39,16 @@ export function getChapterUrl(
   const start = chapterList.findIndex((ch) => ch === `${book}/${chapter}`);
   const end = start + prefetch + 1;
   let list = chapterList.slice(start, end);
-  return `${import.meta.env.BACKEND_API}/chapter?fetch=${list.join(",")}&novel=${novel}`;
+  const url = new URL(import.meta.env.BACKEND_API);
+  if (import.meta.env.IS_STATIC_API) {
+    url.pathname = `${novel}/${book}/${chapter}.json`;
+  } else {
+    url.pathname = "chapter";
+    url.searchParams.set("fetch", list.join(","));
+    url.searchParams.set("novel", novel);
+    // `${import.meta.env.BACKEND_API}/chapter?fetch=${list.join(",")}&novel=${novel}`
+  }
+  return url.href;
 }
 
 export function getChapterUrlFromList(novel: string, list: string[]) {
