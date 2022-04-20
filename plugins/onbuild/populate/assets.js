@@ -7,11 +7,16 @@ import { assetsFolder } from "./_shared.js";
 import { join } from "path";
 import { on } from "events";
 
+const IS_STATIC_API = (process.env.BACKEND_API || "").includes(".pages.dev");
+
 if (!existsSync(assetsFolder)) mkdirSync(assetsFolder, { recursive: true });
-let apiEndpoint = process.env.BACKEND_API;
-if (apiEndpoint.slice(-1) === "/") apiEndpoint = apiEndpoint.slice(0, -1);
+
+let apiEndpoint = new URL(process.env.BACKEND_API);
+const siteMetadataURL = apiEndpoint;
+if (IS_STATIC_API) siteMetadataURL.pathname = "sitemetadata.json";
+
 (async function () {
-  const res = await fetch(process.env.BACKEND_API);
+  const res = await fetch(siteMetadataURL.href);
   const siteMetadata = await res.json();
   const { novels } = siteMetadata;
 
@@ -71,15 +76,23 @@ if (apiEndpoint.slice(-1) === "/") apiEndpoint = apiEndpoint.slice(0, -1);
 async function downloadAsset(file, novel = "", opts = {}) {
   let path = assetsFolder;
 
-  let url = `${apiEndpoint}/fetchImage?file=${file}`;
-  if (novel) url += `&novel=${novel}`;
+  let url = apiEndpoint;
+  // let url = `${apiEndpoint}/fetchImage?file=${file}`;
+  if (IS_STATIC_API) {
+    url.pathname = novel + "/" + file + ".png";
+  } else {
+    url.pathname = "fetchImage";
+    url.searchParams.set("file", file);
+    if (novel) url.searchParams.set("novel", novel);
+  }
+
   if (opts.path) {
     if (opts.path.slice(0, 1) !== "/") opts.path = "/" + opts.path;
     path += opts.path;
     checkPathExist(path);
   }
 
-  fetch(url).then(async (res) => {
+  fetch(url.href).then(async (res) => {
     let transformerRaw = res.body.pipe(sharp());
     for (const type of Array.isArray(opts.ext) ? opts.ext : [opts.ext || "png"]) {
       if (opts.resize) {
@@ -134,7 +147,14 @@ function downloadStaticAPIs(siteMetadata) {
     if (existsSync(`${assetsFolder}/publish/${novel}`)) {
       mkdirSync(`${assetsFolder}/publish/${novel}`, { recursive: true });
     }
-    fetch(apiEndpoint + "/novel?name=" + novel).then((res) => {
+    let novelMetadataURL = apiEndpoint;
+    if (IS_STATIC_API) {
+      novelMetadataURL.pathname = novel + "/metadata.json";
+    } else {
+      novelMetadataURL.pathname = novel;
+      novelMetadataURL.searchParams.set("name", novel);
+    }
+    fetch(novelMetadataURL.href).then((res) => {
       res.body.pipe(createWriteStream(`${assetsFolder}/publish/${novel}/metadata.json`, "utf-8"));
     });
   }
@@ -145,7 +165,14 @@ async function downloadComponentsZip() {
   const out = join(process.cwd(), "src/lib/.generated");
   console.log(out);
   if (!existsSync(out)) mkdirSync(out, { recursive: true });
-  const res = await fetch(apiEndpoint + "/fetchData?file=components.zip");
+  const url = apiEndpoint;
+  if (IS_STATIC_API) {
+    url.pathname = "components.zip";
+  } else {
+    url.pathname = "fetchData";
+    url.searchParams.set("file", "components.zip");
+  }
+  const res = await fetch(url.href);
   const stream = createWriteStream(zipFile);
   res.body.pipe(stream);
 
