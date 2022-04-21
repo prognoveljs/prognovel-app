@@ -30,14 +30,6 @@
             <h3>{novelTitles[novel]}</h3>
           </div>
         </div>
-        <!-- <div class="number">
-          <IconSvg data={thumbsUpIcon} />
-          {(70 + Math.random() * 30).toFixed(0)}%
-        </div>
-        <div class="number">
-          <IconSvg data={listIcon} />
-        11chs
-        </div> -->
       </a>
     </div>
   {/each}
@@ -48,22 +40,29 @@
     $offset: 16px;
     display: flex;
     flex-direction: column;
-    padding-top: 24px;
+
+    @include screen("small-desktop") {
+      padding-top: 24px;
+    }
 
     .item {
       a {
         display: grid;
-        grid-template-columns: 64px 4fr 1fr 1fr;
+        grid-template-columns: 64px minmax(0, 4fr) 1fr 1fr;
         gap: 12px;
         align-items: center;
         padding: 8px;
         text-decoration: none;
+
+        @include screen("mobile") {
+          grid-template-columns: 64px minmax(0, 4fr) 1fr 1fr;
+        }
       }
       border-radius: 4px;
       background-color: var(--foreground-color);
       transition: all 0.16s ease-in;
       position: relative;
-      filter: grayscale(50%);
+
       counter-increment: section;
       z-index: var(--index);
       border: 2px solid var(--primary-color-lighten-2);
@@ -89,6 +88,15 @@
         -ms-backface-visibility: hidden;
         font-weight: 700;
         margin: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        display: block;
+        max-width: 100%;
+
+        @include screen("mobile") {
+          font-size: 1.5em;
+        }
       }
 
       .subtitle {
@@ -114,31 +122,39 @@
         pointer-events: none;
       }
 
-      &:not(:first-child) {
-        margin-top: -$offset;
-      }
-
-      &:hover {
-        filter: grayscale(0);
-        transform: scale(1.0125);
-        h3 {
-          color: var(--primary-color-lighten-2);
+      @include screen("small-desktop") {
+        filter: grayscale(50%);
+        &:not(:first-child) {
+          margin-top: -$offset;
         }
 
-        & ~ .item {
-          transform: translateY($offset);
-        }
+        &:hover {
+          filter: grayscale(0);
+          transform: scale(1.0125);
+          h3 {
+            color: var(--primary-color-lighten-2);
+          }
 
-        &::after {
-          // transform: translateY(24px);
-          opacity: 0.2;
-        }
+          & ~ .item {
+            transform: translateY($offset);
+          }
 
-        .subtitle {
-          span {
-            opacity: 1;
+          &::after {
+            // transform: translateY(24px);
+            opacity: 0.2;
+          }
+
+          .subtitle {
+            span {
+              opacity: 1;
+            }
           }
         }
+      }
+
+      @include screen("tablet") {
+        margin-bottom: 12px;
+        border: 2px solid var(--primary-color-lighten-3);
       }
     }
   }
