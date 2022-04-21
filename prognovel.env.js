@@ -18,18 +18,19 @@ export default () => {
     return result;
   }, {});
   const BACKEND_API = process.env.BACKEND_API || "http://localhost";
+  const IS_STATIC_API = (process.env.BACKEND_API || "").includes(".pages.dev");
   return EnvironmentPlugin(
     {
       BASE_PATH: process.cwd(),
       CACHE_PATH,
       BACKEND_API,
-      IS_STATIC_API: (process.env.BACKEND_API || "").includes(".pages.dev"),
+      IS_STATIC_API,
       SITE_TITLE: SITE_METADATA?.site_title || "ProgNovel App",
       IMAGE_RESIZER_SERVICE: SITE_METADATA?.image_resizer_service || "",
       GA_TRACKING_ID: process.env.GA_TRACKING_ID || "",
       IS_DEMO: process.env.IS_DEMO || false,
       NOVEL_LIST: SITE_METADATA?.novels || [],
-
+      STATIC_BANNER_IMAGES: IS_STATIC_API || isValidHttpUrl(SITE_METADATA.image_resizer_service),
       // app vars from build time
       SITE_METADATA,
       // chunks of novels metadata

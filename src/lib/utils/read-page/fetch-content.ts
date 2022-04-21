@@ -49,8 +49,8 @@ export async function prefetchNextChapter() {
   const cursor = (getStore(currentChapterCursor) as number) + 1;
   const next = tableOfContent[cursor];
 
-  // if (import.meta.env.IS_STATIC_API && next && novel && cursor < tableOfContent.length - 1)
-  //   fetchChapter(novel, [next]);
+  if (import.meta.env.IS_STATIC_API && next && novel && cursor < tableOfContent.length - 1)
+    fetchChapter(novel, [next]);
 }
 
 export async function prefetchChapter(

@@ -1,4 +1,4 @@
-<script context="module">
+<script context="module" lang="ts">
   import { checkTableOfContentExists, prefetchChapter } from "$lib/utils/read-page";
   export const prerender = false;
 
@@ -7,7 +7,10 @@
     const { novel, book, chapter } = params;
     if (isBrowser) {
       checkTableOfContentExists(novel);
-      prefetchChapter(novel, book, chapter);
+      prefetchChapter(novel, book, chapter).then((_) => {
+        prefetchNextChapter();
+        // prefetch((document.querySelector("a.next-link") as HTMLAnchorElement).href);
+      });
     }
 
     return {};
@@ -29,6 +32,7 @@
   import { fetchNovelMetadata } from "$lib/utils/fetch-metadata";
   import { currentChapter, currentBook, currentContent } from "$lib/store/read-page";
   import { replacePageTitleBookAndChapter } from "$lib/utils/read-page/history";
+  import { prefetch } from "$app/navigation";
   // import { prefetchNextChapter } from "$lib/utils/read-page/fetch-content";
 
   let { novel, book, chapter } = $page.params;
