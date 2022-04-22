@@ -1,6 +1,5 @@
 <script lang="ts">
   import { siteMetadata } from "$lib/store/states";
-  import { tick } from "svelte";
   import { fly, fade } from "svelte/transition";
   import { getCoverURLPath } from "$lib/utils/images";
   import { stringSearch } from "$lib/utils/string";
@@ -10,7 +9,6 @@
   import alertIcon from "$lib/assets/feather-icons/alert-octagon.svg?raw";
   import { browser } from "$app/env";
   import { cubicIn, cubicOut } from "svelte/easing";
-  import { out } from "$lib/utils/animation/animation-keyframes";
 
   export let isMobile: boolean = false;
   const SEARCH_ROW_ITEMS = 3;
