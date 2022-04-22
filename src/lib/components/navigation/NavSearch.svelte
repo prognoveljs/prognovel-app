@@ -79,7 +79,10 @@
         {novel.title}
       </a>
     {/each}
-    <div class:active={searchedNovels && searchedNovels.length} class="overlay" />
+    {#if search && !searchedNovels.length}
+      <div class="no-match">no match found...</div>
+    {/if}
+    <div class:active={search} class="overlay" />
   </section>
 </section>
 
@@ -94,8 +97,14 @@
     .icon {
       font-size: 1.7em;
       position: absolute;
-      top: 10px;
       left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+
+      :global(span) {
+        display: flex;
+        align-items: center;
+      }
     }
 
     input {
@@ -118,7 +127,7 @@
       }
 
       &:before {
-        content: "🔍 ";
+        content: "";
         position: absolute;
         left: 0;
         bottom: 0;
@@ -130,10 +139,6 @@
       &:active {
         outline: none;
         border-color: var(--primary-color);
-        // transform: translateX(0);
-        & + .icon {
-          // transform: scale(1.3);
-        }
       }
     }
 
@@ -175,6 +180,7 @@
     flex-wrap: wrap;
     flex-direction: row-reverse;
     gap: 1em;
+    max-width: 100%;
 
     a {
       display: flex;
@@ -188,9 +194,11 @@
       line-height: 1.1;
       z-index: 900;
       position: relative;
+      color: var(--primary-color-darken-4);
+      font-weight: 700;
 
       &:hover {
-        background-color: #fff4;
+        background-color: #fffa;
         box-shadow: 0 2px 8px #0002;
       }
 
@@ -201,16 +209,27 @@
       }
     }
 
+    $overlay-index: 400;
+    .no-match {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: $overlay-index + 1;
+    }
+
     .overlay {
       width: $resultWidth;
       height: 100vh;
-      transform: translateX(#{$resultWidth});
-      background: linear-gradient(to left, #0007, transparent);
+      // width: 100%;
       position: fixed;
       top: var(--header-height);
       right: 0;
       transition: all 0.3s ease-in-out;
-      z-index: 899;
+      z-index: $overlay-index;
+      background: #fff4;
+      backdrop-filter: blur(10px);
+      // background: linear-gradient(to left, #0007 30%, #0002, #0000);
+      transform: translateX(#{$resultWidth});
       &.active {
         transform: translateX(0);
       }
