@@ -9,9 +9,14 @@
   const dispatch = createEventDispatcher();
 
   function hideMobileMenu() {
-    $menuReadPageShow = false;
+    if (
+      !document.activeElement.classList.contains("adjust-font") ||
+      !document.activeElement.parentElement.classList.contains("adjust-font")
+    ) {
+      $menuReadPageShow = false;
 
-    window.addEventListener("click", showMobileMenu), { once: true };
+      window.addEventListener("click", showMobileMenu), { once: true };
+    }
   }
   function showMobileMenu() {
     $menuReadPageShow = true;

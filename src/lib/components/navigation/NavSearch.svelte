@@ -271,7 +271,7 @@
       background-color: #0006;
       width: fit-content;
 
-      &:nth-child(2) {
+      &:last-child {
         margin-bottom: 0.7em;
       }
     }

@@ -18,7 +18,7 @@
 {#if standalone && $showAdjustFont}
   <div class="overlay" on:click={() => ($showAdjustFont = false)} />
 {/if}
-<section on:blur={onBlur} class:standalone class:show={$showAdjustFont}>
+<section class="adjust-font" on:blur={onBlur} class:standalone class:show={$showAdjustFont}>
   <SectionHeader>Adjust font</SectionHeader>
   <Slider labelText="Font size (in %)" min={75} max={150} bind:value={$fontSize} step={5} />
   <Slider labelText="Font thickness (in %)" min={75} max={150} bind:value={$fontWeight} step={5} />
