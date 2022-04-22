@@ -50,7 +50,7 @@
       <a class:active={!$showSettings && $path === "/"} href="/"
         ><Icon icon={faHome} /><small>Home</small>
       </a>
-      <a class:active={!$showSettings && $path === "/novel"} href="/novel"
+      <a class:active={!$showSettings && $path.startsWith("/novel")} href="/novel"
         ><Icon icon={faCompass} /><small>Explore</small>
       </a>
       <a class:active={!$showSettings && $path.startsWith("/discussions/")} href="/discussions/all"
