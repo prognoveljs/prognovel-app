@@ -4,6 +4,8 @@
   import { fly } from "svelte/transition";
   import { getCoverURLPath } from "$lib/utils/images";
   import { stringSearch } from "$lib/utils/string";
+  import IconSvg from "$lib/components/IconSVG.svelte";
+  import searchIcon from "$lib/assets/feather-icons/search.svg?raw";
 
   export let isMobile: boolean = false;
   let search: string;
@@ -48,7 +50,9 @@
     bind:value={search}
     type="text"
   />
-  <span class="icon">🔍</span>
+  <span class="icon">
+    <IconSvg --color="#0006" data={searchIcon} />
+  </span>
   <section class="result">
     {#each searchedNovels as novel, index}
       <a
