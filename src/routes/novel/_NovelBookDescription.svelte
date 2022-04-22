@@ -5,7 +5,7 @@
   import { getContext } from "svelte";
   import type { NovelMetadata } from "$typings";
 
-  export let novelMetadata: NovelMetadata = getContext("novelMetadata");
+  let novelMetadata: NovelMetadata = getContext("novelMetadata");
 
   let showMore = false;
   $: height = showMore ? "auto" : "270px";

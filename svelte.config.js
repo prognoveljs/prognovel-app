@@ -10,7 +10,7 @@ import ProgNovelENV from "./prognovel.env.js";
 import postcss from "postcss";
 import autoprefixer from "autoprefixer";
 import purgeCSS from "@fullhuman/postcss-purgecss";
-// ProgNovelENV();
+import siteMetadata from "./.cache/assets/publish/sitemetadata.json" assert { type: "json" };
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
@@ -32,10 +32,17 @@ export default {
     ]),
   ],
   kit: {
-    adapter: adapter(),
+    adapter: adapter({
+      onError: ({ status, path, referrer, referenceType }) => {
+        if (path.startsWith("/blog")) throw new Error("Missing a blog page!");
+        console.warn(`${status} ${path}${referrer ? ` (${referenceType} from ${referrer})` : ""}`);
+      },
+    }),
     prerender: {
       default: true,
+      entries: ["*", ...siteMetadata.novels.map((novel) => `/novel/${novel}/`)],
     },
+    trailingSlash: "always",
     vite: {
       build: {
         rollupOptions: {

@@ -29,7 +29,6 @@
 >
   {#each novelList.slice(0, MAX_NOVEL_LISTED) as novel}
     <a
-      data-cy="yashura"
       sveltekit:prefetch
       href="/novel/{novel}"
       class="novel"

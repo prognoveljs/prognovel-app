@@ -1,27 +1,75 @@
 <script lang="ts">
-  import { bannerImages, updateBannerImage } from "$lib/utils/images";
+  import { updateBannerImage } from "$lib/utils/images";
   import { NOVEL_BANNER_HEIGHT } from "$lib/_setting";
-  import { getContext, onMount } from "svelte";
+  import { getContext } from "svelte";
   import type { NovelMetadata } from "$typings";
 
   export let novelMetadata: NovelMetadata = getContext("novelMetadata");
   export let id: string = getContext("id");
+  const IS_STATIC = import.meta.env.STATIC_BANNER_IMAGES;
   let banner;
   let img;
-  let hide = true;
-  $: if (banner && id && banner.querySelector(`img[data-banner=${id}]`) !== undefined) {
+  let hide = !IS_STATIC;
+
+  $: if (
+    !IS_STATIC &&
+    banner &&
+    id &&
+    banner.querySelector(`img[data-banner=${id}]`) !== undefined
+  ) {
     updateBannerImage(id);
     if (hide && (img?.src || "").length < 1024 * 10) hide = false;
   }
 </script>
 
 <div class="banner" style="height: {NOVEL_BANNER_HEIGHT}px;" bind:this={banner} class:hide>
-  <img
-    bind:this={img}
-    crossorigin="anonymous"
-    data-banner={id}
-    alt={novelMetadata ? novelMetadata.title + " cover." : ""}
-  />
+  {#if IS_STATIC}
+    <picture>
+      <source
+        type="image/avif"
+        srcset={`/publish/${id}/banner-480.avif 480w,
+/publish/${id}/banner-480.avif 480w,
+/publish/${id}/banner-800.avif 800w,
+/publish/${id}/banner-1000.avif 1000w,
+/publish/${id}/banner-1400.avif 1400w,
+/publish/${id}/banner-1900.avif 1900w,
+    `}
+        sizes={`(max-width:500px) 480w,
+(max-width:1000px) 800w,
+(max-width:1300px) 1000w,
+(max-width:1700px) 1400w,
+1900w`}
+      />
+      <source
+        type="image/webp"
+        srcset={`/publish/${id}/banner-480.webp 480w,
+/publish/${id}/banner-480.webp 480w,
+/publish/${id}/banner-800.webp 800w,
+/publish/${id}/banner-1000.webp 1000w,
+/publish/${id}/banner-1400.webp 1400w,
+/publish/${id}/banner-1900.webp 1900w,
+    `}
+        sizes={`(max-width:500px) 480w,
+(max-width:1000px) 800w,
+(max-width:1300px) 1000w,
+(max-width:1700px) 1400w,
+1900w`}
+      />
+      <img
+        bind:this={img}
+        crossorigin="anonymous"
+        alt={novelMetadata ? novelMetadata.title + " cover." : ""}
+        src={`/publish/${id}/banner-1400.jpeg`}
+      />
+    </picture>
+  {:else}
+    <img
+      bind:this={img}
+      crossorigin="anonymous"
+      data-banner={id}
+      alt={novelMetadata ? novelMetadata.title + " cover." : ""}
+    />
+  {/if}
   <div class="gradient" />
 </div>
 

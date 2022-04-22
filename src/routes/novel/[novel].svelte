@@ -3,45 +3,40 @@
   import { getCoverURLPath, prefetchBannerImage } from "$lib/utils/images";
   import { isBrowser } from "$lib/store/states";
 
+  export const prerender = true;
+
   /** @type {import('@sveltejs/kit').Load} */
-  export async function load({ params }) {
+  export async function load({ params, fetch }) {
     const { novel } = params;
-    let data: any = {};
-    let url;
+    let novelMetadata: any = {};
+    let status = 200;
+    let message = "";
+    try {
+      const res = await fetch(`/novel/${novel}.json`);
+      novelMetadata = await res.json();
+    } catch (error) {
+      status = 500;
+      message = "Error when reading " + novel + " metadata from build cache.";
+      console.error(error);
+    }
 
-    url = `/publish/${novel}/metadata.json`;
-    if (isBrowser) {
+    if (browser) {
       prefetchBannerImage(novel);
-      data = await getLocalNovelMetadataCache(novel);
+      novelMetadata = await getLocalNovelMetadataCache(novel);
 
-      if (!data) {
-        data = await fetchNovelMetadata(novel);
-        data.fresh = true;
-      }
-      data.status = 200;
-    } else {
-      const path = await import("path");
-      const fs = await import("fs");
-      console.log(novel);
-      url = `.cache/assets/publish/${novel}/metadata.json`;
-      try {
-        data = JSON.parse(fs.readFileSync(url, "utf-8"));
-        data.status = 200;
-      } catch (error) {
-        data.status = 500;
-        data.message = "Error when reading " + novel + " metadata from build cache.";
-        console.error(error);
+      if (!novelMetadata) {
+        novelMetadata = await fetchNovelMetadata(novel);
       }
     }
 
-    if (data.status === 200) {
-      return { status: data.status, props: { novelMetadata: data, id: novel } };
-    } else {
-      return {
-        error: data.message,
-        status: data.status,
-      };
+    if (status === 200) {
+      return { status, props: { novelMetadata, novel } };
     }
+
+    return {
+      error: message,
+      status,
+    };
   }
 </script>
 
@@ -55,16 +50,18 @@
   import { toc, chaptersLoaded } from "$lib/store/read-page";
   import { getChapterStoreKey, prefetchChapter } from "$lib/utils/read-page";
   import type { NovelMetadata } from "$typings";
+  import { browser } from "$app/env";
+  import { novelDemographics, novelGenres } from "$lib/utils/novel-page";
   // import { isBrowser } from "$lib/store/states";
 
-  export let id;
+  export let novel;
   export let novelMetadata: NovelMetadata;
   let affiliate = isBrowser ? new URL(location.href).searchParams.get("affiliate") || "" : "";
   let affiliateName = isBrowser
     ? new URL(location.href).searchParams.get("affiliateName") || ""
     : "";
 
-  setContext("id", id);
+  setContext("id", novel);
   setContext("novelMetadata", novelMetadata);
 
   toc.subscribe((chapterList) => {
@@ -72,10 +69,10 @@
     const destinationChapter = chapterList[0];
     if (typeof destinationChapter === "string") {
       const [book, chapter] = destinationChapter.split("/");
-      const key = getChapterStoreKey(id, book, chapter);
+      const key = getChapterStoreKey(novel, book, chapter);
 
       if ($chaptersLoaded[key]) return;
-      prefetchChapter(id, book, chapter);
+      prefetchChapter(novel, book, chapter);
     }
   });
 
@@ -92,11 +89,11 @@
   <meta property="og:book:author" content={novelMetadata.author} />
   <meta
     property="og:book:tag"
-    content={[...novelMetadata.genre, ...novelMetadata.tags].join(", ")}
+    content={[novelDemographics[novel], ...novelGenres[novel]].join(", ")}
   />
   <meta
     property="og:image"
-    content={getSiteURL() + getCoverURLPath(id, { height: 256, width: 256 }, "jpeg")}
+    content={getSiteURL() + getCoverURLPath(novel, { height: 256, width: 256 }, "jpeg")}
   />
 </svelte:head>
 
