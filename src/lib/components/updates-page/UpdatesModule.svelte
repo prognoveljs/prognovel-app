@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Icon from "$lib/components/Icon.svelte";
   import { faFire } from "@fortawesome/free-solid-svg-icons";
   import { siteMetadata } from "$lib/store/states";
@@ -35,7 +35,9 @@
     <div class="list">
       {#each $siteMetadata.novelsMetadata as novel}
         <a sveltekit:prefetch href="/novel/{novel.id}">
-          {novel.title}
+          <span>
+            {novel.title}
+          </span>
           <span>{novel.author || "--"}</span>
           <span class="chapters"> <span>{novel.totalChapter}</span> <span>chapters</span> </span>
         </a>
@@ -53,9 +55,10 @@
 
 <style lang="scss">
   figure {
+    --header-border-color: #0003;
+    --border-color: #0001;
     margin: 0;
     background-color: var(--foreground-color);
-    padding: 12px 24px;
     box-shadow: 0 4px 12px #0002;
     flex: 3;
     height: 100%;
@@ -63,6 +66,8 @@
     box-sizing: border-box;
     min-height: 421px;
     max-width: 100vw;
+    padding: 12px 24px;
+
     // content-visibility: auto;
     // contain-intrinsic-size: 592px;
 
@@ -86,44 +91,72 @@
         }
       }
     }
-  }
 
-  ul {
-    margin-top: 12px;
-    padding: 0;
-    list-style: none;
-  }
-  li,
-  .list a {
-    padding: 4px 8px;
-    position: relative;
-    display: grid;
-    grid-template-columns: 2fr minmax(180px, 1fr) minmax(135px, 1fr);
-    font-weight: 400;
-    text-decoration: none;
-  }
+    ul {
+      margin-top: 12px;
+      padding: 0;
+      list-style: none;
+    }
 
-  .list {
-    a {
-      text-shadow: 2px 2px 4px #0003;
+    li,
+    .list a {
+      padding: 4px 8px;
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(70px, 1fr) minmax(90px, 1fr);
+      grid-template-areas: "title" "author" "chapter";
+      font-weight: 400;
+      text-decoration: none;
 
-      &:hover:not([disabled]) {
-        background: #0001;
+      @include screen("small-mobile") {
+        // grid-template-columns: minmax(0, 2fr) minmax(90px, 1fr);
+        // grid-template-areas: "title" "chapter";
       }
+    }
 
-      &:not(.header [disabled]) {
-        cursor: pointer;
-        user-select: none;
+    .list {
+      a {
+        text-shadow: 2px 2px 4px #0003;
+
+        @include screen("mobile") {
+          padding: 12px 0;
+        }
+
+        span {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          max-width: 100%;
+          // display: block;
+        }
+
+        &:hover:not([disabled]) {
+          background: #0001;
+        }
+
+        &:not(.header [disabled]) {
+          cursor: pointer;
+          user-select: none;
+        }
+
+        &:not(:last-child) {
+          border-bottom: 1px solid var(--border-color);
+        }
+
+        // &[disabled] {
+        //   opacity: 0.5;
+        //   pointer-events: none;
+        // }
       }
+    }
 
-      &:not(:last-child) {
-        border-bottom: 1px solid #0001;
-      }
-
-      // &[disabled] {
-      //   opacity: 0.5;
-      //   pointer-events: none;
-      // }
+    @include screen("mobile") {
+      background: none;
+      box-shadow: none;
+      padding: 0;
+      min-height: auto;
+      --border-color: #fff1;
+      --header-border-color: #fff3;
     }
   }
 
@@ -136,6 +169,6 @@
   }
 
   li:first-child {
-    border-bottom: 1px solid #0003;
+    border-bottom: 1px solid var(--header-border-color);
   }
 </style>
