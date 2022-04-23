@@ -14,7 +14,7 @@ let STATIC_BANNER_IMAGES = false;
 if (!existsSync(assetsFolder)) mkdirSync(assetsFolder, { recursive: true });
 
 let apiEndpoint = new URL(process.env.BACKEND_API);
-const siteMetadataURL = apiEndpoint;
+const siteMetadataURL = new URL(process.env.BACKEND_API);
 if (IS_STATIC_API) siteMetadataURL.pathname = "sitemetadata.json";
 
 (async function () {
@@ -91,7 +91,7 @@ if (IS_STATIC_API) siteMetadataURL.pathname = "sitemetadata.json";
 async function downloadAsset(file, novel = "", opts = {}) {
   let path = assetsFolder;
 
-  let url = apiEndpoint;
+  let url = new URL(process.env.BACKEND_API);
   // let url = `${apiEndpoint}/fetchImage?file=${file}`;
   if (IS_STATIC_API) {
     url.pathname = novel + "/" + file + ".png";
@@ -165,13 +165,15 @@ function downloadStaticAPIs(siteMetadata) {
     if (existsSync(`${assetsFolder}/publish/${novel}`)) {
       mkdirSync(`${assetsFolder}/publish/${novel}`, { recursive: true });
     }
-    let novelMetadataURL = apiEndpoint;
+    let novelMetadataURL = new URL(process.env.BACKEND_API);
+    console.log(apiEndpoint.href);
     if (IS_STATIC_API) {
       novelMetadataURL.pathname = novel + "/metadata.json";
     } else {
-      novelMetadataURL.pathname = novel;
+      novelMetadataURL.pathname = "novel";
       novelMetadataURL.searchParams.set("name", novel);
     }
+    console.log("Fetching", novelMetadataURL.href);
     fetch(novelMetadataURL.href).then((res) => {
       res.body.pipe(createWriteStream(`${assetsFolder}/publish/${novel}/metadata.json`, "utf-8"));
     });
@@ -183,7 +185,7 @@ async function downloadComponentsZip() {
   const out = join(process.cwd(), "src/lib/.generated");
   console.log(out);
   if (!existsSync(out)) mkdirSync(out, { recursive: true });
-  const url = apiEndpoint;
+  const url = new URL(process.env.BACKEND_API);
   if (IS_STATIC_API) {
     url.pathname = "components.zip";
   } else {
