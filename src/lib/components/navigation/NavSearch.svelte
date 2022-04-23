@@ -12,8 +12,8 @@
   import { frameTick } from "$lib/utils/animation";
 
   export let isMobile: boolean = false;
-  const SEARCH_ROW_ITEMS = 3;
   const RESULT_WIDTH = 510;
+  let SEARCH_ROW_ITEMS = 3;
   let search: string;
   let input: HTMLInputElement;
   let selectedNovel: number = -1;
@@ -28,7 +28,7 @@
     : import.meta.env.IS_DEMO
     ? Array(11).fill({
         id: "yashura-legacy",
-        title: "Yashura Legacy: The First Chapter Yahuyd Yahud Yahud",
+        title: "Yashura Legacy: The Demo Novel of ProgNovel",
       })
     : novelsGroup.filter((novelMetadata) => {
         return stringSearch((novelMetadata?.title || "").toLowerCase(), search.toLowerCase()) > 0;
@@ -96,6 +96,12 @@
     search = "";
   }
 
+  function resultWrapper(el: HTMLDivElement) {
+    if (!browser) return;
+    const style = getComputedStyle(el);
+    SEARCH_ROW_ITEMS = style.gridTemplateColumns.split(" ").length;
+  }
+
   function resultItem(el: HTMLAnchorElement) {
     el.onfocus = async () => {
       const elWrapper: HTMLDivElement = el.querySelector(".content-wrapper");
@@ -114,7 +120,7 @@
 
 <svelte:window on:keydown={pressKey} />
 
-<section class="input" class:isMobile style="--row-items: {SEARCH_ROW_ITEMS};">
+<section class="input" class:isMobile>
   <div class="side-overlay" />
   <input
     on:blur={onBlur}
@@ -148,7 +154,7 @@
           >
         {/if}
       </div>
-      <div class="item-wrapper">
+      <div class="item-wrapper" use:resultWrapper>
         {#each searchedNovels as novel, index}
           <a
             sveltekit:prefetch
@@ -310,7 +316,7 @@
       display: grid;
       align-items: start;
       justify-content: start;
-      grid-template-columns: repeat(var(--row-items, 3), minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fill, 136px);
       // flex-direction: row-reverse;
       gap: 1em;
 
