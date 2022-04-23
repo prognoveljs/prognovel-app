@@ -52,6 +52,7 @@
   import type { NovelMetadata } from "$typings";
   import { browser } from "$app/env";
   import { novelDemographics, novelGenres } from "$lib/utils/novel-page";
+  import { SITE_TITLE } from "$lib/_setting";
   // import { isBrowser } from "$lib/store/states";
 
   export let novel;
@@ -83,7 +84,11 @@
 </script>
 
 <svelte:head>
-  <title>{novelMetadata ? novelMetadata.title : "Loading..."}</title>
+  <title
+    >{novelMetadata
+      ? `${novelMetadata.title} | ${SITE_TITLE}`
+      : "Loading... | " + SITE_TITLE}</title
+  >
   <meta property="og:title" content={novelMetadata.title} />
   <meta property="og:type" content="book" />
   <meta property="og:book:author" content={novelMetadata.author} />

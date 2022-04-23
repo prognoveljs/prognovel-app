@@ -124,7 +124,7 @@
   <div class="page-content">
     <div class="hero-container">
       <section class="hero">
-        <h1>{SITE_TITLE}</h1>
+        <!-- <h1>{SITE_TITLE}</h1> -->
         <HomeHero />
         <HomeNovels {novelsMetadata} grid={"novels"} />
       </section>

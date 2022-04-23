@@ -1,6 +1,7 @@
 <script>
   import { scale } from "svelte/transition";
   import ComingSoon from "$lib/components/ComingSoon.svelte";
+  import { SITE_TITLE } from "$lib/_setting";
   const mockNovels = [
     "--primary-color-darken-1",
     "--primary-color-darken-2",
@@ -14,7 +15,7 @@
 </script>
 
 <svelte:head>
-  <title>Explore Novels</title>
+  <title>Explore Novels | {SITE_TITLE}</title>
 </svelte:head>
 <div class="container-center">
   <h1>All novels</h1>

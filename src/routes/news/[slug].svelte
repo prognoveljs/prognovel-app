@@ -29,6 +29,10 @@
   $: hasDisqus = Boolean($siteMetadata?.disqus_id);
 </script>
 
+<svelte:head>
+  <title>{data?.title} | {SITE_TITLE}</title>
+</svelte:head>
+
 <article>
   <h1>{data?.title}</h1>
   <div class="cover">

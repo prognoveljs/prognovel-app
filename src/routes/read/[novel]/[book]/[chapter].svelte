@@ -33,6 +33,7 @@
   import { currentChapter, currentBook, currentContent } from "$lib/store/read-page";
   import { replacePageTitleBookAndChapter } from "$lib/utils/read-page/history";
   import { prefetch } from "$app/navigation";
+  import { SITE_TITLE } from "$lib/_setting";
   // import { prefetchNextChapter } from "$lib/utils/read-page/fetch-content";
 
   let { novel, book, chapter } = $page.params;
@@ -93,8 +94,10 @@
     {$novelsData[novel]
       ? `${$novelsData[novel].title} ${replacePageTitleBookAndChapter(
           $currentBook,
-        )}: chapter ${$currentChapter.slice(8).replace("-", ".")} - ${$currentContent.title}`
-      : "Loading..."}
+        )}: chapter ${$currentChapter.slice(8).replace("-", ".")} - ${
+          $currentContent.title
+        } | ${SITE_TITLE}`
+      : "Loading... | " + SITE_TITLE}
   </title>
 </svelte:head>
 
