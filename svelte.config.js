@@ -10,7 +10,9 @@ import ProgNovelENV from "./prognovel.env.js";
 import postcss from "postcss";
 import autoprefixer from "autoprefixer";
 import purgeCSS from "@fullhuman/postcss-purgecss";
-import siteMetadata from "./.cache/assets/publish/sitemetadata.json" assert { type: "json" };
+import { readFileSync } from "fs";
+
+const siteMetadata = JSON.parse(readFileSync("./.cache/assets/publish/sitemetadata.json", "utf-8"));
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
