@@ -9,6 +9,7 @@
   import alertIcon from "$lib/assets/feather-icons/alert-octagon.svg?raw";
   import { browser } from "$app/env";
   import { cubicIn, cubicOut } from "svelte/easing";
+  import { frameTick } from "$lib/utils/animation";
 
   export let isMobile: boolean = false;
   const SEARCH_ROW_ITEMS = 3;
@@ -25,13 +26,15 @@
   $: searchedNovels = !search
     ? []
     : import.meta.env.IS_DEMO
-    ? Array(11).fill({ id: "yashura-legacy", title: "Yashura Legacy" })
+    ? Array(11).fill({
+        id: "yashura-legacy",
+        title: "Yashura Legacy: The First Chapter Yahuyd Yahud Yahud",
+      })
     : novelsGroup.filter((novelMetadata) => {
         return stringSearch((novelMetadata?.title || "").toLowerCase(), search.toLowerCase()) > 0;
       });
 
   function pressKey(e) {
-    console.log(e.key);
     switch (e.key) {
       case "/":
         input.focus();
@@ -57,7 +60,6 @@
         if (!searchedNovels.length) break;
         selectedNovel -= SEARCH_ROW_ITEMS;
         if (selectedNovel < 0) input.focus();
-        console.log(selectedNovel);
         e.preventDefault();
 
         break;
@@ -80,7 +82,12 @@
   function onBlur() {
     setTimeout(() => {
       const activeEl = document.activeElement;
-      if (activeEl.classList.contains("search-result-item") || activeEl === input) return;
+      if (
+        activeEl.classList.contains("search-result-item") ||
+        activeEl.classList.contains("search-result-overlay") ||
+        activeEl === input
+      )
+        return;
       search = "";
     }, 100);
   }
@@ -88,11 +95,26 @@
   function onClickItem() {
     search = "";
   }
+
+  function resultItem(el: HTMLAnchorElement) {
+    el.onfocus = async () => {
+      const elWrapper: HTMLDivElement = el.querySelector(".content-wrapper");
+      const elTitle: HTMLDivElement = el.querySelector(".title");
+
+      await frameTick();
+
+      elWrapper.style.height = `calc(var(--item-height) + ${elTitle.clientHeight}px - 18px)`;
+    };
+    el.onblur = async () => {
+      const elWrapper: HTMLDivElement = el.querySelector(".content-wrapper");
+      elWrapper.style.height = `calc(100%)`;
+    };
+  }
 </script>
 
 <svelte:window on:keydown={pressKey} />
 
-<section class="input" class:isMobile>
+<section class="input" class:isMobile style="--row-items: {SEARCH_ROW_ITEMS};">
   <div class="side-overlay" />
   <input
     on:blur={onBlur}
@@ -122,7 +144,7 @@
               style="margin-right: 6px;"
               size="1.1em"
               data={alertIcon}
-            />lots novels being added for demo purpose</em
+            />lots results being added for demo purpose</em
           >
         {/if}
       </div>
@@ -132,28 +154,34 @@
             sveltekit:prefetch
             in:fly={{ duration: 125, y: 12, delay: 50 * index }}
             out:fly={{ duration: 80, y: -20, delay: 30 * index }}
-            id="search-{novel}"
+            id="search-{novel.id}"
             class="search-result-item"
             href="/novel/{novel.id}"
+            style="z-index:{900 - index}"
+            use:resultItem
             on:click={onClickItem}
             on:blur={onBlur}
             on:mouseover={() => (selectedNovel = index)}
           >
-            <picture>
-              <source
-                srcset={getCoverURLPath(novel.id, { width: 128, height: 128 }, "webp")}
-                type="image/webp"
-              />
-              <source
-                srcset={getCoverURLPath(novel.id, { width: 128, height: 128 }, "jpeg")}
-                type="image/jpeg"
-              />
-              <img
-                src={getCoverURLPath(novel.id, { width: 128, height: 128 }, "jpeg")}
-                alt={novel.title}
-              />
-            </picture>
-            {novel.title}
+            <div class="content-wrapper">
+              <picture>
+                <source
+                  srcset={getCoverURLPath(novel.id, { width: 128, height: 128 }, "webp")}
+                  type="image/webp"
+                />
+                <source
+                  srcset={getCoverURLPath(novel.id, { width: 128, height: 128 }, "jpeg")}
+                  type="image/jpeg"
+                />
+                <img
+                  src={getCoverURLPath(novel.id, { width: 128, height: 128 }, "jpeg")}
+                  alt={novel.title}
+                />
+              </picture>
+              <div class="title">
+                {novel.title}
+              </div>
+            </div>
           </a>
         {/each}
       </div>
@@ -164,7 +192,8 @@
         class:active={search}
         in:fly={{ duration: 225, x: RESULT_WIDTH, easing: cubicOut }}
         out:fly={{ duration: 300, x: RESULT_WIDTH, easing: cubicIn }}
-        class="overlay"
+        class="search-result-overlay"
+        tabindex="0"
       />
     </section>
   {/if}
@@ -277,15 +306,17 @@
     }
 
     .item-wrapper {
-      display: flex;
+      --item-height: 160px;
+      display: grid;
       align-items: start;
       justify-content: start;
-      flex-wrap: wrap;
+      grid-template-columns: repeat(var(--row-items, 3), minmax(0, 1fr));
       // flex-direction: row-reverse;
       gap: 1em;
 
       a {
         display: flex;
+        position: relative;
         flex-direction: column;
         flex: 0;
         text-align: center;
@@ -294,24 +325,47 @@
         border-radius: 2px;
         padding: 0.25em;
         line-height: 1.1;
-        z-index: 900;
+        z-index: $overlay-index + 1;
         position: relative;
         color: var(--primary-color-darken-4);
         font-weight: 700;
+        min-height: var(--item-height);
 
-        // &:hover:not(:focus),
-        &:focus,
-        &:active {
-          background-color: #fffa;
-          box-shadow: 0 2px 8px #0002;
-          color: var(--primary-color-darken-2);
-          outline: none;
+        .title {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          width: 100%;
+        }
+        .content-wrapper {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 100%;
+          padding-top: 4px;
+
+          // &:hover:not(:focus),
+          picture {
+            border-radius: 2px;
+            margin-bottom: 8px;
+            width: 100%;
+            height: auto;
+          }
         }
 
-        picture {
-          border-radius: 2px;
-          margin-bottom: 8px;
-          height: 128px;
+        &:focus,
+        &:active {
+          outline: none;
+          .content-wrapper {
+            background-color: #fffa;
+            box-shadow: 0 2px 8px #0002;
+            color: var(--primary-color-darken-2);
+            height: 100%;
+          }
+          .title {
+            white-space: normal;
+            width: 100%;
+          }
         }
       }
     }
@@ -323,7 +377,7 @@
       z-index: $overlay-index + 1;
     }
 
-    .overlay {
+    .search-result-overlay {
       width: $resultWidth;
       height: 100vh;
       // width: 100%;
