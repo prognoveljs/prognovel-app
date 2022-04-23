@@ -44,6 +44,7 @@ export async function getPreviousBreadcrumbLink(): Promise<string> {
     if (current) {
       const dest = current.previousElementSibling as HTMLAnchorElement;
       if (dest && dest.href && dest.id !== "back-button") {
+        if ((dest.href = "/discussions")) return "/";
         return dest.href;
       }
     }
