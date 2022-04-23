@@ -1,5 +1,6 @@
 <script>
   import ComingSoon from "$lib/components/ComingSoon.svelte";
+  import { SITE_TITLE } from "$lib/_setting";
   // import { onMount } from "svelte";
 
   // let ActionBottom;
@@ -13,7 +14,7 @@
 </script>
 
 <svelte:head>
-  <title>DMCA Notice</title>
+  <title>DMCA Notice | {SITE_TITLE}</title>
 </svelte:head>
 
 <div class="container-center">

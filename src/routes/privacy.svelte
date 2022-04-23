@@ -1,5 +1,9 @@
+<script>
+  import { SITE_TITLE } from "$lib/_setting";
+</script>
+
 <svelte:head>
-  <title>Privacy Policy</title>
+  <title>Privacy Policy | {SITE_TITLE}</title>
 </svelte:head>
 
 <div class="container-center">

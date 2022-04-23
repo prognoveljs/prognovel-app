@@ -97,7 +97,6 @@
       padding: 0;
       height: var(--header-height);
       text-decoration: none;
-      height: var(--header-height);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -110,6 +109,7 @@
         bottom: 1px;
         left: -8px;
         width: var(--sidebar-width);
+        min-width: 64px;
       }
 
       // start of breadcrumb
@@ -150,7 +150,7 @@
     }
   }
 
-  @media screen and (max-width: 768px) {
+  @include screen("mobile") {
     #breadcrumb {
       span {
         display: none;

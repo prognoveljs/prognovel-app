@@ -1,8 +1,10 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 import sass from "sass";
-import sharp from "sharp";
+// import sharp from "sharp";
 import EnvironmentPlugin from "vite-plugin-environment";
+import env from "dotenv";
+env.config();
 
 export default () => {
   const CACHE_PATH = ".cache";
@@ -15,17 +17,20 @@ export default () => {
     );
     return result;
   }, {});
+  const BACKEND_API = process.env.BACKEND_API || "http://localhost";
+  const IS_STATIC_API = (process.env.BACKEND_API || "").includes(".pages.dev");
   return EnvironmentPlugin(
     {
       BASE_PATH: process.cwd(),
       CACHE_PATH,
+      BACKEND_API,
+      IS_STATIC_API,
       SITE_TITLE: SITE_METADATA?.site_title || "ProgNovel App",
       IMAGE_RESIZER_SERVICE: SITE_METADATA?.image_resizer_service || "",
-      BACKEND_API: process.env.BACKEND_API || "http://localhost",
       GA_TRACKING_ID: process.env.GA_TRACKING_ID || "",
       IS_DEMO: process.env.IS_DEMO || false,
       NOVEL_LIST: SITE_METADATA?.novels || [],
-
+      STATIC_BANNER_IMAGES: IS_STATIC_API || isValidHttpUrl(SITE_METADATA.image_resizer_service),
       // app vars from build time
       SITE_METADATA,
       // chunks of novels metadata
@@ -110,4 +115,16 @@ function readCSSVariables() {
     // if (!darkTheme) console.log(regexResult);
     return (regexResult[1] || "").trim();
   }
+}
+
+function isValidHttpUrl(string) {
+  let url;
+
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;
+  }
+
+  return url.protocol === "http:" || url.protocol === "https:";
 }

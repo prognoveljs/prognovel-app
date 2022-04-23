@@ -91,6 +91,14 @@
     grid-gap: 128px;
     border-radius: 8px;
 
+    @include screen("tablet") {
+      --width: clamp(80vw, 850px, 1000px);
+    }
+    @include screen("small-tablet") {
+      --width: clamp(750px, 850px, 80vw);
+      // padding: 80vw;
+    }
+
     img {
       transform: scale(1.8);
     }

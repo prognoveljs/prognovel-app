@@ -1,11 +1,12 @@
 <script lang="ts">
   import NavMobile from "$lib/components/NavMobile.svelte";
+  import { SITE_TITLE } from "$lib/_setting";
   import IndexNovelBody from "./_IndexNovelBody.svelte";
   import IndexNovelHead from "./_IndexNovelHead.svelte";
 </script>
 
 <svelte:head>
-  <title>Explore Novels</title>
+  <title>Explore Novels | {SITE_TITLE}</title>
 </svelte:head>
 <NavMobile />
 <div class="container-center body">

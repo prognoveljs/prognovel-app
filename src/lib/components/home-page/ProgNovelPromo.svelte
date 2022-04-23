@@ -121,7 +121,7 @@
 
       @include screen("mobile") {
         grid-template-columns: 100%;
-        grid-template-rows: repeat(6, minmax(200px, 1fr));
+        grid-template-rows: auto repeat(5, minmax(300px, 1fr));
         grid-template-areas: "title" "monetization" "performance" "pwa" "plugins" "scale";
       }
     }

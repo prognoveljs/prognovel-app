@@ -30,7 +30,7 @@
       <Icon icon={faHome} size={"24px"} />
       <span class="tooltip" aria-hidden="true">home</span>
     </a>
-    <a sveltekit:prefetch class={$path === "/updates" ? "selected" : ""} href="/updates">
+    <a sveltekit:prefetch class={$path.startsWith("/updates") ? "selected" : ""} href="/updates">
       <Icon icon={faBolt} size={"24px"} />
       <span class="tooltip" aria-hidden="true">all updates</span>
     </a>
@@ -42,7 +42,7 @@
       <Icon icon={faCommentAlt} size={"24px"} />
       <span class="tooltip" aria-hidden="true">discussions</span>
     </a>
-    <a sveltekit:prefetch class={$path === "/novel" ? "selected" : ""} href="/novel">
+    <a sveltekit:prefetch class={$path.startsWith("/novel") ? "selected" : ""} href="/novel">
       <Icon icon={faBook} size={"24px"} />
       <span class="tooltip" aria-hidden="true">all novels</span>
     </a>

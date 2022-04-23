@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import NavHome from "$lib/components/navigation/NavHome.svelte";
   import NavSearch from "./navigation/NavSearch.svelte";
 </script>

@@ -53,11 +53,9 @@
       <Stacks grid={"stack"} />
     </div>
     <div class="misc">
-      <a sveltekit:prefetch href="https://www.twitter.com/prognovel">twitter</a>
-      <a sveltekit:prefetch href="https://www.github.com/prognoveljs">github</a>
-      <a sveltekit:prefetch href="https://community.webmonetization.org/prognovel"
-        >WM API community</a
-      >
+      <a href="https://www.twitter.com/prognovel">twitter</a>
+      <a href="https://www.github.com/prognoveljs">github</a>
+      <a href="https://community.webmonetization.org/prognovel">WM API community</a>
       <strong style="display: block;">
         <small>&copy; Copyright {COPYRIGHT_YEAR}, ProgNovel</small>
       </strong>

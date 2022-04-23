@@ -7,7 +7,7 @@
   $: cleanedPath = $path.replace(/\//, "");
   $: pageHeaderTitle = cleanedPath
     ? cleanedPath.slice(0, 1).toUpperCase() + cleanedPath.slice(1)
-    : "Home";
+    : SITE_TITLE;
 </script>
 
 <section>

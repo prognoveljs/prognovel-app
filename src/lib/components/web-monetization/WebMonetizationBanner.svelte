@@ -69,6 +69,15 @@
     display: flex;
     justify-content: left;
 
+    @include screen("small-mobile") {
+      flex-direction: column;
+
+      a {
+        margin-bottom: 8px;
+        max-width: 270px;
+      }
+    }
+
     a {
       text-decoration: none;
       padding: 4px 16px;

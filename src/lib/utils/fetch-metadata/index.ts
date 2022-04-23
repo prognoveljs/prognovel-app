@@ -9,8 +9,11 @@ const IDB_HOMEPAGE_PREFIX = "homepage";
 
 export async function fetchSiteMetadata(): Promise<SiteMetadata> {
   let data: SiteMetadata;
+  console.log(import.meta.env.IS_STATIC_API);
+  const url = new URL(import.meta.env.BACKEND_API);
+  if (import.meta.env.IS_STATIC_API) url.pathname = "sitemetadata.json";
   try {
-    const response = await fetch(import.meta.env.BACKEND_API);
+    const response = await fetch(url.href);
     data = await response.json();
     await set(IDB_HOMEPAGE_PREFIX, data, getMetadataStore());
   } catch (err) {
@@ -39,10 +42,15 @@ export async function fetchSiteMetadata(): Promise<SiteMetadata> {
 
 // TODO add loading status to NovelMetadata
 export async function fetchNovelMetadata(id: string): Promise<NovelMetadata> {
-  const url = `${import.meta.env.BACKEND_API}/novel?name=${id}`;
+  const url = new URL(import.meta.env.BACKEND_API);
+  if (import.meta.env.IS_STATIC_API) {
+    url.pathname = id + "/metadata.json";
+  } else {
+    url.pathname = "novel?name=" + id;
+  }
   let data: NovelMetadata;
   try {
-    const response = await fetch(url);
+    const response = await fetch(url.href);
     data = await response.json();
     // console.log("🚀 fetching novel metadata", data);
     await set(IDB_NOVEL_PREFIX + id, data, getMetadataStore());

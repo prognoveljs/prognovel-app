@@ -1,5 +1,9 @@
+<script lang="ts">
+  import { SITE_TITLE } from "$lib/_setting";
+</script>
+
 <svelte:head>
-  <title>404 - Not Found</title>
+  <title>404 - Not Found | {SITE_TITLE}</title>
 </svelte:head>
 
 <div class="container-center">

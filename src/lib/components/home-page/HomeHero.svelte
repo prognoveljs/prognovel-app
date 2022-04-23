@@ -21,6 +21,7 @@
     grid-template-columns: minmax(560px, 650px) 1fr;
     gap: 16px;
     width: 100%;
+    margin-top: 3.5em;
 
     section {
       h2 {

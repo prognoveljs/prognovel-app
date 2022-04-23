@@ -2,6 +2,7 @@
   import Icon from "$lib/components/Icon.svelte";
   import Avatar from "$lib/components/user/Avatar.svelte";
   import { newsData } from "$lib/store/news-page";
+  import { SITE_TITLE } from "$lib/_setting";
   import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
   import { formatDistance } from "date-fns";
   import { onMount } from "svelte";
@@ -10,6 +11,10 @@
     //
   });
 </script>
+
+<svelte:head>
+  <title>News | {SITE_TITLE}</title>
+</svelte:head>
 
 <article class="container">
   <h1>📰 News</h1>

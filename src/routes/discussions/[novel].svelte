@@ -13,6 +13,7 @@
   import { getNovelBookCoverSrc, novelTitles } from "$lib/utils/novel-page";
   import Comments from "$lib/components/comments/disqus/Disqus.svelte";
   import NoDisqus from "./_NoDisqus.svelte";
+  import { SITE_TITLE } from "$lib/_setting";
   $: novels = $siteMetadata?.novels ?? [];
   // $: novels = ["yashura-legacy", "yashura-legacy", "yashura-legacy"];
   $: hasDisqus = Boolean($siteMetadata?.disqus_id);
@@ -22,7 +23,7 @@
 </script>
 
 <svelte:head>
-  <title>Discussion{novelTitles[novel] ? ` - ${novelTitles[novel]}` : ""}</title>
+  <title>Discussion{novelTitles[novel] ? ` - ${novelTitles[novel]}` : ""} | {SITE_TITLE}</title>
 </svelte:head>
 
 {#if hasDisqus}

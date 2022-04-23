@@ -1,9 +1,10 @@
-<script>
+<script lang="ts">
   import ComingSoon from "$lib/components/ComingSoon.svelte";
+  import { SITE_TITLE } from "$lib/_setting";
 </script>
 
 <svelte:head>
-  <title>Offline Mode</title>
+  <title>Offline Mode | {SITE_TITLE}</title>
 </svelte:head>
 
 <div class="container-center">

@@ -3,10 +3,11 @@
   import Cover from "$lib/components/BookCover.svelte";
   import { loadBookmark } from "$lib/utils/bookmark";
   import { siteMetadata } from "$lib/store/states";
+  import { SITE_TITLE } from "$lib/_setting";
 </script>
 
 <svelte:head>
-  <title>Bookmark</title>
+  <title>Bookmark | {SITE_TITLE}</title>
 </svelte:head>
 
 <div class="container-center">

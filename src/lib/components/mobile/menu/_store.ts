@@ -1,5 +1,6 @@
 import { derived, Readable, writable, Writable } from "svelte/store";
 import { path } from "$lib/store/states";
+import { page } from "$app/stores";
 // import type { Page } from "@sapper/common";
 
 // const { page } = stores() as { page: any };
@@ -14,11 +15,11 @@ interface Page {
   error?: Error;
 }
 
-export const menuVariance: Readable<string> = derived([path], ([$path]: [string]) => {
+export const menuVariance: Readable<string> = derived([path, page], ([$path, $page]) => {
   if (!$path) return MenuVariance.General;
 
   if ($path.startsWith("/read/")) return MenuVariance.ReadPage;
-  if ($path.startsWith("/novel/")) return MenuVariance.NovelPage;
+  if ($path.startsWith("/novel") && $page?.params?.novel) return MenuVariance.NovelPage;
 
   return MenuVariance.General;
 });

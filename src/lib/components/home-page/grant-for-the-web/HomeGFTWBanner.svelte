@@ -96,6 +96,7 @@
         padding: 0.2em 1em 0.5em;
         display: inline-flex;
         align-items: center;
+        max-width: 440px;
 
         &:hover {
           --alpha: 0.2;
