@@ -1,5 +1,23 @@
 # ProgNovel Changelog
 
+# 0.7.2
+
+- perf: allow completely free hosting (not including domain and others) on CDN with hosting backend as static JSON on Cloudflare Pages platform
+- security: static API allow significant security increase against attacks like DDoS since there's no actual server or database attackers need to target
+- ui: remove site title on home page hero, and apply it to header and document title instead
+- ui: rework search bar UI and UX, now can completely navigable with keyboard only
+- ui(home page): adjust browse novel styling on mobile and tablet
+- ui(home page/updates): rework styling on novel updates components to prevent overflow on mobile
+- ui(home page): adjust width for Grant for the Web and Web Monetization banner on mobile
+- ui(home page): give more height on feature highlight on mobile and tablet
+- ui(novel page): clamp affiliate link width on tablet
+- perf: allow hosting static API for backend by connecting a repo that contains ProgNovel project folder to CLoudflare Pages
+- fix(ui): back button on discussions page error
+- fix(ui): issue where tablet doesn't have navigation bar
+- fix(ui): CSS error where back button on header missing on tablet
+- fix(ui/read page): issue where sometimes read page menu closed when adjusting font size on mobile
+- fix(build): novel pages not being prerendered
+
 # 0.7.1
 
 - ui(homepage): remember novel list display preference
