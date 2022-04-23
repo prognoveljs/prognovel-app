@@ -6,7 +6,7 @@
 </script>
 
 <header>
-  {#if $path === "/" || $path.startsWith("/announcement")}
+  {#if $path === "/"}
     <NavHome />
   {:else}
     <NavTitles />
