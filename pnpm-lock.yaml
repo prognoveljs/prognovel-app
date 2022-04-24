@@ -38,6 +38,7 @@ specifiers:
   sharp: ^0.29.3
   svelte: 3.47.0
   svelte-forms: ^2.3.1
+  svelte-inview: ^3.0.0
   svelte-loader: ^2.13.6
   svelte-preprocess: ^4.10.6
   svelte-previous: ^2.1.0
@@ -70,6 +71,7 @@ dependencies:
   node-fetch: 2.6.7
   sharp: 0.29.3
   svelte-forms: 2.3.1
+  svelte-inview: 3.0.0_svelte@3.47.0
   three: 0.139.2
   web-vitals: 1.1.2
   webfunding: 0.2.6
@@ -2121,6 +2123,14 @@ packages:
     dependencies:
       svelte: 3.47.0
     dev: true
+
+  /svelte-inview/3.0.0_svelte@3.47.0:
+    resolution: {integrity: sha512-1lA0ImDC0OngLwozr3n0WtfvdO3HhrGtt5aIYj6AV4JK1dsoJAA4n0qjvRhDQzPcId7muXofHxENZwAmDSQwfg==}
+    peerDependencies:
+      svelte: ^3.0.0
+    dependencies:
+      svelte: 3.47.0
+    dev: false
 
   /svelte-loader/2.13.6_svelte@3.47.0:
     resolution: {integrity: sha512-7uf7ZQdPAl+lwb1ldUYJFY/raZRUCuaNx7lMJ+F16jrVwN1+c35C2pBMGIY0mCqdKm5sm45jqELJJLGM3UG9Pw==}
