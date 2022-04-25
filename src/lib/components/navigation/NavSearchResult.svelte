@@ -9,6 +9,7 @@
   import { cubicIn, cubicOut } from "svelte/easing";
   import IconSvg from "../IconSVG.svelte";
   import { getCoverURLPath } from "$lib/utils/images";
+  import { prefetch, prefetchRoutes } from "$app/navigation";
 
   export let search = "";
   export let input;
@@ -85,6 +86,7 @@
       const elTitle: HTMLDivElement = el.querySelector(".title");
 
       await frameTick();
+      prefetch(el.href);
 
       elWrapper.style.height = `calc(var(--item-height) + ${elTitle.clientHeight}px - 18px)`;
     };
