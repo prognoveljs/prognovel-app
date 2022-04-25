@@ -1,7 +1,6 @@
 <script lang="ts">
   import { scale } from "svelte/transition";
   import { goto, prefetch } from "$app/navigation";
-  import { getCoverURLPath } from "$lib/utils/images";
   import {
     novelCoverPlaceholders,
     novelCoverSubtitle,

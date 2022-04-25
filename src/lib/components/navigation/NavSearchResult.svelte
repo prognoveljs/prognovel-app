@@ -10,6 +10,7 @@
   import IconSvg from "../IconSVG.svelte";
   import { getCoverURLPath } from "$lib/utils/images";
   import { prefetch, prefetchRoutes } from "$app/navigation";
+  import { novelCoverPlaceholders } from "$lib/utils/novel-page";
 
   export let search = "";
   export let input;
@@ -129,20 +130,25 @@
         on:focus
       >
         <div class="content-wrapper">
-          <picture>
-            <source
-              srcset={getCoverURLPath(novel.id, { width: 128, height: 128 }, "webp")}
-              type="image/webp"
-            />
-            <source
-              srcset={getCoverURLPath(novel.id, { width: 128, height: 128 }, "jpeg")}
-              type="image/jpeg"
-            />
-            <img
-              src={getCoverURLPath(novel.id, { width: 128, height: 128 }, "jpeg")}
-              alt={novel.title}
-            />
-          </picture>
+          <div
+            class="cover"
+            style="--cover-size: 128px;background: url({novelCoverPlaceholders[novel.id]});"
+          >
+            <picture>
+              <source
+                srcset={getCoverURLPath(novel.id, { width: 128, height: 128 }, "webp")}
+                type="image/webp"
+              />
+              <source
+                srcset={getCoverURLPath(novel.id, { width: 128, height: 128 }, "jpeg")}
+                type="image/jpeg"
+              />
+              <img
+                src={getCoverURLPath(novel.id, { width: 128, height: 128 }, "jpeg")}
+                alt={novel.title}
+              />
+            </picture>
+          </div>
           <div class="title">
             {novel.title}
           </div>
@@ -219,6 +225,7 @@
           text-overflow: ellipsis;
           white-space: nowrap;
           width: 100%;
+          margin-top: 0.3em;
         }
         .content-wrapper {
           position: absolute;
@@ -227,12 +234,20 @@
           width: 100%;
           padding-top: 4px;
 
-          // &:hover:not(:focus),
-          picture {
-            border-radius: 2px;
-            margin-bottom: 8px;
-            width: 100%;
-            height: auto;
+          .cover {
+            width: var(--cover-size, 128px);
+            height: var(--cover-size, 128px);
+            background-size: var(--cover-size, 128px) !important;
+            background-repeat: no-repeat;
+            margin: 0 auto;
+
+            // &:hover:not(:focus),
+            picture {
+              border-radius: 2px;
+              margin-bottom: 8px;
+              width: 100%;
+              height: auto;
+            }
           }
         }
 
