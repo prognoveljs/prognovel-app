@@ -22,7 +22,6 @@
 
   onMount(async () => {
     if (load) goto("/news/" + load);
-    //
   });
 </script>
 
