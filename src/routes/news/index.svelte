@@ -1,3 +1,14 @@
+<script context="module" lang="ts">
+  import { isBrowser } from "$lib/store/states";
+  /** @type {import('@sveltejs/kit').Load} */
+  export async function load({ params }) {
+    const { slug } = params;
+    return {
+      props: { slug, load: isBrowser ? new URL(location.href).searchParams.get("load") : "" },
+    };
+  }
+</script>
+
 <script lang="ts">
   import Icon from "$lib/components/Icon.svelte";
   import Avatar from "$lib/components/user/Avatar.svelte";
@@ -6,8 +17,13 @@
   import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
   import { formatDistance } from "date-fns";
   import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
+
+  export let slug;
+  export let load;
 
   onMount(async () => {
+    if (load) goto("/news/" + load);
     //
   });
 </script>
