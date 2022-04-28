@@ -61,7 +61,7 @@ export default () => {
       CSS_VARIABLES: readCSSVariables(),
       // misc
       NOVEL_COVER_PLACEHOLDERS: Object.keys(NOVELS_METADATA)
-        .slice(0, 10)
+        .slice(0, process.env.MAX_NOVEL_PLACEHOLDER || 10)
         .reduce((placeholder, novel) => {
           const data = readFileSync(`${CACHE_PATH}/assets/publish/${novel}/placeholder.jpeg`);
           placeholder[novel] = `data:image/jpeg;base64,${data.toString("base64")}`;
