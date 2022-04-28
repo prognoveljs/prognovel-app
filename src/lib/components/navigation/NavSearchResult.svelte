@@ -130,10 +130,13 @@
         on:focus
       >
         <div class="content-wrapper">
-          <div
-            class="cover"
-            style="--cover-size: 128px;background: url({novelCoverPlaceholders[novel.id]});"
-          >
+          <div class="cover" style="--cover-size: 128px;">
+            <img
+              src={novelCoverPlaceholders[novel.id]}
+              alt=""
+              aria-hidden="true"
+              class="placeholder"
+            />
             <picture>
               <source
                 srcset={getCoverURLPath(novel.id, { width: 128, height: 128 }, "webp")}
@@ -240,9 +243,24 @@
             background-size: var(--cover-size, 128px) !important;
             background-repeat: no-repeat;
             margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+
+            .placeholder {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: auto;
+              transform: scale(1.1);
+              filter: blur(8px);
+            }
 
             // &:hover:not(:focus),
             picture {
+              position: absolute;
+              top: 0;
+              left: 0;
               border-radius: 2px;
               margin-bottom: 8px;
               width: 100%;
