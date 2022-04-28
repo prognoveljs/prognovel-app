@@ -9,7 +9,6 @@ const IDB_HOMEPAGE_PREFIX = "homepage";
 
 export async function fetchSiteMetadata(): Promise<SiteMetadata> {
   let data: SiteMetadata;
-  console.log(import.meta.env.IS_STATIC_API);
   const url = new URL(import.meta.env.BACKEND_API);
   if (import.meta.env.IS_STATIC_API) url.pathname = "sitemetadata.json";
   try {
@@ -46,7 +45,8 @@ export async function fetchNovelMetadata(id: string): Promise<NovelMetadata> {
   if (import.meta.env.IS_STATIC_API) {
     url.pathname = id + "/metadata.json";
   } else {
-    url.pathname = "novel?name=" + id;
+    url.pathname = "novel";
+    url.searchParams.set("name", id);
   }
   let data: NovelMetadata;
   try {
