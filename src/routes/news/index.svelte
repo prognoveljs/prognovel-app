@@ -71,8 +71,8 @@
       margin-bottom: 1em;
       font-size: 3em;
     }
-    a,
-    section {
+
+    a {
       margin-bottom: 3em;
       padding: 2em;
       text-decoration: none;

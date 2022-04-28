@@ -1,7 +1,10 @@
 import { test, expect } from "@playwright/test";
+import { readFileSync } from "fs";
+
+const siteMetadata = JSON.parse(readFileSync("./cache/assets/publish/sitemetadata.json", "utf-8"));
 
 test("basic test", async ({ page }) => {
-  await page.goto("https://playwright.dev/");
-  const title = page.locator(".navbar__inner .navbar__title");
-  await expect(title).toHaveText("Playwright");
+  await page.goto("http://localhost:3000");
+  const title = page.locator("h1");
+  await expect(title).toHaveText(siteMetadata.title);
 });
