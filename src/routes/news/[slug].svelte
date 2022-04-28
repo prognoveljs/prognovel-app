@@ -139,6 +139,10 @@
     position: relative;
     padding: 0 24px;
 
+    .content {
+      min-height: 35em;
+    }
+
     h1 {
       font-weight: 700;
       font-size: 3em;
