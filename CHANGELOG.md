@@ -1,5 +1,20 @@
 # ProgNovel Changelog
 
+# 0.7.3
+
+- ui: add bookmark page for mobile and tablet
+- ui: adjust bookmark item responsive width and height
+- perf: prefetch highlighted novel in home page
+- perf: prefetch selected/hovered search result
+- perf: improve percieved performance for search result by using low resolution image placeholder
+- ui: add skelethon shell to news page
+- ui: add min-height to news page content before inserting comments
+- fix: bookmark link directing to 404 page
+- fix: 404 api fetch on novel page
+- fix: fix discussions and news page 404 on Netlify and Cloudflare Pages
+- fix: breadcrumb links error due to previous patch
+- fix: discussions page error/locked in undefined thread
+
 # 0.7.2
 
 - perf: allow completely free hosting (not including domain and others) on CDN with hosting backend as static JSON on Cloudflare Pages platform
