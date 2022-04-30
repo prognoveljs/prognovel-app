@@ -11,7 +11,7 @@
   let pending: boolean = false;
   let destination: string;
   $: novel = bookmark ? bookmark.id : "";
-  $: href = `read/${novel}/${destination}`;
+  $: href = `/read/${novel}/${destination}`;
   $: chapterList = $novelsData[novel]?.chapters ?? [];
   $: isLastChapterReached = chapterList.indexOf(destination) === chapterList.length - 1;
   $: isFirstChapter = chapterList.indexOf(destination) === 0;
@@ -65,6 +65,10 @@
     user-select: none;
     margin-bottom: 8px;
     background-color: #fff2;
+
+    @include screen("mobile") {
+      width: 100%;
+    }
 
     .image {
       transform: translateY(-15%);
