@@ -21,11 +21,7 @@
     if (!novel) return;
 
     await fetchNovelMetadata(novel);
-    destination = await getBookmarkLastRead(novel);
-
-    if (!destination) {
-      destination = await getNovelFirstChapter(novel);
-    }
+    destination = (await getBookmarkLastRead(novel)) || (await getNovelFirstChapter(novel));
   });
 </script>
 
@@ -50,12 +46,12 @@
 {/if}
 
 <style lang="scss">
-  $bookmarkItemWidth: 250px;
+  $bookmarkItemWidth: 300px;
   $bookmarkItemHeight: 125px;
 
   article {
-    width: $bookmarkItemWidth;
-    height: $bookmarkItemHeight;
+    width: 100%;
+    height: var(--item-height, $bookmarkItemHeight);
     position: relative;
     overflow: hidden;
     border-radius: 8px;
@@ -65,9 +61,10 @@
     user-select: none;
     margin-bottom: 8px;
     background-color: #fff2;
+    --wrapper-width: 100%;
+    width: 100%;
 
-    @include screen("mobile") {
-      width: 100%;
+    @include screen("tablet") {
     }
 
     .image {
@@ -100,6 +97,7 @@
       opacity: 0;
       transition: all 0.225s ease-out;
       transition-delay: 0.175s;
+      white-space: nowrap;
 
       & * {
         border-radius: 9.5px;
@@ -125,6 +123,20 @@
 
       .title {
         transform: translateY(-40px);
+      }
+    }
+
+    @include screen("tablet") {
+      .reading {
+        transform: translateY(0);
+        opacity: 1;
+        transition-delay: 0;
+      }
+    }
+
+    @include screen("mobile") {
+      .title {
+        font-size: 28px;
       }
     }
   }

@@ -33,7 +33,8 @@
 <div
   class="book-cover image {size}"
   class:isNovelPageCover
-  style="--width: {width};--aspect-ratio: {NOVEL_COVER_ASPECT_RATIO}; {width === '100%'
+  style="--width: var(--wrapper-width, {width});--aspect-ratio: {NOVEL_COVER_ASPECT_RATIO}; {width ===
+  '100%'
     ? '--padding-top:' + height + ';height:0;'
     : 'height: ' + height}"
 >

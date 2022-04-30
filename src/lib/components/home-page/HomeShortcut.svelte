@@ -3,7 +3,7 @@
   import HistorySection from "./shortcut/History.svelte";
   import type { Bookmark } from "$typings";
 
-  export let bookmarkData: Bookmark[];
+  export let bookmarkData: Bookmark[] = null;
   let select = "bookmark";
   $: translateX = select === "bookmark" ? "0" : "calc(var(--shortcut-width) * -1)";
 </script>
@@ -51,7 +51,9 @@
     overflow-x: hidden;
 
     @include screen("tablet") {
-      display: none;
+      display: var(--display, none);
+      --shortcut-width: 100vw;
+      height: 100vh;
     }
 
     :global(html.light) & {
@@ -116,9 +118,18 @@
   }
 
   article {
+    --padding: 0;
     display: flex;
     width: calc(var(--shortcut-width) * 2);
     transition: transform 0.325s ease-in-out;
+
+    @include screen("tablet") {
+      --padding: 24px;
+    }
+
+    @include screen("mobile") {
+      --padding: 12px;
+    }
 
     :global(section) {
       width: var(--shortcut-width);
