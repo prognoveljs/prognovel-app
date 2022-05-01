@@ -37,15 +37,25 @@
   }}
 />
 
-<section class="input" class:isMobile>
+<section class:isMobile>
   <div class="side-overlay" />
-  <input
-    on:blur={onBlur}
-    bind:this={input}
-    placeholder={isMobile ? "Search novels" : "Press / to search novels"}
-    bind:value={search}
-    type="text"
-  />
+  <div class="input-wrap">
+    <input
+      on:blur={onBlur}
+      bind:this={input}
+      bind:value={search}
+      class:active={search}
+      type="text"
+    />
+    <span class="placeholder">
+      {#if isMobile}
+        <!-- content here -->
+        Search novels
+      {:else}
+        Press <kbd>/</kbd> to search novels
+      {/if}
+    </span>
+  </div>
   <span class="icon">
     <IconSvg --color="#0006" data={searchIcon} />
   </span>
@@ -56,7 +66,7 @@
 
 <style lang="scss">
   $coverSize: 2em;
-  .input {
+  section {
     height: var(--header-height);
     display: flex;
     align-items: center;
@@ -75,43 +85,107 @@
       }
     }
 
-    input {
-      height: 60%;
-      width: 400px;
-      border-radius: 4px;
-      padding: 0.5em;
-      padding-left: 2em;
-      font-size: 1.4em;
-      margin-right: 1em;
-      box-sizing: border-box;
-      font-family: "Courier New", Courier, monospace;
-      // transform: translateX(150px);
-      // transition: all 0.3s ease-in-out;
-      border: 2px solid transparent;
-      box-shadow: 0 2px gray;
+    .input-wrap {
+      display: flex;
+      contain: content;
+      input {
+        height: 60%;
+        border-radius: 4px;
+        padding: 0.25em;
+        padding-left: 2em;
+        font-size: 1.2em;
+        margin-right: 1em;
+        box-sizing: border-box;
+        // font-family: "Courier New", Courier, monospace;
+        // transform: translateX(150px);
+        // transition: all 0.3s ease-in-out;
+        border: 2px solid transparent;
+        box-shadow: 0 2px gray;
+        transform: translateZ(0);
+        width: 300px;
+        transition: width 0.175s ease-out;
 
-      @include screen("tablet") {
-        width: 270px;
+        &::placeholder {
+          opacity: 0.6;
+        }
+
+        &:before {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          z-index: 19;
+          display: block;
+        }
+
+        &:focus,
+        &:active {
+          outline: none;
+          border-color: var(--primary-color);
+        }
+
+        &.active,
+        &:focus,
+        &:active {
+          & ~ .placeholder {
+            display: none;
+          }
+
+          @include screen("tablet") {
+            @media only screen and (min-width: 768px) {
+              width: 340px;
+            }
+          }
+
+          @include screen("desktop") {
+            width: 400px;
+          }
+        }
+
+        @include screen("tablet") {
+          width: 290px;
+        }
+        @include screen("mobile") {
+          width: 70vw;
+        }
       }
 
-      &:before {
-        content: "";
+      .placeholder {
         position: absolute;
-        left: 0;
-        bottom: 0;
-        z-index: 19;
-        display: block;
+        top: 52%;
+        left: 2.175em;
+        font-size: 1.2em;
+        transform: translateY(-50%);
+        color: #000a;
+        pointer-events: none;
+
+        kbd {
+          padding: 0 8px;
+          border-radius: 4px;
+          border: 1px solid #000a;
+          background-color: #0002;
+          box-shadow: 2px 2px #0003;
+        }
       }
 
-      &:focus,
-      &:active {
-        outline: none;
-        border-color: var(--primary-color);
-      }
-    }
+      @include screen("mobile") {
+        input {
+          padding-left: 2.25em;
+        }
 
-    &:focus :global(path) {
-      color: var(--primary-color) !important;
+        .placeholder {
+          left: 2.25em;
+        }
+      }
+      @include screen("small-mobile") {
+        input {
+          padding-left: 2.6em;
+        }
+
+        .placeholder {
+          left: 2.6em;
+        }
+      }
     }
 
     .side-overlay {
