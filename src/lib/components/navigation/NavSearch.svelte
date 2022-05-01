@@ -8,6 +8,7 @@
 
   import { frameTick } from "$lib/utils/animation";
   import NavSearchResult from "./NavSearchResult.svelte";
+  import { SITE_TITLE } from "$lib/_setting";
 
   export let isMobile: boolean = false;
   let search: string;
@@ -34,6 +35,7 @@
 <svelte:window
   on:keyup={(e) => {
     if (e.key === "/") input.focus();
+    if (e.key === "Escape" && document.activeElement === input) input.blur();
   }}
 />
 
@@ -45,6 +47,7 @@
       bind:this={input}
       bind:value={search}
       class:active={search}
+      placeholder="Search novels in {SITE_TITLE}"
       type="text"
     />
     <span class="placeholder">
@@ -106,7 +109,7 @@
         transition: width 0.175s ease-out;
 
         &::placeholder {
-          opacity: 0.6;
+          opacity: 0;
         }
 
         &:before {
@@ -129,6 +132,10 @@
         &:active {
           & ~ .placeholder {
             display: none;
+          }
+
+          &::placeholder {
+            opacity: 1;
           }
 
           @include screen("tablet") {

@@ -2,6 +2,10 @@
 
 # 0.7.3
 
+- ux: allow blur nav search on Esc key when no value entered
+- ui: animate nav search on focus
+- ui: change search font-family, add style to key
+- ui: improve nav search width on responsively across devices
 - ui: add bookmark page for mobile and tablet
 - ui: adjust bookmark item responsive width and height
 - perf: prefetch highlighted novel in home page
