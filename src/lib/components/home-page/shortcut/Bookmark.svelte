@@ -20,8 +20,6 @@
       <div class="grid-item">
         {#each bookmarks as bookmark}
           <BookmarkItem {bookmark} />
-          <BookmarkItem {bookmark} />
-          <BookmarkItem {bookmark} />
         {/each}
       </div>
       {#if showHelp}
