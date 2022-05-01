@@ -4,11 +4,13 @@ import type { Color } from "$typings";
 
 export const rewriteHTML = async (response: Response, preload = {}) => {
   try {
+    console.time("sw-indexeddb-fetch");
     let [darkMode, primaryColor, novelListDisplay] = await Promise.all([
       get("darkMode"),
       get("primary-color"),
       get("novel-list-display"),
     ]);
+    console.timeEnd("sw-indexeddb-fetch");
     // let darkMode: boolean | undefined = (await get("darkMode")) ?? true;
     // let primaryColor: Color | undefined = await get("primary-color");
     if (darkMode === undefined) darkMode = true;
@@ -17,6 +19,7 @@ export const rewriteHTML = async (response: Response, preload = {}) => {
 
     // TODO - process HTML prerender in stream
 
+    console.time("html-rewrite");
     let html = new Response(
       (await response.text())
         .replace(`<html`, `<html` + isDarkMode(darkMode))
@@ -27,14 +30,15 @@ export const rewriteHTML = async (response: Response, preload = {}) => {
         .replace(
           "</head>",
           `${appendPreload(preload)}
-          ${
-            novelListDisplay ? `<meta name="novel-list-display" content="${novelListDisplay}">` : ""
-          }</head>`,
+        ${
+          novelListDisplay ? `<meta name="novel-list-display" content="${novelListDisplay}">` : ""
+        }</head>`,
         ),
       {
         headers: { "Content-Type": "text/html" },
       },
     );
+    console.timeEnd("html-rewrite");
     console.timeEnd("Service worker HTML prerender");
     return html;
   } catch (err) {

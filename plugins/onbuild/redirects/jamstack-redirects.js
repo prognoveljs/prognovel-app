@@ -14,6 +14,12 @@ if (BACKEND_API.endsWith("/")) BACKEND_API.slice(0, -1);
 writeFileSync(
   redirectsFile,
   `${process.env.NETLIFY ? "/read/* /read?load=:splat" : "/read/:slug /read?load=:slug"}
+${
+  process.env.NETLIFY
+    ? "/discussions/* /discussions?load=:splat"
+    : "/discussions/:slug /discussions?load=:slug"
+}
+${process.env.NETLIFY ? "/news/* /news?load=:splat" : "/news/:slug /news?load=:slug"}
 /feed/* ${BACKEND_API}feed?novel=:splat 200
 /chapter-list/* ${BACKEND_API}chapter-list?novel=:splat 200
 `,

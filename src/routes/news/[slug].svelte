@@ -18,6 +18,7 @@
   import { page } from "$app/stores";
   import Disqus from "$lib/components/comments/disqus/Disqus.svelte";
   import Icon from "$lib/components/Icon.svelte";
+  import SkeletonShell from "$lib/components/SkeletonShell.svelte";
   import Avatar from "$lib/components/user/Avatar.svelte";
   import { newsData } from "$lib/store/news-page";
   import { isBrowser, siteMetadata } from "$lib/store/states";
@@ -26,21 +27,40 @@
 
   export let slug;
   $: data = $newsData.find((news) => news.id === slug);
+  // $: data = null;
   $: hasDisqus = Boolean($siteMetadata?.disqus_id);
+  const SKELETON_SHELL_RANDOM_WIDTH = [40, 20, 60, 30];
 </script>
 
 <svelte:head>
-  <title>{data?.title} | {SITE_TITLE}</title>
+  <title>{data?.title || "Loading..."} | {SITE_TITLE}</title>
 </svelte:head>
 
 <article>
-  <h1>{data?.title}</h1>
+  {#if data}
+    <h1>{data?.title}</h1>
+  {:else}
+    <SkeletonShell primaryColor="#EBECEF99" secondaryColor="#F5F5F7aa" height="50px">
+      <rect width="70%" height="3em" x="0" y="0" rx="4" ry="4" />
+    </SkeletonShell>
+  {/if}
   <div class="cover">
     <!-- <img src="" alt="" /> -->
     <div class="author">
       <Avatar size={42} email={data?.author?.email} />
       <div>
-        {data?.author?.name}
+        {#if data}
+          <!-- content here -->
+          {data?.author?.name}
+        {:else}
+          <SkeletonShell
+            width="100px"
+            primaryColor="hsla(var(--primary-color-h), 60%,60%,.4)"
+            secondaryColor="hsla(var(--primary-color-h), 40%,70%,.8)"
+          >
+            <rect width="100px" height="1em" x="0" y="0" rx="4" ry="4" />
+          </SkeletonShell>
+        {/if}
       </div>
     </div>
     <div class="share">
@@ -87,7 +107,25 @@
     </div>
   </div>
   <div class="content">
-    {@html data?.content}
+    {#if data}
+      <!-- content here -->
+      {@html data?.content}
+    {:else}
+      {#each Array(4).fill(0) as shells, width}
+        <SkeletonShell primaryColor="#EBECEF55" secondaryColor="#F5F5F766" height="9em">
+          {#each Array(4).fill(0) as svg, i}
+            <rect
+              width={(i + 1) % 4 === 0 ? SKELETON_SHELL_RANDOM_WIDTH[width] + "%" : "100%"}
+              height="1.35em"
+              x="0"
+              y="{i * 2}em"
+              rx="4"
+              ry="4"
+            />
+          {/each}
+        </SkeletonShell>
+      {/each}
+    {/if}
   </div>
   {#if hasDisqus && browser}
     <Disqus src={$siteMetadata.disqus_id} identifier="news/{slug}" />
@@ -101,9 +139,16 @@
     position: relative;
     padding: 0 24px;
 
+    .content {
+      min-height: 35em;
+    }
+
     h1 {
       font-weight: 700;
       font-size: 3em;
+      margin: 0;
+      height: 50px;
+      display: block;
     }
 
     .cover {
@@ -119,13 +164,17 @@
         flex-direction: column;
         align-items: end;
         position: absolute;
+        height: 4em;
+        justify-content: space-between;
         gap: 8px;
         top: 48px;
-        left: -86px;
+        right: calc(100%);
         font-size: 1.2em;
-        font-weight: 700;
+        // font-weight: 700;
         // font-family: "Courier New", Courier, monospace;
         color: var(--primary-color-lighten-3);
+        width: max-content;
+        white-space: normal;
       }
 
       .share {

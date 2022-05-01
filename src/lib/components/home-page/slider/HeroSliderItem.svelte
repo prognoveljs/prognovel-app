@@ -1,7 +1,6 @@
 <script lang="ts">
   import { scale } from "svelte/transition";
-  import { goto } from "$app/navigation";
-  import { getCoverURLPath } from "$lib/utils/images";
+  import { goto, prefetch } from "$app/navigation";
   import {
     novelCoverPlaceholders,
     novelCoverSubtitle,
@@ -18,7 +17,9 @@
   export let data: any;
   let node;
 
-  onMount(async () => {});
+  onMount(async () => {
+    prefetch("/novel/" + novel);
+  });
 </script>
 
 <div

@@ -11,11 +11,11 @@
   import ReadPageHeader from "./MenuReadPageHeader.svelte";
   import Icon from "$lib/components/Icon.svelte";
   import {
+    faBookmark,
     faChevronRight,
     faCog,
     faCogs,
     faComment,
-    faCompass,
     faFileDownload,
     faFont,
     faGlobe,
@@ -50,8 +50,8 @@
       <a class:active={!$showSettings && $path === "/"} href="/"
         ><Icon icon={faHome} /><small>Home</small>
       </a>
-      <a class:active={!$showSettings && $path.startsWith("/novel")} href="/novel"
-        ><Icon icon={faCompass} /><small>Explore</small>
+      <a class:active={!$showSettings && $path.startsWith("/bookmark")} href="/bookmark"
+        ><Icon icon={faBookmark} /><small>Bookmark</small>
       </a>
       <a class:active={!$showSettings && $path.startsWith("/discussions/")} href="/discussions/all"
         ><Icon icon={faGlobe} /><small>Community</small>

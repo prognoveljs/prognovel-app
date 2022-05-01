@@ -4,18 +4,17 @@
   /** @type {import('@sveltejs/kit').Load} */
   export async function load({ params }) {
     const { novel } = params;
-    return { novel };
+    return { props: { novel } };
   }
 </script>
 
 <script lang="ts">
   import { siteMetadata, isBrowser } from "$lib/store/states";
-  import { getNovelBookCoverSrc, novelTitles } from "$lib/utils/novel-page";
+  import { getNovelBookCoverSrc, novelList, novelTitles } from "$lib/utils/novel-page";
   import Comments from "$lib/components/comments/disqus/Disqus.svelte";
   import NoDisqus from "./_NoDisqus.svelte";
   import { SITE_TITLE } from "$lib/_setting";
-  $: novels = $siteMetadata?.novels ?? [];
-  // $: novels = ["yashura-legacy", "yashura-legacy", "yashura-legacy"];
+
   $: hasDisqus = Boolean($siteMetadata?.disqus_id);
   const GENERAL_SLUG = "all";
 
@@ -33,7 +32,7 @@
         <a class="general" href="/discussions/all" class:selected={novel === GENERAL_SLUG}>
           <strong>General</strong></a
         >
-        {#each novels as novelID}
+        {#each novelList as novelID}
           <a
             style="--bg: {getNovelBookCoverSrc(novelID)};"
             href="/discussions/{novelID}"
@@ -42,7 +41,7 @@
             <img src={getNovelBookCoverSrc(novelID)} alt={novelTitles[novelID]} />
             <div class="metadata">
               <strong>
-                {novelTitles[novelID] || ""}
+                {novelTitles?.[novelID] || ""}
               </strong>
             </div>
           </a>
