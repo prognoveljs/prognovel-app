@@ -45,10 +45,10 @@ ProgNovel works best when hosted on Jamstack platforms for performance and effie
 
      To setup a Static API for ProgNovel is simple; you need to upload your ProgNovel project to a Github repository and connect it from Cloudflare Pages dashboard. Create a new repo via [repo.new](https://repo.new/), and connect it with Cloudflare Pages with these settings:
 
-     ```md
-     **Production branch:** main
-     **Build command:** npm run build
-     **Build output directory:** /.publish
+     ```
+     PRODUCTION BRANCH: main
+     BUILD COMMAND: npm run build
+     BUILD OUTPUT DIRECTORY: /.publish
      ```
 
      **NOTE:** _note that all content hosted statically will be available their raw `.json` file to the public, so its possible to see content behind locked chapter via browsers' dev tools if you use Static API backend._
