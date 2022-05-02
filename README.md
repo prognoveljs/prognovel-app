@@ -37,9 +37,9 @@ ProgNovel works best when hosted on Jamstack platforms for performance and effie
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/prognoveljs/prognovel-app)
 
 1. You need to get your backend for ProgNovel where the content is hosted. For that you need to setup a local project of ProgNovel first by installing ProgNovel CLI to your computer. Follow [how to get your first content published with ProgNovel CLI here](https://github.com/prognoveljs/prognovel-cli).
-2. Assuming that you already have a ready project with novels and settings already configured and filled with content chapters, it's time to upload your content to a backend for ProgNovel to serve readers all around the world.
+2. Assuming that you already have a ready project with novels and settings already configured and filled with content chapters, it's time to upload your content to a backend for ProgNovel to serve readers all around the world. You can choose how you host your backend between of the statically and dynamically:
 
-   - Host content with a Static API backend
+   - Host content with a Static API backend (Recommended)
 
      Hosting this way will make your backend behaves like a pseudo pre-built websites, but host `.json` files instead of `.html` files. The only platform to host ProgNovel Static API right now is Cloudflare Pages, chosen due to its global wide CDN network and price-wise has unlimited bandwidth even for its free-tier--meaning, you can setup your website for free and forget about it for years and it will still online, no matter how much traffic it takes.
 
