@@ -113,6 +113,8 @@
   <article>...</article>
 {/if}
 
+<div class="backdrop" />
+
 <style lang="scss">
   @import "style";
 </style>

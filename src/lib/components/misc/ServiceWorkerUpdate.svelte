@@ -1,10 +1,28 @@
 <script lang="ts">
+  import { browser, dev } from "$app/env";
   import { onMount } from "svelte";
   import { fly } from "svelte/transition";
+  import IconSVG from "$lib/components/IconSVG.svelte";
+  import reloadIcon from "$lib/assets/feather-icons/refresh-cw.svg?raw";
 
   let show;
   let count;
   let progress = 0;
+  let reloadLabelElement: HTMLElement;
+  const MOBILE_BANNER_HEIGHT = "24px";
+
+  let hasFired = false;
+  $: if (show && !hasFired) {
+    hasFired = true;
+    if (browser) {
+      document
+        .querySelector("body")
+        .style.setProperty("--mobile-menu-offset-y", MOBILE_BANNER_HEIGHT);
+      document
+        .querySelector("body")
+        .style.setProperty("--mobile-menu-sw-transition", "transform .425s ease-in");
+    }
+  }
 
   onMount(async () => {
     const broadcast = new BroadcastChannel("service-worker");
@@ -22,6 +40,12 @@
 
     await new Promise((resolve) => setTimeout(resolve, 5 * 1000));
     if (!show) checkServiceWorkerUpdate();
+
+    if (dev) {
+      // show = "install";
+      // await new Promise((resolve) => setTimeout(resolve, 2 * 1000));
+      // show = "activate";
+    }
   });
 
   function checkServiceWorkerUpdate() {
@@ -34,7 +58,13 @@
     if (show !== "activate") return;
     window.location.reload();
   }
+
+  function tapLabel() {
+    return browser ? getComputedStyle(reloadLabelElement).getPropertyValue("--tap") : "click";
+  }
 </script>
+
+<div class="label" bind:this={reloadLabelElement} />
 
 {#if show}
   {#if show === "install"}
@@ -70,7 +100,8 @@
       on:click={refresh}
       class="reload"
     >
-      update available - please reload
+      <IconSVG size="1.25em" style="margin-right: 8px" data={reloadIcon} />
+      update available - {tapLabel()} to reload
     </article>
   {/if}
 {/if}
@@ -90,10 +121,31 @@
     text-align: center;
     padding: 8px;
     user-select: none;
+    contain: layout;
 
     &.reload {
-      background: var(--primary-color);
-      cursor: $zIndex + 1;
+      background: hsla(#{$hsl}, 0.4);
+      backdrop-filter: blur(14px);
+      cursor: pointer;
+    }
+
+    @include screen("small-tablet") {
+      transition: var(--mobile-menu-sw-transition, none);
+      transform: translateY(calc(var(--mobile-menu-offset-y, 0) * -1));
+      bottom: calc(var(--mobile-menu-offset-y, 0) * -1);
+      height: var(--mobile-menu-offset-y);
+
+      &.reload {
+        height: calc(var(--mobile-menu-offset-y) + var(--mobile-menu-height));
+      }
+    }
+  }
+
+  .label {
+    --tap: click;
+
+    @include screen("small-tablet") {
+      --tap: tap;
     }
   }
 </style>
