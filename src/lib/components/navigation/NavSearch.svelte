@@ -47,7 +47,7 @@
       bind:this={input}
       bind:value={search}
       class:active={search}
-      placeholder="Search novels in {SITE_TITLE}"
+      placeholder="Search novels in {SITE_TITLE}..."
       type="text"
     />
     <span class="placeholder">
