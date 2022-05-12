@@ -3,6 +3,8 @@
 # 0.7.4
 
 - ui: enable opt-in new header for installed PWA
+- ui: slight adjustment to search placeholder
+- ui: new Service Worker update UI for future releases
 
 # 0.7.3
 
