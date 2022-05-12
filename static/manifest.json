@@ -1,9 +1,11 @@
 {
 	"background_color": "#ffffff",
-	"theme_color": "#333333",
 	"name": "ProgNovel",
 	"short_name": "prognovel",
 	"display": "standalone",
+	"display_override": [
+		"window-controls-overlay"
+	],
 	"start_url": "/",
 	"icons": [
 		{

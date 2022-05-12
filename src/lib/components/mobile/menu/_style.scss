@@ -1,3 +1,5 @@
+$zIndex: 9999;
+
 article {
   display: none;
   grid-gap: 0 4px;
@@ -12,7 +14,9 @@ article {
   background-color: var(--foreground-color);
   box-shadow: 0 -4px 6px 12px #0001, 0 -2px 3px #0003;
   z-index: 9999;
-  
+  transform: translateY(calc(var(--mobile-menu-offset-y,0) * -1));
+  transition: var(--mobile-menu-sw-transition, none);
+
   a,
   button {
     text-decoration: none;
@@ -48,6 +52,8 @@ article {
       }
     }
   }
+
+  
   
   @include screen("small-tablet") {
     padding: 0 20%;
@@ -63,10 +69,20 @@ article {
   }
 }
 
-.float {
+.float,.backdrop {
   display: none;
 
   @include screen("small-tablet") {
     display: block;
   }
+}
+
+.backdrop {
+  position: fixed;
+  bottom:0;
+  left:0;
+  width: 100%;
+  height: var(--mobile-menu-height, 50px);
+  background-color: var(--foreground-color);
+  z-index: $zIndex - 1;
 }

@@ -47,7 +47,7 @@
       bind:this={input}
       bind:value={search}
       class:active={search}
-      placeholder="Search novels in {SITE_TITLE}"
+      placeholder="Search novels in {SITE_TITLE}..."
       type="text"
     />
     <span class="placeholder">
@@ -74,6 +74,8 @@
     display: flex;
     align-items: center;
     position: relative;
+    -webkit-app-region: no-drag;
+    app-region: no-drag;
 
     .icon {
       font-size: 1.7em;
@@ -90,7 +92,7 @@
 
     .input-wrap {
       display: flex;
-      contain: content;
+
       input {
         height: 60%;
         border-radius: 4px;
@@ -107,6 +109,7 @@
         transform: translateZ(0);
         width: 300px;
         transition: width 0.175s ease-out;
+        contain: content;
 
         &::placeholder {
           opacity: 0;

@@ -87,6 +87,8 @@
     height: var(--header-height);
     user-select: none;
     overflow: hidden;
+    -webkit-app-region: no-drag;
+    app-region: no-drag;
 
     * {
       white-space: nowrap;
