@@ -1,5 +1,9 @@
 # ProgNovel Changelog
 
+# 0.7.4
+
+- ui: enable opt-in new header for installed PWA
+
 # 0.7.3
 
 - ux: allow blur nav search on Esc key when no value entered

@@ -18,6 +18,8 @@
   import { appStart } from "$lib/utils/app-start";
   // import "carbon-components-svelte/css/g90.css";
   import "@skeleton-elements/svelte/skeleton-elements.css";
+  import PwaHeader from "$lib/components/pwa/PWAHeader.svelte";
+  import { browser } from "$app/env";
 
   $: $currentPage = $page;
   $: $currentNovel = FORBIDDEN_NOVEL_ID.includes($page?.params?.novel)
@@ -41,6 +43,17 @@
   });
 </script>
 
+<!-- 
+<svelte:head>
+  {#if !browser || !("windowControlsOverlay" in navigator)}
+    <meta name="theme-color" content="#333" />
+  {:else if document.querySelector("html").classList.contains("light")}
+    <meta name="theme-color" content="#fff" />
+  {:else}
+    <meta name="theme-color" content="#444" />
+  {/if}
+</svelte:head> -->
+
 <Nav />
 <Sidebar />
 
@@ -57,6 +70,7 @@
 <ServiceWorkerUpdate />
 <Analytics />
 <MobileMenuBase />
+<PwaHeader />
 
 <style lang="scss">
   // @import "../../style/cssVariables.scss";

@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <link id="carbon-css" rel="stylesheet" href="/style/carbon-css/g90.css" media="print" onload="this.media='all'" /> -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#444" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="description" content="The next generation web novel platform for all." />
+    <!-- <link rel="preload" as="font" href="/fonts/Roboto-Regular-preload.woff2" crossorigin> -->
+    <link rel="preload" as="font" href="/fonts/Roboto-Bold-preload.woff2" crossorigin />
+    <link href="https://cdn.jsdelivr.net" rel="preconnect" crossorigin />
+    <link
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+      href="https://cdn.jsdelivr.net/npm/carbon-components-svelte/css/g90.css"
+    />
+    %svelte.head% %css%
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#333333" />
-  <!-- <link id="carbon-css" rel="stylesheet" href="/style/carbon-css/g90.css" media="print" onload="this.media='all'" /> -->
-  <link rel="manifest" href="/manifest.json" />
-  <link rel="icon" type="image/png" href="/favicon.png" />
-  <meta name="description" content="The next generation web novel platform for all." />
-  <!-- <link rel="preload" as="font" href="/fonts/Roboto-Regular-preload.woff2" crossorigin> -->
-  <link rel="preload" as="font" href="/fonts/Roboto-Bold-preload.woff2" crossorigin />
-  <link href="https://cdn.jsdelivr.net" rel="preconnect" crossorigin>
-  <link rel="stylesheet" media="print" onload="this.media='all'" href="https://cdn.jsdelivr.net/npm/carbon-components-svelte/css/g90.css">
-  %svelte.head%
-  %css%
-</head>
-
-<body style="
+  <body
+    style="
       background-color: var(--background-color);
       transition: background-color 0.06s ease-in-out;
       width: 100%;
-    ">
-  %svelte.body%
-  %css.lazy%
-</body>
-
+    "
+  >
+    %svelte.body% %css.lazy%
+  </body>
 </html>

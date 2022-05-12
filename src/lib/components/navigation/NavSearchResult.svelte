@@ -181,6 +181,7 @@
     padding: 1em;
     width: $resultWidth;
     max-width: 100%;
+    // contain: content;
 
     em {
       display: flex;
