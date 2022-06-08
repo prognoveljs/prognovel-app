@@ -46,6 +46,7 @@
     }
 
     .item {
+      --overlay-color: #0006;
       a {
         display: grid;
         grid-template-columns: 64px minmax(0, 4fr) 1fr 1fr;
@@ -68,20 +69,6 @@
       border: 2px solid var(--primary-color-lighten-2);
       transform-origin: bottom center;
 
-      // .number {
-      //   display: flex;
-      //   align-items: center;
-      //   font-size: 1.4em;
-      //   font-weight: 300;
-      //   line-height: 1;
-      //   gap: 8px;
-
-      //   * {
-      //     display: flex;
-      //     align-items: center;
-      //   }
-      // }
-
       h3 {
         -webkit-backface-visibility: hidden;
         -moz-backface-visibility: hidden;
@@ -100,11 +87,15 @@
       }
 
       .subtitle {
+        --opacity: 0.6;
         width: max-content;
         span {
           $delay-factor: 0.225s;
           transition: all 0.3s calc(var(--delay) * #{$delay-factor}) ease-in;
-          opacity: 0.6;
+          opacity: var(--opacity);
+        }
+        :global(html.light) & {
+          --opacity: 0.8;
         }
       }
 
@@ -116,10 +107,17 @@
         bottom: 0;
         width: 100%;
         height: $height;
-        background: linear-gradient(to top, #0006, #0000);
+        background: linear-gradient(to top, var(--overlay-color), #0000);
         transition: all 0.3s ease-out;
         z-index: calc(var(--index));
         pointer-events: none;
+      }
+      :global(html.light) & {
+        --overlay-color: #0003;
+
+        h3 {
+          color: #000a;
+        }
       }
 
       @include screen("small-desktop") {
@@ -132,7 +130,7 @@
           filter: grayscale(0);
           transform: scale(1.0125);
           h3 {
-            color: var(--primary-color-lighten-2);
+            color: var(--primary-color-lighten-2) !important;
           }
 
           & ~ .item {

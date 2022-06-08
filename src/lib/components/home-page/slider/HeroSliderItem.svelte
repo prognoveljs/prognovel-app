@@ -141,11 +141,21 @@
         }
       }
 
-      :global(p) {
-        margin-top: 0;
-        margin-bottom: 1.4em;
-        font-size: 1em;
+      :global {
+        p {
+          margin-top: 0;
+          margin-bottom: 1.4em;
+          font-size: 1em;
+        }
+        html.light & {
+          color: #fffc;
+
+          h2 {
+            color: #fffe;
+          }
+        }
       }
+
       @include screen("mobile") {
         text-align: center;
         font-size: 14px;

@@ -97,6 +97,7 @@
         display: inline-flex;
         align-items: center;
         max-width: 440px;
+        border: 2px solid transparent;
 
         &:hover {
           --alpha: 0.2;
@@ -124,6 +125,11 @@
         color: hsl(var(--primary-color-h), var(--primary-color-s), var(--text-lightness));
         text-underline-offset: 2px;
         text-decoration-thickness: 0.5px;
+        border-color: var(--primary-color-lighten-3);
+
+        :global(html.light) & {
+          --text-lightness: 47%;
+        }
 
         &:hover {
           --shadow-color: #0002;

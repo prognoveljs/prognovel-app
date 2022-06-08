@@ -137,6 +137,12 @@
         background-color: var(--primary-color);
         opacity: 0.7;
       }
+
+      :global {
+        html.light & {
+          font-weight: 700;
+        }
+      }
     }
 
     .options {
