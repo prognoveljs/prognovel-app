@@ -152,6 +152,10 @@
 
   .email-address {
     color: hsl(calc(var(--primary-color-h) + 17), var(--primary-color-s), 71%);
+
+    :global(html.light) & {
+      color: hsl(calc(var(--primary-color-h) + 4), var(--primary-color-s), 42%);
+    }
     // text-decoration: underline;
     // text-decoration-line: line-through;
     // text-decoration-skip-ink: unset;

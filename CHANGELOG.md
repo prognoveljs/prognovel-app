@@ -1,5 +1,9 @@
 # ProgNovel Changelog
 
+# 0.7.5
+
+- ui: light theme fix colors being broken on home page
+
 # 0.7.4
 
 - ui: enable opt-in new header for installed PWA

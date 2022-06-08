@@ -36,6 +36,12 @@
           text-decoration-thickness: 8px;
           text-decoration-color: var(--primary-color);
         }
+
+        :global {
+          html.light & {
+            color: #fffd;
+          }
+        }
       }
     }
 

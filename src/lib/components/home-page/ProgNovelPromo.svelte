@@ -106,6 +106,10 @@
     width: 100%;
     margin-top: 3em;
 
+    :global(html.light) & {
+      --bg-color: #0001;
+    }
+
     @include screen("tablet") {
       padding: 0;
     }

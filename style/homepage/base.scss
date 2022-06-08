@@ -55,17 +55,32 @@ h1 {
     // overflow-x: auto;
     width: auto;
     padding: var(--padding-top) var(--padding-side) var(--padding-bottom) var(--padding-side);
-    
+
     &::before {
+      --color1: var(--primary-color-lighten-2);
+      --color2: var(--background-color);
+      --color3: var(--background-color);
       $size: 40%;
-      content:'';
+      content: "";
       position: absolute;
       width: 100% + $size;
       height: 100% + $size;
       top: $size / -2;
       left: $size / -2;
       z-index: -1;
-      background: radial-gradient(circle at top , var(--primary-color-lighten-2) 0%,  var(--background-color) 70%);
+      background: radial-gradient(
+        circle at top,
+        var(--color1) 0%,
+        var(--color2) 70%,
+        var(--color3) 100%
+      );
+
+      :global {
+        html.light & {
+          --color1: var(--primary-color-darken-2);
+          // --color2: var(--primary-color-lighten-4);
+        }
+      }
     }
   }
 

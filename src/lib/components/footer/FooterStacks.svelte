@@ -48,6 +48,10 @@
       text-decoration-skip-ink: none;
       text-decoration-thickness: 0.3em;
       text-decoration-color: hsla(var(--primary-color-h), 55%, 33%, 0.9);
+
+      :global(html.light) & {
+        text-decoration-color: hsla(var(--primary-color-h), 55%, 66%, 0.4);
+      }
     }
   }
 
