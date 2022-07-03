@@ -1,5 +1,9 @@
 # ProgNovel Changelog
 
+# 0.7.6
+
+- fix: Fix endless loop on reload / redirect
+
 # 0.7.5
 
 - ui: light theme fix colors being broken on home page
