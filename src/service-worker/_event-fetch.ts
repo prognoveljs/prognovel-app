@@ -28,7 +28,7 @@ async function openCache(event: FetchEvent, whichCache: string): Promise<Respons
 }
 
 async function offlineResponse(event: FetchEvent, cache: Cache): Promise<Response | null> {
-  const path = new URL(event.request.url).pathname;
+  const url = new URL(event.request.url);
   const requestInfo: RequestInfo = await normalizeURL(event.request);
 
   let offlineResponse: Response = await cache.match(requestInfo);
@@ -44,8 +44,9 @@ async function offlineResponse(event: FetchEvent, cache: Cache): Promise<Respons
       return offlineResponse;
     }
   } else {
-    if (pageNotPrerendered.includes(path.split("/")[1])) {
-      return await redirect(path);
+    if (pageNotPrerendered.includes(url.pathname.split("/")[1]) && !url.searchParams.get("load")) {
+      console.log(url.pathname);
+      return redirect(url);
     }
   }
 

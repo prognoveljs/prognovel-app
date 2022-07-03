@@ -17,8 +17,8 @@
   export let novel;
 
   onMount(async () => {
-    console.log("🚀 redirecting to", load);
-    load = novel ? "/discussions/" + load : "/";
+    load = "/discussions/" + load;
+    console.log("🚀 redirecting to", novel, load);
     goto(load);
   });
 </script>
