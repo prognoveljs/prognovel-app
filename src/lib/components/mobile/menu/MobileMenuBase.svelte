@@ -109,11 +109,10 @@
       <ReadPageHeader />
     {/if}
   </div>
+  <div class="backdrop" />
 {:else if $menuState === MenuState.Loading}
   <article>...</article>
 {/if}
-
-<div class="backdrop" />
 
 <style lang="scss">
   @import "style";

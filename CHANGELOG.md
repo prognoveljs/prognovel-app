@@ -1,5 +1,12 @@
 # ProgNovel Changelog
 
+# 0.7.7
+
+- ui: novel cover header now loads image with better resolution on top of low res placeholder
+- ui(read page): fix stuck floating menu bar container when it supposed to be hidden
+- ui(read page): center floating chapter navigation on tablet
+- ui(read page): fix "undefined" label on floating chapter navigation when loading chapter
+
 # 0.7.6
 
 - fix: Fix endless loop on reload / redirect
