@@ -12,7 +12,8 @@ export interface Chapter {
   contributors: {
     [role: string]: Array<{
       name: string;
-      paymentPointer?: string;
+      payment?: string;
+      email?: string;
     }>;
   };
 }
