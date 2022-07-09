@@ -4,9 +4,9 @@
   import StatsStaff from "./novel-stats/StatsStaff.svelte";
 </script>
 
-<SectionHeader>Novel Stats</SectionHeader>
+<SectionHeader>This chapter brought to you by</SectionHeader>
 <StatsStaff />
-<SectionHeader>Revenue share</SectionHeader>
+<SectionHeader>How revenue from Web Monetization API will be shared</SectionHeader>
 <StatsRevshare />
 
 <style lang="scss">

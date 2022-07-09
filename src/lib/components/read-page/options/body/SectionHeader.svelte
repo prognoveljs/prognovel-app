@@ -4,6 +4,7 @@
 <style lang="scss">
   strong {
     display: block;
+    max-width: 75%;
 
     &:not(:first-of-type) {
       margin-top: 20px;

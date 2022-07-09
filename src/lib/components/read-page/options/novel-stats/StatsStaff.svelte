@@ -35,10 +35,23 @@
 </section>
 
 <style lang="scss">
+  $outline-size: 2px;
   section {
+    // position: relative;
     display: flex;
     // gap: 1em;
-    width: 100%;
+    width: max-content;
+    margin-left: $outline-size;
+    // overflow: auto;
+    // overflow: scroll;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+
+    &::-webkit-scrollbar {
+      display: none; /* for Chrome, Safari, and Opera */
+      width: 0;
+      height: 0;
+    }
 
     span {
       display: flex;
@@ -58,6 +71,7 @@
       }
 
       &:hover {
+        outline: $outline-size solid #fffa;
         .badge {
           opacity: 1;
           transform: translateY(-1em);
