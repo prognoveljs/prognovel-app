@@ -1,5 +1,10 @@
 # ProgNovel Changelog
 
+# 0.7.8
+
+- ui(read page): rework novel stats UI
+- ui(novel page): fix "undefined" revenue share contributors profile if their about me is empty
+
 # 0.7.7
 
 - ui: novel cover header now loads image with better resolution on top of low res placeholder

@@ -38,7 +38,7 @@
       </h1>
     </div>
     <span class="ilp-address">
-      {user.paymentPointer}
+      {user.paymentPointer || ""}
     </span>
     <!-- <span class="email">
       <Icon icon={faAddressCard} size="1em" />
@@ -49,7 +49,7 @@
     {#await data()}
       <p>...</p>
     {:then gravatar}
-      <p class:empty={gravatar.isAboutMeEmpty}>{gravatar.aboutMe}</p>
+      <p class:empty={gravatar.isAboutMeEmpty}>{gravatar.aboutMe || ""}</p>
     {:catch error}
       <!-- promise was rejected -->
     {/await}
