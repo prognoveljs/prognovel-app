@@ -16,5 +16,6 @@
     display: flex;
     gap: 0.6em;
     flex-direction: column;
+    width: 92%;
   }
 </style>
