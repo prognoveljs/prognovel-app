@@ -20,27 +20,74 @@
         return "#bdc3c7";
     }
   };
+
+  function getFontSize(name: string) {
+    const length = (name || "").length;
+    const optimalLength = 8;
+    const maxLength = 21;
+    const optimalFontSize = 1;
+    const minFontSize = 0.7;
+    if (length <= optimalLength) return optimalFontSize;
+    if (length >= maxLength) return minFontSize;
+    const formula = optimalFontSize - (optimalFontSize - minFontSize) * (length / maxLength);
+
+    return formula;
+  }
 </script>
 
-<section style="--border-color: {getBorderColor()};">
-  <img src={avatar} alt={name} />
-  <div class="name">
-    {name}
+<section>
+  <div class="grid-container" style="--border-color: {getBorderColor()};">
+    <img src={avatar} alt={name} />
+    <div class="name-wrapper">
+      <div class="name" style="--hovered-font-size: {getFontSize(name)}em;">
+        <!-- {getFontSize(name)} -->
+        {name}
+      </div>
+    </div>
   </div>
 </section>
 
 <style lang="scss">
+  $innerWidth: 90px;
   section {
-    display: grid;
-    img {
-      border-radius: 50%;
-      border: 4px solid var(--border-color);
-    }
+    position: relative;
+    width: $innerWidth;
+    height: 120px;
+    .grid-container {
+      position: absolute;
+      display: grid;
+      align-items: center;
+      justify-content: center;
+      img {
+        border-radius: 50%;
+        border: 4px solid var(--border-color);
+      }
 
-    .name {
-      text-align: center;
-      font-weight: 700;
-      margin-top: 8px;
+      .name-wrapper {
+        position: relative;
+        width: $innerWidth;
+        .name {
+          text-align: center;
+          font-weight: 700;
+          margin-top: 8px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          line-height: 1.1;
+        }
+      }
+
+      &:hover {
+        height: auto;
+        .name-wrapper {
+          .name {
+            overflow: visible;
+            white-space: normal;
+            word-wrap: break-word;
+            font-size: var(--hovered-font-size, 1em);
+          }
+        }
+      }
     }
   }
 </style>

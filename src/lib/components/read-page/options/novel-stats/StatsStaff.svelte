@@ -4,6 +4,7 @@
   import { enhanceRoleWithEmoji } from "$lib/utils/users/roles";
   import StatsAvatar from "./StatsAvatar.svelte";
 
+  let wrapper: HTMLElement;
   $: roles = Object.keys($currentContent?.contributors ?? {});
   $: contributors = $currentContent.contributors;
 
@@ -19,9 +20,15 @@
         return "#bdc3c7" + (alpha ? "55" : "");
     }
   };
+
+  function onScroll(e: WheelEvent) {
+    wrapper.scrollLeft += e.deltaY;
+
+    e.preventDefault();
+  }
 </script>
 
-<section>
+<section bind:this={wrapper} on:mousewheel={onScroll}>
   {#each roles as role}
     <span style="background-color:{getBackgroundColor(role, true)};">
       {#each contributors[role] as data}
@@ -35,46 +42,47 @@
 </section>
 
 <style lang="scss">
-  $outline-size: 2px;
   section {
     // position: relative;
     display: flex;
     // gap: 1em;
-    width: max-content;
-    margin-left: $outline-size;
-    // overflow: auto;
-    // overflow: scroll;
-    -ms-overflow-style: none; /* for Internet Explorer, Edge */
-    scrollbar-width: none; /* for Firefox */
+    // width: max-content;
+
+    overflow-x: scroll;
+    scrollbar-width: none;
+    white-space: nowrap;
 
     &::-webkit-scrollbar {
       display: none; /* for Chrome, Safari, and Opera */
       width: 0;
       height: 0;
     }
+    // overflow-x: scroll;
 
     span {
       display: flex;
       gap: 1em;
       padding: 1em;
       position: relative;
+      overflow: visible;
+      filter: grayscale(40%);
 
       .badge {
         opacity: 0;
         position: absolute;
-        top: 0;
+        top: 0.2em;
         left: 0.4em;
-        padding: 0.1em 1em;
-        border-radius: 1.2em;
+        padding: 0 4px;
+        // padding: 0.1em 1em;
+        // border-radius: 1.2em;
         transition: all 0.13s ease-in;
-        box-shadow: 0 2px 8px #0002, 0 4px 16px #0001;
       }
 
       &:hover {
-        outline: $outline-size solid #fffa;
+        filter: grayscale(0%);
         .badge {
           opacity: 1;
-          transform: translateY(-1em);
+          transform: translateY(-0.2em);
         }
       }
     }
