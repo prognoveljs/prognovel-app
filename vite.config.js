@@ -5,6 +5,7 @@ import ProgNovelENV from "./prognovel.env.js";
 import ProgNovelCSS from "./plugins/onbuild/themes/css-global.js";
 import { join, resolve } from "path";
 import { dynamicImport } from "vite-plugin-dynamic-import";
+import commonjs from "@rollup/plugin-commonjs";
 
 export default {
   build: {
@@ -13,6 +14,7 @@ export default {
     },
   },
   plugins: [
+    commonjs(),
     sveltekit(),
     ProgNovelENV(),
     dynamicImport(),
