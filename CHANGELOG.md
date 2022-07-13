@@ -1,5 +1,17 @@
 # ProgNovel Changelog
 
+# 0.7.7
+
+- upgrade SvelteKit and Vite version
+- BREAKING: now requires Nodejs v16 and up (correct version for cloud build should be automatically chosen by Jamstack platforms - if not, refer to your hosting documentation how to choose Node version)
+- ui(read page): rework novel stats UI
+- ux(read page): add more information for revenue sharing on novel stats
+- ui(novel page): fix "undefined" revenue share contributors profile if their about me is empty
+- ui: novel cover header now loads image with better resolution on top of low res placeholder
+- ui(read page): fix stuck floating menu bar container when it supposed to be hidden
+- ui(read page): center floating chapter navigation on tablet
+- ui(read page): fix "undefined" label on floating chapter navigation when loading chapter
+
 # 0.7.6
 
 - fix: Fix endless loop on reload / redirect

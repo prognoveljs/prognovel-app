@@ -5,9 +5,17 @@
   import { getCoverURLPath, isWEBP } from "$lib/utils/images";
   import { currentNovel, novelsData, path } from "$lib/store/states";
   import { novelCoverPlaceholders } from "$lib/utils/novel-page";
+  import { onMount } from "svelte";
+  import { waitForNovelCoverLoading } from "$lib/utils/images/novel-cover";
 
   $: novelTitle = $novelsData?.[$currentNovel]?.title;
   $: backURL = $path.startsWith("/read") ? `/novel/${$currentNovel}` : "/";
+
+  let novelCover = novelCoverPlaceholders[$currentNovel];
+
+  onMount(async () => {
+    novelCover = await waitForNovelCoverLoading($currentNovel);
+  });
 </script>
 
 {#if $currentNovel}
@@ -39,7 +47,7 @@
       }}
       class="novel-info"
     >
-      <img width="40" height="40" src={novelCoverPlaceholders[$currentNovel]} alt={novelTitle} />
+      <img width="40" height="40" src={novelCover} alt={novelTitle} />
       <strong>{novelTitle || ""}</strong>
     </div>
   </article>
