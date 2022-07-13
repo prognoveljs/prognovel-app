@@ -2,7 +2,7 @@
   import { currentContent } from "$lib/store/read-page";
   import { parseContributorsNames } from "$lib/utils/string";
   import { enhanceRoleWithEmoji } from "$lib/utils/users/roles";
-  import StatsAvatar from "./StatsAvatar.svelte";
+  import StaffAvatar from "./StatsStaffAvatar.svelte";
 
   let wrapper: HTMLElement;
   $: roles = Object.keys($currentContent?.contributors ?? {});
@@ -28,11 +28,11 @@
   }
 </script>
 
-<section bind:this={wrapper} on:mousewheel={onScroll}>
+<section bind:this={wrapper} on:wheel={onScroll}>
   {#each roles as role}
     <span style="background-color:{getBackgroundColor(role, true)};">
       {#each contributors[role] as data}
-        <StatsAvatar {...data} {role} />
+        <StaffAvatar {...data} {role} />
       {/each}
       <div class="badge" style="background-color: {getBackgroundColor(role)};">
         {role}

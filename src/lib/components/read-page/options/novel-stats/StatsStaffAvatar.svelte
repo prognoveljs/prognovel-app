@@ -24,9 +24,9 @@
   function getFontSize(name: string) {
     const length = (name || "").length;
     const optimalLength = 8;
-    const maxLength = 21;
+    const maxLength = 25;
     const optimalFontSize = 1;
-    const minFontSize = 0.7;
+    const minFontSize = 0.65;
     if (length <= optimalLength) return optimalFontSize;
     if (length >= maxLength) return minFontSize;
     const formula = optimalFontSize - (optimalFontSize - minFontSize) * (length / maxLength);

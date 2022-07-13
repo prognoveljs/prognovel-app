@@ -1,20 +1,20 @@
 <script lang="ts">
   import { revShareUsersLite } from "$lib/utils/web-monetization";
+  import RevshareAvatar from "./StatsRevshareAvatar.svelte";
 </script>
 
-{#each $revShareUsersLite as user}
-  <section>
-    <strong>{user && user.name ? user.name : ""}</strong> |
-    <span>
-      {user && user.chance ? user.chance : "--"}%
-    </span>
-  </section>
-{/each}
+<section>
+  {#each $revShareUsersLite as user}
+    <!-- {JSON.stringify(user)} -->
+    <RevshareAvatar {...user} />
+  {/each}
+</section>
 
 <style lang="scss">
   section {
-    span {
-      color: green;
-    }
+    position: relative;
+    display: flex;
+    gap: 0.6em;
+    flex-direction: column;
   }
 </style>
