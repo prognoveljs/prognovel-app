@@ -40,6 +40,7 @@ specifiers:
   sharp: ^0.29.3
   stream: ^0.0.2
   svelte: 3.47.0
+  svelte-feather-icons: ^4.0.0
   svelte-forms: ^2.3.1
   svelte-inview: ^3.0.0
   svelte-loader: ^2.13.6
@@ -75,6 +76,7 @@ dependencies:
   node-fetch: 2.6.7
   rxjs: 7.5.5
   sharp: 0.29.3
+  svelte-feather-icons: 4.0.0
   svelte-forms: 2.3.1
   svelte-inview: 3.0.0_svelte@3.47.0
   three: 0.139.2
@@ -3371,6 +3373,12 @@ packages:
   /svelte-dev-helper/1.1.9:
     resolution: {integrity: sha1-fRh9tcbNu9ZNdaMvkbiZi94yc8M=}
     dev: true
+
+  /svelte-feather-icons/4.0.0:
+    resolution: {integrity: sha512-4ieUsjp+VYa1r6y80jDt9zRiRUZyJNbESpRdHdJJhiBubyuXX96A7f1UZSK4olxzP6Qsg5ZAuyZlnmvD+/swAA==}
+    dependencies:
+      svelte: 3.47.0
+    dev: false
 
   /svelte-forms/2.3.1:
     resolution: {integrity: sha512-ExX9PM0JgvdOWlHl2ztD7XzLNPOPt9U5hBKV8sUAisMfcYWpPRnyz+6EFmh35BOBGJJmuhTDBGm5/7seLjOTIA==}

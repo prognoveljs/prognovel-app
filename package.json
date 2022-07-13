@@ -33,6 +33,7 @@
 		"node-fetch": "^2.6.0",
 		"rxjs": "^7.5.5",
 		"sharp": "^0.29.3",
+		"svelte-feather-icons": "^4.0.0",
 		"svelte-forms": "^2.3.1",
 		"svelte-inview": "^3.0.0",
 		"three": "^0.139.2",
