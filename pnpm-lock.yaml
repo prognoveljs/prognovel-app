@@ -30,13 +30,14 @@ specifiers:
   js-crypto-aes: ^1.0.4
   mdsvex: ^0.8.9
   ncp: ^2.0.0
-  node-fetch: ^2.6.7
+  node-fetch: 2.6.5
   npm-run-all: ^4.1.5
   postcss: ^8.4.12
   postcss-load-config: ^3.1.4
   rxjs: ^7.5.5
   sass: 1.32.13
   sharp: ^0.29.3
+  stream: ^0.0.2
   svelte: 3.47.0
   svelte-forms: ^2.3.1
   svelte-inview: ^3.0.0
@@ -70,7 +71,7 @@ dependencies:
   idb-keyval: 6.1.0
   js-crypto-aes: 1.0.4
   ncp: 2.0.0
-  node-fetch: 2.6.7
+  node-fetch: 2.6.5
   rxjs: 7.5.5
   sharp: 0.29.3
   svelte-forms: 2.3.1
@@ -97,6 +98,7 @@ devDependencies:
   postcss: 8.4.12
   postcss-load-config: 3.1.4_postcss@8.4.12
   sass: 1.32.13
+  stream: 0.0.2
   svelte: 3.47.0
   svelte-loader: 2.13.6_svelte@3.47.0
   svelte-preprocess: 4.10.6_x45borwqhcgn3udc64oi73p2pa
@@ -1316,6 +1318,10 @@ packages:
 
   /electron-to-chromium/1.4.108:
     resolution: {integrity: sha512-/36KkMuL6+WTrodVlOjtHhH9Ro7BgRaQrh0bfKckwDtdRSjTBuZCOddeXxzK1PkwphoeTxGUFVT9xnmvQ7xEdw==}
+    dev: true
+
+  /emitter-component/1.1.1:
+    resolution: {integrity: sha512-G+mpdiAySMuB7kesVRLuyvYRqDmshB7ReKEVuyBPkzQlmiDiLrt7hHHIy4Aff552bgknVN7B2/d3lzhGO5dvpQ==}
     dev: true
 
   /emojis-list/3.0.0:
@@ -2540,14 +2546,9 @@ packages:
     resolution: {integrity: sha512-73sE9+3UaLYYFmDsFZnqCInzPyh3MqIwZO9cw58yIqAZhONrrabrYyYe3TuIqtIiOuTXVhsGau8hcrhhwSsDIQ==}
     dev: false
 
-  /node-fetch/2.6.7:
-    resolution: {integrity: sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==}
+  /node-fetch/2.6.5:
+    resolution: {integrity: sha512-mmlIVHJEu5rnIxgEgez6b9GgWXbkZj5YZ7fx+2r94a2E+Uirsp6HsPTPlomfdHtpt/B0cdKviwkoaM6pyvUOpQ==}
     engines: {node: 4.x || >=6.0.0}
-    peerDependencies:
-      encoding: ^0.1.0
-    peerDependenciesMeta:
-      encoding:
-        optional: true
     dependencies:
       whatwg-url: 5.0.0
     dev: false
@@ -3219,6 +3220,12 @@ packages:
       escape-string-regexp: 2.0.0
     dev: true
 
+  /stream/0.0.2:
+    resolution: {integrity: sha512-gCq3NDI2P35B2n6t76YJuOp7d6cN/C7Rt0577l91wllh0sY9ZBuw9KaSGqH/b0hzn3CWWJbpbW0W0WvQ1H/Q7g==}
+    dependencies:
+      emitter-component: 1.1.1
+    dev: true
+
   /string-width/1.0.2:
     resolution: {integrity: sha1-EYvfW4zcUaKn5w0hHgfisLmxB9M=}
     engines: {node: '>=0.10.0'}
@@ -3505,7 +3512,7 @@ packages:
       is-number: 7.0.0
 
   /tr46/0.0.3:
-    resolution: {integrity: sha1-gYT9NH2snNwYWZLzpmIuFLnZq2o=}
+    resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
     dev: false
 
   /tslib/2.4.0:
@@ -3619,11 +3626,11 @@ packages:
     dev: false
 
   /webidl-conversions/3.0.1:
-    resolution: {integrity: sha1-JFNCdeKnvGvnvIZhHMFq4KVlSHE=}
+    resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
     dev: false
 
   /whatwg-url/5.0.0:
-    resolution: {integrity: sha1-lmRU6HZUYuN2RNNib2dCzotwll0=}
+    resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
     dependencies:
       tr46: 0.0.3
       webidl-conversions: 3.0.1
