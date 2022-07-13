@@ -2,7 +2,8 @@
 
 # 0.7.7
 
-- upgrade SvelteKit
+- upgrade SvelteKit and Vite version
+- now requires Nodejs v16 and up (should be automatically chosen by Jamstack platforms)
 - ui(read page): rework novel stats UI
 - ui(novel page): fix "undefined" revenue share contributors profile if their about me is empty
 - ui: novel cover header now loads image with better resolution on top of low res placeholder
