@@ -1,12 +1,10 @@
 # ProgNovel Changelog
 
-# 0.7.8
-
-- ui(read page): rework novel stats UI
-- ui(novel page): fix "undefined" revenue share contributors profile if their about me is empty
-
 # 0.7.7
 
+- upgrade SvelteKit
+- ui(read page): rework novel stats UI
+- ui(novel page): fix "undefined" revenue share contributors profile if their about me is empty
 - ui: novel cover header now loads image with better resolution on top of low res placeholder
 - ui(read page): fix stuck floating menu bar container when it supposed to be hidden
 - ui(read page): center floating chapter navigation on tablet
