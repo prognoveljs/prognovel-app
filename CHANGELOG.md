@@ -1,5 +1,9 @@
 # ProgNovel Changelog
 
+# 0.7.8
+
+
+
 # 0.7.7
 
 - upgrade SvelteKit and Vite version
