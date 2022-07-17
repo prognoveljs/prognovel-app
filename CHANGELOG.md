@@ -2,7 +2,8 @@
 
 # 0.7.8
 
-
+- ui(read page): show skeleton shell animation for novel stats when loading
+- ui(read page): prevent much of unintended layout shift for novel stats section
 
 # 0.7.7
 

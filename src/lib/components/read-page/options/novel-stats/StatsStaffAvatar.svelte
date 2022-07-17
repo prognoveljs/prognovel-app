@@ -37,7 +37,7 @@
 
 <section>
   <div class="grid-container" style="--border-color: {getBorderColor()};">
-    <img src={avatar} alt={name} />
+    <img width="90" height="90" src={avatar} alt={name} />
     <div class="name-wrapper">
       <div class="name" style="--hovered-font-size: {getFontSize(name)}em;">
         <!-- {getFontSize(name)} -->

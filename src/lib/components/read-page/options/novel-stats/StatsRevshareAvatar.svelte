@@ -10,7 +10,7 @@
 <section>
   <div class="grid">
     <Avatar {name} {email} />
-    <span style="text-align:ce">{chance}%</span>
+    <span style="">{chance}%</span>
     <strong>
       {name}
     </strong>
