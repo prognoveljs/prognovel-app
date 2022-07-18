@@ -12,7 +12,6 @@
 
   export let search = "";
   export let input;
-  let mousemove = 0;
   const dispath = createEventDispatcher();
 
   $: novelsGroup = $siteMetadata?.novelsMetadata || [];
@@ -121,7 +120,14 @@
   </div>
   <div class="item-wrapper" use:resultWrapper>
     {#each searchedNovels as novel, index}
-      <NavSearchResultItem {novel} {index} on:mouseover={() => onMouseOverItem(index)} />
+      <NavSearchResultItem
+        {novel}
+        {index}
+        on:blur
+        on:click
+        on:focus
+        on:mouseover={() => onMouseOverItem(index)}
+      />
     {/each}
   </div>
   {#if search && !searchedNovels.length}
