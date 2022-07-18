@@ -4,6 +4,7 @@
 
 - ui(read page): show skeleton shell animation for novel stats when loading
 - ui(read page): prevent much of unintended layout shift for novel stats section
+- ux: add mouseover threshold to search result, preventing to lose search bar focus if mouse accidentally touch some search results when they appear
 
 # 0.7.7
 
