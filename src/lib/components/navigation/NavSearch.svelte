@@ -52,7 +52,6 @@
     />
     <span class="placeholder">
       {#if isMobile}
-        <!-- content here -->
         Search novels
       {:else}
         Press <kbd>/</kbd> to search novels
@@ -63,7 +62,13 @@
     <IconSvg --color="#0006" data={searchIcon} />
   </span>
   {#if search}
-    <NavSearchResult on:click={onClickItem} on:blur={onBlur} {search} {input} />
+    <NavSearchResult
+      on:click={onClickItem}
+      on:escape={() => (search = "")}
+      on:blur={onBlur}
+      {search}
+      {input}
+    />
   {/if}
 </section>
 
