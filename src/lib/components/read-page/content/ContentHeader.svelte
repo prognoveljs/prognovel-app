@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Navigation from "./_Navigation.svelte";
+  import Navigation from "./ClassicNavigation.svelte";
   import { createEventDispatcher } from "svelte";
   import ReadHeader from "$lib/components/read-page/header/ReadHeader.svelte";
   import SpeechSyntesis from "$lib/components/read-page/speech-synthesis/SpeechSyntesis.svelte";
@@ -19,7 +19,7 @@
 </article>
 
 <style lang="scss">
-  @import "vars";
+  @import "../../../../routes/read/vars";
 
   article {
     padding: 24px calc(#{$padding-base} + #{$padding-ratio});

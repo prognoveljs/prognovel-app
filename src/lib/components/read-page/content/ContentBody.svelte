@@ -1,9 +1,9 @@
 <script lang="ts">
-  import Header from "./_ReadContentHeader.svelte";
-  import Footer from "./_ReadContentFooter.svelte";
+  import Header from "./ContentHeader.svelte";
+  import Footer from "./ContentFooter.svelte";
   import TOC from "$lib/components/read-page/ReadTableOfContent.svelte";
   import ErrorPlaceholder from "$lib/components/read-page/body/ReadBodyErrorPlaceholder.svelte";
-  import NativePlugins from "./_NativePlugins.svelte";
+  import NativePlugins from "$lib/components/plugins/_NativePlugins.svelte";
   import AdsDelay from "$lib/components/read-page/ContentAdsDelay.svelte";
   import {
     currentContent,
@@ -106,7 +106,7 @@
 {/if}
 
 <style lang="scss">
-  @import "vars";
+  @import "../../../../routes/read/vars";
 
   #chapter {
     --fontResponsiveRatio: #{$fontResponsiveRatio};
