@@ -20,9 +20,9 @@
         {#each Array(9).fill("") as item, i}
           <SkeletonShell
             width="100%"
-            height="32"
-            primaryColor="#EBECEFAA"
-            secondaryColor="#F5F5F7EE"
+            height="36"
+            primaryColor="#EBECEF55"
+            secondaryColor="#F5F5F799"
           >
             <rect width="100%" height="32" x="0" y="0" rx="2" ry="2" />
           </SkeletonShell>

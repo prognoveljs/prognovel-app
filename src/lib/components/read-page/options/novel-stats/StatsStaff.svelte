@@ -48,7 +48,7 @@
     {/if}
   {:else}
     {#each [1, 2, 3, 4] as item, i}
-      <SkeletonShell width="120" height="152" primaryColor="#EBECEFAA" secondaryColor="#F5F5F7EE">
+      <SkeletonShell width="120" height="152" primaryColor="#EBECEF77" secondaryColor="#F5F5F799">
         <rect width={(i + 1) * 120} height="152" x={i ? 8 : 0} y="0" rx="2" ry="2" />
       </SkeletonShell>
     {/each}
