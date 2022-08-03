@@ -1,16 +1,38 @@
 <script lang="ts">
-  import { currentNovel } from "$lib/store/states";
+  import { currentNovel, novelsData } from "$lib/store/states";
   import { novelTitles } from "$lib/utils/novel-page";
   import { revShareUsersLite } from "$lib/utils/web-monetization";
   import RevshareAvatar from "./StatsRevshareAvatar.svelte";
   import { AlertCircleIcon } from "svelte-feather-icons";
+  import SkeletonShell from "$lib/components/SkeletonShell.svelte";
+
+  $: novelData = $novelsData?.[$currentNovel];
 </script>
 
 <section>
-  {#each $revShareUsersLite as user}
-    <!-- {JSON.stringify(user)} -->
-    <RevshareAvatar {...user} />
-  {/each}
+  {#if $revShareUsersLite?.length}
+    {#each $revShareUsersLite as user}
+      <RevshareAvatar {...user} />
+    {/each}
+  {:else}
+    <div class="no-data-wrapper">
+      {#if !$revShareUsersLite?.length || novelData?.rev_share?.length}
+        {#each Array(9).fill("") as item, i}
+          <SkeletonShell
+            width="100%"
+            height="36"
+            primaryColor="#EBECEF55"
+            secondaryColor="#F5F5F799"
+          >
+            <rect width="100%" height="32" x="0" y="0" rx="2" ry="2" />
+          </SkeletonShell>
+        {/each}
+      {:else}
+        <!-- TODO: create UI for no rev share available -->
+        <!-- no contributors found -->
+      {/if}
+    </div>
+  {/if}
   <div class="info">
     <AlertCircleIcon size="32" />
     <div>
@@ -55,6 +77,10 @@
         flex-shrink: 0;
         opacity: 0.6;
       }
+    }
+
+    .no-data-wrapper {
+      min-height: 300px;
     }
   }
 </style>

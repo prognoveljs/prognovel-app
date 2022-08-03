@@ -1,19 +1,18 @@
 <script lang="ts">
   import { browser } from "$app/env";
   import { siteMetadata } from "$lib/store/states";
-  import { frameTick } from "$lib/utils/animation";
   import { stringSearch } from "$lib/utils/string";
   import { fade, fly } from "svelte/transition";
   import arrowDownIcon from "$lib/assets/feather-icons/arrow-down.svg?raw";
   import alertIcon from "$lib/assets/feather-icons/alert-octagon.svg?raw";
   import { cubicIn, cubicOut } from "svelte/easing";
   import IconSvg from "../IconSVG.svelte";
-  import { getCoverURLPath } from "$lib/utils/images";
-  import { prefetch, prefetchRoutes } from "$app/navigation";
-  import { novelCoverPlaceholders } from "$lib/utils/novel-page";
+  import NavSearchResultItem from "./NavSearchResultItem.svelte";
+  import { createEventDispatcher } from "svelte";
 
   export let search = "";
   export let input;
+  const dispath = createEventDispatcher();
 
   $: novelsGroup = $siteMetadata?.novelsMetadata || [];
   const RESULT_WIDTH = 510;
@@ -41,6 +40,7 @@
         search = "";
         input.blur();
         e.preventDefault();
+        dispath("escape");
         break;
       case "ArrowLeft":
         if (!searchedNovels.length || document.activeElement === input) break;
@@ -75,32 +75,37 @@
         break;
     }
   }
+
   function resultWrapper(el: HTMLDivElement) {
     if (!browser) return;
     const style = getComputedStyle(el);
     SEARCH_ROW_ITEMS = style.gridTemplateColumns.split(" ").length;
   }
 
-  function resultItem(el: HTMLAnchorElement) {
-    el.onfocus = async () => {
-      const elWrapper: HTMLDivElement = el.querySelector(".content-wrapper");
-      const elTitle: HTMLDivElement = el.querySelector(".title");
+  function onMouseOverItem(index: number) {
+    if (!hasMouseMove) return;
+    selectedNovel = index;
+  }
 
-      await frameTick();
-      prefetch(el.href);
-
-      elWrapper.style.height = `calc(var(--item-height) + ${elTitle.clientHeight}px - 18px)`;
-    };
-    el.onblur = async () => {
-      const elWrapper: HTMLDivElement = el.querySelector(".content-wrapper");
-      elWrapper.style.height = `calc(100%)`;
-    };
+  let hasMouseMove = false;
+  let mouseX;
+  let mouseY;
+  function onMouseMove(e: MouseEvent) {
+    if (!mouseX) mouseX = e.x;
+    if (!mouseY) mouseY = e.y;
+    if (mouseX - e.x > 50 || mouseX - e.x < -50) hasMouseMove = true;
+    if (mouseY - e.x > 30 || mouseY - e.y < -30) hasMouseMove = true;
   }
 </script>
 
 <svelte:window on:keydown={searchPressKey} />
 
-<section class="result" style="--result-width: {RESULT_WIDTH}px;">
+<section
+  on:focus
+  on:mouseover={onMouseMove}
+  class="result"
+  style="--result-width: {RESULT_WIDTH}px;"
+>
   <div in:fade={{ duration: 100 }} out:fade={{ duration: 100 }}>
     <em
       ><IconSvg --color="#fff7" style="margin-right: 6px;" size="1.1em" data={arrowDownIcon} />use
@@ -115,48 +120,14 @@
   </div>
   <div class="item-wrapper" use:resultWrapper>
     {#each searchedNovels as novel, index}
-      <a
-        sveltekit:prefetch
-        in:fly={{ duration: 125, y: 12, delay: 50 * index }}
-        out:fly={{ duration: 80, y: -20, delay: 30 * index }}
-        id="search-{novel.id}"
-        class="search-result-item"
-        href="/novel/{novel.id}"
-        style="z-index:{900 - index}"
-        use:resultItem
-        on:click
+      <NavSearchResultItem
+        {novel}
+        {index}
         on:blur
-        on:mouseover={() => (selectedNovel = index)}
+        on:click
         on:focus
-      >
-        <div class="content-wrapper">
-          <div class="cover" style="--cover-size: 128px;">
-            <img
-              src={novelCoverPlaceholders[novel.id]}
-              alt=""
-              aria-hidden="true"
-              class="placeholder"
-            />
-            <picture>
-              <source
-                srcset={getCoverURLPath(novel.id, { width: 128, height: 128 }, "webp")}
-                type="image/webp"
-              />
-              <source
-                srcset={getCoverURLPath(novel.id, { width: 128, height: 128 }, "jpeg")}
-                type="image/jpeg"
-              />
-              <img
-                src={getCoverURLPath(novel.id, { width: 128, height: 128 }, "jpeg")}
-                alt={novel.title}
-              />
-            </picture>
-          </div>
-          <div class="title">
-            {novel.title}
-          </div>
-        </div>
-      </a>
+        on:mouseover={() => onMouseOverItem(index)}
+      />
     {/each}
   </div>
   {#if search && !searchedNovels.length}
@@ -172,8 +143,7 @@
 </section>
 
 <style lang="scss">
-  $resultWidth: var(--result-width);
-  $overlay-index: 400;
+  @import "shared";
   .result {
     position: fixed;
     top: var(--header-height);
@@ -206,85 +176,6 @@
       grid-template-columns: repeat(auto-fill, 136px);
       // flex-direction: row-reverse;
       gap: 1em;
-
-      a {
-        display: flex;
-        position: relative;
-        flex-direction: column;
-        flex: 0;
-        text-align: center;
-        justify-content: center;
-        align-items: center;
-        border-radius: 2px;
-        padding: 0.25em;
-        line-height: 1.1;
-        z-index: $overlay-index + 1;
-        position: relative;
-        color: var(--primary-color-darken-4);
-        font-weight: 700;
-        min-height: var(--item-height);
-
-        .title {
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          width: 100%;
-          margin-top: 0.3em;
-        }
-        .content-wrapper {
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          width: 100%;
-          padding-top: 4px;
-
-          .cover {
-            width: var(--cover-size, 128px);
-            height: var(--cover-size, 128px);
-            background-size: var(--cover-size, 128px) !important;
-            background-repeat: no-repeat;
-            margin: 0 auto;
-            overflow: hidden;
-            position: relative;
-
-            .placeholder {
-              position: absolute;
-              top: 0;
-              left: 0;
-              width: 100%;
-              height: auto;
-              transform: scale(1.1);
-              filter: blur(8px);
-            }
-
-            // &:hover:not(:focus),
-            picture {
-              position: absolute;
-              top: 0;
-              left: 0;
-              border-radius: 2px;
-              margin-bottom: 8px;
-              width: 100%;
-              height: auto;
-            }
-          }
-        }
-
-        &:focus,
-        &:active {
-          outline: none;
-          .content-wrapper {
-            background-color: #fffa;
-            box-shadow: 0 2px 8px #0002;
-            color: var(--primary-color-darken-2);
-            height: 100%;
-          }
-          .title {
-            white-space: normal;
-            width: 100%;
-          }
-        }
-      }
     }
 
     .no-match {

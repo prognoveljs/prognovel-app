@@ -11,7 +11,7 @@
     const tag = "native";
     if ($registeredPlugins.has(tag)) return;
     const { AuthorsNote, NovelTrivia } = await import(
-      "../../../plugins/web-components/prognovel-native-plugins"
+      "../../../../plugins/web-components/prognovel-native-plugins"
     );
     window.customElements.define("novel-trivia", NovelTrivia);
     window.customElements.define("authors-note", AuthorsNote);

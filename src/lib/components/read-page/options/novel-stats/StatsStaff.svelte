@@ -1,4 +1,5 @@
 <script lang="ts">
+  import SkeletonShell from "$lib/components/SkeletonShell.svelte";
   import { currentContent } from "$lib/store/read-page";
   import { parseContributorsNames } from "$lib/utils/string";
   import { enhanceRoleWithEmoji } from "$lib/utils/users/roles";
@@ -29,16 +30,29 @@
 </script>
 
 <section bind:this={wrapper} on:wheel={onScroll}>
-  {#each roles as role}
-    <span style="background-color:{getBackgroundColor(role, true)};">
-      {#each contributors[role] as data}
-        <StaffAvatar {...data} {role} />
+  {#if $currentContent?.meta?.status !== "loading"}
+    {#if roles.length}
+      {#each roles as role}
+        <span style="background-color:{getBackgroundColor(role, true)};">
+          {#each contributors[role] as data}
+            <StaffAvatar {...data} {role} />
+          {/each}
+          <div class="badge" style="background-color: {getBackgroundColor(role)};">
+            {role}
+          </div>
+        </span>
       {/each}
-      <div class="badge" style="background-color: {getBackgroundColor(role)};">
-        {role}
-      </div>
-    </span>
-  {/each}
+    {:else}
+      <!-- TODO: create UI if no staff seen in chapter -->
+      <!-- nothing to see here.... -->
+    {/if}
+  {:else}
+    {#each [1, 2, 3, 4] as item, i}
+      <SkeletonShell width="120" height="152" primaryColor="#EBECEF77" secondaryColor="#F5F5F799">
+        <rect width={(i + 1) * 120} height="152" x={i ? 8 : 0} y="0" rx="2" ry="2" />
+      </SkeletonShell>
+    {/each}
+  {/if}
 </section>
 
 <style lang="scss">
@@ -47,6 +61,7 @@
     display: flex;
     // gap: 1em;
     // width: max-content;
+    min-height: 152px;
 
     overflow-x: scroll;
     scrollbar-width: none;

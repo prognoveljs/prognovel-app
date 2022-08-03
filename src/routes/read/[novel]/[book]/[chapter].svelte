@@ -26,13 +26,11 @@
     setChapterCursor,
     prefetchNextChapter,
   } from "$lib/utils/read-page";
-  import Content from "../../_ReadContent.svelte";
+  import Content from "$lib/components/read-page/content/ContentBody.svelte";
   import Options from "../../_Options.svelte";
   import { currentNovel, novelsData, isBrowser } from "$lib/store/states";
-  import { fetchNovelMetadata } from "$lib/utils/fetch-metadata";
   import { currentChapter, currentBook, currentContent } from "$lib/store/read-page";
   import { replacePageTitleBookAndChapter } from "$lib/utils/read-page/history";
-  import { prefetch } from "$app/navigation";
   import { SITE_TITLE } from "$lib/_setting";
   // import { prefetchNextChapter } from "$lib/utils/read-page/fetch-content";
 

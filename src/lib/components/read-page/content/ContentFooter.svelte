@@ -1,10 +1,11 @@
 <script lang="ts">
-  import Navigation from "./_Navigation.svelte";
+  import Navigation from "./ClassicNavigation.svelte";
   import { createEventDispatcher, onMount, tick } from "svelte";
   import { isMobileScreen } from "$lib/utils/mobile";
   import { menuReadPageShow } from "$lib/components/mobile/menu/_store";
   import Comments from "$lib/components/read-page/comments/Comments.svelte";
   import { browser } from "$app/env";
+
   // TODO migrate mobile menu to _layout
   const dispatch = createEventDispatcher();
 
@@ -42,7 +43,8 @@
 {/if}
 
 <style lang="scss">
-  @import "_vars.scss";
+  @import "../../../../routes/read/vars";
+
   section {
     padding: 24px calc(#{$padding-base} + #{$padding-ratio});
     padding-right: calc(#{$padding-base} + #{$padding-ratio / 4});
