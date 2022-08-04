@@ -43,7 +43,7 @@ ProgNovel works best when hosted on Jamstack platforms for performance and effie
 
      Hosting this way will make your backend behaves like a pseudo pre-built websites, but host `.json` files instead of `.html` files. The only platform to host ProgNovel Static API right now is Cloudflare Pages, chosen due to its global wide CDN network and price-wise has unlimited bandwidth even for its free-tier--meaning, you can setup your website for free and forget about it for years and it will still online, no matter how much traffic it takes.
 
-     To setup a Static API for ProgNovel is simple; you need to upload your ProgNovel project to a Github repository and connect it from Cloudflare Pages dashboard. Create a new repo via [repo.new](https://repo.new/), and connect it with Cloudflare Pages with these settings:
+     To setup a Static API for ProgNovel is simple; you need to upload your ProgNovel project to a Github repository and connect it from Cloudflare Pages dashboard. Create a new repo via [repo.new](https://repo.new/), upload content of project folder thyat you create with ProgNovel CLI, and connect the repo with Cloudflare Pages with these settings:
 
      ```
      PRODUCTION BRANCH: main
@@ -55,7 +55,7 @@ ProgNovel works best when hosted on Jamstack platforms for performance and effie
 
    - Host content with a Dynamic API backend
 
-     ProgNovel will use Cloudflare Workers serverless platform to host your Dynamic API, in case if you doesn't use static API. This means it will bound to [Cloudflare Workers' limit](https://developers.cloudflare.com/workers/platform/limits/#worker-limits). Dynamic API might have features like secure locked chapters and Web Monetization receipt verification in the future.
+     ProgNovel will use Cloudflare Workers serverless platform to host your Dynamic API, in case if you don't use static API. This means it will bound to [Cloudflare Workers' limit](https://developers.cloudflare.com/workers/platform/limits/#worker-limits). Dynamic API might have features like secure locked chapters and Web Monetization receipt verification in the future.
 
      You need to host on Cloudflare Workers with some content already online on Cloudflare Workers network. [Read how to host a worker for Dynamic API ProgNovel backend here.](https://github.com/prognoveljs/prognovel-workers)
 
