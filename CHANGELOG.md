@@ -3,7 +3,7 @@
 # 0.7.9
 
 🎨 UI/UX IMPROVEMENTS AND FIXES:
-- (read page) 
+- (read page) adjust color and add icons for section headers in read page option tab
 
 # 0.7.8
 
