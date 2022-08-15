@@ -4,6 +4,7 @@
   import { fontWeight, fontSize } from "$lib/utils/fonts";
   import { showAdjustFont } from "$lib/store/read-page/read-page-state";
   import { MenuState, menuState } from "$lib/components/mobile/menu/_store";
+  import { TypeIcon } from "svelte-feather-icons";
 
   export let standalone: boolean = false;
 
@@ -19,7 +20,7 @@
   <div class="overlay" on:click={() => ($showAdjustFont = false)} />
 {/if}
 <section class="adjust-font" on:blur={onBlur} class:standalone class:show={$showAdjustFont}>
-  <SectionHeader>Adjust font</SectionHeader>
+  <SectionHeader Icon={TypeIcon} style="margin-top:0.5em">Adjust font</SectionHeader>
   <Slider labelText="Font size (in %)" min={75} max={150} bind:value={$fontSize} step={5} />
   <Slider labelText="Font thickness (in %)" min={75} max={150} bind:value={$fontWeight} step={5} />
 </section>

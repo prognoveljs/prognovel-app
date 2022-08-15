@@ -1,9 +1,10 @@
 <script lang="ts">
   import { discordGroupId } from "$lib/store/novel-page";
+  import { GlobeIcon } from "svelte-feather-icons";
   import SectionHeader from "./body/SectionHeader.svelte";
 </script>
 
-<SectionHeader>Community</SectionHeader>
+<SectionHeader Icon={GlobeIcon}>Community</SectionHeader>
 {#if $discordGroupId}
   <iframe
     title="discord group"

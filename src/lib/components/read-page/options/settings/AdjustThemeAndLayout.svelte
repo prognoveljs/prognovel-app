@@ -4,9 +4,10 @@
   import SettingsLayout from "$lib/components/read-page/options/layout/SettingsLayout.svelte";
   import { colorContrast } from "$lib/utils/fonts/background-contrast";
   import { colorHue, colorizedBackground } from "$lib/utils/fonts/background-hue";
+  import { ImageIcon } from "svelte-feather-icons";
 </script>
 
-<SectionHeader>Layout and themes</SectionHeader>
+<SectionHeader Icon={ImageIcon}>Layout and themes</SectionHeader>
 <div style="position:relative;">
   <div style="opacity: 0.35; filter: blur(2.5px);">
     <SettingsLayout />

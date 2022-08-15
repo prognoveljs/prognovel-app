@@ -1,5 +1,10 @@
 # ProgNovel Changelog
 
+# 0.7.9
+
+🎨 UI/UX IMPROVEMENTS AND FIXES:
+- (read page) 
+
 # 0.7.8
 
 - ui(read page): show skeleton shell animation for novel stats when loading
