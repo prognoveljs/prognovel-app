@@ -82,6 +82,7 @@
     color: var(--primary-color-darken-4);
     font-weight: 700;
     min-height: var(--item-height);
+    pointer-events: all;
 
     .title {
       overflow: hidden;
