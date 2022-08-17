@@ -7,15 +7,17 @@
   import { ArrowRightIcon, RefreshCwIcon } from "svelte-feather-icons";
   import { chapterTitles } from "$lib/store/read-page";
   import { fly } from "svelte/transition";
+  import { replacePageTitleBookAndChapter } from "$lib/utils/read-page/history";
 
   let novelMetadata: NovelMetadata = getContext("novelMetadata");
-
-  let readNowVolume = "volume-1";
-  let readNowChapter = "chapter-1";
   let showMore = false;
   $: height = showMore ? "auto" : "270px";
   $: disableLink = Boolean(!isBrowser || !$readPageLink);
-  $: beginReadingTitle = $chapterTitles?.[$currentNovel]?.[readNowVolume]?.[readNowChapter];
+  $: [volume, chapter] = ($readPageLink || "")
+    .split("/")
+    .filter((s) => !!s)
+    .slice(-2);
+  $: beginReadingTitle = $chapterTitles?.[$currentNovel]?.[volume]?.[chapter];
 </script>
 
 <article>
@@ -41,7 +43,11 @@
     </a>
     {#if beginReadingTitle}
       <sub>
-        <div in:fly={{ y: -4, duration: 200 }}>from Vol. 1 Chapter 1</div>
+        <div in:fly={{ y: -4, duration: 200 }}>
+          from {replacePageTitleBookAndChapter(`${volume}`, true)}, Chapter {(
+            (chapter || "").split("chapter-")[1] || ""
+          ).replace("-", ".")}
+        </div>
         <em in:fly={{ y: -4, duration: 200, delay: 125 }}>{beginReadingTitle}</em>
       </sub>
     {/if}

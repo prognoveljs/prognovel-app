@@ -5,6 +5,7 @@
 This version bring fixes to search result as well greatly enhance its UX on mobile. Also, I'll try to make this version changelog to be more readable with some commentary about the changes, rather than some random logs than I directly copy-paste'd from codebase commits.
 
 🎨 UI/UX IMPROVEMENTS:
+- (novel page) rework read now button, change label to "Begin reading", add "fetch info..." label when loading, new subtle animations and show destination chapter title
 - (read page) adjust color and add icons for section headers in read page option tab
 - (searchbar) now has close button both on desktop and mobile versions
 
