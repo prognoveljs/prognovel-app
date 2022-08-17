@@ -1,15 +1,21 @@
 <script lang="ts">
   import DescriptionInfo from "$lib/components/novel-page/DescriptionInfo.svelte";
   import { readPageLink } from "$lib/store/read-page/read-page-navigation";
-  import { isBrowser } from "$lib/store/states";
+  import { currentNovel, isBrowser } from "$lib/store/states";
   import { getContext } from "svelte";
   import type { NovelMetadata } from "$typings";
+  import { ArrowRightIcon, RefreshCwIcon } from "svelte-feather-icons";
+  import { chapterTitles } from "$lib/store/read-page";
+  import { fly } from "svelte/transition";
 
   let novelMetadata: NovelMetadata = getContext("novelMetadata");
 
+  let readNowVolume = "volume-1";
+  let readNowChapter = "chapter-1";
   let showMore = false;
   $: height = showMore ? "auto" : "270px";
   $: disableLink = Boolean(!isBrowser || !$readPageLink);
+  $: beginReadingTitle = $chapterTitles?.[$currentNovel]?.[readNowVolume]?.[readNowChapter];
 </script>
 
 <article>
@@ -22,7 +28,23 @@
     {#if !showMore}<span class="show-more" on:click={() => (showMore = true)}>show more</span>{/if}
   </div>
   <div class="read-button-flex">
-    <a href={$readPageLink || "/"} disabled={disableLink}>READ NOW</a>
+    <a
+      href={$readPageLink || "/"}
+      disabled={disableLink}
+      class:loading={disableLink || !beginReadingTitle}
+      >{!disableLink ? "Begin reading" : "Fetching info..."}
+      {#if disableLink}
+        <RefreshCwIcon size="18" class="spin" />
+      {:else}
+        <ArrowRightIcon size="21" />
+      {/if}
+    </a>
+    {#if beginReadingTitle}
+      <sub>
+        <div in:fly={{ y: -4, duration: 200 }}>from Vol. 1 Chapter 1</div>
+        <em in:fly={{ y: -4, duration: 200, delay: 125 }}>{beginReadingTitle}</em>
+      </sub>
+    {/if}
   </div>
 </article>
 
@@ -84,33 +106,115 @@
 
   .read-button-flex {
     text-align: right;
-    margin-top: 24px;
+    margin-top: 20px;
     justify-content: end;
+    position: relative;
 
     a {
+      margin: 0;
+      width: 170px;
+      display: inline-block;
+      text-align: left;
       --bg: hsl(var(--primary-color-h), 80%, 40%);
       cursor: pointer;
       padding: 8px 18px;
+      padding-right: 40px;
       border-radius: 4px;
-      color: #fffd !important;
+      color: #fffc;
       background-color: var(--bg);
-      border: 1px solid var(--bg);
+      border: 2px solid var(--bg);
       text-decoration: none;
-      font-weight: 700;
-      letter-spacing: 0.075em;
-      margin-top: 12px;
+      font-weight: 600;
+      letter-spacing: -0.0275em;
+      font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
 
       transition: all 0.085s ease-out;
+      position: relative;
+
+      :global(svg) {
+        position: absolute;
+        top: 50%;
+        right: 14px;
+        transform: translateY(-50%);
+        margin-left: 12px;
+        transition: all 0.132s ease-in-out;
+        opacity: 0.7;
+        color: #fff !important;
+      }
+
+      &:not(.loading)::before {
+        --height: 20px;
+        $size: 32px;
+        $rad: calc(#{$size} / 2);
+        content: "";
+        width: $size;
+        height: var(--height);
+        border-radius: 0 0 $rad $rad;
+        background-color: var(--primary-color);
+        opacity: 0.25;
+        bottom: 0;
+        right: 2em;
+        position: absolute;
+        z-index: -1;
+        transition: all 0.4s ease-in-out;
+      }
 
       &:hover {
-        background-color: hsl(var(--primary-color-h), 67%, 39%);
+        color: #fff;
+        background-color: hsl(var(--primary-color-h), 85%, 46%);
+        border-color: var(--primary-color-lighten-3);
         // color: #000e;
+
+        :global(svg) {
+          opacity: 1;
+          transform: translateY(-50%) translateX(2px);
+        }
+
+        & + sub {
+          transform: translateY(-2px) translateZ(0);
+          div {
+            // font-weight: 700;
+          }
+        }
+
+        &::before {
+          transform: translateY(var(--height)) translateZ(0);
+        }
       }
 
       &[disabled="true"] {
         filter: saturate(0.4);
         pointer-events: none;
         cursor: default;
+
+        :global(svg) {
+          animation: spin 4s infinite linear;
+        }
+      }
+    }
+
+    sub {
+      display: block;
+      margin-top: 8px;
+      text-align: right;
+      position: absolute;
+      right: 0;
+      transition: all 0.35s ease-in-out;
+      backface-visibility: hidden;
+      transform: translateZ(0);
+
+      div {
+        // font-weight: 700;
+      }
+
+      em {
+        display: block;
+        line-height: 1;
+        color: var(--primary-color-lighten-4);
+      }
+
+      @include screen("tablet") {
+        display: none;
       }
     }
 
@@ -174,6 +278,15 @@
           );
         }
       }
+    }
+  }
+
+  @keyframes spin {
+    from {
+      transform: translateY(-50%) rotate(0deg);
+    }
+    to {
+      transform: translateY(-50%) rotate(360deg);
     }
   }
 </style>

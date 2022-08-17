@@ -78,7 +78,7 @@
         ><Icon icon={faCog} /><small>Settings</small>
       </button>
       <a href={$readPageLink} class:active={false}>
-        <Icon icon={faChevronRight} /><small>Read Now</small>
+        <Icon icon={faChevronRight} /><small>Begin reading</small>
       </a>
     {/if}
     {#if $menuVariance === MenuVariance.ReadPage}

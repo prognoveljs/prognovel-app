@@ -75,7 +75,7 @@ export function createDerivedNovelsMetadata($meta: SiteMetadata) {
   }
 }
 
-export function handleReadButton(novel: string): string {
+export function handleBeginReadingButton(novel: string): string {
   const tableOfContent: string[] = getStore(toc);
   if (!tableOfContent.length) return;
 

@@ -1,7 +1,7 @@
 import { derived, Readable } from "svelte/store";
 import { currentNovel } from "$lib/store/states";
 import { currentBook, currentChapter, currentChapterCursor, toc } from "./index";
-import { handleReadButton } from "$lib/utils/novel-page";
+import { handleBeginReadingButton } from "$lib/utils/novel-page";
 
 export const disableNextChapter: Readable<boolean> = derived(
   [currentChapterCursor, toc],
@@ -31,5 +31,5 @@ export const prevChapterLink: Readable<string> = derived(
 );
 
 export const readPageLink: Readable<string> = derived([toc, currentNovel], ([list, novel]) => {
-  return list && novel ? handleReadButton(novel) : "";
+  return list && novel ? handleBeginReadingButton(novel) : "";
 });
