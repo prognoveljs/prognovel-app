@@ -47,7 +47,8 @@
   });
 
   function onScroll(event: MouseEvent) {
-    body;
+    if (document.activeElement.tagName.toLowerCase() !== "input") return;
+    body.focus();
   }
 
   export function searchPressKey(e) {
