@@ -20,14 +20,14 @@
   $: readNowData = (
     $toc?.length ? handleBeginReadingButton($currentNovel) : Promise.resolve("")
   ) as Promise<ReadNowObject>;
-  $: isLinkReady = readLink && volume && chapter;
-  $: height = showMore ? "auto" : "270px";
-  $: disableLink = Boolean(!isBrowser || !isLinkReady);
-  $: beginReadingTitle = $chapterTitles?.[$currentNovel]?.[volume]?.[chapter];
   $: readNowData.then((data) => {
     if (typeof data?.link === "string") readLink = data?.link;
     lastReadAt = data?.lastReadAt;
   });
+  $: isLinkReady = readLink && volume && chapter;
+  $: height = showMore ? "auto" : "270px";
+  $: disableLink = Boolean(!isBrowser || !isLinkReady);
+  $: beginReadingTitle = $chapterTitles?.[$currentNovel]?.[volume]?.[chapter];
 </script>
 
 <article>

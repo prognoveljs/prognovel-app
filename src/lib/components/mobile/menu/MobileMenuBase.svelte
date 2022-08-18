@@ -27,6 +27,7 @@
   import { path, showReadPageWindow, showSettings } from "$lib/store/states";
   import { showNovelPageWindow } from "$lib/store/novel-page";
   import { readNowObjectData } from "$lib/store/read-page/read-page-navigation";
+  import ContinueReadPreventDialogue from "$lib/components/novel-page/menu/ContinueReadPreventDialogue.svelte";
   $: readPageActive = $showAdjustFont || $showStatsAndOptions || $showTOC || $showComments;
   $: buttonsLength = function () {
     switch ($menuVariance) {
@@ -40,8 +41,11 @@
   };
 
   let readButton: HTMLAnchorElement;
+  let showContinueReadDialog: boolean = false;
   function continueReadingClick(e: MouseEvent) {
     if (readButton.textContent.includes("Continue")) {
+      showContinueReadDialog = true;
+      e.preventDefault();
     }
   }
 </script>
@@ -132,6 +136,10 @@
   <div class="backdrop" />
 {:else if $menuState === MenuState.Loading}
   <article>...</article>
+{/if}
+
+{#if showContinueReadDialog}
+  <ContinueReadPreventDialogue on:close={() => (showContinueReadDialog = false)} />
 {/if}
 
 <style lang="scss">
