@@ -26,7 +26,7 @@
   import { showDownload } from "$lib/store/novel-page";
   import { path, showReadPageWindow, showSettings } from "$lib/store/states";
   import { showNovelPageWindow } from "$lib/store/novel-page";
-  import { readPageLink } from "$lib/store/read-page/read-page-navigation";
+  import { readNowObjectData } from "$lib/store/read-page/read-page-navigation";
   $: readPageActive = $showAdjustFont || $showStatsAndOptions || $showTOC || $showComments;
   $: buttonsLength = function () {
     switch ($menuVariance) {
@@ -77,9 +77,15 @@
       <button class:active={$showSettings} on:click={() => showNovelPageWindow(showSettings)}
         ><Icon icon={faCog} /><small>Settings</small>
       </button>
-      <a href={$readPageLink} class:active={false}>
-        <Icon icon={faChevronRight} /><small>Begin reading</small>
-      </a>
+      {#await $readNowObjectData}
+        <a href={"/"} class:active={false} disabled>
+          <Icon icon={faChevronRight} /><small>Begin reading</small>
+        </a>
+      {:then data}
+        <a href={data?.link || "/"} class:active={false}>
+          <Icon icon={faChevronRight} /><small>Begin reading</small>
+        </a>
+      {/await}
     {/if}
     {#if $menuVariance === MenuVariance.ReadPage}
       <a class:active={!$showSettings && $path === "/"} href="/"

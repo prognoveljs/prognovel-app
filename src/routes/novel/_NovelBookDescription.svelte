@@ -1,23 +1,33 @@
 <script lang="ts">
   import DescriptionInfo from "$lib/components/novel-page/DescriptionInfo.svelte";
-  import { readPageLink } from "$lib/store/read-page/read-page-navigation";
   import { currentNovel, isBrowser } from "$lib/store/states";
   import { getContext } from "svelte";
   import type { NovelMetadata } from "$typings";
   import { ArrowRightIcon, RefreshCwIcon } from "svelte-feather-icons";
-  import { chapterTitles } from "$lib/store/read-page";
+  import { chapterTitles, toc } from "$lib/store/read-page";
   import { fly } from "svelte/transition";
   import { replacePageTitleBookAndChapter } from "$lib/utils/read-page/history";
+  import { handleBeginReadingButton, ReadNowObject } from "$lib/utils/novel-page";
 
   let novelMetadata: NovelMetadata = getContext("novelMetadata");
   let showMore = false;
-  $: height = showMore ? "auto" : "270px";
-  $: disableLink = Boolean(!isBrowser || !$readPageLink);
-  $: [volume, chapter] = ($readPageLink || "")
+  let readLink = "";
+  let lastReadAt = null;
+  $: [volume, chapter] = (readLink || "")
     .split("/")
     .filter((s) => !!s)
     .slice(-2);
+  $: readNowData = (
+    $toc?.length ? handleBeginReadingButton($currentNovel) : Promise.resolve("")
+  ) as Promise<ReadNowObject>;
+  $: isLinkReady = readLink && volume && chapter;
+  $: height = showMore ? "auto" : "270px";
+  $: disableLink = Boolean(!isBrowser || !isLinkReady);
   $: beginReadingTitle = $chapterTitles?.[$currentNovel]?.[volume]?.[chapter];
+  $: readNowData.then((data) => {
+    if (typeof data?.link === "string") readLink = data?.link;
+    lastReadAt = data?.lastReadAt;
+  });
 </script>
 
 <article>
@@ -31,10 +41,10 @@
   </div>
   <div class="read-button-flex">
     <a
-      href={$readPageLink || "/"}
+      href={readLink || "/"}
       disabled={disableLink}
       class:loading={disableLink || !beginReadingTitle}
-      >{!disableLink ? "Begin reading" : "Fetching info..."}
+      >{!disableLink ? (!lastReadAt ? "Begin reading" : "Continue reading") : "Fetching info..."}
       {#if disableLink}
         <RefreshCwIcon size="18" class="spin" />
       {:else}
@@ -44,7 +54,8 @@
     {#if beginReadingTitle}
       <sub>
         <div in:fly={{ y: -4, duration: 200 }}>
-          from {replacePageTitleBookAndChapter(`${volume}`, true)}, Chapter {(
+          {lastReadAt ? "" : "from"}
+          {replacePageTitleBookAndChapter(`${volume}`, true)}, Chapter {(
             (chapter || "").split("chapter-")[1] || ""
           ).replace("-", ".")}
         </div>
@@ -118,13 +129,12 @@
 
     a {
       margin: 0;
-      width: 170px;
+      width: 180px;
       display: inline-block;
       text-align: left;
       --bg: hsl(var(--primary-color-h), 80%, 40%);
       cursor: pointer;
-      padding: 8px 18px;
-      padding-right: 40px;
+      padding: 8px 32px 8px 12px;
       border-radius: 4px;
       color: #fffc;
       background-color: var(--bg);
@@ -140,7 +150,7 @@
       :global(svg) {
         position: absolute;
         top: 50%;
-        right: 14px;
+        right: 8px;
         transform: translateY(-50%);
         margin-left: 12px;
         transition: all 0.132s ease-in-out;

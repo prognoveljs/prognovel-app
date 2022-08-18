@@ -4,12 +4,15 @@
 
 I'll try to make this version changelog to be more readable with some commentary about the changes, rather than some random logs than I directly copy-paste'd from codebase commits. I hope the changes more readable from now on.
 
-On this version, there some fixes to search result as well greatly enhance its UX on mobile device. I haven't been testing ProgNovel on mobile recently and wasn't aware the UX on mobile for searchbar is abysmal - and this patch should fixes most of the issues for mobile users.
+In this version, there some fixes to search result as well greatly enhance its UX on mobile device. I haven't been testing ProgNovel on mobile recently and wasn't aware the UX on mobile for searchbar is abysmal - and this patch should fixes most of the issues for mobile users.
 
-Other changes also includes some adjustment to UI like for read page's option section headers, and "READ NOW" button on novel page has been reworked to include some hover animation, adding icon and changing the label to "Begin reading", and at the bottom of the button now title of the novel chapter for the button is being displayed to give readers some idea where the button will direct them to.
+Other changes also includes some adjustment to UI like for read page's option section headers, and "READ NOW" button on novel page has been reworked to include some hover animation, adding icon and changing the label to "Begin reading" or "Continue reading" (if reader has read the novel). There also minor enhancement where at the bottom of button, title of the novel chapter is being displayed to give readers some idea where the button will direct them to.
+
+## Changelogs:
 
 🎨 UI/UX IMPROVEMENTS:
 - (novel page) rework read now button, change label to "Begin reading", add "fetch info..." label when loading, new subtle animations and show destination chapter title
+- (novel page) Allow to continue reading from novel page, based on reader's last chapter read
 - (read page) adjust color and add icons for section headers in read page option tab
 - (searchbar) now has close button both on desktop and mobile versions
 - (searchbar) on mobile, scrolling/swipping down the search result will lose the focus on searchbar, disabling the mobile keyboard and thus giving the search result larger view of the screen
@@ -19,6 +22,7 @@ Other changes also includes some adjustment to UI like for read page's option se
 - (fix - searchbar) search result not being able to scroll on mobile
 - (fix - searchbar) active search unintendedly closing when clicking search result container
 - (fix - search result) randomly blur images and texts on scrolling
+- (fux - read page) fix missing (404 error) for chapter lock SVG
 
 # 0.7.8
 

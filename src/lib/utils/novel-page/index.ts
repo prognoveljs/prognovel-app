@@ -3,7 +3,8 @@ import { derived, get as getStore, Readable } from "svelte/store";
 import { fetchNovelMetadata } from "$lib/utils/fetch-metadata";
 import { toc } from "$lib/store/read-page";
 import { getCoverURLPath } from "$lib/utils/images";
-import type { NovelsMetadata, SiteMetadata } from "$typings";
+import { getNovelRecentHistory } from "$lib/utils/read-page/history";
+import type { HistoryRecent, NovelsMetadata, SiteMetadata } from "$typings";
 
 export function getNovelBookCoverSrc(
   novel: string,
@@ -22,25 +23,24 @@ export async function getNovelFirstChapter(novel: string): Promise<string> {
   return novelsMetadata[novel].chapters?.[0] ?? "";
 }
 
-// @ts-expect-error
 export const novelList: string[] = import.meta.env.NOVEL_LIST;
-// @ts-expect-error
+
 export const novelTitles: {
   [novel: string]: string;
 } = import.meta.env.NOVEL_TITLES;
-// @ts-expect-error
+
 export const novelGenres: {
   [novel: string]: string[];
 } = import.meta.env.NOVEL_GENRES;
-// @ts-expect-error
+
 export const novelDemographics: {
   [novel: string]: string;
 } = import.meta.env.NOVEL_DEMOGRAPHICS;
-// @ts-expect-error
+
 export const novelSynopsises: {
   [novel: string]: string;
 } = import.meta.env.NOVEL_SYNOPSISES;
-// @ts-expect-error
+
 export const novelCoverPlaceholders: {
   [novel: string]: string;
 } = import.meta.env.NOVEL_COVER_PLACEHOLDERS;
@@ -75,12 +75,24 @@ export function createDerivedNovelsMetadata($meta: SiteMetadata) {
   }
 }
 
-export function handleBeginReadingButton(novel: string): string {
+export interface ReadNowObject extends HistoryRecent {
+  link: string;
+}
+export async function handleBeginReadingButton(novel: string): Promise<ReadNowObject> {
   const tableOfContent: string[] = getStore(toc);
   if (!tableOfContent.length) return;
+  const recent = await getNovelRecentHistory(novel);
 
-  const chapterDestination = tableOfContent[0];
-  return `/read/${novel}/${chapterDestination}`;
+  const chapterDestination = recent?.lastChapterRead || tableOfContent[0];
+  const result: ReadNowObject = {
+    id: novel,
+    lastChapterRead: chapterDestination,
+    link: `/read/${novel}/${chapterDestination}`,
+    lastReadAt: recent?.lastReadAt,
+  };
+  if (recent?.lastChapter) result.lastChapter = recent.lastChapter;
+  if (recent?.progress) result.progress = recent.progress;
+  return result;
 }
 
 export const novelCoverSubtitle: Readable<{
