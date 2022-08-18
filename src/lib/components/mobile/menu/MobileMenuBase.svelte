@@ -38,6 +38,12 @@
         return 5;
     }
   };
+
+  let readButton: HTMLAnchorElement;
+  function continueReadingClick(e: MouseEvent) {
+    if (readButton.textContent.includes("Continue")) {
+    }
+  }
 </script>
 
 {#if $menuState === MenuState.Shown || readPageActive}
@@ -78,12 +84,20 @@
         ><Icon icon={faCog} /><small>Settings</small>
       </button>
       {#await $readNowObjectData}
-        <a href={"/"} class:active={false} disabled>
+        <a href={"/"} class:active={false} class="right-cta" disabled>
           <Icon icon={faChevronRight} /><small>Begin reading</small>
         </a>
       {:then data}
-        <a href={data?.link || "/"} class:active={false}>
-          <Icon icon={faChevronRight} /><small>Begin reading</small>
+        <a
+          bind:this={readButton}
+          href={data?.link || "/"}
+          class:active={false}
+          on:click={continueReadingClick}
+          class="right-cta"
+        >
+          <Icon icon={faChevronRight} /><small
+            >{data?.lastReadAt ? "Continue" : "Begin reading"}</small
+          >
         </a>
       {/await}
     {/if}

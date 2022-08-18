@@ -1,6 +1,8 @@
 $zIndex: 9999;
 
 article {
+  --padding-side: 0%;
+  padding: 0 var(--padding-side);
   display: none;
   grid-gap: 0 4px;
   grid-template-columns: repeat(var(--buttons-length, 4), minmax(10px, 1fr));
@@ -54,16 +56,21 @@ article {
     }
   }
 
+  .right-cta {
+    padding-right: calc(var(--padding-side) * -1);
+    background-color: var(--primary-color-darken-2);
+  }
+
   @include screen("small-tablet") {
-    padding: 0 20%;
+    --padding-side: 20%;
     display: grid;
   }
   @include screen("mobile") {
-    padding: 0 7%;
+    --padding-side: 7%;
     // display: grid;
   }
   @include screen("small-mobile") {
-    padding: 0 4%;
+    --padding-side: 4%;
     // display: grid;
   }
 }
