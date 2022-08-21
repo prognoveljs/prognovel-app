@@ -1,9 +1,10 @@
 <script lang="ts">
   import { asyncTextRendering } from "$lib/store/read-page";
+  import { CpuIcon } from "svelte-feather-icons";
   import SectionHeader from "../body/SectionHeader.svelte";
 </script>
 
-<SectionHeader>Tweak performance</SectionHeader>
+<SectionHeader Icon={CpuIcon}>Tweak performance</SectionHeader>
 <div class="checkbox">
   <div class="async-text-perf option__checkbox">
     <label for="async-render">Asynchronous Text Rendering</label>

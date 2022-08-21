@@ -4,10 +4,13 @@
   import { getCoverURLPath } from "$lib/utils/images";
   import { prefetch, prefetchRoutes } from "$app/navigation";
   import { fade, fly } from "svelte/transition";
+  import { isMobileScreen } from "$lib/utils/mobile";
 
   export let index = 0;
   export let novel = { id: "", title: "" };
+  let el;
 
+  let clicked = false;
   function resultItem(el: HTMLAnchorElement) {
     el.onfocus = async () => {
       const elWrapper: HTMLDivElement = el.querySelector(".content-wrapper");
@@ -17,15 +20,27 @@
       prefetch(el.href);
 
       elWrapper.style.height = `calc(var(--item-height) + ${elTitle.clientHeight}px - 18px)`;
+      clicked = true;
     };
+
     el.onblur = async () => {
       const elWrapper: HTMLDivElement = el.querySelector(".content-wrapper");
       elWrapper.style.height = `calc(100%)`;
+      clicked = false;
     };
+  }
+
+  function onClick(e: MouseEvent) {
+    if (isMobileScreen()) {
+      if (!clicked) {
+        e.preventDefault();
+      }
+    }
   }
 </script>
 
 <a
+  bind:this={el}
   sveltekit:prefetch
   in:fly={{ duration: 125, y: 12, delay: 50 * index }}
   out:fly={{ duration: 80, y: -20, delay: 30 * index }}
@@ -34,7 +49,7 @@
   href="/novel/{novel.id}"
   style="z-index:{900 - index}"
   use:resultItem
-  on:click
+  on:click={onClick}
   on:blur
   on:mouseover
   on:focus
@@ -82,6 +97,7 @@
     color: var(--primary-color-darken-4);
     font-weight: 700;
     min-height: var(--item-height);
+    pointer-events: all;
 
     .title {
       overflow: hidden;

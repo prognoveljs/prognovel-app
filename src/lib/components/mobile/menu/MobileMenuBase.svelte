@@ -26,7 +26,8 @@
   import { showDownload } from "$lib/store/novel-page";
   import { path, showReadPageWindow, showSettings } from "$lib/store/states";
   import { showNovelPageWindow } from "$lib/store/novel-page";
-  import { readPageLink } from "$lib/store/read-page/read-page-navigation";
+  import { readNowObjectData } from "$lib/store/read-page/read-page-navigation";
+  import ContinueReadPreventDialogue from "$lib/components/novel-page/menu/ContinueReadPreventDialogue.svelte";
   $: readPageActive = $showAdjustFont || $showStatsAndOptions || $showTOC || $showComments;
   $: buttonsLength = function () {
     switch ($menuVariance) {
@@ -38,6 +39,15 @@
         return 5;
     }
   };
+
+  let readButton: HTMLAnchorElement;
+  let showContinueReadDialog: boolean = false;
+  function continueReadingClick(e: MouseEvent) {
+    if (readButton.textContent.includes("Continue")) {
+      showContinueReadDialog = true;
+      e.preventDefault();
+    }
+  }
 </script>
 
 {#if $menuState === MenuState.Shown || readPageActive}
@@ -77,9 +87,23 @@
       <button class:active={$showSettings} on:click={() => showNovelPageWindow(showSettings)}
         ><Icon icon={faCog} /><small>Settings</small>
       </button>
-      <a href={$readPageLink} class:active={false}>
-        <Icon icon={faChevronRight} /><small>Read Now</small>
-      </a>
+      {#await $readNowObjectData}
+        <a href={"/"} class:active={false} class="right-cta" disabled>
+          <Icon icon={faChevronRight} /><small>Begin reading</small>
+        </a>
+      {:then data}
+        <a
+          bind:this={readButton}
+          href={data?.link || "/"}
+          class:active={false}
+          on:click={continueReadingClick}
+          class="right-cta"
+        >
+          <Icon icon={faChevronRight} /><small
+            >{data?.lastReadAt ? "Continue" : "Begin reading"}</small
+          >
+        </a>
+      {/await}
     {/if}
     {#if $menuVariance === MenuVariance.ReadPage}
       <a class:active={!$showSettings && $path === "/"} href="/"
@@ -112,6 +136,10 @@
   <div class="backdrop" />
 {:else if $menuState === MenuState.Loading}
   <article>...</article>
+{/if}
+
+{#if showContinueReadDialog}
+  <ContinueReadPreventDialogue on:close={() => (showContinueReadDialog = false)} />
 {/if}
 
 <style lang="scss">

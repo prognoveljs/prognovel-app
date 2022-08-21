@@ -8,10 +8,12 @@
   import { cubicIn, cubicOut } from "svelte/easing";
   import IconSvg from "../IconSVG.svelte";
   import NavSearchResultItem from "./NavSearchResultItem.svelte";
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onDestroy, onMount } from "svelte";
+  import { windowLock, windowUnlock } from "$lib/utils/window/lock";
 
   export let search = "";
   export let input;
+  let body: HTMLElement;
   const dispath = createEventDispatcher();
 
   $: novelsGroup = $siteMetadata?.novelsMetadata || [];
@@ -30,8 +32,23 @@
       });
   $: if (search === null || selectedNovel < -1) selectedNovel = -1;
   $: if (selectedNovel > -1 && browser) {
-    const sel = document.querySelectorAll(".result a")?.[selectedNovel] as HTMLAnchorElement;
+    const sel = document.querySelectorAll(".result-body a")?.[selectedNovel] as HTMLAnchorElement;
     if (sel) sel.focus();
+  }
+
+  onMount(() => {
+    windowLock();
+    body.addEventListener("scroll", onScroll);
+  });
+
+  onDestroy(() => {
+    windowUnlock();
+    body.removeEventListener("scroll", onScroll);
+  });
+
+  function onScroll(event: MouseEvent) {
+    if (document.activeElement.tagName.toLowerCase() !== "input") return;
+    body.focus();
   }
 
   export function searchPressKey(e) {
@@ -103,8 +120,10 @@
 <section
   on:focus
   on:mouseover={onMouseMove}
-  class="result"
+  class="result-body"
   style="--result-width: {RESULT_WIDTH}px;"
+  bind:this={body}
+  tabindex="0"
 >
   <div in:fade={{ duration: 100 }} out:fade={{ duration: 100 }}>
     <em
@@ -138,20 +157,31 @@
     in:fly={{ duration: 225, x: RESULT_WIDTH, easing: cubicOut }}
     out:fly={{ duration: 300, x: RESULT_WIDTH, easing: cubicIn }}
     class="search-result-overlay"
-    tabindex="0"
   />
 </section>
 
 <style lang="scss">
   @import "shared";
-  .result {
+  .result-body {
     position: fixed;
     top: var(--header-height);
     right: 0;
     padding: 1em;
     width: $resultWidth;
     max-width: 100%;
-    // contain: content;
+    overflow-y: scroll;
+    height: calc(100vh - var(--header-height) - var(--mobile-menu-height));
+    isolation: isolate;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    * {
+      pointer-events: none;
+    }
 
     em {
       display: flex;
@@ -193,10 +223,11 @@
       top: var(--header-height);
       right: 0;
       transition: all 0.3s ease-in-out;
-      z-index: $overlay-index;
+      z-index: -1;
       background: #fff4;
       backdrop-filter: blur(10px);
       box-shadow: -4px 0 8px #0001, -4px 0 20px #0001;
+      // pointer-events: none;
       // background: linear-gradient(to left, #0007 30%, #0002, #0000);
       // transform: translateX(#{$resultWidth});
       // &.active {

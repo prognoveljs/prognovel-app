@@ -27,7 +27,7 @@ export const novelsData: Writable<NovelsMetadata> = writable({});
 export const page: Writable<any> = writable({});
 export const path: Readable<string> = derived([page], ([currentPage]) => {
   if (!isBrowser) return "";
-  return currentPage.url.pathname || document.location.pathname;
+  return currentPage?.url?.pathname || document.location.pathname;
 });
 
 // user

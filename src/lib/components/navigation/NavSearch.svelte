@@ -9,6 +9,7 @@
   import { frameTick } from "$lib/utils/animation";
   import NavSearchResult from "./NavSearchResult.svelte";
   import { SITE_TITLE } from "$lib/_setting";
+  import { XCircleIcon } from "svelte-feather-icons";
 
   export let isMobile: boolean = false;
   let search: string;
@@ -17,9 +18,10 @@
   function onBlur() {
     setTimeout(() => {
       const activeEl = document.activeElement;
+      console.log(activeEl.classList);
       if (
         activeEl.classList.contains("search-result-item") ||
-        activeEl.classList.contains("search-result-overlay") ||
+        activeEl.classList.contains("result-body") ||
         activeEl === input
       )
         return;
@@ -57,6 +59,11 @@
         Press <kbd>/</kbd> to search novels
       {/if}
     </span>
+    {#if search}
+      <span on:click={() => (search = "")}>
+        <XCircleIcon class="close-icon" />
+      </span>
+    {/if}
   </div>
   <span class="icon">
     <IconSvg --color="#0006" data={searchIcon} />
@@ -97,12 +104,31 @@
 
     .input-wrap {
       display: flex;
+      position: relative;
+
+      :global {
+        .close-icon {
+          position: absolute;
+          right: 28px;
+          top: 50%;
+          color: var(--header-color);
+          opacity: 0.6;
+          transform: translateY(-50%);
+          cursor: pointer;
+
+          &:hover {
+            opacity: 0.75;
+            color: darkred;
+          }
+        }
+      }
 
       input {
         height: 60%;
         border-radius: 4px;
         padding: 0.25em;
         padding-left: 2em;
+        padding-right: 1.825em;
         font-size: 1.2em;
         margin-right: 1em;
         box-sizing: border-box;

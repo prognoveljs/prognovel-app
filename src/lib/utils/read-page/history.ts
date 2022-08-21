@@ -30,6 +30,16 @@ export async function setNovelRecentHistory(novel: string, chapter: string) {
   }
 }
 
+export async function getNovelRecentHistory(novel: string): Promise<HistoryRecent> {
+  const history: HistoryRecent[] = await get(IDB_PREFIX_HISTORY_RECENT);
+  let novelHistory: HistoryRecent;
+  if (history && history.length) {
+    novelHistory = history.filter((obj) => obj.id === novel)[0];
+  }
+
+  return novelHistory;
+}
+
 interface HistoryOptions {
   title: string;
   path: string;

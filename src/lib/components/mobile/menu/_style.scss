@@ -1,6 +1,8 @@
 $zIndex: 9999;
 
 article {
+  --padding-side: 0%;
+  padding: 0 var(--padding-side);
   display: none;
   grid-gap: 0 4px;
   grid-template-columns: repeat(var(--buttons-length, 4), minmax(10px, 1fr));
@@ -14,7 +16,7 @@ article {
   background-color: var(--foreground-color);
   box-shadow: 0 -4px 6px 12px #0001, 0 -2px 3px #0003;
   z-index: 9999;
-  transform: translateY(calc(var(--mobile-menu-offset-y,0) * -1));
+  transform: translateY(calc(var(--mobile-menu-offset-y, 0) * -1));
   transition: var(--mobile-menu-sw-transition, none);
 
   a,
@@ -33,43 +35,48 @@ article {
     position: relative;
     height: 100%;
     transition: background-color 0.125s ease-in-out;
-    
+
     small {
       margin-top: 4px;
       font-size: 12px;
       color: var(--text-body-color);
+      width: max-content;
     }
-    
+
     &.active {
       font-weight: 700;
       color: hsla(#{$hsl}, 0.9);
       z-index: 2;
       text-shadow: 0 2px #0002;
       background-color: hsla(#{$hsl}, 0.2);
-      
+
       :global(path) {
         color: hsla(#{$hsl}, 0.8);
       }
     }
   }
 
-  
-  
+  .right-cta {
+    padding-right: calc(var(--padding-side) * -1);
+    background-color: var(--primary-color-darken-2);
+  }
+
   @include screen("small-tablet") {
-    padding: 0 20%;
+    --padding-side: 20%;
     display: grid;
   }
   @include screen("mobile") {
-    padding: 0 7%;
+    --padding-side: 7%;
     // display: grid;
   }
   @include screen("small-mobile") {
-    padding: 0 4%;
+    --padding-side: 4%;
     // display: grid;
   }
 }
 
-.float,.backdrop {
+.float,
+.backdrop {
   display: none;
 
   @include screen("small-tablet") {
@@ -79,8 +86,8 @@ article {
 
 .backdrop {
   position: fixed;
-  bottom:0;
-  left:0;
+  bottom: 0;
+  left: 0;
   width: 100%;
   height: var(--mobile-menu-height, 50px);
   background-color: var(--foreground-color);

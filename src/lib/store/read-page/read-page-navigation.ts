@@ -1,7 +1,9 @@
 import { derived, Readable } from "svelte/store";
 import { currentNovel } from "$lib/store/states";
 import { currentBook, currentChapter, currentChapterCursor, toc } from "./index";
-import { handleReadButton } from "$lib/utils/novel-page";
+import { handleBeginReadingButton, ReadNowObject } from "$lib/utils/novel-page";
+import { resolveConfig } from "vite";
+import { HistoryRecent } from "$typings";
 
 export const disableNextChapter: Readable<boolean> = derived(
   [currentChapterCursor, toc],
@@ -30,6 +32,16 @@ export const prevChapterLink: Readable<string> = derived(
   },
 );
 
-export const readPageLink: Readable<string> = derived([toc, currentNovel], ([list, novel]) => {
-  return list && novel ? handleReadButton(novel) : "";
-});
+export const readNowObjectData: Readable<Promise<ReadNowObject>> = derived(
+  [toc, currentNovel],
+  ([list, novel]) => {
+    return list && novel
+      ? handleBeginReadingButton(novel)
+      : Promise.resolve({
+          id: "",
+          link: "",
+          lastChapterRead: "",
+          lastReadAt: null,
+        });
+  },
+);

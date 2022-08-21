@@ -5,7 +5,7 @@
 <div class="overlay" />
 <div class="chapter-locked">
   <div class="container">
-    <img width={imgSize} height={imgSize} src="img/svg/lock.svg" alt="Chapter locked." />
+    <img width={imgSize} height={imgSize} src="/img/svg/lock.svg" alt="Chapter locked." />
     <h2>This Chapter is Locked</h2>
     <p>Support the team to unlock.</p>
   </div>
