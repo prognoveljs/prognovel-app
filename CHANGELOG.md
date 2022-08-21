@@ -22,7 +22,7 @@ Other changes also includes some adjustment to UI like for read page's option se
 - (fix - searchbar) search result not being able to scroll on mobile
 - (fix - searchbar) active search unintendedly closing when clicking search result container
 - (fix - search result) randomly blur images and texts on scrolling
-- (fux - read page) fix missing (404 error) for chapter lock SVG
+- (fix - read page) fix missing (404 error) for chapter lock SVG
 
 # 0.7.8
 

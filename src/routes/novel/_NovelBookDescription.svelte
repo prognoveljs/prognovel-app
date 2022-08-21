@@ -3,7 +3,7 @@
   import { currentNovel, isBrowser } from "$lib/store/states";
   import { getContext } from "svelte";
   import type { NovelMetadata } from "$typings";
-  import { ArrowRightIcon, RefreshCwIcon } from "svelte-feather-icons";
+  import { ArrowRightIcon, CornerUpLeftIcon, RefreshCwIcon } from "svelte-feather-icons";
   import { chapterTitles, toc } from "$lib/store/read-page";
   import { fly } from "svelte/transition";
   import { replacePageTitleBookAndChapter } from "$lib/utils/read-page/history";
@@ -40,21 +40,29 @@
     {#if !showMore}<span class="show-more" on:click={() => (showMore = true)}>show more</span>{/if}
   </div>
   <div class="read-button-flex">
-    <a
-      href={readLink || "/"}
-      disabled={disableLink}
-      class:loading={disableLink || !beginReadingTitle}
-      >{!disableLink ? (!lastReadAt ? "Begin reading" : "Continue reading") : "Fetching info..."}
-      {#if disableLink}
-        <RefreshCwIcon size="18" class="spin" />
-      {:else}
-        <ArrowRightIcon size="21" />
+    <div class="links">
+      {#if lastReadAt}
+        <a class="first-chapter" href="/read/{$currentNovel}/{$toc[0]}" disabled={disableLink}
+          >Read from first chapter
+          <CornerUpLeftIcon size="21" />
+        </a>
       {/if}
-    </a>
+      <a
+        href={readLink || "/"}
+        disabled={disableLink}
+        class:loading={disableLink || !beginReadingTitle}
+        >{!disableLink ? (!lastReadAt ? "Begin reading" : "Continue reading") : "Fetching info..."}
+        {#if disableLink}
+          <RefreshCwIcon size="18" class="spin" />
+        {:else}
+          <ArrowRightIcon size="21" />
+        {/if}
+      </a>
+    </div>
     {#if beginReadingTitle}
       <sub>
         <div in:fly={{ y: -4, duration: 200 }}>
-          {lastReadAt ? "" : "from"}
+          {lastReadAt ? "last read at" : "from"}
           {replacePageTitleBookAndChapter(`${volume}`, true)}, Chapter {(
             (chapter || "").split("chapter-")[1] || ""
           ).replace("-", ".")}
@@ -127,12 +135,19 @@
     justify-content: end;
     position: relative;
 
+    .links {
+      display: flex;
+      gap: 0.5em;
+      justify-content: end;
+    }
+
     a {
+      --bg-alpha: 1;
+      --bg: hsla(var(--primary-color-h), 80%, 40%, var(--bg-alpha));
       margin: 0;
       width: 180px;
       display: inline-block;
       text-align: left;
-      --bg: hsl(var(--primary-color-h), 80%, 40%);
       cursor: pointer;
       padding: 8px 32px 8px 12px;
       border-radius: 4px;
@@ -147,6 +162,21 @@
       transition: all 0.085s ease-out;
       position: relative;
 
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &.first-chapter {
+        --bg-alpha: 0.2;
+        width: max-content;
+        padding-right: 2.85em;
+        transition: all 0.065s ease-out;
+
+        &:hover {
+          --bg-alpha: 0.4;
+        }
+      }
+
       :global(svg) {
         position: absolute;
         top: 50%;
@@ -158,7 +188,7 @@
         color: #fff !important;
       }
 
-      &:not(.loading)::before {
+      &:not(.loading):not(.first-chapter)::before {
         --height: 20px;
         $size: 32px;
         $rad: calc(#{$size} / 2);
@@ -175,7 +205,7 @@
         transition: all 0.4s ease-in-out;
       }
 
-      &:hover {
+      &:hover:not(.first-chapter) {
         color: #fff;
         background-color: hsl(var(--primary-color-h), 85%, 46%);
         border-color: var(--primary-color-lighten-3);
