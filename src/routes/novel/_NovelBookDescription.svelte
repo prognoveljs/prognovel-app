@@ -8,6 +8,7 @@
   import { fly } from "svelte/transition";
   import { replacePageTitleBookAndChapter } from "$lib/utils/read-page/history";
   import { handleBeginReadingButton, ReadNowObject } from "$lib/utils/novel-page";
+  import { cubicIn, cubicOut } from "svelte/easing";
 
   let novelMetadata: NovelMetadata = getContext("novelMetadata");
   let showMore = false;
@@ -42,7 +43,11 @@
   <div class="read-button-flex">
     <div class="links">
       {#if lastReadAt}
-        <a class="first-chapter" href="/read/{$currentNovel}/{$toc[0]}" disabled={disableLink}
+        <a
+          in:fly={{ duration: 600, easing: cubicOut, opacity: 1, x: 3 }}
+          class="first-chapter"
+          href="/read/{$currentNovel}/{$toc[0]}"
+          disabled={disableLink}
           >Read from first chapter
           <CornerUpLeftIcon size="21" />
         </a>
