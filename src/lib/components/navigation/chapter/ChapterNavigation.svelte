@@ -1,0 +1,214 @@
+<script lang="ts">
+  import { ArrowRightIcon, CornerUpLeftIcon, RefreshCwIcon } from "svelte-feather-icons";
+  import { chapterTitles } from "$lib/store/read-page";
+  import { fly } from "svelte/transition";
+  import { replacePageTitleBookAndChapter } from "$lib/utils/read-page/history";
+  import { cubicOut } from "svelte/easing";
+  import { currentNovel } from "$lib/store/states";
+
+  export let backChapter = "";
+  export let nextChapter = "";
+  export let backLabel = "Previous chapter";
+  export let nextLabel = "Begin reading";
+  export let disabled = false;
+  export let lastReadAt;
+
+  $: [volumeNext, chapterNext] = (nextChapter || "")
+    .split("/")
+    .filter((s) => !!s)
+    .slice(-2);
+  $: [volumeBack, chapterBack] = (backChapter || "")
+    .split("/")
+    .filter((s) => !!s)
+    .slice(-2);
+
+  $: beginReadingTitle = $chapterTitles?.[$currentNovel]?.[volumeNext]?.[chapterNext];
+</script>
+
+<div class="read-button-flex">
+  <div class="links">
+    {#if backChapter}
+      <a
+        in:fly={{ duration: 600, easing: cubicOut, opacity: 1, x: 3 }}
+        class="first-chapter"
+        href="/read/{$currentNovel}/{volumeBack}/{chapterBack}"
+        {disabled}
+        >{backLabel}
+        <CornerUpLeftIcon size="21" />
+      </a>
+    {/if}
+    <a
+      href={nextChapter ? `/read/${$currentNovel}/${volumeNext}/${chapterNext}` : "/"}
+      {disabled}
+      class:loading={disabled || !beginReadingTitle}
+      >{!disabled ? nextLabel : "Fetching info..."}
+      {#if disabled}
+        <RefreshCwIcon size="18" class="spin" />
+      {:else}
+        <ArrowRightIcon size="21" />
+      {/if}
+    </a>
+  </div>
+  {#if beginReadingTitle}
+    <sub>
+      <div in:fly={{ y: -4, duration: 200 }}>
+        {lastReadAt ? "last read at" : "from"}
+        {replacePageTitleBookAndChapter(`${volumeNext}`, true)}, Chapter {(
+          (chapterNext || "").split("chapter-")[1] || ""
+        ).replace("-", ".")}
+      </div>
+      <em in:fly={{ y: -4, duration: 200, delay: 125 }}>{beginReadingTitle}</em>
+    </sub>
+  {/if}
+</div>
+
+<style lang="scss">
+  .read-button-flex {
+    text-align: right;
+    margin-top: 20px;
+    justify-content: end;
+    position: relative;
+
+    .links {
+      display: flex;
+      gap: 0.5em;
+      justify-content: end;
+    }
+
+    a {
+      --bg-alpha: 1;
+      --bg: hsla(var(--primary-color-h), 80%, 40%, var(--bg-alpha));
+      margin: 0;
+      width: 180px;
+      display: inline-block;
+      text-align: left;
+      cursor: pointer;
+      padding: 8px 32px 8px 12px;
+      border-radius: 4px;
+      color: #fffc;
+      background-color: var(--bg);
+      border: 2px solid var(--bg);
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: -0.0275em;
+      font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+
+      transition: all 0.085s ease-out;
+      position: relative;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &.first-chapter {
+        --bg-alpha: 0.2;
+        width: max-content;
+        padding-right: 2.85em;
+        transition: all 0.065s ease-out;
+
+        &:hover {
+          --bg-alpha: 0.4;
+        }
+      }
+
+      :global(svg) {
+        position: absolute;
+        top: 50%;
+        right: 8px;
+        transform: translateY(-50%);
+        margin-left: 12px;
+        transition: all 0.132s ease-in-out;
+        opacity: 0.7;
+        color: #fff !important;
+      }
+
+      &:not(.loading):not(.first-chapter)::before {
+        --height: 20px;
+        $size: 32px;
+        $rad: calc(#{$size} / 2);
+        content: "";
+        width: $size;
+        height: var(--height);
+        border-radius: 0 0 $rad $rad;
+        background-color: var(--primary-color);
+        opacity: 0.25;
+        bottom: 0;
+        right: 2em;
+        position: absolute;
+        z-index: -1;
+        transition: all 0.4s ease-in-out;
+      }
+
+      &:hover:not(.first-chapter) {
+        color: #fff;
+        background-color: hsl(var(--primary-color-h), 85%, 46%);
+        border-color: var(--primary-color-lighten-3);
+        // color: #000e;
+
+        :global(svg) {
+          opacity: 1;
+          transform: translateY(-50%) translateX(2px);
+        }
+
+        & + sub {
+          transform: translateY(-2px) translateZ(0);
+          div {
+            // font-weight: 700;
+          }
+        }
+
+        &::before {
+          transform: translateY(var(--height)) translateZ(0);
+        }
+      }
+
+      &.loading {
+        filter: saturate(0.4);
+        pointer-events: none;
+        cursor: default;
+
+        :global(svg) {
+          animation: spin 4s infinite linear;
+        }
+      }
+    }
+
+    sub {
+      display: block;
+      margin-top: 8px;
+      text-align: right;
+      position: absolute;
+      right: 0;
+      transition: all 0.35s ease-in-out;
+      backface-visibility: hidden;
+      transform: translateZ(0);
+
+      div {
+        // font-weight: 700;
+      }
+
+      em {
+        display: block;
+        line-height: 1;
+        color: var(--primary-color-lighten-4);
+      }
+
+      @include screen("tablet") {
+        display: none;
+      }
+    }
+
+    @include screen("mobile") {
+      display: none;
+    }
+  }
+
+  @keyframes spin {
+    from {
+      transform: translateY(-50%) rotate(0deg);
+    }
+    to {
+      transform: translateY(-50%) rotate(360deg);
+    }
+  }
+</style>

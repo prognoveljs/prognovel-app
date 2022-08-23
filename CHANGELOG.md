@@ -1,5 +1,9 @@
 # ProgNovel Changelog
 
+# 0.8.0
+
+...
+
 # 0.7.9
 
 I'll try to make this version changelog to be more readable with some commentary about the changes, rather than some random logs than I directly copy-paste'd from codebase commits. I hope the changes more readable from now on.
