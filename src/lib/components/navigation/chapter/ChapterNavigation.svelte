@@ -10,8 +10,13 @@
   export let nextChapter = "";
   export let backButtonLabel = "Previous chapter";
   export let nextButtonLabel = "Begin reading";
-  export let disabled = false;
+  export let disabledNext = false;
+  export let disabledBack = false;
   export let nextChapterLabel = "";
+  export let hasLoading = false;
+  export let nextButtonDisabledLabel = "Fetching info...";
+  export let backButtonDisabledLabel = "Previous chapter";
+  export let spoiler = false;
 
   $: [volumeNext, chapterNext] = (nextChapter || "")
     .split("/")
@@ -32,24 +37,26 @@
         in:fly={{ duration: 600, easing: cubicOut, opacity: 1, x: 3 }}
         class="first-chapter"
         href="/read/{$currentNovel}/{volumeBack}/{chapterBack}"
-        {disabled}
-        >{backButtonLabel}
+        disabled={disabledBack}
+        class:disabled={disabledBack}
+        >{!disabledBack ? backButtonLabel : backButtonDisabledLabel}
         <CornerUpLeftIcon size="21" />
       </a>
     {/if}
     <a
       href={nextChapter ? `/read/${$currentNovel}/${volumeNext}/${chapterNext}` : "/"}
-      {disabled}
-      class:loading={disabled || !nextChapterTitle}
-      >{!disabled ? nextButtonLabel : "Fetching info..."}
-      {#if disabled}
+      disabled={disabledNext}
+      class:disabled={disabledNext || !nextChapterTitle}
+      class:loading={disabledNext && hasLoading}
+      >{!disabledNext ? nextButtonLabel : nextButtonDisabledLabel}
+      {#if disabledNext && hasLoading}
         <RefreshCwIcon size="18" class="spin" />
       {:else}
         <ArrowRightIcon size="21" />
       {/if}
     </a>
   </div>
-  {#if nextChapterTitle}
+  {#if nextChapterTitle && !disabledNext}
     <sub>
       <div in:fly={{ y: -4, duration: 200 }}>
         {nextChapterLabel}
@@ -57,7 +64,7 @@
           (chapterNext || "").split("chapter-")[1] || ""
         ).replace("-", ".")}
       </div>
-      <em in:fly={{ y: -4, duration: 200, delay: 125 }}>{nextChapterTitle}</em>
+      <em class:spoiler in:fly={{ y: -4, duration: 200, delay: 125 }}>{nextChapterTitle}</em>
     </sub>
   {/if}
 </div>
@@ -65,7 +72,7 @@
 <style lang="scss">
   .read-button-flex {
     text-align: right;
-    margin-top: 20px;
+    margin-top: var(--margin-top, 20px);
     justify-content: end;
     position: relative;
 
@@ -79,7 +86,7 @@
       --bg-alpha: 1;
       --bg: hsla(var(--primary-color-h), 80%, 40%, var(--bg-alpha));
       margin: 0;
-      width: 180px;
+      width: var(--width, 180px);
       display: inline-block;
       text-align: left;
       cursor: pointer;
@@ -150,25 +157,28 @@
           transform: translateY(-50%) translateX(2px);
         }
 
-        & + sub {
-          transform: translateY(-2px) translateZ(0);
-          div {
-            // font-weight: 700;
-          }
-        }
+        // & + sub {
+        //   transform: translateY(-2px) translateZ(0);
+        // }
 
         &::before {
           transform: translateY(var(--height)) translateZ(0);
         }
       }
 
-      &.loading {
+      &.disabled {
         filter: saturate(0.4);
         pointer-events: none;
         cursor: default;
 
-        :global(svg) {
-          animation: spin 4s infinite linear;
+        &::before {
+          display: none !important;
+        }
+
+        &.loading {
+          :global(svg) {
+            animation: spin 4s infinite linear;
+          }
         }
       }
     }
@@ -183,14 +193,32 @@
       backface-visibility: hidden;
       transform: translateZ(0);
 
-      div {
-        // font-weight: 700;
-      }
-
       em {
-        display: block;
+        display: inline-block;
         line-height: 1;
         color: var(--primary-color-lighten-4);
+        position: relative;
+        padding: 2px;
+        overflow: hidden;
+
+        &.spoiler {
+          &::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transition: all 0.2s ease-in-out;
+            inset: 0;
+            background-color: #fff2;
+            backdrop-filter: blur(4px);
+          }
+
+          &:hover {
+            &::after {
+              transform: translateY(-100%);
+            }
+          }
+        }
       }
 
       @include screen("tablet") {

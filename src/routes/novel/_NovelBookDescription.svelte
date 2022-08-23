@@ -38,8 +38,9 @@
     backChapter={lastReadAt ? $toc[0] : ""}
     backButtonLabel="Read from first chapter"
     nextButtonLabel={lastReadAt ? "Continue reading" : "Begin reading"}
-    disabled={disableLink}
+    disabledNext={disableLink}
     nextChapterLabel={lastReadAt ? "last read at" : "from"}
+    hasLoading={true}
   />
 </article>
 

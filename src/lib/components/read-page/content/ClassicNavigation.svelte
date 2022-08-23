@@ -7,7 +7,11 @@
     disablePrevChapter,
     nextChapterLink,
     prevChapterLink,
+    nextChapter,
+    prevChapter,
   } from "$lib/store/read-page";
+  import ChapterNavigation from "$lib/components/navigation/chapter/ChapterNavigation.svelte";
+  import { ListIcon } from "svelte-feather-icons";
 
   const dispatch = createEventDispatcher();
 
@@ -18,30 +22,91 @@
   };
 </script>
 
-<div class:isFooter>
-  <hr />
-  <section>
-    {#if !($disablePrevChapter || !$toc.length || !$currentChapterCursor)}
-      <a id="prev-chapter" style="grid-area: prev;" href={$prevChapterLink}> Prev Chapter </a>
-    {:else}<em style="grid-area: prev;">Prev Chapter</em>{/if}
+{#if isFooter}
+  <div class="container">
+    <div class="toc" on:click={tableOfContent}>
+      <ListIcon size="21" />
+    </div>
+    <ChapterNavigation
+      --width="220px"
+      --margin-top="0"
+      nextChapter={$nextChapter}
+      backChapter={$prevChapter}
+      backButtonLabel="Previous chapter"
+      nextButtonLabel="Next Chapter"
+      disabledNext={$disableNextChapter}
+      disabledBack={$disablePrevChapter}
+      nextChapterLabel="next chapter is"
+      nextButtonDisabledLabel="Last chapter reached..."
+      spoiler={false}
+    />
+  </div>
+{:else}
+  <div class:isFooter>
+    <hr />
+    <section>
+      {#if !($disablePrevChapter || !$toc.length || !$currentChapterCursor)}
+        <a id="prev-chapter" style="grid-area: prev;" href={$prevChapterLink}> Prev Chapter </a>
+      {:else}<em style="grid-area: prev;">Prev Chapter</em>{/if}
 
-    <button style="grid-area: toc;" disabled={!$toc.length} on:click={tableOfContent}
-      >Table of Content</button
-    >
-    {#if !($disableNextChapter || !$toc.length)}
-      <a
-        id="next-chapter"
-        style="grid-area: next;"
-        class:disabled={$disableNextChapter || !$toc.length}
-        href={$nextChapterLink}
+      <button style="grid-area: toc;" disabled={!$toc.length} on:click={tableOfContent}
+        >Table of Content</button
       >
-        {$disableNextChapter ? "Last chapter reached..." : "Next Chapter"}
-      </a>
-    {:else}<em style="grid-area: next;">Last chapter reached...</em>{/if}
-  </section>
-</div>
+      {#if !($disableNextChapter || !$toc.length)}
+        <a
+          id="next-chapter"
+          style="grid-area: next;"
+          class:disabled={$disableNextChapter || !$toc.length}
+          href={$nextChapterLink}
+        >
+          {$disableNextChapter ? "Last chapter reached..." : "Next Chapter"}
+        </a>
+      {:else}<em style="grid-area: next;">Last chapter reached...</em>{/if}
+    </section>
+  </div>
+{/if}
 
 <style lang="scss">
+  .container {
+    max-width: var(--contentMaxWidth);
+    margin-right: auto;
+    margin-left: auto;
+    padding: var(--contentPadding, 0);
+    margin-bottom: 7em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+    gap: 0.5em;
+
+    .toc {
+      --bg-alpha: 0.2;
+      --bg: hsla(var(--primary-color-h), 80%, 40%, var(--bg-alpha));
+      margin: 0;
+      height: 44px;
+      // width: var(--width, 180px);
+      display: inline-block;
+      text-align: left;
+      cursor: pointer;
+      padding: 8px 12px 8px 12px;
+      border-radius: 4px;
+      color: #fffc;
+      background-color: var(--bg);
+      border: 2px solid var(--bg);
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: -0.0275em;
+      font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+
+      transition: all 0.085s ease-out;
+      position: relative;
+
+      &:hover {
+        --bg-alpha: 0.4;
+      }
+    }
+  }
+
   hr {
     display: none;
   }

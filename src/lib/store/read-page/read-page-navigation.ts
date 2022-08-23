@@ -32,6 +32,19 @@ export const prevChapterLink: Readable<string> = derived(
   },
 );
 
+export const nextChapter: Readable<string> = derived(
+  [disableNextChapter, currentChapterCursor, toc, currentNovel, currentBook, currentChapter],
+  ([disabled, cursor, tableOfContent, novel, book, chapter]) => {
+    return !disabled ? `${(tableOfContent || [])[cursor + 1]}` : `${book}/${chapter}`;
+  },
+);
+export const prevChapter: Readable<string> = derived(
+  [disablePrevChapter, currentChapterCursor, toc, currentNovel, currentBook, currentChapter],
+  ([disabled, cursor, tableOfContent, novel, book, chapter]) => {
+    return !disabled ? `${(tableOfContent || [])[cursor - 1]}` : `${book}/${chapter}`;
+  },
+);
+
 export const readNowObjectData: Readable<Promise<ReadNowObject>> = derived(
   [toc, currentNovel],
   ([list, novel]) => {

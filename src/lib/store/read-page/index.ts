@@ -23,4 +23,6 @@ export {
   disablePrevChapter,
   nextChapterLink,
   prevChapterLink,
+  nextChapter,
+  prevChapter,
 } from "./read-page-navigation";
