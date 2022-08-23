@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { ArrowRightIcon, CornerUpLeftIcon, RefreshCwIcon } from "svelte-feather-icons";
+  import { ArrowRightIcon, CornerUpLeftIcon, ListIcon, RefreshCwIcon } from "svelte-feather-icons";
   import { chapterTitles } from "$lib/store/read-page";
   import { fly } from "svelte/transition";
   import { replacePageTitleBookAndChapter } from "$lib/utils/read-page/history";
   import { cubicOut } from "svelte/easing";
   import { currentNovel } from "$lib/store/states";
+  import { createEventDispatcher } from "svelte";
 
   export let backChapter = "";
   export let nextChapter = "";
@@ -17,6 +18,7 @@
   export let nextButtonDisabledLabel = "Fetching info...";
   export let backButtonDisabledLabel = "Previous chapter";
   export let spoiler = false;
+  export let showChapterList = false;
 
   $: [volumeNext, chapterNext] = (nextChapter || "")
     .split("/")
@@ -28,14 +30,29 @@
     .slice(-2);
 
   $: nextChapterTitle = $chapterTitles?.[$currentNovel]?.[volumeNext]?.[chapterNext];
+  const dispatch = createEventDispatcher();
+  function onListClick() {
+    dispatch("onlistclick");
+  }
 </script>
 
 <div class="read-button-flex">
   <div class="links">
+    {#if showChapterList}
+      <button
+        class="secondary-button"
+        href="#chapter-list"
+        on:click|preventDefault
+        on:click={onListClick}
+      >
+        Chapter list
+        <ListIcon size="21" />
+      </button>
+    {/if}
     {#if backChapter}
       <a
         in:fly={{ duration: 600, easing: cubicOut, opacity: 1, x: 3 }}
-        class="first-chapter"
+        class="secondary-button"
         href="/read/{$currentNovel}/{volumeBack}/{chapterBack}"
         disabled={disabledBack}
         class:disabled={disabledBack}
@@ -55,18 +72,18 @@
         <ArrowRightIcon size="21" />
       {/if}
     </a>
+    {#if nextChapterTitle && !disabledNext}
+      <sub>
+        <div in:fly={{ y: -4, duration: 200 }}>
+          {nextChapterLabel}
+          {replacePageTitleBookAndChapter(`${volumeNext}`, true)}, Chapter {(
+            (chapterNext || "").split("chapter-")[1] || ""
+          ).replace("-", ".")}
+        </div>
+        <em class:spoiler in:fly={{ y: -4, duration: 200, delay: 125 }}>{nextChapterTitle}</em>
+      </sub>
+    {/if}
   </div>
-  {#if nextChapterTitle && !disabledNext}
-    <sub>
-      <div in:fly={{ y: -4, duration: 200 }}>
-        {nextChapterLabel}
-        {replacePageTitleBookAndChapter(`${volumeNext}`, true)}, Chapter {(
-          (chapterNext || "").split("chapter-")[1] || ""
-        ).replace("-", ".")}
-      </div>
-      <em class:spoiler in:fly={{ y: -4, duration: 200, delay: 125 }}>{nextChapterTitle}</em>
-    </sub>
-  {/if}
 </div>
 
 <style lang="scss">
@@ -82,10 +99,12 @@
       justify-content: end;
     }
 
-    a {
+    a,
+    button {
       --bg-alpha: 1;
       --bg: hsla(var(--primary-color-h), 80%, 40%, var(--bg-alpha));
       margin: 0;
+      font-size: 1em;
       width: var(--width, 180px);
       display: inline-block;
       text-align: left;
@@ -107,7 +126,7 @@
         text-decoration: underline;
       }
 
-      &.first-chapter {
+      &.secondary-button {
         --bg-alpha: 0.2;
         width: max-content;
         padding-right: 2.85em;
@@ -128,8 +147,10 @@
         opacity: 0.7;
         color: #fff !important;
       }
+    }
 
-      &:not(.loading):not(.first-chapter)::before {
+    a {
+      &:not(.loading):not(.secondary-button)::before {
         --height: 20px;
         $size: 32px;
         $rad: calc(#{$size} / 2);
@@ -146,7 +167,7 @@
         transition: all 0.4s ease-in-out;
       }
 
-      &:hover:not(.first-chapter) {
+      &:hover:not(.secondary-button) {
         color: #fff;
         background-color: hsl(var(--primary-color-h), 85%, 46%);
         border-color: var(--primary-color-lighten-3);
@@ -157,9 +178,9 @@
           transform: translateY(-50%) translateX(2px);
         }
 
-        // & + sub {
-        //   transform: translateY(-2px) translateZ(0);
-        // }
+        & + sub {
+          transform: translateY(-2px) translateZ(0);
+        }
 
         &::before {
           transform: translateY(var(--height)) translateZ(0);
@@ -188,6 +209,7 @@
       margin-top: 8px;
       text-align: right;
       position: absolute;
+      bottom: calc(-100% - 0.86em);
       right: 0;
       transition: all 0.35s ease-in-out;
       backface-visibility: hidden;

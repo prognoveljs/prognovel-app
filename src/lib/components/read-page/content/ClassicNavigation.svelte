@@ -24,9 +24,6 @@
 
 {#if isFooter}
   <div class="container">
-    <div class="toc" on:click={tableOfContent}>
-      <ListIcon size="21" />
-    </div>
     <ChapterNavigation
       --width="220px"
       --margin-top="0"
@@ -39,6 +36,8 @@
       nextChapterLabel="next chapter is"
       nextButtonDisabledLabel="Last chapter reached..."
       spoiler={false}
+      showChapterList={true}
+      on:onlistclick={tableOfContent}
     />
   </div>
 {:else}
@@ -78,33 +77,6 @@
     align-items: center;
     justify-content: end;
     gap: 0.5em;
-
-    .toc {
-      --bg-alpha: 0.2;
-      --bg: hsla(var(--primary-color-h), 80%, 40%, var(--bg-alpha));
-      margin: 0;
-      height: 44px;
-      // width: var(--width, 180px);
-      display: inline-block;
-      text-align: left;
-      cursor: pointer;
-      padding: 8px 12px 8px 12px;
-      border-radius: 4px;
-      color: #fffc;
-      background-color: var(--bg);
-      border: 2px solid var(--bg);
-      text-decoration: none;
-      font-weight: 600;
-      letter-spacing: -0.0275em;
-      font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
-
-      transition: all 0.085s ease-out;
-      position: relative;
-
-      &:hover {
-        --bg-alpha: 0.4;
-      }
-    }
   }
 
   hr {
