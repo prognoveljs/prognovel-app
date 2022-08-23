@@ -36,10 +36,10 @@
   <ChapterNavigation
     {nextChapter}
     backChapter={lastReadAt ? $toc[0] : ""}
-    backLabel="Read from first chapter"
-    nextLabel={lastReadAt ? "Continue reading" : "Begin reading"}
-    {lastReadAt}
+    backButtonLabel="Read from first chapter"
+    nextButtonLabel={lastReadAt ? "Continue reading" : "Begin reading"}
     disabled={disableLink}
+    nextChapterLabel={lastReadAt ? "last read at" : "from"}
   />
 </article>
 

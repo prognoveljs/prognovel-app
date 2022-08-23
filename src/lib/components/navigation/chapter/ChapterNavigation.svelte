@@ -8,10 +8,10 @@
 
   export let backChapter = "";
   export let nextChapter = "";
-  export let backLabel = "Previous chapter";
-  export let nextLabel = "Begin reading";
+  export let backButtonLabel = "Previous chapter";
+  export let nextButtonLabel = "Begin reading";
   export let disabled = false;
-  export let lastReadAt;
+  export let nextChapterLabel = "";
 
   $: [volumeNext, chapterNext] = (nextChapter || "")
     .split("/")
@@ -22,7 +22,7 @@
     .filter((s) => !!s)
     .slice(-2);
 
-  $: beginReadingTitle = $chapterTitles?.[$currentNovel]?.[volumeNext]?.[chapterNext];
+  $: nextChapterTitle = $chapterTitles?.[$currentNovel]?.[volumeNext]?.[chapterNext];
 </script>
 
 <div class="read-button-flex">
@@ -33,15 +33,15 @@
         class="first-chapter"
         href="/read/{$currentNovel}/{volumeBack}/{chapterBack}"
         {disabled}
-        >{backLabel}
+        >{backButtonLabel}
         <CornerUpLeftIcon size="21" />
       </a>
     {/if}
     <a
       href={nextChapter ? `/read/${$currentNovel}/${volumeNext}/${chapterNext}` : "/"}
       {disabled}
-      class:loading={disabled || !beginReadingTitle}
-      >{!disabled ? nextLabel : "Fetching info..."}
+      class:loading={disabled || !nextChapterTitle}
+      >{!disabled ? nextButtonLabel : "Fetching info..."}
       {#if disabled}
         <RefreshCwIcon size="18" class="spin" />
       {:else}
@@ -49,15 +49,15 @@
       {/if}
     </a>
   </div>
-  {#if beginReadingTitle}
+  {#if nextChapterTitle}
     <sub>
       <div in:fly={{ y: -4, duration: 200 }}>
-        {lastReadAt ? "last read at" : "from"}
+        {nextChapterLabel}
         {replacePageTitleBookAndChapter(`${volumeNext}`, true)}, Chapter {(
           (chapterNext || "").split("chapter-")[1] || ""
         ).replace("-", ".")}
       </div>
-      <em in:fly={{ y: -4, duration: 200, delay: 125 }}>{beginReadingTitle}</em>
+      <em in:fly={{ y: -4, duration: 200, delay: 125 }}>{nextChapterTitle}</em>
     </sub>
   {/if}
 </div>
