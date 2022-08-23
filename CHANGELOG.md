@@ -1,6 +1,6 @@
 # ProgNovel Changelog
 
-# 0.8.0
+# 0.7.10
 
 🎨 UI/UX IMPROVEMENTS:
 - (read page) rework botton chapter navigation to uses new navigation UI from novel page
