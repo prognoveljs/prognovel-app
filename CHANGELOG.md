@@ -2,7 +2,9 @@
 
 # 0.8.0
 
-...
+🎨 UI/UX IMPROVEMENTS:
+- (read page) rework botton chapter navigation to uses new navigation UI from novel page
+- (internal) refactor chapter navigation to its own component and rework its dependency store accordingly
 
 # 0.7.9
 
