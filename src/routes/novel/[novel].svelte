@@ -82,11 +82,8 @@
     return import.meta.env.URL || import.meta.env.VERCEL_URL || "";
   }
 
-  const bottomBackground = `background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='scale(2) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(0,0%,100%,0)'/><path d='M11 6a5 5 0 01-5 5 5 5 0 01-5-5 5 5 0 015-5 5 5 0 015 5'  stroke-width='1' stroke='none' fill='hsla(258.5,59.4%,59.4%,1)'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>")`;
-  const { primaryColorHue, primaryColorSaturate, primaryColorLight } = import.meta.env
-    .CSS_VARIABLES;
-  $: bgColor = `hsl(${primaryColorHue},${primaryColorSaturate},${primaryColorLight})`;
-  $: console.log("Background color", bgColor);
+  const patterGap = 52;
+  const patterSize = 6;
 </script>
 
 <svelte:head>
@@ -115,7 +112,39 @@
 <Affiliate {affiliate} {affiliateName} title={novelMetadata.title || ""} />
 <InstantAffiliate title={novelMetadata.title} />
 
-<div class="bg_bottom" style={bottomBackground.replace("hsla(258.5,59.4%,59.4%,1)", bgColor)} />
+<!-- <div class="bg_bottom" style={bottomBackground.replace("hsla(258.5,59.4%,59.4%,1)", bgColor)} /> -->
+
+<div class="bg_bottom">
+  <svg width="100%" height="100%">
+    <!-- Create mask that we'll use to define a slight gradient -->
+    <mask maskUnits="userSpaceOnUse" id="bg_fade">
+      <!-- Here's that slight gradient -->
+      <linearGradient id="bg_gradient" x1="0" y1="0" x2="0" y2="100%">
+        <stop offset="0" style="stop-color: #FFFFFF" />
+        <stop offset="1" style="stop-color: #000000" />
+      </linearGradient>
+      <!-- The canvas for our mask -->
+      <rect fill="url(#bg_gradient)" width="100%" height="100%" />
+    </mask>
+
+    <!-- Let's define the pattern -->
+    <!-- The width and height should be double the circle radius we plan to use -->
+    <pattern
+      id="pattern-circles"
+      x="0"
+      y="42"
+      width={patterGap}
+      height={patterGap}
+      patternUnits="userSpaceOnUse"
+    >
+      <!-- Now let's draw the circle -->
+      <!-- We're going to define the `fill` in the CSS for flexible use -->
+      <circle mask="url(#bg_fade)" cx={patterSize} cy={patterSize} r={patterSize} />
+    </pattern>
+    <!-- The canvas with our applied pattern -->
+    <rect x="0" y="0" width="100%" height="100%" fill="url(#pattern-circles)" />
+  </svg>
+</div>
 
 <style lang="scss">
   .bg_bottom {
@@ -125,6 +154,14 @@
     bottom: 0;
     z-index: -1;
     opacity: 0.2;
+    padding-left: 1%;
+    overflow: hidden;
+
+    :global {
+      svg {
+        fill: var(--primary-color);
+      }
+    }
 
     &::after {
       content: "";
