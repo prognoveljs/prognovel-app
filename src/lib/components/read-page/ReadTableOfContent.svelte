@@ -6,7 +6,7 @@
   import { currentNovel, novelsData } from "$lib/store/states";
   import { windowLock, windowUnlock } from "$lib/utils/window/lock";
   import { isMobileScreen } from "$lib/utils/mobile";
-  import { showTOC } from "$lib/store/read-page/read-page-state";
+  import { chaptersWithSpoiler, showTOC } from "$lib/store/read-page/read-page-state";
   import { getCoverURLPath } from "$lib/utils/images";
   import { chaptersLoaded } from "$lib/store/read-page";
   import { getChapterStoreKey } from "$lib/utils/read-page";
@@ -58,7 +58,10 @@
 
   function isSpoiler(volumeAndChapter: string) {
     const [book, chapter] = volumeAndChapter.split("/");
-    return Boolean($chaptersLoaded?.[getChapterStoreKey($currentNovel, book, chapter)]?.spoiler);
+    return (
+      Boolean($chaptersLoaded?.[getChapterStoreKey($currentNovel, book, chapter)]?.spoiler) ||
+      chaptersWithSpoiler.has(`${$currentNovel}/${volumeAndChapter}`)
+    );
   }
 </script>
 

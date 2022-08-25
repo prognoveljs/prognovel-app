@@ -1,6 +1,6 @@
 <script lang="ts">
   import { ArrowRightIcon, CornerUpLeftIcon, ListIcon, RefreshCwIcon } from "svelte-feather-icons";
-  import { chaptersLoaded, chapterTitles } from "$lib/store/read-page";
+  import { chaptersLoaded, chaptersWithSpoiler, chapterTitles } from "$lib/store/read-page";
   import { fly } from "svelte/transition";
   import { replacePageTitleBookAndChapter } from "$lib/utils/read-page/history";
   import { cubicOut } from "svelte/easing";
@@ -29,9 +29,10 @@
     .split("/")
     .filter((s) => !!s)
     .slice(-2);
-  $: spoiler = Boolean(
-    $chaptersLoaded?.[getChapterStoreKey($currentNovel, volumeNext, chapterNext)]?.spoiler,
-  );
+  $: spoiler =
+    Boolean(
+      $chaptersLoaded?.[getChapterStoreKey($currentNovel, volumeNext, chapterNext)]?.spoiler,
+    ) || chaptersWithSpoiler.has(`${$currentNovel}/${volumeNext}/${chapterNext}`);
 
   $: nextChapterTitle = $chapterTitles?.[$currentNovel]?.[volumeNext]?.[chapterNext];
   const dispatch = createEventDispatcher();

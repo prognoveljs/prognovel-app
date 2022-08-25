@@ -3,6 +3,7 @@
   import { ChapterState } from "$lib/utils/read-page/vars";
   import {
     chaptersLoaded,
+    chaptersWithSpoiler,
     currentBook,
     currentChapter,
     currentContent,
@@ -13,9 +14,10 @@
 
   export let title: string;
   $: chapter = $currentChapter.slice(8).replace(/-/, ".");
-  $: spoiler = Boolean(
-    $chaptersLoaded?.[getChapterStoreKey($currentNovel, $currentBook, $currentChapter)]?.spoiler,
-  );
+  $: spoiler =
+    Boolean(
+      $chaptersLoaded?.[getChapterStoreKey($currentNovel, $currentBook, $currentChapter)]?.spoiler,
+    ) || chaptersWithSpoiler.has(`${$currentNovel}/${$currentBook}/${$currentChapter}`);
 </script>
 
 <section class="title">
