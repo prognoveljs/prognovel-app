@@ -81,6 +81,12 @@
     if (this && this.location) return new URL(this.location).origin;
     return import.meta.env.URL || import.meta.env.VERCEL_URL || "";
   }
+
+  const bottomBackground = `background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='scale(2) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(0,0%,100%,0)'/><path d='M11 6a5 5 0 01-5 5 5 5 0 01-5-5 5 5 0 015-5 5 5 0 015 5'  stroke-width='1' stroke='none' fill='hsla(258.5,59.4%,59.4%,1)'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>")`;
+  const { primaryColorHue, primaryColorSaturate, primaryColorLight } = import.meta.env
+    .CSS_VARIABLES;
+  $: bgColor = `hsl(${primaryColorHue},${primaryColorSaturate},${primaryColorLight})`;
+  $: console.log("Background color", bgColor);
 </script>
 
 <svelte:head>
@@ -109,5 +115,29 @@
 <Affiliate {affiliate} {affiliateName} title={novelMetadata.title || ""} />
 <InstantAffiliate title={novelMetadata.title} />
 
+<div class="bg_bottom" style={bottomBackground.replace("hsla(258.5,59.4%,59.4%,1)", bgColor)} />
+
 <style lang="scss">
+  .bg_bottom {
+    width: 100%;
+    height: 750px;
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+    opacity: 0.2;
+
+    &::after {
+      content: "";
+      background-image: linear-gradient(
+        to bottom,
+        var(--background-color),
+        var(--background-color-alpha)
+      );
+      width: 100%;
+      height: 70%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
 </style>
