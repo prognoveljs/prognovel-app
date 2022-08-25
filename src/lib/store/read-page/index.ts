@@ -14,8 +14,9 @@ export {
   fontSize,
   asyncTextRendering,
   registeredPlugins,
+  chaptersWithSpoiler,
 } from "./read-page-state";
-export type { ChapterTitles } from "./read-page-state";
+export type { ChapterTitles, ChapterTitlesChildren } from "./read-page-state";
 import "./read-page-trigger";
 
 export {

@@ -3,8 +3,8 @@ import { get as getStore } from "svelte/store";
 import { tick } from "svelte";
 import { fetchNovelMetadata } from "$lib/utils/fetch-metadata";
 import { fireDebounceFetchChapter } from "$lib/utils/read-page/fetch-content";
-import { toc, chapterTitles } from "./index";
-import type { ChapterTitles } from "./index";
+import { toc, chapterTitles, chaptersWithSpoiler } from "./index";
+import type { ChapterTitles, ChapterTitlesChildren } from "./index";
 import { isBrowser } from "$lib/store/states";
 
 if (isBrowser) {
@@ -24,8 +24,8 @@ if (isBrowser) {
 }
 
 async function updateChapterTitles(novel: string, freshChapterTitles?: ChapterTitles) {
-  let data;
-  const titles = getStore(chapterTitles);
+  let data: ChapterTitles;
+  let titles = getStore(chapterTitles);
   if (titles[novel]) return;
 
   if (freshChapterTitles) {
@@ -39,6 +39,26 @@ async function updateChapterTitles(novel: string, freshChapterTitles?: ChapterTi
     }
     data = await response.json();
   }
-  titles[novel] = data;
+  const novelChapterTitles = Object.keys(data).reduce(
+    (all: ChapterTitlesChildren, book: string) => {
+      const spoilerTag = "$";
+
+      all[book] = Object.keys(data[book]).reduce((prev, ch) => {
+        let chapterTitle: unknown = data?.[book]?.[ch];
+        if (typeof chapterTitle === "string") {
+          if (chapterTitle.startsWith(spoilerTag)) {
+            chaptersWithSpoiler.add(`${novel}/${book}/${ch}`);
+            chapterTitle = chapterTitle.slice(1);
+          }
+        }
+        prev[ch] = chapterTitle;
+        return prev;
+      }, {});
+      return all;
+    },
+    {},
+  );
+  titles = getStore(chapterTitles) ?? {};
+  titles[novel] = novelChapterTitles;
   chapterTitles.set(titles);
 }

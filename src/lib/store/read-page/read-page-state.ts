@@ -16,9 +16,17 @@ export type ChapterTitles = {
     };
   };
 };
+
+export type ChapterTitlesChildren = {
+  [book: string]: {
+    [chapter: string]: string;
+  };
+};
+
 export const chapterTitles: Writable<ChapterTitles | {}> = writable({});
 
 export const showTOC: Writable<Boolean> = writable(false);
 export const showStatsAndOptions: Writable<Boolean> = writable(false);
 export const showComments: Writable<Boolean> = writable(false);
 export const showAdjustFont: Writable<Boolean> = writable(false);
+export const chaptersWithSpoiler: Set<string> = new Set();
