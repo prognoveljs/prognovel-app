@@ -2,7 +2,11 @@ export { getLoadingPlaceholder, getErrorPlaceholder } from "./placeholder";
 export { enterPage, leavePage } from "./page";
 export { getSlug, parseSlug, readSlug, getChapterUrl, getChapterUrlFromList } from "./slug";
 export { fetchChapter, prefetchChapter, prefetchNextChapter, appendChapter } from "./fetch-content";
-export { setNovelRecentHistory, setBrowserHistory } from "./history";
+export {
+  setNovelRecentHistory,
+  setBrowserHistory,
+  replacePageTitleBookAndChapter,
+} from "./history";
 export {
   getNextChapter,
   getPreviousChapter,
@@ -10,4 +14,4 @@ export {
   setChapterCursor,
   checkTableOfContentExists,
 } from "./navigation";
-export { contentRenderer, createContentDelay } from "./render-content";
+export { contentRenderer, createContentDelay, renderContentReady } from "./render-content";

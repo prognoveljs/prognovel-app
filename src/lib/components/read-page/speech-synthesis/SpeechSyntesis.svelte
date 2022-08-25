@@ -6,6 +6,8 @@
   import { currentChapterIndex, currentChapterTitle } from "$lib/store/read-page";
   import { goto } from "$app/navigation";
 
+  export let volumeAndChapter: string;
+
   let speech: SpeechSynthesis;
   let utterance: SpeechSynthesisUtterance;
   let speechState: "playing" | "pause" | "stop" = "stop";
@@ -15,19 +17,19 @@
 
   $: if ($path && speech) stop();
 
-  function play() {
+  function play(index: string) {
     let text = "";
     speechState = "playing";
     document
-      .querySelectorAll("#chapter-state-success > p")
+      .querySelectorAll(`#chapter-state-success-${index} > p`)
       .forEach((para: HTMLParagraphElement) => {
         text += para.innerText + "\n";
       });
     console.log(text);
     if (!text) return;
     text =
-      `${document.querySelector("#chapter-index").textContent}. ${
-        document.querySelector("#chapter-title").textContent
+      `${document.querySelector(`#chapter-index-${index}`).textContent}. ${
+        document.querySelector(`#chapter-title-${index}`).textContent
       }\n\n\n` + text;
 
     utterance = new SpeechSynthesisUtterance(text);
@@ -69,7 +71,9 @@
 
 <div class="flex">
   {#if speechState === "stop"}
-    <SpeechSynthesisButton icon={faVolumeUp} on:click={play}>Play audio</SpeechSynthesisButton>
+    <SpeechSynthesisButton icon={faVolumeUp} on:click={() => play(volumeAndChapter)}
+      >Play audio</SpeechSynthesisButton
+    >
   {:else}
     <SpeechSynthesisButton icon={faStop} on:click={stop} />
     {#if speechState === "pause"}

@@ -1,9 +1,11 @@
-import { derived, Readable } from "svelte/store";
+import { derived, Readable, writable, Writable } from "svelte/store";
 import { currentNovel } from "$lib/store/states";
 import { currentBook, currentChapter, currentChapterCursor, toc } from "./index";
 import { handleBeginReadingButton, ReadNowObject } from "$lib/utils/novel-page";
 import { resolveConfig } from "vite";
 import { HistoryRecent } from "$typings";
+
+export const infiniteLoading: Writable<boolean> = writable(false);
 
 export const disableNextChapter: Readable<boolean> = derived(
   [currentChapterCursor, toc],

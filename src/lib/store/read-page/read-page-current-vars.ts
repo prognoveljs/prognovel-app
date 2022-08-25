@@ -1,5 +1,4 @@
 import { writable, get as getStore, derived, Readable, Writable } from "svelte/store";
-import { getLoadingPlaceholder } from "../../utils/read-page/index";
 import type { Chapter } from "$typings";
 
 export const toc: Writable<string[]> = writable([]);
@@ -15,7 +14,11 @@ export const currentChapterIndex: Readable<string> = derived(
   },
 );
 
-export const currentContent: Writable<Chapter> = writable(getLoadingPlaceholder());
+export const currentContent: Writable<Chapter> = writable({
+  title: "",
+  html: "",
+  contributors: {},
+});
 
 export const currentChapterTitle: Readable<string> = derived(currentContent, ($content) => {
   return $content && $content.title ? $content.title : "";

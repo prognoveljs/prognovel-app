@@ -13,7 +13,11 @@
   import { currentNovel } from "$lib/store/states";
 
   export let title: string;
-  $: chapter = $currentChapter.slice(8).replace(/-/, ".");
+  export let book = "";
+  export let chapter = "";
+  const CHAPTER_LABEL_INDEX = 8;
+  $: volumeAndChapter = `${book}/${chapter}`;
+  $: chapterLabel = chapter.slice(CHAPTER_LABEL_INDEX).replace(/-/, ".");
   $: spoiler =
     Boolean(
       $chaptersLoaded?.[getChapterStoreKey($currentNovel, $currentBook, $currentChapter)]?.spoiler,
@@ -21,17 +25,17 @@
 </script>
 
 <section class="title">
-  <SpeechSyntesis />
+  <SpeechSyntesis {volumeAndChapter} />
   <div class="index" data-cy="chapter-number">
-    <span id="chapter-index">
-      CHAPTER {chapter}
+    <span id="chapter-index-{volumeAndChapter}">
+      CHAPTER {chapterLabel}
     </span>
     {#if $isCurrentChapterLocked}🔒{/if}
   </div>
   <h1
     tabindex={spoiler ? 0 : -1}
     class:spoiler
-    id="chapter-title"
+    id="chapter-title-{volumeAndChapter}"
     class:chapterError={$currentContent.meta && $currentContent.meta.status === ChapterState.Error}
   >
     {title}

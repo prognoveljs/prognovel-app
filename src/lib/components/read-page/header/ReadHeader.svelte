@@ -3,10 +3,12 @@
 
   $: banner = "";
   export let title: string;
+  export let book = "";
+  export let chapter = "";
 </script>
 
 <section style="background-image: url('{banner}');">
-  <ChapterTitle {title} />
+  <ChapterTitle {book} {chapter} {title} />
 </section>
 
 <style lang="scss">

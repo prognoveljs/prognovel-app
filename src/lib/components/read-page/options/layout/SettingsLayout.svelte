@@ -1,3 +1,10 @@
+<script lang="ts">
+  import { infiniteLoading } from "$lib/store/read-page";
+  function setInfiniteLoading(bool: boolean) {
+    $infiniteLoading;
+  }
+</script>
+
 <section>
   <div><span /> Classic mode</div>
   <div><span /> Infinite reading</div>

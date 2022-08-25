@@ -6,9 +6,8 @@
   import { currentNovel, novelsData } from "$lib/store/states";
   import { windowLock, windowUnlock } from "$lib/utils/window/lock";
   import { isMobileScreen } from "$lib/utils/mobile";
-  import { chaptersWithSpoiler, showTOC } from "$lib/store/read-page/read-page-state";
   import { getCoverURLPath } from "$lib/utils/images";
-  import { chaptersLoaded } from "$lib/store/read-page";
+  import { chaptersLoaded, chaptersWithSpoiler, showTOC } from "$lib/store/read-page";
   import { getChapterStoreKey } from "$lib/utils/read-page";
 
   let width = 400;

@@ -12,6 +12,7 @@
   } from "$lib/store/read-page";
   import ChapterNavigation from "$lib/components/navigation/chapter/ChapterNavigation.svelte";
   import { ListIcon } from "svelte-feather-icons";
+  import { infiniteLoading } from "$lib/store/read-page";
 
   const dispatch = createEventDispatcher();
 
@@ -22,46 +23,48 @@
   };
 </script>
 
-{#if isFooter}
-  <div class="container">
-    <ChapterNavigation
-      --width="220px"
-      --margin-top="0"
-      nextChapter={$nextChapter}
-      backChapter={$prevChapter}
-      backButtonLabel="Previous chapter"
-      nextButtonLabel="Next Chapter"
-      disabledNext={$disableNextChapter}
-      disabledBack={$disablePrevChapter}
-      nextChapterLabel="next chapter is"
-      nextButtonDisabledLabel="Last chapter reached..."
-      showChapterList={true}
-      on:onlistclick={tableOfContent}
-    />
-  </div>
-{:else}
-  <div class:isFooter>
-    <hr />
-    <section>
-      {#if !($disablePrevChapter || !$toc.length || !$currentChapterCursor)}
-        <a id="prev-chapter" style="grid-area: prev;" href={$prevChapterLink}> Prev Chapter </a>
-      {:else}<em style="grid-area: prev;">Prev Chapter</em>{/if}
+{#if !$infiniteLoading}
+  {#if isFooter}
+    <div class="container">
+      <ChapterNavigation
+        --width="220px"
+        --margin-top="0"
+        nextChapter={$nextChapter}
+        backChapter={$prevChapter}
+        backButtonLabel="Previous chapter"
+        nextButtonLabel="Next Chapter"
+        disabledNext={$disableNextChapter}
+        disabledBack={$disablePrevChapter}
+        nextChapterLabel="next chapter is"
+        nextButtonDisabledLabel="Last chapter reached..."
+        showChapterList={true}
+        on:onlistclick={tableOfContent}
+      />
+    </div>
+  {:else}
+    <div class:isFooter>
+      <hr />
+      <section>
+        {#if !($disablePrevChapter || !$toc.length || !$currentChapterCursor)}
+          <a id="prev-chapter" style="grid-area: prev;" href={$prevChapterLink}> Prev Chapter </a>
+        {:else}<em style="grid-area: prev;">Prev Chapter</em>{/if}
 
-      <button style="grid-area: toc;" disabled={!$toc.length} on:click={tableOfContent}
-        >Table of Content</button
-      >
-      {#if !($disableNextChapter || !$toc.length)}
-        <a
-          id="next-chapter"
-          style="grid-area: next;"
-          class:disabled={$disableNextChapter || !$toc.length}
-          href={$nextChapterLink}
+        <button style="grid-area: toc;" disabled={!$toc.length} on:click={tableOfContent}
+          >Table of Content</button
         >
-          {$disableNextChapter ? "Last chapter reached..." : "Next Chapter"}
-        </a>
-      {:else}<em style="grid-area: next;">Last chapter reached...</em>{/if}
-    </section>
-  </div>
+        {#if !($disableNextChapter || !$toc.length)}
+          <a
+            id="next-chapter"
+            style="grid-area: next;"
+            class:disabled={$disableNextChapter || !$toc.length}
+            href={$nextChapterLink}
+          >
+            {$disableNextChapter ? "Last chapter reached..." : "Next Chapter"}
+          </a>
+        {:else}<em style="grid-area: next;">Last chapter reached...</em>{/if}
+      </section>
+    </div>
+  {/if}
 {/if}
 
 <style lang="scss">

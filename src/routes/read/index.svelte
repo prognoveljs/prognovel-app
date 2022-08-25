@@ -11,7 +11,7 @@
 <script>
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
-  import { getLoadingPlaceholder } from "$lib/utils/read-page";
+  // import { getLoadingPlaceholder } from "$lib/utils/read-page";
 
   export let load;
 
@@ -24,7 +24,7 @@
 <div class="body">
   <div class="content">
     <article>
-      {@html getLoadingPlaceholder().html}
+      <!-- {@html getLoadingPlaceholder().html} -->
     </article>
     <div class="options dummy" />
   </div>

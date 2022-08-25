@@ -10,9 +10,11 @@
   }
 
   export let title = "Loading...";
+  export let book = "";
+  export let chapter = "";
 </script>
 
-<ReadHeader {title} />
+<ReadHeader {book} {chapter} {title} />
 
 <article>
   <Navigation on:toc={tableOfContent} />

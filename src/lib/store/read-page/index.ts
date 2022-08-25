@@ -15,6 +15,7 @@ export {
   asyncTextRendering,
   registeredPlugins,
   chaptersWithSpoiler,
+  showTOC,
 } from "./read-page-state";
 export type { ChapterTitles, ChapterTitlesChildren } from "./read-page-state";
 import "./read-page-trigger";
@@ -26,4 +27,5 @@ export {
   prevChapterLink,
   nextChapter,
   prevChapter,
+  infiniteLoading,
 } from "./read-page-navigation";

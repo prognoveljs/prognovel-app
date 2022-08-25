@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import { checkTableOfContentExists, prefetchChapter } from "$lib/utils/read-page";
+  import { checkTableOfContentExists, getNextChapter, prefetchChapter } from "$lib/utils/read-page";
   export const prerender = false;
 
   /** @type {import('@sveltejs/kit').Load} */
@@ -29,16 +29,33 @@
   import Content from "$lib/components/read-page/content/ContentBody.svelte";
   import Options from "../../_Options.svelte";
   import { currentNovel, novelsData, isBrowser } from "$lib/store/states";
-  import { currentChapter, currentBook, currentContent } from "$lib/store/read-page";
-  import { replacePageTitleBookAndChapter } from "$lib/utils/read-page/history";
+  import { currentChapter, currentBook, currentContent, toc } from "$lib/store/read-page";
+  import { replacePageTitleBookAndChapter } from "$lib/utils/read-page";
   import { SITE_TITLE } from "$lib/_setting";
+  import NativePlugins from "$lib/components/plugins/_NativePlugins.svelte";
+  import { showTOC, infiniteLoading } from "$lib/store/read-page";
+  import TOC from "$lib/components/read-page/ReadTableOfContent.svelte";
   // import { prefetchNextChapter } from "$lib/utils/read-page/fetch-content";
 
-  let { novel, book, chapter } = $page.params;
+  $: novel = $page.params.novel;
+  $: book = $page.params.book;
+  $: chapter = $page.params.chapter;
+  $: bookAndChapter = `${book}/${chapter}`;
+  $: activeChapter = [bookAndChapter];
   $: if ($novelsData[novel] && book && chapter) mountPage($page);
 
+  function onChapterEndViewed(bookAndChapter: string) {
+    if ($infiniteLoading) {
+      const cursor = $toc.indexOf(bookAndChapter);
+      const next = getNextChapter(cursor);
+      console.log("Next chapter is", next);
+    }
+
+    console.log("Chapter end viewed");
+  }
+
   let currentPage;
-  function mountPage(page) {
+  function mountPage(page, soft = false) {
     if (currentPage === JSON.stringify(page)) return;
     currentPage = JSON.stringify(page);
 
@@ -100,11 +117,25 @@
 </svelte:head>
 
 <div class="body">
-  <div class="content">
-    <Content {novel} {book} {chapter} />
-    <Options />
-  </div>
+  {#each activeChapter as bookAndChapterIndex}
+    <!-- content here -->
+    <div class="content">
+      <Content
+        {novel}
+        {bookAndChapterIndex}
+        on:chapterendviewed={() => onChapterEndViewed(bookAndChapterIndex)}
+      />
+    </div>
+  {/each}
+  <!-- <div class="content">
+    <Content {novel} book="volume-1" chapter="chapter-2" />
+  </div> -->
+  <Options />
+  <NativePlugins />
   <!-- <Comments /> -->
+  {#if $showTOC}
+    <TOC on:close={() => ($showTOC = false)} />
+  {/if}
 </div>
 
 <style lang="scss">

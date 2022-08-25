@@ -1,11 +1,17 @@
 import { setNovelRecentHistory } from "./history";
 import { tick } from "svelte";
-import { get as getStore } from "svelte/store";
-import { asyncTextRendering, toc, chaptersLoaded } from "$lib/store/read-page";
+import { get as getStore, writable, Writable } from "svelte/store";
+import { asyncTextRendering, toc, chaptersLoaded, infiniteLoading } from "$lib/store/read-page";
 import { isLaunchOnPWA } from "../pwa";
 import type { Chapter } from "$typings";
 import { getChapterStoreKey } from "./navigation";
 import { enablePremiumContent } from "$lib/utils/web-monetization";
+import { currentNovel } from "$lib/store/states";
+
+type RenderContentReady = {
+  [volumeAndChapter: string]: Promise<boolean>;
+};
+export const renderContentReady: Writable<RenderContentReady> = writable({});
 
 export function createContentDelay(novel: string, chapterIndex: string): Promise<any> {
   const last = (getStore(toc) ?? []).slice(-3);
@@ -74,9 +80,12 @@ export function contentRenderer(
       // ideally clean sanitize dirty HTML while
       // allowing WebComponents at the same time
       node.innerHTML = content.html;
+      complete();
     }
 
-    _updateNovelRecentHistory();
+    if (!getStore(infiniteLoading)) {
+      _updateNovelRecentHistory();
+    }
   });
 
   function _asyncTextRendering(html: string): void {
@@ -96,7 +105,16 @@ export function contentRenderer(
     // if current chapter is already not the soon updated one
     if (chunks.length) {
       requestAnimationFrame(() => _update(chunks));
+    } else {
+      complete();
     }
+  }
+
+  function complete() {
+    renderContentReady.update((pool) => {
+      pool[`${novel}/${book}/${chapter}`] = Promise.resolve(true);
+      return pool;
+    });
   }
 
   async function _updateNovelRecentHistory(): Promise<void> {
