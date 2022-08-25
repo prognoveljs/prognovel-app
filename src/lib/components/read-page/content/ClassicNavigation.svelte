@@ -35,7 +35,6 @@
       disabledBack={$disablePrevChapter}
       nextChapterLabel="next chapter is"
       nextButtonDisabledLabel="Last chapter reached..."
-      spoiler={false}
       showChapterList={true}
       on:onlistclick={tableOfContent}
     />

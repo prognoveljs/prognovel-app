@@ -13,7 +13,7 @@
     chapterTitles,
   } from "$lib/store/read-page";
   import { FONT_SIZE, LINE_HEIGHT, ChapterState } from "$lib/utils/read-page/vars";
-  import { getChapterStoreKey, getLoadingPlaceholder } from "$lib/utils/read-page";
+  import { getChapterStoreKey } from "$lib/utils/read-page";
   import { onMount, tick } from "svelte";
   import { readPageSettingsInit } from "$lib/utils/fonts";
   import {
