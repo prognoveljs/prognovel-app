@@ -94,6 +94,7 @@
   import { page, siteMetadata } from "$lib/store/states";
   import NavMobile from "$lib/components/NavMobile.svelte";
   import HomeHero from "$lib/components/home-page/HomeHero.svelte";
+  import ProgNovelPromo from "$lib/components/home-page/ProgNovelPromo.svelte";
 
   export let novelList: string[];
   export let sitemetadata: SiteMetadata & PreloadData;
@@ -129,18 +130,39 @@
         <HomeNovels {novelsMetadata} grid={"novels"} />
       </section>
     </div>
-
-    <!-- load lazy components -->
-    {#await loadHomepageLazyComponents()}
-      <LazyComponentsSkeletonShell />
-    {:then component}
-      <svelte:component this={component} />
-    {/await}
   </div>
+</div>
+
+<div class="lazy-component">
+  <!-- load lazy components -->
+  {#await loadHomepageLazyComponents()}
+    <LazyComponentsSkeletonShell />
+  {:then component}
+    <svelte:component this={component} />
+  {/await}
 </div>
 
 <GenerateHTML />
 
 <style lang="scss">
   @import "style/homepage/base.scss";
+
+  .lazy-component {
+    --hero-bg: hsl(var(--primary-color-h), 85%, 35%);
+    width: calc(100% - var(--shortcut-width));
+    left: var(--shortcut-width);
+    position: relative;
+
+    @include screen("tablet") {
+      width: 100%;
+      left: 0;
+      margin: 0 auto;
+    }
+
+    @include screen("small-mobile") {
+      width: 100%;
+      left: 0;
+      margin: 0 auto;
+    }
+  }
 </style>

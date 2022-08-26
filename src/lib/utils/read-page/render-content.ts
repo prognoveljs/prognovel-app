@@ -7,6 +7,7 @@ import type { Chapter } from "$typings";
 import { getChapterStoreKey } from "./navigation";
 import { enablePremiumContent } from "$lib/utils/web-monetization";
 import { currentNovel } from "$lib/store/states";
+import { frameTick } from "../animation";
 
 type RenderContentReady = {
   [volumeAndChapter: string]: Promise<boolean>;
@@ -110,7 +111,8 @@ export function contentRenderer(
     }
   }
 
-  function complete() {
+  async function complete() {
+    await frameTick();
     renderContentReady.update((pool) => {
       pool[`${novel}/${book}/${chapter}`] = Promise.resolve(true);
       return pool;

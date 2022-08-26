@@ -31,8 +31,8 @@
 
   const dispatch = createEventDispatcher();
 
-  export let bookAndChapterIndex: string;
-  export let novel: string;
+  export let bookAndChapterIndex: string = "";
+  export let novel: string = "";
   let nextObserver: HTMLElement;
   let body: HTMLElement;
   // core
@@ -40,6 +40,7 @@
   $: [book, chapter] = bookAndChapterIndex.split("/");
   $: loadedContent = $chaptersLoaded?.[getChapterStoreKey(novel, book, chapter)];
   $: chapterStatus = loadedContent?.meta?.status;
+  $: console.log(`Loading`, bookAndChapterIndex);
   // ===================================================== \\
   // if valid content loaded, update global store          \\
   // for current content                                   \\
@@ -63,6 +64,9 @@
   onMount(readPageSettingsInit);
 
   $: locked = !$enablePremiumContent && $isCurrentChapterMonetized;
+  $: isRendering = $renderContentReady?.[`${novel}/${book}/${chapter}`];
+
+  $: console.log({ isRendering, timestamp: Date.now() });
 
   onDestroy(() => {
     renderContentReady.update((pool) => {
@@ -92,7 +96,7 @@
               use:pannable={{ restrictY: true }}
               use:contentRenderer={{ novel, book, chapter, content: loadedContent }}
             />
-            {#await $renderContentReady?.[`${novel}/${book}/${chapter}`] ?? new Promise(() => {})}
+            {#await isRendering ?? new Promise(() => {})}
               <!-- promise is pending -->
             {:then value}
               <Observer element={nextObserver} once on:observe={() => dispatch("chapterendviewed")}>

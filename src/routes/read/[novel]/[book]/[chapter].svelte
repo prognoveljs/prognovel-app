@@ -35,23 +35,28 @@
   import NativePlugins from "$lib/components/plugins/_NativePlugins.svelte";
   import { showTOC, infiniteLoading } from "$lib/store/read-page";
   import TOC from "$lib/components/read-page/ReadTableOfContent.svelte";
+  import InfiniteReadingEnd from "$lib/components/read-page/InfiniteReadingEnd.svelte";
   // import { prefetchNextChapter } from "$lib/utils/read-page/fetch-content";
 
-  $: novel = $page.params.novel;
-  $: book = $page.params.book;
-  $: chapter = $page.params.chapter;
+  $: ({ novel, book, chapter } = $page.params);
   $: bookAndChapter = `${book}/${chapter}`;
-  $: activeChapter = [bookAndChapter];
   $: if ($novelsData[novel] && book && chapter) mountPage($page);
+  $: activeChapter = [bookAndChapter];
+  let infiniteReadingEnd = false;
+  $: console.log({ activeChapter });
 
   function onChapterEndViewed(bookAndChapter: string) {
     if ($infiniteLoading) {
       const cursor = $toc.indexOf(bookAndChapter);
-      const next = getNextChapter(cursor);
-      console.log("Next chapter is", next);
+      if (cursor < $toc.length - 1) {
+        const next = getNextChapter(cursor);
+        if (!activeChapter.includes(next)) {
+          activeChapter = [...activeChapter, next];
+        }
+      } else {
+        infiniteReadingEnd = true;
+      }
     }
-
-    console.log("Chapter end viewed");
   }
 
   let currentPage;
@@ -127,9 +132,9 @@
       />
     </div>
   {/each}
-  <!-- <div class="content">
-    <Content {novel} book="volume-1" chapter="chapter-2" />
-  </div> -->
+  {#if infiniteReadingEnd}
+    <InfiniteReadingEnd />
+  {/if}
   <Options />
   <NativePlugins />
   <!-- <Comments /> -->
