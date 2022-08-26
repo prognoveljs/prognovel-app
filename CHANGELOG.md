@@ -1,16 +1,18 @@
 # ProgNovel Changelog
 
-# 0.7.10
+# 0.8.0
 
 This version extend the previous new chapter navigation UI to the app's read page. Another notable feature in this version also allow authors to hide chapters' titles in a blurred spoiler.
 
 🎉 FEATURES ADDED:
+- VERY FIRST EXPERIMENTAL Infinite reading option (WARNING: may contains bugs)
 - Now chapter titles can be blurred in a spoiler, which can be revealed on mouse hover or click, as well on tap in case for mobile devices 
 - To hide chapter title in spoiler, authors can set `spoiler: true` in chapter markdown's frontmatter (the same place to set the chapter's title)
 - Chapter spoiler feature requires at least ProgNovel CLI v0.8.7 and ProgNovel Backend v0.6.5 to work.
 
 🎨 UI/UX IMPROVEMENTS:
 - (novel page) add background patters on the bottom of novel page
+- (home page) add background patters on the bottom of novel promo
 - (read page) rework botton chapter navigation to uses new navigation UI from novel page
 - (internal) refactor chapter navigation to its own component and rework its dependency store accordingly
 

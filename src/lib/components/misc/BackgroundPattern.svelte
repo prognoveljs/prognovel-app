@@ -37,10 +37,11 @@
 
 <style lang="scss">
   .bg_bottom {
-    width: 100%;
+    width: 99%;
     height: 750px;
     position: absolute;
     bottom: 0;
+    left: 1%;
     z-index: -1;
     opacity: 0.2;
     padding-left: 1%;
