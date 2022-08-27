@@ -14,7 +14,11 @@ This version extend the previous new chapter navigation UI to the app's read pag
 - (novel page) add background patters on the bottom of novel page
 - (home page) add background patters on the bottom of novel promo
 - (read page) rework botton chapter navigation to uses new navigation UI from novel page
-- (internal) refactor chapter navigation to its own component and rework its dependency store accordingly
+- Fix settings modal images 404 not found
+
+🛠️ INTERNAL:
+- Upgrade SvelteKit and Vite to latest versions. This might bring hidden bugs from SvelteKit's recent breaking changes.
+- Refactor chapter navigation to its own component and rework its dependency store accordingly
 
 # 0.7.9
 

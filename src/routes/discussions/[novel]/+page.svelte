@@ -1,24 +1,15 @@
-<script context="module" lang="ts">
-  export const prerender = false;
-
-  /** @type {import('@sveltejs/kit').Load} */
-  export async function load({ params }) {
-    const { novel } = params;
-    return { props: { novel } };
-  }
-</script>
-
 <script lang="ts">
   import { siteMetadata, isBrowser } from "$lib/store/states";
   import { getNovelBookCoverSrc, novelList, novelTitles } from "$lib/utils/novel-page";
   import Comments from "$lib/components/comments/disqus/Disqus.svelte";
-  import NoDisqus from "./_NoDisqus.svelte";
+  import NoDisqus from "../_NoDisqus.svelte";
   import { SITE_TITLE } from "$lib/_setting";
 
   $: hasDisqus = Boolean($siteMetadata?.disqus_id);
   const GENERAL_SLUG = "all";
 
-  export let novel;
+  export let data;
+  $: ({ novel } = data);
 </script>
 
 <svelte:head>

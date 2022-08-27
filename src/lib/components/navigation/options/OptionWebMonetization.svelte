@@ -3,8 +3,8 @@
 </script>
 
 <div class="coil-promo">
-  <img class="illustration" src="img/svg/wm.svg" alt="Web Monetization premium content." />
-  <img class="doodles" src="img/svg/doodles.svg" alt="Doodles." />
+  <img class="illustration" src="/img/svg/wm.svg" alt="Web Monetization premium content." />
+  <img class="doodles" src="/img/svg/doodles.svg" alt="Doodles." />
   {#if $enablePremiumContent}
     <div class="subscribed">You have subscribed via Web Monetization - many thanks!</div>
     <div>

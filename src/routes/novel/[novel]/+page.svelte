@@ -1,50 +1,8 @@
-<script context="module" lang="ts">
-  import { getLocalNovelMetadataCache, fetchNovelMetadata } from "$lib/utils/fetch-metadata";
-  import { getCoverURLPath, prefetchBannerImage } from "$lib/utils/images";
-  import { isBrowser } from "$lib/store/states";
-
-  export const prerender = true;
-
-  /** @type {import('@sveltejs/kit').Load} */
-  export async function load({ params, fetch }) {
-    const { novel } = params;
-    let novelMetadata: any = {};
-    let status = 200;
-    let message = "";
-    try {
-      const res = await fetch(`/novel/${novel}.json`);
-      novelMetadata = await res.json();
-    } catch (error) {
-      status = 500;
-      message = "Error when reading " + novel + " metadata from build cache.";
-      console.error(error);
-    }
-
-    if (browser) {
-      prefetchBannerImage(novel);
-      novelMetadata = await getLocalNovelMetadataCache(novel);
-
-      if (!novelMetadata) {
-        novelMetadata = await fetchNovelMetadata(novel);
-      }
-    }
-
-    if (status === 200) {
-      return { status, props: { novelMetadata, novel } };
-    }
-
-    return {
-      error: message,
-      status,
-    };
-  }
-</script>
-
 <script lang="ts">
   import { setContext } from "svelte";
   import InstantAffiliate from "$lib/components/web-monetization/InstantAffiliate.svelte";
-  import Banner from "./_NovelBanner.svelte";
-  import Book from "./_NovelBook.svelte";
+  import Banner from "../_NovelBanner.svelte";
+  import Book from "../_NovelBook.svelte";
   import Affiliate from "$lib/components/novel-page/Affiliate.svelte";
   import RevenueSharingStats from "$lib/components/novel-page/RevenueSharingStats.svelte";
   import { toc, chaptersLoaded } from "$lib/store/read-page";
@@ -54,17 +12,18 @@
   import { novelDemographics, novelGenres } from "$lib/utils/novel-page";
   import { SITE_TITLE } from "$lib/_setting";
   import BackgroundPattern from "$lib/components/misc/BackgroundPattern.svelte";
-  // import { isBrowser } from "$lib/store/states";
+  import { getCoverURLPath } from "$lib/utils/images";
 
-  export let novel;
-  export let novelMetadata: NovelMetadata;
-  let affiliate = isBrowser ? new URL(location.href).searchParams.get("affiliate") || "" : "";
-  let affiliateName = isBrowser
-    ? new URL(location.href).searchParams.get("affiliateName") || ""
-    : "";
+  export let data;
 
-  setContext("id", novel);
-  setContext("novelMetadata", novelMetadata);
+  $: novel = data.novel;
+  $: novelMetadata = data.novelMetadata as NovelMetadata;
+  $: console.log({ data });
+  let affiliate = browser ? new URL(location.href).searchParams.get("affiliate") || "" : "";
+  let affiliateName = browser ? new URL(location.href).searchParams.get("affiliateName") || "" : "";
+
+  $: if (novel) setContext("id", novel);
+  $: if (novelMetadata) setContext("novelMetadata", novelMetadata);
 
   toc.subscribe((chapterList) => {
     // TODO - use recent novel history

@@ -1,13 +1,6 @@
-<script context="module" lang="ts">
-  /** @type {import('@sveltejs/kit').Load} */
-  export async function load({ params }) {
-    return {
-      novel: params.novelID,
-    };
-  }
-</script>
-
 <script lang="ts">
+  throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
+
   import { faSave } from "@fortawesome/free-solid-svg-icons";
   import Icon from "$lib/components/Icon.svelte";
   import { isBrowser } from "$lib/store/states";

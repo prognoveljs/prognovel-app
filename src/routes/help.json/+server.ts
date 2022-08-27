@@ -1,3 +1,4 @@
+// @migration task: Check imports
 import { globbySync } from "globby";
 import fm from "front-matter";
 import { readFileSync } from "fs";
@@ -23,7 +24,7 @@ pages = pages.sort((a: string, b: string): number => {
   return a_order - b_order;
 });
 
-export async function get() {
+export async function GET() {
   const result = pages.reduce(
     (prev: any, cur: string) => {
       // get id by slicing the .svx format
@@ -59,8 +60,5 @@ export async function get() {
     return prev;
   }, {});
 
-  return {
-    status: 200,
-    body: result,
-  };
+  return new Response(JSON.stringify(result));
 }

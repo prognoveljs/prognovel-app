@@ -1,19 +1,10 @@
-<script context="module">
-  import { isBrowser } from "$lib/store/states";
-  /** @type {import('@sveltejs/kit').Load} */
-  export async function load({}) {
-    return {
-      props: { load: isBrowser ? new URL(location.href).searchParams.get("load") : "" },
-    };
-  }
-</script>
-
 <script>
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
-  // import { getLoadingPlaceholder } from "$lib/utils/read-page";
+  import ReadPageSkeletonShell from "$lib/components/read-page/ReadPageSkeletonShell.svelte";
 
-  export let load;
+  export let data;
+  $: load = data.load;
 
   onMount(async () => {
     console.log("🚀 redirecting to", load);
@@ -24,7 +15,7 @@
 <div class="body">
   <div class="content">
     <article>
-      <!-- {@html getLoadingPlaceholder().html} -->
+      <ReadPageSkeletonShell />
     </article>
     <div class="options dummy" />
   </div>

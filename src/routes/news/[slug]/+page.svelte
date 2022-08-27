@@ -1,18 +1,6 @@
-<script lang="ts" context="module">
-  export const prerender = false;
-  /** @type {import('@sveltejs/kit').Load} */
-  export async function load({ params }) {
-    const { slug } = params;
-
-    return {
-      props: {
-        slug,
-      },
-    };
-  }
-</script>
-
 <script lang="ts">
+  throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
+
   import { browser } from "$app/env";
 
   import { page } from "$app/stores";

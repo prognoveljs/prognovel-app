@@ -1,14 +1,3 @@
-<script context="module" lang="ts">
-  /** @type {import('@sveltejs/kit').Load} */
-  export async function load({ params, fetch }) {
-    const { slug } = params;
-    let res = await fetch(`/help.json`);
-    // let res = await this.fetch(`${path.split("/").slice(0, -1).join("/") || path}.json`);
-    let { parent, children } = await res.json();
-    return { props: { parent, children } };
-  }
-</script>
-
 <script lang="ts">
   import Index from "$lib/components/help-page/SidebarIndex.svelte";
   import Misc from "$lib/components/help-page/SidebarMisc.svelte";
@@ -21,8 +10,8 @@
   import { faList } from "@fortawesome/free-solid-svg-icons";
   import { fade } from "svelte/transition";
 
-  export let parent = {};
-  export let children = {};
+  export let data;
+  $: ({ parent, children } = data);
 
   $: slug = $page && $page.url.pathname ? $page.url.pathname.split("help/")[1] : "";
   $: $customBreadcrumbTitle = $childData.title || parent[slug]?.title || "";

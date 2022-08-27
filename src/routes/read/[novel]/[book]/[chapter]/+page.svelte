@@ -1,22 +1,3 @@
-<script context="module" lang="ts">
-  import { checkTableOfContentExists, getNextChapter, prefetchChapter } from "$lib/utils/read-page";
-  export const prerender = false;
-
-  /** @type {import('@sveltejs/kit').Load} */
-  export async function load({ params }) {
-    const { novel, book, chapter } = params;
-    if (isBrowser) {
-      checkTableOfContentExists(novel);
-      prefetchChapter(novel, book, chapter).then((_) => {
-        prefetchNextChapter();
-        // prefetch((document.querySelector("a.next-link") as HTMLAnchorElement).href);
-      });
-    }
-
-    return {};
-  }
-</script>
-
 <script lang="ts">
   import { onMount, tick, onDestroy } from "svelte";
   import { page } from "$app/stores";
@@ -25,9 +6,10 @@
     enterPage,
     setChapterCursor,
     prefetchNextChapter,
+    getNextChapter,
   } from "$lib/utils/read-page";
   import Content from "$lib/components/read-page/content/ContentBody.svelte";
-  import Options from "../../_Options.svelte";
+  import Options from "../../../_Options.svelte";
   import { currentNovel, novelsData, isBrowser } from "$lib/store/states";
   import { currentChapter, currentBook, currentContent, toc } from "$lib/store/read-page";
   import { replacePageTitleBookAndChapter } from "$lib/utils/read-page";
@@ -43,7 +25,6 @@
   $: if ($novelsData[novel] && book && chapter) mountPage($page);
   $: activeChapter = [bookAndChapter];
   let infiniteReadingEnd = false;
-  $: console.log({ activeChapter });
 
   function onChapterEndViewed(bookAndChapter: string) {
     if ($infiniteLoading) {
@@ -144,5 +125,5 @@
 </div>
 
 <style lang="scss">
-  @import "../../slug";
+  @import "../../../slug";
 </style>

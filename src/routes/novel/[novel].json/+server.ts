@@ -2,7 +2,7 @@ import { readFileSync } from "fs";
 import { join, resolve } from "path";
 
 /** @type {import('./[id]').RequestHandler} */
-export function get({ params }) {
+export function GET({ params }) {
   const { novel } = params;
   let url;
   let novelMetadata = {};
@@ -19,9 +19,5 @@ export function get({ params }) {
     console.error(error);
   }
 
-  return {
-    status,
-    message,
-    body: novelMetadata,
-  };
+  return new Response(JSON.stringify(novelMetadata));
 }
