@@ -10,9 +10,9 @@ const thisSlug = (slug: string) => thisDir(slug).split("routes/")[1] + "/";
 const pages = (slug: string) =>
   globbySync(thisDir(slug) + "/*.svx")
     .map((s) => s.split(thisSlug(slug))[1])
-    .filter((page) => page.endsWith(".svx") && !page.startsWith("index."));
+    .filter((page) => page.endsWith(".svx") && !page.startsWith("+page."));
 
-export function get(req, res) {
+export function GET(req, res) {
   const { slug } = req.params;
   const result = pages(slug).reduce((prev: any, cur: string) => {
     const id = cur.slice(0, -4);
@@ -26,5 +26,6 @@ export function get(req, res) {
     };
     return prev;
   }, {});
-  res.end(JSON.stringify(result));
+
+  return new Response(JSON.stringify(result));
 }

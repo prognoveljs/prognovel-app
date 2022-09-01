@@ -9,7 +9,7 @@ const thisDirSlug = (slug: string) => "src/routes/help/" + slug;
 const folders = globbySync(thisDirSlug("") + "*", { onlyDirectories: true });
 let pages = globbySync(thisDir + "/*.svx")
   .map((s) => s.split("/help/")[1])
-  .filter((page) => page.endsWith(".svx") && !page.startsWith("index."));
+  .filter((page) => page.endsWith(".svx") && !page.startsWith("+page."));
 
 const pagesOrder = pages.map((page: string): number => {
   const path = join(import.meta.env.BASEPATH || "", thisDir, page);
