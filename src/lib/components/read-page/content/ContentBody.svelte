@@ -9,10 +9,11 @@
     toc,
     chaptersLoaded,
     chapterTitles,
+    infiniteLoading,
   } from "$lib/store/read-page";
   import { FONT_SIZE, LINE_HEIGHT, ChapterState } from "$lib/utils/read-page/vars";
   import { getChapterStoreKey } from "$lib/utils/read-page";
-  import { createEventDispatcher, onMount, tick } from "svelte";
+  import { onMount, tick } from "svelte";
   import { readPageSettingsInit } from "$lib/utils/fonts";
   import {
     enablePremiumContent,
@@ -27,13 +28,10 @@
   import { colorizedBackground } from "$lib/utils/fonts/background-hue";
   import ReadPageSkeletonShell from "$lib/components/read-page/ReadPageSkeletonShell.svelte";
   import { onDestroy } from "svelte";
-  import Observer from "svelte-intersection-observer";
-
-  const dispatch = createEventDispatcher();
+  import InfiniteReadingBound from "../InfiniteReadingBound.svelte";
 
   export let bookAndChapterIndex: string = "";
   export let novel: string = "";
-  let nextObserver: HTMLElement;
   let body: HTMLElement;
   // core
   // $: renderHTML($currentContent);
@@ -64,9 +62,6 @@
   onMount(readPageSettingsInit);
 
   $: locked = !$enablePremiumContent && $isCurrentChapterMonetized;
-  $: isRendering = $renderContentReady?.[`${novel}/${book}/${chapter}`];
-
-  $: console.log({ isRendering, timestamp: Date.now() });
 
   onDestroy(() => {
     renderContentReady.update((pool) => {
@@ -96,14 +91,9 @@
               use:pannable={{ restrictY: true }}
               use:contentRenderer={{ novel, book, chapter, content: loadedContent }}
             />
-            {#await isRendering ?? new Promise(() => {})}
-              <!-- promise is pending -->
-            {:then value}
-              <Observer element={nextObserver} once on:observe={() => dispatch("chapterendviewed")}>
-                <div bind:this={nextObserver} />
-              </Observer>
-              <!-- promise was fulfilled -->
-            {/await}
+            {#if $infiniteLoading}
+              <InfiniteReadingBound {novel} {book} {chapter} on:chapterendviewed />
+            {/if}
           {/await}
         {/key}
       {:else if chapterStatus === ChapterState.Error}
