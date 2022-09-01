@@ -6,13 +6,15 @@ import { join, resolve } from "path";
 
 const thisDir = "src/routes/help";
 const thisDirSlug = (slug: string) => "src/routes/help/" + slug;
-const folders = globbySync(thisDirSlug("") + "*", { onlyDirectories: true });
-let pages = globbySync(thisDir + "/*.svx")
-  .map((s) => s.split("/help/")[1])
-  .filter((page) => page.endsWith(".svx") && !page.startsWith("+page."));
+const folders = globbySync(thisDirSlug("") + "*/+page.svx").map((p) => p.replace("/+page.svx", ""));
+let pages = globbySync(thisDir + "**/*/+page.svx").map(
+  (s) => s.split("/help/")[1].split("/+page.svx")[0],
+);
+// .filter((page) => page.endsWith(".svx") && !page.startsWith("+page."));
+// .filter((page) => page.endsWith(".svx"));
 
 const pagesOrder = pages.map((page: string): number => {
-  const path = join(import.meta.env.BASEPATH || "", thisDir, page);
+  const path = join(import.meta.env.BASEPATH || "", thisDir, page, "+page.svx");
   const frontmatter = fm(readFileSync(path, "utf-8"));
 
   return (frontmatter.attributes as any)?.order ?? 99999;
@@ -28,14 +30,12 @@ export async function GET() {
   const result = pages.reduce(
     (prev: any, cur: string) => {
       // get id by slicing the .svx format
-      const id = cur.slice(0, -4);
+      const id = cur;
+      const file = join(import.meta.env.BASEPATH || "", thisDir, cur, "+page.svx");
+      console.log(file);
       prev.parent[id] = {
         href: `/help/${id}`,
-        title:
-          (
-            fm(readFileSync(join(import.meta.env.BASEPATH || "", thisDir, cur), "utf-8"))
-              .attributes as any
-          ).title || id,
+        title: (fm(readFileSync(file, "utf-8")).attributes as any).title || id,
       };
       return prev;
     },
@@ -45,16 +45,19 @@ export async function GET() {
     },
   );
   result.children = folders.reduce((prev, cur) => {
-    const childMarkdowns = globbySync(cur + "/*.svx");
+    const childMarkdowns = globbySync(cur + "/**/+page.svx").filter(
+      (p) => p !== cur + "/+page.svx",
+    );
     const slug = cur.split("help/")[1];
-    prev[slug] = {};
+    if (childMarkdowns.length) prev[slug] = {};
     childMarkdowns.forEach((child) => {
-      const childSlug = child.split("routes/")[1].split(".svx")[0];
+      const childSlug = child.split("routes/")[1].split("/+page.svx")[0];
+      console.log({ child, childSlug });
       prev[slug][childSlug.split("/").slice(-1)] = {
         title:
           (fm(readFileSync(join(import.meta.env.BASEPATH || "", child), "utf-8")).attributes as any)
             .title || childSlug.split("/").slice(-1),
-        href: "/" + childSlug,
+        href: "/" + childSlug.replace("+page.svx", ""),
       };
     });
     return prev;

@@ -15,7 +15,7 @@ const pages = (slug: string) =>
 export function GET(req, res) {
   const { slug } = req.params;
   const result = pages(slug).reduce((prev: any, cur: string) => {
-    const id = cur.slice(0, -4);
+    const id = cur.replace(".svx", "").replace("+page", "");
     prev[id] = {
       href: `${thisSlug(slug) + id}`,
       title:

@@ -13,9 +13,13 @@
   export let data;
   $: ({ parent, children } = data);
 
-  $: slug = $page && $page.url.pathname ? $page.url.pathname.split("help/")[1] : "";
+  $: slug = ($page && $page.url.pathname ? $page.url.pathname.split("help/")[1] : "").replace(
+    "/",
+    "",
+  );
   $: $customBreadcrumbTitle = $childData.title || parent[slug]?.title || "";
   $: pageTitle = $customBreadcrumbTitle;
+  $: console.log({ parent, slug });
 
   // $: console.log($page);
 
