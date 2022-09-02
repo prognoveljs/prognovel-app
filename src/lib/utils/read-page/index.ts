@@ -1,7 +1,12 @@
 export { getLoadingPlaceholder, getErrorPlaceholder } from "./placeholder";
 export { enterPage, leavePage } from "./page";
 export { getSlug, parseSlug, readSlug, getChapterUrl, getChapterUrlFromList } from "./slug";
-export { fetchChapter, prefetchChapter, prefetchNextChapter, appendChapter } from "./fetch-content";
+export {
+  fetch_chapter,
+  prefetchChapter,
+  prefetchNextChapter,
+  appendChapter,
+} from "./fetch-content";
 export {
   setNovelRecentHistory,
   setBrowserHistory,

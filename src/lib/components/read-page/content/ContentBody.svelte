@@ -38,7 +38,6 @@
   $: [book, chapter] = bookAndChapterIndex.split("/");
   $: loadedContent = $chaptersLoaded?.[getChapterStoreKey(novel, book, chapter)];
   $: chapterStatus = loadedContent?.meta?.status;
-  $: console.log(`Loading`, bookAndChapterIndex);
   // ===================================================== \\
   // if valid content loaded, update global store          \\
   // for current content                                   \\

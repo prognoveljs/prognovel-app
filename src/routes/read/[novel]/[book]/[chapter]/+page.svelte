@@ -7,15 +7,23 @@
     setChapterCursor,
     prefetchNextChapter,
     getNextChapter,
+    replacePageTitleBookAndChapter,
+    getChapterStoreKey,
+    prefetchChapter,
   } from "$lib/utils/read-page";
   import Content from "$lib/components/read-page/content/ContentBody.svelte";
   import Options from "../../../_Options.svelte";
   import { currentNovel, novelsData, isBrowser } from "$lib/store/states";
-  import { currentChapter, currentBook, currentContent, toc } from "$lib/store/read-page";
-  import { replacePageTitleBookAndChapter } from "$lib/utils/read-page";
+  import {
+    currentChapter,
+    currentBook,
+    currentContent,
+    toc,
+    chaptersAppended,
+  } from "$lib/store/read-page";
   import { SITE_TITLE } from "$lib/_setting";
   import NativePlugins from "$lib/components/plugins/_NativePlugins.svelte";
-  import { showTOC, infiniteLoading } from "$lib/store/read-page";
+  import { showTOC, infiniteLoading, chaptersLoaded } from "$lib/store/read-page";
   import TOC from "$lib/components/read-page/ReadTableOfContent.svelte";
   import InfiniteReadingEnd from "$lib/components/read-page/InfiniteReadingEnd.svelte";
   // import { prefetchNextChapter } from "$lib/utils/read-page/fetch-content";
@@ -26,13 +34,20 @@
   $: activeChapter = [bookAndChapter];
   let infiniteReadingEnd = false;
 
-  function onChapterEndViewed(bookAndChapter: string) {
+  $: if (novel) $chaptersAppended = [];
+
+  async function onChapterEndViewed(bookAndChapter: string) {
     if ($infiniteLoading) {
       const cursor = $toc.indexOf(bookAndChapter);
       if (cursor < $toc.length - 1) {
         const next = getNextChapter(cursor);
+        const [nextBook, nextChapter] = next.split("/");
         if (!activeChapter.includes(next)) {
           activeChapter = [...activeChapter, next];
+          prefetchChapter(novel, nextBook, nextChapter);
+          // if (!$chaptersAppended[`${book}/${chapter}`]) {
+          //   console.log("Fetch infinite loading chapter", book, chapter);
+          // }
         }
       } else {
         infiniteReadingEnd = true;

@@ -19,7 +19,6 @@
   );
   $: $customBreadcrumbTitle = $childData.title || parent[slug]?.title || "";
   $: pageTitle = $customBreadcrumbTitle;
-  $: console.log({ parent, slug });
 
   // $: console.log($page);
 
