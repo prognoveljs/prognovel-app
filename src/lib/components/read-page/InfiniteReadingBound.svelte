@@ -7,15 +7,22 @@
   export let novel: string = "";
   export let book: string = "";
   export let chapter: string = "";
+  export let timer: number = 0;
+  export let rootMargin: string = "";
   $: isRendering = $renderContentReady?.[`${novel}/${book}/${chapter}`];
   const dispatch = createEventDispatcher();
   let nextObserver: HTMLElement;
 
   let enableOserver = false;
   async function runTimer() {
-    await delay(2000);
+    await delay(timer);
     enableOserver = true;
   }
+
+  const trigger = () => {
+    dispatch("chapterendviewed");
+    dispatch("viewed");
+  };
 
   onMount(async () => {
     runTimer();
@@ -24,7 +31,7 @@
 
 {#if enableOserver}
   {#await isRendering ?? new Promise(() => {}) then value}
-    <Observer element={nextObserver} once on:intersect={() => dispatch("chapterendviewed")}>
+    <Observer {rootMargin} element={nextObserver} once on:intersect={trigger}>
       <div bind:this={nextObserver} />
     </Observer>
   {/await}

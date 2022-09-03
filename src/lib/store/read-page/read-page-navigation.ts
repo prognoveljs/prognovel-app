@@ -4,8 +4,19 @@ import { currentBook, currentChapter, currentChapterCursor, toc } from "./index"
 import { handleBeginReadingButton, ReadNowObject } from "$lib/utils/novel-page";
 import { resolveConfig } from "vite";
 import { HistoryRecent } from "$typings";
+import { browser } from "$app/env";
+import { get, set } from "idb-keyval";
 
 export const infiniteLoading: Writable<boolean> = writable(false);
+
+if (browser) {
+  get("infinite-loading").then((infinite) => {
+    infiniteLoading.set(infinite);
+  });
+  infiniteLoading.subscribe((infinite) => {
+    set("infinite-loading", infinite);
+  });
+}
 
 export const disableNextChapter: Readable<boolean> = derived(
   [currentChapterCursor, toc],

@@ -10,9 +10,11 @@
     chaptersLoaded,
     chapterTitles,
     infiniteLoading,
+    currentBook,
+    currentChapter,
   } from "$lib/store/read-page";
   import { FONT_SIZE, LINE_HEIGHT, ChapterState } from "$lib/utils/read-page/vars";
-  import { getChapterStoreKey } from "$lib/utils/read-page";
+  import { getChapterStoreKey, setNovelRecentHistory } from "$lib/utils/read-page";
   import { onMount, tick } from "svelte";
   import { readPageSettingsInit } from "$lib/utils/fonts";
   import {
@@ -41,7 +43,7 @@
   // ===================================================== \\
   // if valid content loaded, update global store          \\
   // for current content                                   \\
-  $: if (loadedContent) {
+  $: if (loadedContent && !$infiniteLoading) {
     $currentContent = loadedContent;
     $isCurrentChapterMonetized = Boolean(loadedContent.monetization);
   }
@@ -54,6 +56,14 @@
 
   // options
   // $: textRendering = $asyncTextRendering ? "auto" : "visible";
+  function onInfiniteReadChapterViewed() {
+    $currentContent = loadedContent;
+    $isCurrentChapterMonetized = Boolean(loadedContent.monetization);
+    $currentBook = book;
+    $currentChapter = chapter;
+    setNovelRecentHistory(novel, `${book}/${chapter}`);
+    history.pushState(null, null, `/read/${novel}/${book}/${chapter}/`);
+  }
 
   $: contentDelay = isValidChapterLoaded
     ? tick().then(() => createContentDelay(novel, $currentChapterIndex))
@@ -84,6 +94,15 @@
           {#await contentDelay}
             <AdsDelay on:click={() => (contentDelay = Promise.resolve())} />
           {:then}
+            {#if $infiniteLoading}
+              <InfiniteReadingBound
+                rootMargin="0px 0px -50% 0px"
+                {novel}
+                {book}
+                {chapter}
+                on:viewed={onInfiniteReadChapterViewed}
+              />
+            {/if}
             <div
               id="chapter-state-success-{bookAndChapterIndex}"
               class="chapter-state-success"
@@ -91,7 +110,7 @@
               use:contentRenderer={{ novel, book, chapter, content: loadedContent }}
             />
             {#if $infiniteLoading}
-              <InfiniteReadingBound {novel} {book} {chapter} on:chapterendviewed />
+              <InfiniteReadingBound timer={2000} {novel} {book} {chapter} on:chapterendviewed />
             {/if}
           {/await}
         {/key}
