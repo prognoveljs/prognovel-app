@@ -2,10 +2,12 @@
 
 # 0.8.0
 
-This version extend the previous new chapter navigation UI to the app's read page. Another notable feature in this version also allow authors to hide chapters' titles in a blurred spoiler.
+This version adds "Infinite Reading" option that will load chapters automatically on page scroll instead of clicking next chapter button. One chapter per page with next button is now "Classic Mode" and can be switched to "Infinite Reading" in read page's setting Layout and Themes section. Note that this is still too early to say that Infinite Reading mode is bug free so if you encounter any bugs, please raise an issue at https://github.com/prognoveljs/prognovel-app/issues.
+
+Another notable feature in this version also allow authors to hide chapters' titles in a blurred spoiler, which is only available if used with recent versions of ProgNovel CLI and backend.
 
 🎉 FEATURES ADDED:
-- VERY FIRST EXPERIMENTAL Infinite reading option (WARNING: may contains bugs)
+- Infinite reading option is now available
 - Now chapter titles can be blurred in a spoiler, which can be revealed on mouse hover or click, as well on tap in case for mobile devices 
 - To hide chapter title in spoiler, authors can set `spoiler: true` in chapter markdown's frontmatter (the same place to set the chapter's title)
 - Chapter spoiler feature requires at least ProgNovel CLI v0.8.7 and ProgNovel Backend v0.6.5 to work.
