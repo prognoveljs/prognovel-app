@@ -71,7 +71,6 @@ export function contentRenderer(
   // console.log("Last content:", lastContent);
   if (lastContent === JSON.stringify(content)) return;
   lastContent = JSON.stringify(content);
-  console.log(content);
 
   tick().then(() => {
     if (getStore(asyncTextRendering)) {

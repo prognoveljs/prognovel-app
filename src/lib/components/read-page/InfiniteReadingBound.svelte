@@ -10,9 +10,9 @@
   export let timer: number = 0;
   export let rootMargin: string = "";
   export let once: boolean = false;
+  export let el: HTMLElement = null;
   $: isRendering = $renderContentReady?.[`${novel}/${book}/${chapter}`];
   const dispatch = createEventDispatcher();
-  let nextObserver: HTMLElement;
 
   let enableOserver = false;
   async function runTimer() {
@@ -32,9 +32,9 @@
 
 {#if enableOserver}
   {#await isRendering ?? new Promise(() => {}) then value}
-    <Observer {rootMargin} element={nextObserver} {once} on:intersect={trigger}>
+    <Observer {rootMargin} element={el} {once} on:intersect={trigger}>
       <slot>
-        <div bind:this={nextObserver} />
+        <div bind:this={el} />
       </slot>
     </Observer>
   {/await}

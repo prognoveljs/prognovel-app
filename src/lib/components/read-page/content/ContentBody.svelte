@@ -31,6 +31,7 @@
   import ReadPageSkeletonShell from "$lib/components/read-page/ReadPageSkeletonShell.svelte";
   import { onDestroy } from "svelte";
   import InfiniteReadingBound from "../InfiniteReadingBound.svelte";
+  import Observer from "svelte-intersection-observer";
 
   export let bookAndChapterIndex: string = "";
   export let novel: string = "";
@@ -56,7 +57,9 @@
 
   // options
   // $: textRendering = $asyncTextRendering ? "auto" : "visible";
-  function onInfiniteReadChapterViewed() {
+  function onChapterViewed() {
+    if (!$infiniteLoading) return;
+    console.log("👀 vieweing", book, chapter);
     $currentContent = loadedContent;
     $isCurrentChapterMonetized = Boolean(loadedContent.monetization);
     $currentBook = book;
@@ -94,21 +97,15 @@
           {#await contentDelay}
             <AdsDelay on:click={() => (contentDelay = Promise.resolve())} />
           {:then}
-            {#if $infiniteLoading}
-              <InfiniteReadingBound
-                rootMargin="0px 0px -50% 0px"
-                {novel}
-                {book}
-                {chapter}
-                on:viewed={onInfiniteReadChapterViewed}
+            <Observer rootMargin="-60% 0px -40% 0px" element={body} on:intersect={onChapterViewed}>
+              <div
+                bind:this={body}
+                id="chapter-state-success-{bookAndChapterIndex}"
+                class="chapter-state-success"
+                use:pannable={{ restrictY: true }}
+                use:contentRenderer={{ novel, book, chapter, content: loadedContent }}
               />
-            {/if}
-            <div
-              id="chapter-state-success-{bookAndChapterIndex}"
-              class="chapter-state-success"
-              use:pannable={{ restrictY: true }}
-              use:contentRenderer={{ novel, book, chapter, content: loadedContent }}
-            />
+            </Observer>
             {#if $infiniteLoading}
               <InfiniteReadingBound
                 timer={2000}
