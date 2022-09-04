@@ -1,13 +1,7 @@
 <script lang="ts">
   import { isCurrentChapterLocked } from "$lib/utils/web-monetization";
   import { ChapterState } from "$lib/utils/read-page/vars";
-  import {
-    chaptersLoaded,
-    chaptersWithSpoiler,
-    currentBook,
-    currentChapter,
-    currentContent,
-  } from "$lib/store/read-page";
+  import { chaptersLoaded, chaptersWithSpoiler, currentContent } from "$lib/store/read-page";
   import { getChapterStoreKey } from "$lib/utils/read-page";
   import SpeechSyntesis from "$lib/components/read-page/speech-synthesis/SpeechSyntesis.svelte";
   import { currentNovel } from "$lib/store/states";
@@ -19,9 +13,8 @@
   $: volumeAndChapter = `${book}/${chapter}`;
   $: chapterLabel = chapter.slice(CHAPTER_LABEL_INDEX).replace(/-/, ".");
   $: spoiler =
-    Boolean(
-      $chaptersLoaded?.[getChapterStoreKey($currentNovel, $currentBook, $currentChapter)]?.spoiler,
-    ) || chaptersWithSpoiler.has(`${$currentNovel}/${$currentBook}/${$currentChapter}`);
+    Boolean($chaptersLoaded?.[getChapterStoreKey($currentNovel, book, chapter)]?.spoiler) ||
+    chaptersWithSpoiler.has(`${$currentNovel}/${book}/${chapter}`);
 </script>
 
 <section class="title">

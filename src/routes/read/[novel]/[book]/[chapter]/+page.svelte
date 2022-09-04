@@ -26,6 +26,7 @@
   import { showTOC, infiniteLoading, chaptersLoaded } from "$lib/store/read-page";
   import TOC from "$lib/components/read-page/ReadTableOfContent.svelte";
   import InfiniteReadingEnd from "$lib/components/read-page/InfiniteReadingEnd.svelte";
+  import InfiniteReadingNavigation from "$lib/components/read-page/InfiniteReadingNavigation.svelte";
   // import { prefetchNextChapter } from "$lib/utils/read-page/fetch-content";
 
   $: ({ novel, book, chapter } = $page.params);
@@ -136,7 +137,9 @@
   {/if}
   <Options />
   <NativePlugins />
-  <!-- <Comments /> -->
+  {#if $infiniteLoading}
+    <InfiniteReadingNavigation />
+  {/if}
   {#if $showTOC}
     <TOC on:close={() => ($showTOC = false)} />
   {/if}

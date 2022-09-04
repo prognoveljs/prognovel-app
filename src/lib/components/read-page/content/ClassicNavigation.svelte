@@ -11,7 +11,6 @@
     prevChapter,
   } from "$lib/store/read-page";
   import ChapterNavigation from "$lib/components/navigation/chapter/ChapterNavigation.svelte";
-  import { ListIcon } from "svelte-feather-icons";
   import { infiniteLoading } from "$lib/store/read-page";
 
   const dispatch = createEventDispatcher();
