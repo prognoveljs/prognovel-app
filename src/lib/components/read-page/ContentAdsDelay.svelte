@@ -1,4 +1,8 @@
 <script lang="ts">
+  import { isMobileScreen } from "$lib/utils/mobile";
+
+  import { SITE_TITLE } from "$lib/_setting";
+
   import { onMount, onDestroy } from "svelte";
 
   let duration = 5;
@@ -16,75 +20,73 @@
 
 <section>
   <div class="ads-container">
-    <div class="ads-square">Ads</div>
+    <span class="square">Ads</span>
     <button on:click disabled={!isTimerDone}>Skip ads{duration ? ` (${duration})` : ""}</button>
   </div>
   <div class="pwa-promotion">
-    <h2>Want to disable this ads? Sure you can!</h2>
-    Here's the deal: we only show ads that brings money but slightly annoying to our guests. We don't
-    want to do this. But creating content needs money. So how about you stop being guest, and become
-    our friend instead?
-    <br />
-    Install our app! There's nothing to download, we promise. Just
-    <strong>click this here to install</strong>, and click that prompt that showing--we're done!
-
-    <ul>
-      perks for friends who install our app:
-      <li>Lift lots of chapter limitations for offline read</li>
-      <li>
-        Periodic syncing in the background to make sure our app be ready to serve you whenever
-        wherever you want!
-      </li>
-      <li>
-        Do you know, starting from Chrome 81 and Edge 84, you can receive chapter updates
-        notifications if you pin our app to your taskbar?
-      </li>
-    </ul>
+    <h2>Install {SITE_TITLE} app to disable this ads</h2>
+    {#if isMobileScreen()}
+      Tap Install App on browser's menu.
+    {:else}
+      Click install button on the right side of your browser's address bar to install {SITE_TITLE} to
+      your desktop.
+    {/if}
   </div>
 </section>
 
 <style lang="scss">
   section {
     margin-top: 48px;
-    display: grid;
-    grid-gap: 48px;
-    grid-template-columns: minmax(250px, 1fr) 3fr;
-  }
-
-  .ads-container {
-    .ads-square {
-      width: 250px;
-      height: 250px;
-      background: #fff2;
-      color: #000a;
+    display: flex;
+    gap: 48px;
+    .ads-container {
+      width: 30%;
+      min-width: 250px;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 0.5em;
+      flex-shrink: 0;
+      .square {
+        position: relative;
+        width: 250px;
+        height: 250px;
+        background: #fff2;
+        color: #000a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      button {
+        padding: 8px 16px;
+        margin: 8px auto;
+        display: block;
+      }
     }
 
-    button {
-      padding: 8px 16px;
-      margin: 8px auto;
-      display: block;
-    }
-  }
+    .pwa-promotion {
+      font-size: 15px;
+      max-width: 35em;
+      line-height: 1.2;
 
-  .pwa-promotion {
-    font-size: 15px;
-
-    h2 {
-      font-size: 2em;
-      margin-top: 0;
-    }
-
-    strong {
-      text-decoration: underline;
-      color: var(--primary-color);
-      cursor: pointer;
+      h2 {
+        font-size: 2em;
+        margin-top: 0;
+        font-weight: 700;
+        color: var(--primary-color-lighten-2);
+        max-width: 16em;
+      }
     }
 
-    ul {
-      margin-top: 16px;
+    @include screen("mobile") {
+      padding: 12px;
+      flex-direction: column;
+
+      .ads-container {
+        width: 100%;
+      }
     }
   }
 </style>
