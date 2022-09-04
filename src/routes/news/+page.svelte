@@ -1,18 +1,4 @@
-<script context="module" lang="ts">
-  throw new Error("@migration task: Check code was safely removed (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292722)");
-
-  // import { isBrowser } from "$lib/store/states";
-  // /** @type {import('@sveltejs/kit').Load} */
-  // export async function load({ params }) {
-  //   return {
-  //     props: { load: isBrowser ? new URL(location.href).searchParams.get("load") : "" },
-  //   };
-  // }
-</script>
-
 <script lang="ts">
-  throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
-
   import Icon from "$lib/components/Icon.svelte";
   import Avatar from "$lib/components/user/Avatar.svelte";
   import { newsData } from "$lib/store/news-page";
@@ -22,7 +8,8 @@
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
 
-  export let load;
+  export let data;
+  $: ({ load } = data);
 
   onMount(async () => {
     if (load) goto("/news/" + load);

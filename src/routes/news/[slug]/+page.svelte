@@ -1,6 +1,4 @@
 <script lang="ts">
-  throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
-
   import { browser } from "$app/env";
 
   import { page } from "$app/stores";
@@ -13,20 +11,21 @@
   import { SITE_TITLE } from "$lib/_setting";
   import { faFacebook, faReddit, faTwitter, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
-  export let slug;
-  $: data = $newsData.find((news) => news.id === slug);
+  $: ({ slug } = $page?.params || {});
+  $: console.log({ slug, localNewsData });
+  $: localNewsData = $newsData.find((news) => news.id === slug);
   // $: data = null;
   $: hasDisqus = Boolean($siteMetadata?.disqus_id);
   const SKELETON_SHELL_RANDOM_WIDTH = [40, 20, 60, 30];
 </script>
 
 <svelte:head>
-  <title>{data?.title || "Loading..."} | {SITE_TITLE}</title>
+  <title>{localNewsData?.title || "Loading..."} | {SITE_TITLE}</title>
 </svelte:head>
 
 <article>
-  {#if data}
-    <h1>{data?.title}</h1>
+  {#if localNewsData}
+    <h1>{localNewsData?.title}</h1>
   {:else}
     <SkeletonShell primaryColor="#EBECEF99" secondaryColor="#F5F5F7aa" height="50px">
       <rect width="70%" height="3em" x="0" y="0" rx="4" ry="4" />
@@ -35,11 +34,11 @@
   <div class="cover">
     <!-- <img src="" alt="" /> -->
     <div class="author">
-      <Avatar size={42} email={data?.author?.email} />
+      <Avatar size={42} email={localNewsData?.author?.email} />
       <div>
-        {#if data}
+        {#if localNewsData}
           <!-- content here -->
-          {data?.author?.name}
+          {localNewsData?.author?.name}
         {:else}
           <SkeletonShell
             width="100px"
@@ -55,7 +54,7 @@
       <span>share</span>
       <a
         target="_blank"
-        href={data?.url}
+        href={localNewsData?.url}
         on:click|preventDefault={() => {
           window.open(
             "https://www.facebook.com/sharer/sharer.php?u=" + $page.url,
@@ -71,7 +70,7 @@
         href="https://twitter.com/intent/tweet?text={'[' +
           SITE_TITLE +
           ' news] ' +
-          data?.title +
+          localNewsData?.title +
           ' ' +
           $page?.url}"
       >
@@ -80,7 +79,7 @@
       <a
         target="_blank"
         href="https://api.whatsapp.com/send?text={$page?.url
-          ?.href}&title=[{SITE_TITLE} news] {data?.title}"
+          ?.href}&title=[{SITE_TITLE} news] {localNewsData?.title}"
         data-action="share/whatsapp/share"
       >
         <Icon size="1.5em" icon={faWhatsapp} />
@@ -88,16 +87,16 @@
       <a
         target="_blank"
         href="https://www.reddit.com/submit?url={$page?.url
-          ?.href}&title=[{SITE_TITLE} news] {data?.title}"
+          ?.href}&title=[{SITE_TITLE} news] {localNewsData?.title}"
       >
         <Icon size="1.25em" icon={faReddit} />
       </a>
     </div>
   </div>
   <div class="content">
-    {#if data}
+    {#if localNewsData}
       <!-- content here -->
-      {@html data?.content}
+      {@html localNewsData?.content}
     {:else}
       {#each Array(4).fill(0) as shells, width}
         <SkeletonShell primaryColor="#EBECEF55" secondaryColor="#F5F5F766" height="9em">

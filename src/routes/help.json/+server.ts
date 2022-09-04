@@ -32,7 +32,6 @@ export async function GET() {
       // get id by slicing the .svx format
       const id = cur;
       const file = join(import.meta.env.BASEPATH || "", thisDir, cur, "+page.svx");
-      console.log(file);
       prev.parent[id] = {
         href: `/help/${id}`,
         title: (fm(readFileSync(file, "utf-8")).attributes as any).title || id,
@@ -52,7 +51,6 @@ export async function GET() {
     if (childMarkdowns.length) prev[slug] = {};
     childMarkdowns.forEach((child) => {
       const childSlug = child.split("routes/")[1].split("/+page.svx")[0];
-      console.log({ child, childSlug });
       prev[slug][childSlug.split("/").slice(-1)] = {
         title:
           (fm(readFileSync(join(import.meta.env.BASEPATH || "", child), "utf-8")).attributes as any)
