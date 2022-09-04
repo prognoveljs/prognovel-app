@@ -10,9 +10,11 @@
   }
 
   export let title = "Loading...";
+  export let book = "";
+  export let chapter = "";
 </script>
 
-<ReadHeader {title} />
+<ReadHeader {book} {chapter} {title} />
 
 <article>
   <Navigation on:toc={tableOfContent} />
@@ -23,7 +25,7 @@
 
   article {
     padding: 24px calc(#{$padding-base} + #{$padding-ratio});
-    padding-right: calc(#{$padding-base} + #{$padding-ratio / 4});
+    padding-right: calc(#{$padding-base} + #{math.div($padding-ratio, 4)});
     margin: 0 auto;
 
     @include screen("mobile") {

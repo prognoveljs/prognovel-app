@@ -1,6 +1,7 @@
 <script lang="ts">
   import Section from "./HomeHighlightSection.svelte";
   import GFTW from "./grant-for-the-web/HomeGFTWBanner.svelte";
+  import BackgroundPattern from "$lib/components/misc/BackgroundPattern.svelte";
 </script>
 
 <article>
@@ -93,6 +94,7 @@
       and apps with only $0 for a long, long time.
     </Section>
   </section>
+  <BackgroundPattern />
 </article>
 
 <style lang="scss">

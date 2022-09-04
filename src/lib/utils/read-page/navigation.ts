@@ -1,5 +1,5 @@
 import { currentChapterCursor, toc } from "$lib/store/read-page";
-import { get as getStore } from "svelte/store";
+import { get as getStore, writable, Writable } from "svelte/store";
 import { novelsData } from "$lib/store/states";
 
 export function getChapterStoreKey(novel, book, chapter) {

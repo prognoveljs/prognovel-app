@@ -6,7 +6,12 @@ import autoprefixer from "autoprefixer";
 import purgeCSS from "@fullhuman/postcss-purgecss";
 import { readFileSync } from "fs";
 
-const siteMetadata = JSON.parse(readFileSync("./.cache/assets/publish/sitemetadata.json", "utf-8"));
+let siteMetadata;
+try {
+  siteMetadata = JSON.parse(readFileSync("./.cache/assets/publish/sitemetadata.json", "utf-8"));
+} catch (error) {
+  console.error(error);
+}
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
@@ -18,7 +23,11 @@ export default {
       },
     }),
     preprocess({
-      scss: { prependData: `@import "style/scss/global.scss";` },
+      scss: {
+        prependData: `
+@use "sass:math";
+@import "style/scss/global.scss";`,
+      },
     }),
     postcss([
       autoprefixer(),
@@ -36,7 +45,7 @@ export default {
     }),
     prerender: {
       default: true,
-      entries: ["*", ...siteMetadata.novels.map((novel) => `/novel/${novel}/`)],
+      entries: ["*", ...(siteMetadata?.novels || []).map((novel) => `/novel/${novel}/`)],
     },
     trailingSlash: "always",
     // vite: {

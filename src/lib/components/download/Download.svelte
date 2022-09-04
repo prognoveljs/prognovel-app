@@ -40,7 +40,7 @@
   $button__transparent: 0.44;
 
   .btn {
-    --bg-alpha: #{$button__transparent / 3};
+    --bg-alpha: #{math.div($button__transparent, 3)};
     --border-alpha: #{$button__transparent};
     --bg-light: 56%;
     --border-light: 56%;

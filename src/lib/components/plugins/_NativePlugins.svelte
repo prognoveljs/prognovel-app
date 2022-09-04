@@ -15,7 +15,6 @@
     );
     window.customElements.define("novel-trivia", NovelTrivia);
     window.customElements.define("authors-note", AuthorsNote);
-    console.log(NovelTrivia);
     $registeredPlugins.add(tag);
   };
 </script>

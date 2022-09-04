@@ -54,25 +54,25 @@
       &.top::after {
         @include css-triangle(var(--bg), top, $arrowSize);
         top: -$arrowSize;
-        right: var(--right, calc(50% - #{$arrowSize / 2}));
+        right: var(--right, calc(50% - #{$arrowSize} / 2));
         left: var(--left, auto);
       }
       &.bottom::after {
         @include css-triangle(var(--bg), top, $arrowSize);
         bottom: -$arrowSize;
-        right: var(--right, calc(50% - #{$arrowSize / 2}));
+        right: var(--right, calc(50% - #{$arrowSize} / 2));
         left: var(--left, auto);
       }
       &.right::after {
         @include css-triangle(var(--bg), top, $arrowSize);
         right: -$arrowSize;
-        top: var(--top, calc(50% - #{$arrowSize / 2}));
+        top: var(--top, calc(50% - #{$arrowSize} / 2));
         bottom: var(--bottom, auto);
       }
       &.left::after {
         @include css-triangle(var(--bg), top, $arrowSize);
         left: -$arrowSize;
-        top: var(--top, calc(50% - #{$arrowSize / 2}));
+        top: var(--top, calc(50% - #{$arrowSize} / 2));
         bottom: var(--bottom, auto);
       }
     }

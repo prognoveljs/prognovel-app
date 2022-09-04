@@ -1,7 +1,6 @@
 <script lang="ts">
   import BookCover from "$lib/components/BookCover.svelte";
-  import { toc } from "$lib/store/read-page";
-  import { showTOC } from "$lib/store/read-page/read-page-state";
+  import { toc, showTOC } from "$lib/store/read-page";
   import { currentNovel, path } from "$lib/store/states";
   import { handleBeginReadingButton, novelTitles, ReadNowObject } from "$lib/utils/novel-page";
   import { replacePageTitleBookAndChapter } from "$lib/utils/read-page/history";

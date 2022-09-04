@@ -1,6 +1,17 @@
+<script lang="ts">
+  import { infiniteLoading } from "$lib/store/read-page";
+  function setInfiniteLoading(bool: boolean) {
+    $infiniteLoading = bool;
+  }
+</script>
+
 <section>
-  <div><span /> Classic mode</div>
-  <div><span /> Infinite reading</div>
+  <div class:active={!$infiniteLoading} on:click={() => setInfiniteLoading(false)}>
+    <span /> Classic mode
+  </div>
+  <div class:active={$infiniteLoading} on:click={() => setInfiniteLoading(true)}>
+    <span /> Infinite reading
+  </div>
 </section>
 
 <style lang="scss">
@@ -27,6 +38,11 @@
 
       &:hover {
         text-decoration: underline;
+      }
+
+      &.active {
+        color: var(--primary-color);
+        font-weight: 700;
       }
     }
   }

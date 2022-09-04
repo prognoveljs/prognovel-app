@@ -11,7 +11,14 @@ import { getChapterUrl } from "./slug";
 
 const PREFETCH_CHAPTER = parseInt(import.meta.env.PREFETCH_CHAPTER ?? "3");
 
-export async function fetchChapter(novel: string, chapterList: string[]): Promise<Chapter> {
+interface FetchChapterOptions {
+  loadChapter?: boolean;
+}
+export async function fetch_chapter(
+  novel: string,
+  chapterList: string[],
+  opts: FetchChapterOptions = {},
+): Promise<Chapter> {
   let data: any = {};
 
   try {
@@ -40,6 +47,9 @@ export async function fetchChapter(novel: string, chapterList: string[]): Promis
     }
   }
 
+  if (opts?.loadChapter) {
+  }
+
   return data;
 }
 
@@ -50,7 +60,7 @@ export async function prefetchNextChapter() {
   const next = tableOfContent[cursor];
 
   if (import.meta.env.IS_STATIC_API && next && novel && cursor < tableOfContent.length - 1)
-    fetchChapter(novel, [next]);
+    fetch_chapter(novel, [next]);
 }
 
 export async function prefetchChapter(
@@ -66,7 +76,7 @@ export async function prefetchChapter(
 
   async function useStaticAPI(): Promise<Chapter | null> {
     try {
-      data = await fetchChapter(novel, [thisChapter]);
+      data = await fetch_chapter(novel, [thisChapter]);
     } catch (error) {
       isFetchFailed = true;
     }
@@ -101,7 +111,7 @@ export async function prefetchChapter(
     }
 
     try {
-      data = await fetchChapter(novel, list);
+      data = await fetch_chapter(novel, list);
     } catch (error) {
       isFetchFailed = true;
     }

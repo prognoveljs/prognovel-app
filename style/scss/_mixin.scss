@@ -43,12 +43,12 @@
     border-left: $size solid transparent;
     border-right: $size solid transparent;
     border-top: $size solid $color;
-    margin-top: 0 - round($size / 2.5);
+    margin-top: 0 - round(math.div($size, 2.5));
   } @else if $direction == top {
     border-left: $size solid transparent;
     border-right: $size solid transparent;
     border-bottom: $size solid $color;
-    margin-bottom: 0 - round($size / 2.5);
+    margin-bottom: 0 - round(math.div($size, 2.5));
   } @else if $direction == right {
     border-top: $size solid transparent;
     border-bottom: $size solid transparent;

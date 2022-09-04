@@ -1,9 +1,7 @@
 <script lang="ts">
   import Header from "./ContentHeader.svelte";
   import Footer from "./ContentFooter.svelte";
-  import TOC from "$lib/components/read-page/ReadTableOfContent.svelte";
   import ErrorPlaceholder from "$lib/components/read-page/body/ReadBodyErrorPlaceholder.svelte";
-  import NativePlugins from "$lib/components/plugins/_NativePlugins.svelte";
   import AdsDelay from "$lib/components/read-page/ContentAdsDelay.svelte";
   import {
     currentContent,
@@ -11,9 +9,12 @@
     toc,
     chaptersLoaded,
     chapterTitles,
+    infiniteLoading,
+    currentBook,
+    currentChapter,
   } from "$lib/store/read-page";
   import { FONT_SIZE, LINE_HEIGHT, ChapterState } from "$lib/utils/read-page/vars";
-  import { getChapterStoreKey, getLoadingPlaceholder } from "$lib/utils/read-page";
+  import { getChapterStoreKey, setNovelRecentHistory } from "$lib/utils/read-page";
   import { onMount, tick } from "svelte";
   import { readPageSettingsInit } from "$lib/utils/fonts";
   import {
@@ -21,25 +22,29 @@
     isCurrentChapterLocked,
     isCurrentChapterMonetized,
   } from "$lib/utils/web-monetization";
-  import { contentRenderer, createContentDelay } from "$lib/utils/read-page";
+  import { contentRenderer, createContentDelay, renderContentReady } from "$lib/utils/read-page";
   import { pannable } from "$lib/utils/actions";
   import HasReadLotsOfContents from "$lib/components/misc/promotion/HasReadLotsOfContents.svelte";
   import ChapterLock from "$lib/components/read-page/ChapterLock.svelte";
-  import { showTOC } from "$lib/store/read-page/read-page-state";
+  import { showTOC } from "$lib/store/read-page";
   import { colorizedBackground } from "$lib/utils/fonts/background-hue";
   import ReadPageSkeletonShell from "$lib/components/read-page/ReadPageSkeletonShell.svelte";
-  export let novel: string;
-  export let book: string;
-  export let chapter: string;
-  let body;
+  import { onDestroy } from "svelte";
+  import InfiniteReadingBound from "../InfiniteReadingBound.svelte";
+  import Observer from "svelte-intersection-observer";
+
+  export let bookAndChapterIndex: string = "";
+  export let novel: string = "";
+  let body: HTMLElement;
   // core
   // $: renderHTML($currentContent);
-  $: loadedContent = $chaptersLoaded[getChapterStoreKey(novel, book, chapter)];
+  $: [book, chapter] = bookAndChapterIndex.split("/");
+  $: loadedContent = $chaptersLoaded?.[getChapterStoreKey(novel, book, chapter)];
   $: chapterStatus = loadedContent?.meta?.status;
   // ===================================================== \\
   // if valid content loaded, update global store          \\
   // for current content                                   \\
-  $: if (loadedContent) {
+  $: if (loadedContent && !$infiniteLoading) {
     $currentContent = loadedContent;
     $isCurrentChapterMonetized = Boolean(loadedContent.monetization);
   }
@@ -52,6 +57,16 @@
 
   // options
   // $: textRendering = $asyncTextRendering ? "auto" : "visible";
+  function onChapterViewed() {
+    if (!$infiniteLoading) return;
+    console.log("👀 vieweing", book, chapter);
+    $currentContent = loadedContent;
+    $isCurrentChapterMonetized = Boolean(loadedContent.monetization);
+    $currentBook = book;
+    $currentChapter = chapter;
+    setNovelRecentHistory(novel, `${book}/${chapter}`);
+    history.pushState(null, null, `/read/${novel}/${book}/${chapter}/`);
+  }
 
   $: contentDelay = isValidChapterLoaded
     ? tick().then(() => createContentDelay(novel, $currentChapterIndex))
@@ -59,6 +74,13 @@
   onMount(readPageSettingsInit);
 
   $: locked = !$enablePremiumContent && $isCurrentChapterMonetized;
+
+  onDestroy(() => {
+    renderContentReady.update((pool) => {
+      delete pool[`${novel}/${book}/${chapter}`];
+      return pool;
+    });
+  });
 </script>
 
 <article
@@ -66,7 +88,7 @@
   class:colorizedbackground={$colorizedBackground}
   style="--fontSizeBase: {FONT_SIZE}px; --lineHeight: {LINE_HEIGHT};"
 >
-  <Header title={chapterTitle} on:toc={() => ($showTOC = true)} />
+  <Header {book} {chapter} title={chapterTitle} on:toc={() => ($showTOC = true)} />
 
   <section class:monetized={locked}>
     <div bind:this={body} class="body">
@@ -75,13 +97,25 @@
           {#await contentDelay}
             <AdsDelay on:click={() => (contentDelay = Promise.resolve())} />
           {:then}
-            <div id="chapter-placeholder-previous" />
-            <div
-              id="chapter-state-success"
-              use:pannable={{ restrictY: true }}
-              use:contentRenderer={{ novel, book, chapter, content: loadedContent }}
-            />
-            <div id="chapter-placeholder-next" />
+            <Observer rootMargin="-60% 0px -40% 0px" element={body} on:intersect={onChapterViewed}>
+              <div
+                bind:this={body}
+                id="chapter-state-success-{bookAndChapterIndex}"
+                class="chapter-state-success"
+                use:pannable={{ restrictY: true }}
+                use:contentRenderer={{ novel, book, chapter, content: loadedContent }}
+              />
+            </Observer>
+            {#if $infiniteLoading}
+              <InfiniteReadingBound
+                timer={200}
+                once={true}
+                {novel}
+                {book}
+                {chapter}
+                on:chapterendviewed
+              />
+            {/if}
           {/await}
         {/key}
       {:else if chapterStatus === ChapterState.Error}
@@ -98,12 +132,6 @@
   <!-- <HasReadLotsOfContents /> -->
   <Footer on:toc={() => ($showTOC = true)} />
 </article>
-
-<NativePlugins />
-
-{#if $showTOC}
-  <TOC on:close={() => ($showTOC = false)} />
-{/if}
 
 <style lang="scss">
   @import "../../../../routes/read/vars";
@@ -156,7 +184,7 @@
       padding: var(--contentPadding, 0);
     }
 
-    :global(#chapter-state-success > p) {
+    :global(.chapter-state-success > p) {
       font-family: var(--fontFamily);
       font-size: calc(var(--fontSize));
       font-weight: calc(400 * var(--fontWeight));

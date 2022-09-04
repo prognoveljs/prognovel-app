@@ -13,13 +13,12 @@
     faChartArea,
     faMoneyBill,
   } from "@fortawesome/free-solid-svg-icons";
-  import { toc } from "$lib/store/read-page";
+  import { toc, showTOC } from "$lib/store/read-page";
   import TOC from "$lib/components/read-page/ReadTableOfContent.svelte";
   import Icon from "$lib/components/Icon.svelte";
   import Share from "$lib/components/novel-page/Share.svelte";
   import Bookmark from "$lib/components/novel-page/BookmarkSave.svelte";
   import GenreTags from "$lib/components/novel-page/GenreTags.svelte";
-  import { showTOC } from "$lib/store/read-page/read-page-state";
   import { showAffiliateReferrer, showRevshareStats } from "$lib/store/novel-page";
   import DownloadWindow from "$lib/components/download/DownloadWindow.svelte";
   import { getContext } from "svelte";

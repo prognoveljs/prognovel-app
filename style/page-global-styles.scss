@@ -1,0 +1,64 @@
+.cta-button {
+  --bg-alpha: 1;
+  --bg: hsla(var(--primary-color-h), 80%, 40%, var(--bg-alpha));
+  margin: 0;
+  font-size: 1em;
+  width: var(--width, 180px);
+  display: inline-block;
+  text-align: left;
+  cursor: pointer;
+  padding: 8px 32px 8px 12px;
+  border-radius: 4px;
+  color: #fffc;
+  background-color: var(--bg);
+  border: 2px solid var(--bg);
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: -0.0275em;
+  font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+
+  transition: all 0.085s ease-out;
+  position: relative;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &.secondary {
+    --bg-alpha: 0.2;
+    width: max-content;
+    padding-right: 2.85em;
+    transition: all 0.065s ease-out;
+
+    &:hover {
+      --bg-alpha: 0.4;
+    }
+  }
+
+  :global(svg) {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    margin-left: 12px;
+    transition: all 0.132s ease-in-out;
+    opacity: 0.7;
+    color: #fff !important;
+  }
+
+  &[disabled] {
+    filter: saturate(0.4);
+    pointer-events: none;
+    cursor: default;
+
+    &::before {
+      display: none !important;
+    }
+
+    &.loading {
+      :global(svg) {
+        animation: spin 4s infinite linear;
+      }
+    }
+  }
+}

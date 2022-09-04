@@ -17,7 +17,7 @@ const routesToCache: string[] = [
 
 export const SW_HOST: string = "";
 export const cachedRoutes = routesToCache.concat(
-  import.meta.env.NOVEL_LIST.map((novel) => `/novel/${novel}/`),
+  (import.meta.env.NOVEL_LIST || []).map((novel) => `/novel/${novel}/`).filter((f) => !!f),
 );
 const cachedFiles = build.concat(files).concat(cachedRoutes);
 

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { onMount, onDestroy, tick, createEventDispatcher } from "svelte";
   import { cubicIn, cubicOut } from "svelte/easing";
   import { fly, fade } from "svelte/transition";
@@ -6,8 +6,9 @@
   import { currentNovel, novelsData } from "$lib/store/states";
   import { windowLock, windowUnlock } from "$lib/utils/window/lock";
   import { isMobileScreen } from "$lib/utils/mobile";
-  import { showTOC } from "$lib/store/read-page/read-page-state";
   import { getCoverURLPath } from "$lib/utils/images";
+  import { chaptersLoaded, chaptersWithSpoiler, showTOC } from "$lib/store/read-page";
+  import { getChapterStoreKey } from "$lib/utils/read-page";
 
   let width = 400;
   let body;
@@ -53,6 +54,14 @@
     await tick();
   });
   onDestroy(windowUnlock);
+
+  function isSpoiler(volumeAndChapter: string) {
+    const [book, chapter] = volumeAndChapter.split("/");
+    return (
+      Boolean($chaptersLoaded?.[getChapterStoreKey($currentNovel, book, chapter)]?.spoiler) ||
+      chaptersWithSpoiler.has(`${$currentNovel}/${volumeAndChapter}`)
+    );
+  }
 </script>
 
 <div
@@ -91,7 +100,7 @@
           Chapter
           {chapter.split("/")[1].slice(8).replace("-", ".")}
           {#if $chapterTitles && $chapterTitles[$currentNovel]}
-            <span
+            <span class:spoiler={isSpoiler(chapter)}
               >{$chapterTitles[$currentNovel][chapter.split("/")[0]][chapter.split("/")[1]]}</span
             >
           {:else}<span>Loading...</span>{/if}
@@ -206,8 +215,30 @@
 
       span {
         display: block;
+        position: relative;
         font-weight: 300;
         color: var(--text-body-color) !important;
+        width: fit-content;
+        overflow: hidden;
+
+        &.spoiler {
+          &::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transition: all 0.2s ease-in-out;
+            inset: 0;
+            background-color: #fff2;
+            backdrop-filter: blur(4px);
+          }
+
+          &:hover {
+            &::after {
+              transform: translateX(-100%);
+            }
+          }
+        }
       }
 
       &:visited {

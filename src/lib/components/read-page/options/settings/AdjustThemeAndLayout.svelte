@@ -9,13 +9,14 @@
 
 <SectionHeader Icon={ImageIcon}>Layout and themes</SectionHeader>
 <div style="position:relative;">
-  <div style="opacity: 0.35; filter: blur(2.5px);">
-    <SettingsLayout />
-  </div>
-  <span
+  <SettingsLayout />
+  <!-- <div style="opacity: 0.35; filter: blur(2.5px);">
+    
+  </div> -->
+  <!-- <span
     style="height: 100%; font-weight: 500; width: 100%; top: 35%; font-size: 1em;position: absolute; text-align: center;"
     >🚧 some features under construction 🚧
-  </span>
+  </span> -->
 </div>
 <Slider labelText="Adjust contrast" bind:value={$colorContrast} min={75} max={150} step={5} />
 

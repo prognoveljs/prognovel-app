@@ -52,6 +52,7 @@
     flex-direction: column;
     min-width: 0;
     cursor: pointer;
+    // background-color: var(--background-color);
 
     .name {
       align-self: flex-start;
@@ -84,6 +85,7 @@
       --image-opacity: 1;
       --image-grayscale: 0;
       background-color: #0002;
+      backdrop-filter: blur(8px);
       overflow: auto;
     }
   }
