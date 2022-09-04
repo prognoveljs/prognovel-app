@@ -108,7 +108,7 @@
             </Observer>
             {#if $infiniteLoading}
               <InfiniteReadingBound
-                timer={2000}
+                timer={200}
                 once={true}
                 {novel}
                 {book}
