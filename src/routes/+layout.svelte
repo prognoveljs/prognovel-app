@@ -76,6 +76,9 @@
   // @import "../../style/cssVariables.scss";
   @import "../../style/fonts.scss";
   @import "../../style/resets.scss";
+  :global {
+    @import "../../style/page-global-styles.scss";
+  }
 
   :global(body) {
     overflow-y: scroll;

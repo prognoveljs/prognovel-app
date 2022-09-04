@@ -1,9 +1,11 @@
 <script lang="ts">
   import { isMobileScreen } from "$lib/utils/mobile";
+  import { isPWABannerActive, showPWAPrompt } from "$lib/utils/pwa";
 
   import { SITE_TITLE } from "$lib/_setting";
 
   import { onMount, onDestroy } from "svelte";
+  import { DownloadIcon } from "svelte-feather-icons";
 
   let duration = 5;
   let timer = setInterval(() => {
@@ -21,7 +23,6 @@
 <section>
   <div class="ads-container">
     <span class="square">Ads</span>
-    <button on:click disabled={!isTimerDone}>Skip ads{duration ? ` (${duration})` : ""}</button>
   </div>
   <div class="pwa-promotion">
     <h2>Install {SITE_TITLE} app to disable this ads</h2>
@@ -33,6 +34,15 @@
     {/if}
   </div>
 </section>
+
+<div class="cta">
+  <button class="cta-button secondary" disabled={!$isPWABannerActive} on:click={showPWAPrompt}
+    >Install app <DownloadIcon /></button
+  >
+  <button class="cta-button" on:click disabled={!isTimerDone}
+    >Skip ads{duration ? ` (${duration})` : ""}</button
+  >
+</div>
 
 <style lang="scss">
   section {
@@ -58,12 +68,6 @@
         align-items: center;
         justify-content: center;
       }
-
-      button {
-        padding: 8px 16px;
-        margin: 8px auto;
-        display: block;
-      }
     }
 
     .pwa-promotion {
@@ -88,5 +92,13 @@
         width: 100%;
       }
     }
+  }
+
+  .cta {
+    margin: 5em auto 2em;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 0.5em;
   }
 </style>
