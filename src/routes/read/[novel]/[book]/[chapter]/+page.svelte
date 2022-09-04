@@ -32,6 +32,9 @@
   $: bookAndChapter = `${book}/${chapter}`;
   $: if ($novelsData[novel] && book && chapter) mountPage($page);
   $: activeChapter = [bookAndChapter];
+  $: if (!$infiniteLoading) {
+    activeChapter = [`${$currentBook}/${$currentChapter}`];
+  }
   let infiniteReadingEnd = false;
 
   $: if (novel) $chaptersAppended = [];
