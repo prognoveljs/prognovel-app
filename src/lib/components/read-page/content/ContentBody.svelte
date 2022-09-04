@@ -110,7 +110,14 @@
               use:contentRenderer={{ novel, book, chapter, content: loadedContent }}
             />
             {#if $infiniteLoading}
-              <InfiniteReadingBound timer={2000} {novel} {book} {chapter} on:chapterendviewed />
+              <InfiniteReadingBound
+                timer={2000}
+                once={true}
+                {novel}
+                {book}
+                {chapter}
+                on:chapterendviewed
+              />
             {/if}
           {/await}
         {/key}

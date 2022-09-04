@@ -9,6 +9,7 @@
   export let chapter: string = "";
   export let timer: number = 0;
   export let rootMargin: string = "";
+  export let once: boolean = false;
   $: isRendering = $renderContentReady?.[`${novel}/${book}/${chapter}`];
   const dispatch = createEventDispatcher();
   let nextObserver: HTMLElement;
@@ -31,8 +32,10 @@
 
 {#if enableOserver}
   {#await isRendering ?? new Promise(() => {}) then value}
-    <Observer {rootMargin} element={nextObserver} once on:intersect={trigger}>
-      <div bind:this={nextObserver} />
+    <Observer {rootMargin} element={nextObserver} {once} on:intersect={trigger}>
+      <slot>
+        <div bind:this={nextObserver} />
+      </slot>
     </Observer>
   {/await}
 {/if}
