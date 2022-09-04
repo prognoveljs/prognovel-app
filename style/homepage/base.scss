@@ -1,12 +1,6 @@
 @import "grid";
 @import "../scss/mediaquery";
 
-h1 {
-  font-size: 1.5em;
-  letter-spacing: 0.025em;
-  font-weight: 700;
-}
-
 :global(body) {
   --shortcut-width: 270px;
 
@@ -67,8 +61,8 @@ h1 {
       position: absolute;
       width: 100% + $size;
       height: 100% + $size;
-      top: $size / -2;
-      left: $size / -2;
+      top: math.div($size, -2);
+      left: math.div($size, -2);
       z-index: -1;
       background: radial-gradient(
         circle at top,
@@ -84,34 +78,6 @@ h1 {
         }
       }
     }
-  }
-}
-
-h1 {
-  font-size: 4em;
-  margin-top: 1.5em;
-  margin-bottom: 0.8em;
-  text-shadow: 2px 2px 8px #0004;
-
-  @include screen("tablet") {
-    margin-left: 24px;
-    font-size: 3.25em;
-  }
-  @include screen("small-tablet") {
-    margin: 0;
-    font-size: 2.78em;
-  }
-
-  @include screen("mobile") {
-    margin-top: 1em;
-    margin-bottom: 0;
-    font-size: 2.25em;
-    text-align: center;
-    padding: 1em;
-    padding-bottom: 0em;
-  }
-  @include screen("small-mobile") {
-    // font-size: 1.8em;
   }
 }
 

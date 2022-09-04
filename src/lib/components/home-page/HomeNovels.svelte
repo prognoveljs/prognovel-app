@@ -105,7 +105,7 @@
       top: 0;
       height: $thickness;
       background: linear-gradient(to right, #fff0, #fff5, #fff0);
-      border-radius: $thickness / 2;
+      border-radius: math.div($thickness, 2);
     }
   }
 

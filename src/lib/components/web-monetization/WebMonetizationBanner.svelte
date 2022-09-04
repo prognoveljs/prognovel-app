@@ -103,7 +103,7 @@
 
     $learn-more__transparent: 0.44;
     .learn-more {
-      --bg-alpha: #{$learn-more__transparent / 3};
+      --bg-alpha: #{math.div($learn-more__transparent, 3)};
       border-color: hsla(
         var(--primary-color-h),
         var(--primary-color-s),
@@ -113,7 +113,7 @@
       background-color: hsla(var(--primary-color-h), var(--primary-color-s), 56%, var(--bg-alpha));
 
       :global(html.light) & {
-        --bg-alpha: #{$learn-more__transparent / 1.5};
+        --bg-alpha: #{math.div($learn-more__transparent, 1.5)};
       }
 
       &:hover {

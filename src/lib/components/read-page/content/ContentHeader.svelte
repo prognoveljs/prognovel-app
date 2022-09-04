@@ -25,7 +25,7 @@
 
   article {
     padding: 24px calc(#{$padding-base} + #{$padding-ratio});
-    padding-right: calc(#{$padding-base} + #{$padding-ratio / 4});
+    padding-right: calc(#{$padding-base} + #{math.div($padding-ratio, 4)});
     margin: 0 auto;
 
     @include screen("mobile") {

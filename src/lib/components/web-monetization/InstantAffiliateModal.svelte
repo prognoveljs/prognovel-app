@@ -201,7 +201,7 @@
           span {
             margin-right: 6px;
             $size: 8px;
-            border-radius: $size / 2;
+            border-radius: math.div($size, 2);
             width: $size;
             height: $size;
             background-color: var(--text-head-color);

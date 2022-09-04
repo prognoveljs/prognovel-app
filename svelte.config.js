@@ -23,7 +23,11 @@ export default {
       },
     }),
     preprocess({
-      scss: { prependData: `@import "style/scss/global.scss";` },
+      scss: {
+        prependData: `
+@use "sass:math";
+@import "style/scss/global.scss";`,
+      },
     }),
     postcss([
       autoprefixer(),
