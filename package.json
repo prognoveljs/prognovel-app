@@ -5,9 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"populate": "node plugins/onbuild/populate/assets && node plugins/onbuild/populate/copy-assets",
-		"export": "vite build",
 		"dev": "vite dev",
-		"build": "npm run populate && npm run export && node plugins/onbuild/finish",
+		"build": "npm run populate && vite build && node plugins/onbuild/finish",
 		"preview": "vite preview",
 		"test": "playwright test",
 		"format": "prettier --write src/**/*.{ts,js,svelte} --plugin-search-dir=."
