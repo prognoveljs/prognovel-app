@@ -15,7 +15,7 @@ import {
   showTOC,
 } from "./read-page/read-page-state";
 import { showAffiliateReferrer, showDownload, showRevshareStats } from "./novel-page";
-import { browser } from "$app/env";
+import { browser } from "$app/environment";
 import type { SiteMetadata, CredentialMode, NovelsMetadata } from "$typings";
 
 // metadata

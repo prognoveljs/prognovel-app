@@ -19,7 +19,7 @@
   // import "carbon-components-svelte/css/g90.css";
   import "@skeleton-elements/svelte/skeleton-elements.css";
   import PwaHeader from "$lib/components/pwa/PWAHeader.svelte";
-  import { browser } from "$app/env";
+  import { browser } from "$app/environment";
 
   $: $currentPage = $page;
   $: $currentNovel = FORBIDDEN_NOVEL_ID.includes($page?.params?.novel)

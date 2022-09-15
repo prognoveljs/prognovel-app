@@ -5,7 +5,7 @@
   import { faSync, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
   import { get, set } from "idb-keyval";
   import Icon from "./Icon.svelte";
-  import { dev } from "$app/env";
+  import { dev } from "$app/environment";
 
   let isUpdate;
   let overlayIn;

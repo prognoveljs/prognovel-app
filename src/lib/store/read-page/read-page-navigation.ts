@@ -4,7 +4,7 @@ import { currentBook, currentChapter, currentChapterCursor, toc } from "./index"
 import { handleBeginReadingButton, ReadNowObject } from "$lib/utils/novel-page";
 import { resolveConfig } from "vite";
 import { HistoryRecent } from "$typings";
-import { browser } from "$app/env";
+import { browser } from "$app/environment";
 import { get, set } from "idb-keyval";
 
 export const infiniteLoading: Writable<boolean> = writable(false);

@@ -8,7 +8,7 @@
   import { toc, chaptersLoaded } from "$lib/store/read-page";
   import { getChapterStoreKey, prefetchChapter } from "$lib/utils/read-page";
   import type { NovelMetadata } from "$typings";
-  import { browser } from "$app/env";
+  import { browser } from "$app/environment";
   import { novelDemographics, novelGenres } from "$lib/utils/novel-page";
   import { SITE_TITLE } from "$lib/_setting";
   import BackgroundPattern from "$lib/components/misc/BackgroundPattern.svelte";

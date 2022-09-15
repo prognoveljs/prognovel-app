@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser } from "$app/env";
+  import { browser } from "$app/environment";
 
   import { page } from "$app/stores";
   import Disqus from "$lib/components/comments/disqus/Disqus.svelte";

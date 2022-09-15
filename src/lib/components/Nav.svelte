@@ -3,6 +3,7 @@
   import NavHome from "$lib/components/navigation/NavHome.svelte";
   import NavSearch from "./navigation/NavSearch.svelte";
   import { path } from "$lib/store/states";
+  import UserNavButton from "./user/UserNavButton.svelte";
 </script>
 
 <header>
@@ -14,6 +15,7 @@
     {/if}
     <section class="top-right">
       <NavSearch />
+      <UserNavButton />
     </section>
   </div>
 </header>
@@ -39,9 +41,9 @@
 
   header {
     font-weight: 300;
-    height: 1000px;
+    height: var(--header-height);
     position: fixed;
-    top: -944px;
+    top: 0;
     width: 100%;
     z-index: 999;
     box-shadow: 0 2px 8px #0001;
@@ -51,12 +53,15 @@
     transition-delay: 0.06s;
     -webkit-app-region: drag;
     app-region: drag;
+    isolation: isolate;
 
     .pwa-wrapper {
       position: absolute;
       width: env(titlebar-area-width, 100%);
       left: env(titlebar-area-x, 0);
       bottom: 0;
+      display: flex;
+      justify-content: space-between;
     }
 
     &::after {
@@ -83,13 +88,16 @@
   }
 
   .top-right {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    z-index: 1000;
+    // position: absolute;
+    // bottom: 0;
+    // right: 1em;
+    // z-index: 1000;
     display: flex;
     flex-direction: row;
     align-items: center;
-    background: paint(ripple);
+    gap: 0.5em;
+    background: var(--header-color);
+    z-index: 1;
+    margin-right: 1em;
   }
 </style>

@@ -7,8 +7,9 @@
   export let size = 32;
   export let round = true;
   export let email = "";
+  export let url = "";
   let visible = false;
-  $: img = email ? getGravatarURL(email, size) : "/img/avatar-placeholder.svg";
+  $: img = url || (email ? getGravatarURL(email, size) : "/img/avatar-placeholder.svg");
 
   const fetchImage = async () => {
     const res = await fetch(img);

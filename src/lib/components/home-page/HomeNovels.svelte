@@ -5,7 +5,7 @@
   import iconGrid from "$lib/assets/feather-icons/grid.svg?raw";
   import iconList from "$lib/assets/feather-icons/menu.svg?raw";
   import DisplayList from "./novel-list/DisplayList.svelte";
-  import { browser } from "$app/env";
+  import { browser } from "$app/environment";
   import { set } from "idb-keyval";
   import { onMount } from "svelte";
   import SkeletonShell from "../SkeletonShell.svelte";

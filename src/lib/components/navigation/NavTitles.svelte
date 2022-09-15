@@ -81,9 +81,9 @@
   #breadcrumb {
     display: flex;
     align-items: center;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    // position: absolute;
+    // bottom: 0;
+    // left: 0;
     height: var(--header-height);
     user-select: none;
     overflow: hidden;

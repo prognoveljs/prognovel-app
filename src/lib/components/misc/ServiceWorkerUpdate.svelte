@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser, dev } from "$app/env";
+  import { browser, dev } from "$app/environment";
   import { onMount } from "svelte";
   import { fly } from "svelte/transition";
   import IconSVG from "$lib/components/IconSVG.svelte";

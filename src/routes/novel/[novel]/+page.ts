@@ -1,6 +1,6 @@
 import { getLocalNovelMetadataCache, fetchNovelMetadata } from "$lib/utils/fetch-metadata";
 import { prefetchBannerImage } from "$lib/utils/images";
-import { browser } from "$app/env";
+import { browser } from "$app/environment";
 import { error } from "@sveltejs/kit";
 
 export const prerender = true;

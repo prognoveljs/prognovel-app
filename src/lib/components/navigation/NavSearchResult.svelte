@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser } from "$app/env";
+  import { browser } from "$app/environment";
   import { siteMetadata } from "$lib/store/states";
   import { stringSearch } from "$lib/utils/string";
   import { fade, fly } from "svelte/transition";

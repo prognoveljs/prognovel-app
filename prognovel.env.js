@@ -33,6 +33,7 @@ export default () => {
       STATIC_BANNER_IMAGES: IS_STATIC_API || isValidHttpUrl(SITE_METADATA.image_resizer_service),
       // app vars from build time
       SITE_METADATA,
+      POCKETBASE_URL: process.env.POCKETBASE_URL || "",
       // chunks of novels metadata
       NOVEL_TITLES: Object.keys(NOVELS_METADATA).reduce((list, novel) => {
         list[novel] = NOVELS_METADATA[novel].title;

@@ -24,9 +24,9 @@
 <style lang="scss">
   section {
     display: flex;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    // position: absolute;
+    // bottom: 0;
+    // left: 0;
     height: var(--header-height);
     align-items: center;
     user-select: none;

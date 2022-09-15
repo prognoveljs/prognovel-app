@@ -6,6 +6,8 @@ yarn-error.log
 /cypress/screenshots/
 .svelte-kit
 build
+pocketbase/*
+!pocketbase/pocketbase
 /__build-stats__/
 /workers/node_modules/
 src/lib/.generated

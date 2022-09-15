@@ -44,7 +44,6 @@ export default {
       },
     }),
     prerender: {
-      default: true,
       entries: ["*", ...(siteMetadata?.novels || []).map((novel) => `/novel/${novel}/`)],
     },
     trailingSlash: "always",

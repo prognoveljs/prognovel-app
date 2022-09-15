@@ -4,7 +4,7 @@
   import { isMobileScreen } from "$lib/utils/mobile";
   import { menuReadPageShow } from "$lib/components/mobile/menu/_store";
   import Comments from "$lib/components/read-page/comments/Comments.svelte";
-  import { browser } from "$app/env";
+  import { browser } from "$app/environment";
 
   // TODO migrate mobile menu to _layout
   const dispatch = createEventDispatcher();

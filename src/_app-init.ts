@@ -18,6 +18,7 @@ import { signInCredentialModeInit } from "$lib/utils/users";
 import { bookmarkInit } from "$lib/utils/bookmark";
 import "$lib/utils/navigation/app-preload";
 import { loadWorklet } from "$lib/utils/animation";
+import { connectDatabase } from "$lib/utils/backend";
 
 async function init() {
   const url = new URL(window.location.href);
@@ -41,4 +42,5 @@ export default async () => {
   signInCredentialModeInit();
   bookmarkInit();
   loadWorklet();
+  connectDatabase();
 };

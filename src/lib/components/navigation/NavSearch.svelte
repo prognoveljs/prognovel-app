@@ -130,7 +130,7 @@
         padding-left: 2em;
         padding-right: 1.825em;
         font-size: 1.2em;
-        margin-right: 1em;
+        margin-right: 0.5em;
         box-sizing: border-box;
         // font-family: "Courier New", Courier, monospace;
         // transform: translateX(150px);

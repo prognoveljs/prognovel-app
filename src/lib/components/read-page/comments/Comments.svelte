@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser } from "$app/env";
+  import { browser } from "$app/environment";
 
   import Disqus from "$lib/components/comments/disqus/Disqus.svelte";
   import { currentChapterCursor } from "$lib/store/read-page";
