@@ -1,5 +1,7 @@
 FROM golang:1.19-alpine
+
 RUN apk add build-base
+ENV PORT=8090
 
 WORKDIR /
 
