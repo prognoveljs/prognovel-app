@@ -6,14 +6,18 @@
   import { user } from "$lib/store/user";
   import { goto } from "$app/navigation";
   import { LoaderIcon } from "svelte-feather-icons";
-
   const url = new URL($page.url.href.replace("redirect/?", "redirect?"));
+  let data;
   onMount(() => {
-    const code = url.searchParams.get("code");
+    data = { code: url.searchParams.get("code") };
   });
   $: if ($backend && browser) {
     const authProvider: any = JSON.parse(localStorage.getItem("authProvider") || "{}");
     console.log(location.origin + "/login/redirect");
+    data = {
+      ...data,
+      authProvider,
+    };
     $backend.users
       .authViaOAuth2(
         authProvider.name,
@@ -22,11 +26,13 @@
         //@ts-ignore
         location.origin + "/login/redirect",
       )
-      .then((u) => {
+      .then(async (u: any) => {
         $user = u;
-        console.log({ user: u });
+        // $backend.authStore.exportToCookie();
+        console.log("model:", $backend.authStore.model);
         goto("/");
-      });
+      })
+      .catch(console.error);
   }
 </script>
 
@@ -35,8 +41,10 @@
 </svelte:head>
 
 <article>
-  <LoaderIcon size="32" />
-  Loading user data...
+  <div class="flex">
+    <LoaderIcon class="loader" size="32" />
+    Loading user data...
+  </div>
 </article>
 
 <style lang="scss">
@@ -46,12 +54,16 @@
     top: 12%;
     width: 400px;
     margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-    :global(svg) {
-      // display: block;
-      animation: spin 4s linear infinite;
+    .flex {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      margin-bottom: 1em;
+
+      :global(svg.loader) {
+        // display: block;
+        animation: spin 4s linear infinite;
+      }
     }
   }
 

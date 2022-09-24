@@ -15,19 +15,21 @@ export interface User {
     verified: boolean;
     lastResetSentAt: string;
     lastVerificationSentAt: string;
-    profile: {
-      id: string;
-      created: string;
-      updated: string;
-      avatar: string;
-      name: string;
-      userId: string;
-      coin: number;
-      "@collectionId": string;
-      "@collectionName": string;
-      "@expand": any;
-    };
+    profile: UserProfile;
   };
+}
+
+export interface UserProfile {
+  id: string;
+  created: string;
+  updated: string;
+  avatar: string;
+  name: string;
+  userId: string;
+  coin: number;
+  "@collectionId": string;
+  "@collectionName": string;
+  "@expand": any;
 }
 
 export interface GravatarProfile {

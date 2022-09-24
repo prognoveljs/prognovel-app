@@ -14,7 +14,6 @@ import {
   showStatsAndOptions,
   showTOC,
 } from "./read-page/read-page-state";
-import { showAffiliateReferrer, showDownload, showRevshareStats } from "./novel-page";
 import { browser } from "$app/environment";
 import type { SiteMetadata, CredentialMode, NovelsMetadata } from "$typings";
 
@@ -31,7 +30,7 @@ export const path: Readable<string> = derived([page], ([currentPage]) => {
 });
 
 // user
-export const user: Writable<any> = writable({});
+// export const user: Writable<any> = writable({});
 export const credentialMode: Writable<CredentialMode> = writable("prompt");
 
 // novel

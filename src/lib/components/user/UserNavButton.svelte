@@ -1,31 +1,27 @@
 <script lang="ts">
   import Avatar from "./Avatar.svelte";
   import { user, avatarUrl } from "$lib/store/user";
-  import { DollarSignIcon, LogInIcon } from "svelte-feather-icons";
-  $: console.log($user);
+  import { LogInIcon } from "svelte-feather-icons";
+  import LoginModal from "./login/LoginModal.svelte";
+  import UserNavModal from "./UserNavModal.svelte";
+
+  let showLoginModal = false;
 </script>
 
-<section class:loggedIn={Boolean($user)}>
+<section class:loggedIn={Boolean($user)} tabindex="0">
   {#if $user}
     <Avatar url={$avatarUrl} size={36} />
-    <div class="user-hover">
-      <div class="coin">
-        <span class="label">
-          <DollarSignIcon size="18" />
-          Coin
-        </span>
-        <span>
-          {$user?.user?.profile?.coin ?? "--"}
-        </span>
-        <button>get more</button>
-      </div>
-    </div>
+    <UserNavModal />
   {:else if import.meta.env.POCKETBASE_URL}
-    <a href="/login">
+    <a href="/login" on:click|preventDefault={() => (showLoginModal = true)}>
       <LogInIcon />
     </a>
   {/if}
 </section>
+
+{#if showLoginModal}
+  <LoginModal isModal={true} on:close={() => (showLoginModal = false)} />
+{/if}
 
 <style lang="scss">
   section {
@@ -35,43 +31,17 @@
     width: 36px;
     height: 100%;
 
-    .user-hover {
-      --opacity: 0;
-      display: flex;
-      position: fixed;
-      right: 0.5em;
-      top: calc(var(--header-height) - 4px);
-      width: 20em;
-      background-color: var(--foreground-color);
-      padding: 12px;
-      transform: translateY(-100%) translateZ(0);
-      z-index: -1;
-      opacity: var(--opacity);
-      transition: all 0.4s ease-in-out;
-      font-weight: 400;
-
-      .coin {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        gap: 0.5em;
-
-        .label {
-          flex-grow: 1;
-        }
-
-        button {
-          flex-shrink: 0;
-        }
-      }
-    }
-
-    &:hover {
-      .user-hover {
+    &:hover,
+    &:focus {
+      :global(.user-modal) {
         --opacity: 1;
         transform: translateY(0);
       }
+    }
+
+    a {
+      display: flex;
+      align-items: center;
     }
   }
 </style>
