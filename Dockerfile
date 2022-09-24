@@ -14,4 +14,4 @@ COPY ./src/backend/*.go .
 
 RUN go build -o /pocketbase
 EXPOSE 8090
-CMD "/pocketbase serve --http ${PORT}"
+CMD "/pocketbase serve --http 0.0.0.0:${PORT}"
