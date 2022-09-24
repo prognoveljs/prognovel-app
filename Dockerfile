@@ -1,13 +1,15 @@
-FROM golang:1.19
+FROM golang:1.19-alpine
+RUN apk add build-base
 
-WORKDIR /backend
+WORKDIR /
 
-COPY go.mod ./
-COPY go.sum ./
+COPY go.mod .
+COPY go.sum .
 
 RUN go mod download
 
-COPY ./src/backend/*.go ./
+COPY ./src/backend/*.go .
 
 RUN go build -o /pocketbase
-CMD [ "/pocketbase serve" ]
+EXPOSE 8090
+CMD [ "/pocketbase", "serve" ]
