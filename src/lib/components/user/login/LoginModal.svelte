@@ -1,7 +1,7 @@
 <script lang="ts">
   import { browser } from "$app/environment";
   import Icon from "$lib/components/Icon.svelte";
-  import { backend } from "$lib/utils/backend";
+  import { backend } from "$lib/store/backend";
   import { capsFirstLetter } from "$lib/utils/string";
   import {
     faDiscord,

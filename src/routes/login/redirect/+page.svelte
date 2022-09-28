@@ -1,11 +1,13 @@
 <script lang="ts">
   import { browser } from "$app/environment";
   import { page } from "$app/stores";
-  import { backend } from "$lib/utils/backend";
-  import { onMount } from "svelte";
-  import { user } from "$lib/store/user";
+  import { backend } from "$lib/store/backend";
+  import { onMount, tick } from "svelte";
+  import { user, profile } from "$lib/store/user";
   import { goto } from "$app/navigation";
   import { LoaderIcon } from "svelte-feather-icons";
+  import type { UserProfile } from "$typings/user";
+  import { updateProfile } from "$lib/utils/backend/user";
   const url = new URL($page.url.href.replace("redirect/?", "redirect?"));
   let data;
   onMount(() => {
@@ -29,10 +31,30 @@
       .then(async (u: any) => {
         $user = u;
         // $backend.authStore.exportToCookie();
-        console.log("model:", $backend.authStore.model);
+        console.log(u);
+        await tick();
+        await normalizeUserData();
         goto("/");
       })
       .catch(console.error);
+  }
+
+  async function normalizeUserData() {
+    const data: UserProfile | { name?: string; avatar?: Blob } = {};
+    const form = new FormData();
+
+    if (!$profile?.name) data.name = $user.meta?.name;
+    if (!$profile?.avatar) {
+      try {
+        const res = await fetch($user?.meta?.avatarUrl);
+        const blob = await res.blob();
+        data.avatar = blob;
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    if (JSON.stringify(data) === "{}") return;
+    updateProfile(data, true);
   }
 </script>
 

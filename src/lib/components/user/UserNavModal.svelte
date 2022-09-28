@@ -1,31 +1,14 @@
 <script lang="ts">
   import coinSVG from "$lib/assets/svg/coin-1.svg";
   import { profile, user } from "$lib/store/user";
-  import { backend, refreshUser, updateProfile } from "$lib/utils/backend";
-  import { Button } from "carbon-components-svelte";
-  import { tick } from "svelte";
-  import type { UserProfile } from "$typings/user";
-
-  // $: profile = ($user?.user?.profile || {}) as UserProfile;
-  // $: profileId = profile?.id;
-  profile;
-  async function getDailyCoin() {
-    await refreshUser();
-    await tick();
-    // if (!$profile.id) return;
-    const result: unknown = await $backend.records.update("profiles", $profile.id, {
-      coin: ($profile.coin || 0) + 40,
-    });
-    user.update((u) => {
-      u.user.profile = result as UserProfile;
-      return u;
-    });
-  }
-
-  $: console.log({ user: $user });
+  import CoinButton from "./coin/CoinButton.svelte";
+  import LogoutButton from "./logout/LogoutButton.svelte";
 </script>
 
 <section class="user-modal">
+  <div class="name">
+    Welcome {$profile?.name || "..."}
+  </div>
   <div class="coin">
     <span class="label">
       <img src={coinSVG} width="auto" height="24" alt="Coin" />
@@ -34,9 +17,11 @@
     <span class="value">
       {$user?.user?.profile?.coin ?? "--"}
     </span>
-    <Button size="small" on:click={getDailyCoin}>Get more</Button>
+    <CoinButton />
   </div>
-  {$profile.id}
+  <div class="opts">
+    <LogoutButton />
+  </div>
 </section>
 
 <style lang="scss">

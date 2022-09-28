@@ -12,6 +12,7 @@ specifiers:
   '@sveltejs/adapter-static': 1.0.0-next.43
   '@sveltejs/kit': 1.0.0-next.481
   '@types/aws-lambda': ^8.10.93
+  '@types/js-cookie': ^3.0.2
   '@types/ws': ^8.5.3
   autoprefixer: ^10.4.4
   carbon-components-svelte: ^0.59.0
@@ -27,6 +28,7 @@ specifiers:
   hammerjs: ^2.0.8
   html-minifier: ^4.0.0
   idb-keyval: 6.1.0
+  js-cookie: ^3.0.1
   js-crypto-aes: ^1.0.4
   mdsvex: ^0.8.9
   ncp: ^2.0.0
@@ -73,6 +75,7 @@ dependencies:
   hammerjs: 2.0.8
   html-minifier: 4.0.0
   idb-keyval: 6.1.0
+  js-cookie: 3.0.1
   js-crypto-aes: 1.0.4
   ncp: 2.0.0
   node-fetch: 2.6.7
@@ -96,6 +99,7 @@ devDependencies:
   '@sveltejs/adapter-static': 1.0.0-next.43
   '@sveltejs/kit': 1.0.0-next.481_svelte@3.49.0+vite@3.1.0
   '@types/aws-lambda': 8.10.102
+  '@types/js-cookie': 3.0.2
   '@types/ws': 8.5.3
   autoprefixer: 10.4.8_postcss@8.4.16
   carbon-preprocess-svelte: 0.8.2_x3y2lyioxqlolfdfa75f6lh7ve
@@ -288,6 +292,10 @@ packages:
 
   /@types/aws-lambda/8.10.102:
     resolution: {integrity: sha512-BT05v46n9KtSHa9SgGuOvm49eSruJ9utD8iNXpdpuUVYk8wOcqmm1LEzpNRkrXxD0CULc38sdLpk6q3Wa2WOwg==}
+    dev: true
+
+  /@types/js-cookie/3.0.2:
+    resolution: {integrity: sha512-6+0ekgfusHftJNYpihfkMu8BWdeHs9EOJuGcSofErjstGPfPGEu9yTu4t460lTzzAMl2cM5zngQJqPMHbbnvYA==}
     dev: true
 
   /@types/node/18.7.13:
@@ -1588,6 +1596,11 @@ packages:
   /isexe/2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
     dev: true
+
+  /js-cookie/3.0.1:
+    resolution: {integrity: sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw==}
+    engines: {node: '>=12'}
+    dev: false
 
   /js-crypto-aes/1.0.4:
     resolution: {integrity: sha512-L2fh7Q55+8eS/ALbhgAZYZpTkuo+n12+3GpuUE+U6SGlObmwibG5rVtDTVSTNgV9VuzD2BaY4unTkRWTcfLYxg==}

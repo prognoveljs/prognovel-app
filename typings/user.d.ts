@@ -27,6 +27,11 @@ export interface UserProfile {
   name: string;
   userId: string;
   coin: number;
+  lastTimeCoinAcquired: number | string;
+  lastTimeLeveledUP: number | string;
+  exp: number;
+  level: number;
+  contributionPoint: number;
   "@collectionId": string;
   "@collectionName": string;
   "@expand": any;
