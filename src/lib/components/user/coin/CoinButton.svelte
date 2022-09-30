@@ -6,6 +6,7 @@
   import { Button } from "carbon-components-svelte";
   import type { UserProfile } from "$typings/user";
   import { backend } from "$lib/store/backend";
+  import { ClockIcon } from "svelte-feather-icons";
 
   // $: profile = ($user?.user?.profile || {}) as UserProfile;
   // $: profileId = profile?.id;
@@ -14,10 +15,14 @@
     await refreshUser();
     await tick();
     // if (!$profile.id) return;
-    const result: unknown = await $backend.records.update("profiles", $profile.id, {
-      coin: ($profile.coin || 0) + 40,
-      lastTimeCoinAcquired: new Date(),
-    });
+    const result: unknown = await $backend.send("/api/get-coin/" + $user.user.id, {});
+    console.log(result);
+
+    // const result: unknown = await $backend.records.update("profiles", $profile.id, {
+    //   coin: ($profile.coin || 0) + 40,
+    //   lastTimeCoinAcquired: new Date(),
+    // });
+
     user.update((u) => {
       u.user.profile = result as UserProfile;
       return u;
@@ -29,8 +34,11 @@
     (new Date().getTimezoneOffset() / 60) * 36e5; // convert timezone offset
   let dateNow = Date.now();
   $: lastCoinTimeDifference = Math.abs(dateNow - lastCoinAcquired) / 36e5;
-  $: disabledCoinButton = lastCoinTimeDifference < 1;
+  $: remainingTime = $profile.coinGetDelay - lastCoinTimeDifference;
+  $: disabledCoinButton = remainingTime > 0;
   let forceDisableCoinButton = false;
+
+  $: getLabel = disabledCoinButton ? remainingTime.toFixed(2) + " hr" : "Get more";
 
   if (browser) {
     setInterval(() => {
@@ -47,6 +55,25 @@
   // });
 </script>
 
-<Button size="small" on:click={getDailyCoin} disabled={disabledCoinButton || forceDisableCoinButton}
-  >Get more</Button
->
+<section>
+  <Button
+    size="small"
+    on:click={getDailyCoin}
+    disabled={disabledCoinButton || forceDisableCoinButton}
+  >
+    {#if remainingTime > 0}
+      <ClockIcon size="18" class="clock" />
+    {/if}
+    {getLabel}</Button
+  >
+</section>
+
+<style lang="scss">
+  section {
+    :global {
+      .clock {
+        margin-right: 4px;
+      }
+    }
+  }
+</style>

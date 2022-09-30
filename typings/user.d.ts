@@ -27,6 +27,7 @@ export interface UserProfile {
   name: string;
   userId: string;
   coin: number;
+  coinGetDelay: number;
   lastTimeCoinAcquired: number | string;
   lastTimeLeveledUP: number | string;
   exp: number;

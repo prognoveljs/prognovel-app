@@ -2,33 +2,20 @@ package main
 
 import (
 	"log"
-	"net/http"
+	"prognovel/src/backend/coin"
+	"prognovel/src/backend/user"
 
-	"github.com/labstack/echo/v5"
+	"github.com/ReneKroon/ttlcache"
 	"github.com/pocketbase/pocketbase"
-	"github.com/pocketbase/pocketbase/apis"
-	"github.com/pocketbase/pocketbase/core"
 )
 
 func main() {
 	app := pocketbase.New()
 
-	app.OnBeforeServe().Add(func(e *core.ServeEvent) error {
-		// add new "GET /api/hello" route to the app router (echo)
-		e.Router.AddRoute(echo.Route{
-			Method: http.MethodGet,
-			Path:   "/api/get-coin",
-			Handler: func(c echo.Context) error {
+	app.OnBeforeServe().Add(coin.Calculate)
+	app.OnBeforeServe().Add(user.AvatarUpload)
 
-				return c.String(200, "Coin added")
-			},
-			Middlewares: []echo.MiddlewareFunc{
-				apis.RequireAdminOrUserAuth(),
-			},
-		})
-
-		return nil
-	})
+	ttlcache.NewCache()
 
 	if err := app.Start(); err != nil {
 		log.Fatal(err)

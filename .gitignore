@@ -7,11 +7,14 @@ yarn-error.log
 .svelte-kit
 build
 pb_data
+/tmp
 /__build-stats__/
 /workers/node_modules/
 src/lib/.generated
 .cache
 .svelte
+/bin/air
+vite.config.js.timestamp-*
 
 # Local Netlify folder
 .netlify

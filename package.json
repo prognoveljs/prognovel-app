@@ -6,7 +6,7 @@
 	"scripts": {
 		"populate": "node plugins/onbuild/populate/assets && node plugins/onbuild/populate/copy-assets",
 		"dev:frontend": "vite dev --open --host",
-		"dev:backend": "go run ./src/backend serve",
+		"dev:backend": "./bin/air serve",
 		"dev": "run-p \"dev:*\"",
 		"build": "npm run populate && vite build && node plugins/onbuild/finish",
 		"preview": "vite preview",

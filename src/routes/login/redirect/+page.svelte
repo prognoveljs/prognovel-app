@@ -43,18 +43,20 @@
     const data: UserProfile | { name?: string; avatar?: Blob } = {};
     const form = new FormData();
 
-    if (!$profile?.name) data.name = $user.meta?.name;
+    if (!$profile?.name) form.append("name", $user.meta.name);
     if (!$profile?.avatar) {
       try {
         const res = await fetch($user?.meta?.avatarUrl);
         const blob = await res.blob();
-        data.avatar = blob;
+        // data.avatar = blob;
+        form.append("avatar", blob);
       } catch (error) {
         console.error(error);
       }
     }
-    if (JSON.stringify(data) === "{}") return;
-    updateProfile(data, true);
+    // if (JSON.stringify(data) === "{}") return;
+    if (!(form.has("name") || form.has("avatar"))) return;
+    updateProfile(form, true);
   }
 </script>
 
