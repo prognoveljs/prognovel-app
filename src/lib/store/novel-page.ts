@@ -43,4 +43,6 @@ export function showNovelPageWindow(state: any): void {
       show.set(false);
     });
   state.set(!Boolean(getStore(state)));
+
+  // test
 }

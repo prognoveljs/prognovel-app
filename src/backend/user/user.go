@@ -1,7 +1,9 @@
 package user
 
 import (
+	"log"
 	"net/http"
+	"time"
 
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/dbx"
@@ -18,7 +20,7 @@ func AvatarUpload(e *core.ServeEvent) error {
 			user, _ := e.App.Dao().FindUserById(id)
 			avatar_url := c.QueryParam("avatar_url")
 
-			_, err := e.App.Dao().DB().NewQuery(`UPDATE profiles 
+			_, err := e.App.Dao().DB().NewQuery(`UPDATE profiles
 				SET avatar = {:avatar_url}
 				WHERE id={:id}
 			`).Bind(dbx.Params{
@@ -36,6 +38,38 @@ func AvatarUpload(e *core.ServeEvent) error {
 			apis.RequireAdminOrOwnerAuth("user-id"),
 		},
 	})
+
+	return nil
+}
+
+func DefaultProfileValues(e *core.UserCreateEvent) error {
+	now := time.Now()
+	log.Print("Halloooo?????")
+
+	// _, err := global.ProgNovelApp.App.DB().NewQuery(`UPDATE profile
+	// 	SET lastTimeCoinAcquired = {:now}
+	// `).Bind(dbx.Params{
+	// 	"id":  e.User.Id,
+	// 	"now": now,
+	// }).Execute()
+
+	// if err != nil {
+	// 	return nil
+	// }
+
+	e.User.Profile.SetDataValue("lastTimeCoinAcquired", now)
+
+	return nil
+}
+
+type AuthMeta struct {
+	name string
+}
+
+func AuthDefaultProfileValues(e *core.UserAuthEvent) error {
+
+	log.Print(e.Meta)
+	log.Print(e.User.Profile.GetDataValue("name"))
 
 	return nil
 }

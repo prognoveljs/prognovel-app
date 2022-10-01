@@ -5,7 +5,7 @@ tmp_dir = "tmp"
 [build]
   args_bin = []
   bin = "./tmp/main"
-  cmd = "go build -o ./tmp/main ./src/backend/main.go"
+  cmd = "CGO_CFLAGS_ALLOW=\"-Xpreprocessor\" go build -o ./tmp/main ./src/backend/main.go"
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor", "testdata"]
   exclude_file = []
