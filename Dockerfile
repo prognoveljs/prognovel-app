@@ -11,11 +11,6 @@ COPY go.sum .
 RUN go mod download
 
 COPY ./src/backend/*.go .
-COPY ./src/backend/coin/*.go /usr/local/go/src/prognovel/backend/coin/
-COPY ./src/backend/user/*.go /usr/local/go/src/prognovel/backend/user/
-COPY ./src/backend/image/*.go /usr/local/go/src/prognovel/backend/image/
-COPY ./src/backend/novel/*.go /usr/local/go/src/prognovel/backend/novel/
-COPY ./src/backend/app/*.go /usr/local/go/src/prognovel/backend/app/
 
 RUN go build -o /pocketbase
 EXPOSE 8090
