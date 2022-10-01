@@ -1,6 +1,6 @@
-FROM golang:1.19
+FROM golang:1.19-alpine
 
-# RUN apk add build-base
+RUN apk add build-base
 ENV PORT=8090
 
 WORKDIR /
@@ -11,6 +11,7 @@ COPY go.sum .
 RUN go mod download
 
 COPY ./src/backend/*.go .
+COPY ./src/backend/*.go /usr/local/go/src/prognovel/src/backend
 
 RUN go build -o /pocketbase
 EXPOSE 8090
