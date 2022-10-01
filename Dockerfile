@@ -10,7 +10,7 @@ COPY go.sum .
 
 RUN go mod download
 
-COPY ./src/backend/*.go .
+COPY ./backend/*.go .
 
 RUN go build -o /pocketbase
 EXPOSE 8090

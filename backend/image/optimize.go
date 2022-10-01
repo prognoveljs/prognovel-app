@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"sync"
 
-	global "prognovel/src/backend/app"
+	global "prognovel/backend/app"
 
 	vips "github.com/davidbyttow/govips/v2"
 	"github.com/labstack/echo/v5"

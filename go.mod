@@ -4,7 +4,9 @@ go 1.18
 
 require (
 	github.com/ReneKroon/ttlcache v1.7.0
+	github.com/davidbyttow/govips v0.0.0-20201026223743-b1b72c7305d9
 	github.com/labstack/echo/v5 v5.0.0-20220201181537-ed2888cfa198
+	github.com/pocketbase/dbx v1.6.0
 	github.com/pocketbase/pocketbase v0.7.7
 )
 
@@ -31,9 +33,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.13.5 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.16.19 // indirect
 	github.com/aws/smithy-go v1.13.3 // indirect
-	github.com/daddye/vips v0.0.0-20170307215529-87cfaf94f7a1 // indirect
-	github.com/davidbyttow/govips v0.0.0-20201026223743-b1b72c7305d9 // indirect
-	github.com/davidbyttow/govips/v2 v2.11.0 // indirect
 	github.com/disintegration/imaging v1.6.2 // indirect
 	github.com/domodwyer/mailyak/v3 v3.3.4 // indirect
 	github.com/fatih/color v1.13.0 // indirect
@@ -46,7 +45,6 @@ require (
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/google/wire v0.5.0 // indirect
 	github.com/googleapis/gax-go/v2 v2.5.1 // indirect
-	github.com/h2non/bimg v1.1.9 // indirect
 	github.com/inconshreveable/mousetrap v1.0.1 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
@@ -54,7 +52,6 @@ require (
 	github.com/mattn/go-isatty v0.0.16 // indirect
 	github.com/mattn/go-sqlite3 v1.14.15 // indirect
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d // indirect
-	github.com/pocketbase/dbx v1.6.0 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20220927061507-ef77025ab5aa // indirect
 	github.com/spf13/cast v1.5.0 // indirect
 	github.com/spf13/cobra v1.5.0 // indirect
