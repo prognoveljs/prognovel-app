@@ -11,7 +11,7 @@ COPY go.sum .
 RUN go mod download
 
 COPY ./src/backend/*.go .
-COPY ./src/backend/*.go /usr/local/go/src/prognovel/src/backend
+COPY ./src/backend/*.go /usr/local/go/src/prognovel
 
 RUN go build -o /pocketbase
 EXPOSE 8090
