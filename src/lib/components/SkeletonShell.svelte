@@ -1,12 +1,13 @@
 <script lang="ts">
-  export let secondaryColor = "#F5F5F7"; // do not use rgba() - not working in Safari on iOS 11
-  export let primaryColor = "#EBECEF";
+  export let secondaryColor = "#EBECEFAA"; // do not use rgba() - not working in Safari on iOS 11
+  export let primaryColor = "#F5F5F766";
   export let height: number | string = 200;
   export let width: number | string = "100%";
   export let speed = 2;
   export let animate = true;
   export let secondaryColorPercentWidth = 100;
   export let ariaLabel = null;
+  export let style = "";
 
   let idClip = getUniqueId();
   let idGradient = getUniqueId();
@@ -16,7 +17,7 @@
   }
 </script>
 
-<svg {width} {height} aria-label={ariaLabel} preserveAspectRatio="none">
+<svg {width} {height} aria-label={ariaLabel} preserveAspectRatio="none" {style}>
   <rect fill="url(#{idGradient})" clip-path="url(#{idClip})" {width} {height} x="0" y="0" />
   <defs>
     <clipPath id={idClip}>

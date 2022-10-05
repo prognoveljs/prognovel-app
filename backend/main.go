@@ -16,6 +16,9 @@ func main() {
 	// global.ProgNovelApp.OnBeforeServe().Add(image.OptimizeImageAndSave)
 	global.ProgNovelApp.OnUserBeforeCreateRequest().Add(user.DefaultProfileValues)
 	global.ProgNovelApp.OnUserAuthRequest().Add(user.AuthDefaultProfileValues)
+	// global.ProgNovelApp.OnCollectionAfterCreateRequest().Add(schema.SaveDatabaseSchemaOnCreate)
+	// global.ProgNovelApp.OnCollectionAfterDeleteRequest().Add(schema.SaveDatabaseSchemaOnDelete)
+	// global.ProgNovelApp.OnCollectionAfterUpdateRequest().Add(schema.SaveDatabaseSchemaOnUpdate)
 
 	if err := global.ProgNovelApp.Start(); err != nil {
 		log.Fatal(err)

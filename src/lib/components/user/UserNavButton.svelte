@@ -1,6 +1,6 @@
 <script lang="ts">
   import Avatar from "./Avatar.svelte";
-  import { user, avatarUrl } from "$lib/store/user";
+  import { userData, avatarUrl } from "$lib/store/user";
   import { LogInIcon } from "svelte-feather-icons";
   import LoginModal from "./login/LoginModal.svelte";
   import UserNavModal from "./UserNavModal.svelte";
@@ -8,8 +8,8 @@
   let showLoginModal = false;
 </script>
 
-<section class:loggedIn={Boolean($user)} tabindex="0">
-  {#if $user}
+<section class:loggedIn={Boolean($userData)} tabindex="0">
+  {#if $userData}
     <Avatar url={$avatarUrl} size={36} />
     <UserNavModal />
   {:else if import.meta.env.POCKETBASE_URL}

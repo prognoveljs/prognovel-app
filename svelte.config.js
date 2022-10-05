@@ -4,6 +4,7 @@ import { mdsvex } from "mdsvex";
 import postcss from "postcss";
 import autoprefixer from "autoprefixer";
 import purgeCSS from "@fullhuman/postcss-purgecss";
+import { optimizeImports } from "carbon-preprocess-svelte";
 import { readFileSync } from "fs";
 
 let siteMetadata;
@@ -17,6 +18,7 @@ try {
 export default {
   extensions: [".svelte", ".svx"],
   preprocess: [
+    // optimizeImports(),
     mdsvex({
       layout: {
         help_child: "./src/routes/help/_child_layout.svelte",

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { browser } from "$app/environment";
-  import { profile, user } from "$lib/store/user";
+  import { profile, userData } from "$lib/store/user";
   import { refreshUser } from "$lib/utils/backend";
   import { tick } from "svelte";
   import { Button } from "carbon-components-svelte";
@@ -15,7 +15,7 @@
     await refreshUser();
     await tick();
     // if (!$profile.id) return;
-    const result: unknown = await $backend.send("/api/get-coin/" + $user.user.id, {});
+    const result: unknown = await $backend.send("/api/get-coin/" + $userData.user.id, {});
     console.log(result);
 
     // const result: unknown = await $backend.records.update("profiles", $profile.id, {
@@ -23,7 +23,7 @@
     //   lastTimeCoinAcquired: new Date(),
     // });
 
-    user.update((u) => {
+    userData.update((u) => {
       u.user.profile = result as UserProfile;
       return u;
     });

@@ -16,6 +16,7 @@ specifiers:
   '@types/ws': ^8.5.3
   autoprefixer: ^10.4.4
   carbon-components-svelte: ^0.59.0
+  carbon-icons-svelte: ^11.3.0
   carbon-preprocess-svelte: ^0.8.2
   chalk: ^5.0.1
   crypto-es: ^1.2.7
@@ -65,6 +66,7 @@ dependencies:
   '@fortawesome/free-solid-svg-icons': 5.15.4
   '@skeleton-elements/svelte': 2.0.0
   carbon-components-svelte: 0.59.0
+  carbon-icons-svelte: 11.3.0
   chalk: 5.0.1
   crypto-es: 1.2.7
   date-fns: 2.29.2
@@ -470,6 +472,10 @@ packages:
     resolution: {integrity: sha512-bD/ArFVdkP/FYEJ9xhVHil1AG2fZ+mTfGmdZHC+1q24gDzVM4/maFfKmjKA95qxAjKhG3d7zeGCdgD2WOUXhsg==}
     dependencies:
       flatpickr: 4.6.9
+    dev: false
+
+  /carbon-icons-svelte/11.3.0:
+    resolution: {integrity: sha512-45SHyp8RRwP5ZgV1YOvFIKPpdJDIrVzPL3f+YFK5V81eXr0MDH41vebKlRDAVMqAAetci8n8nRNGJ6JbBX2soQ==}
     dev: false
 
   /carbon-preprocess-svelte/0.8.2_x3y2lyioxqlolfdfa75f6lh7ve:

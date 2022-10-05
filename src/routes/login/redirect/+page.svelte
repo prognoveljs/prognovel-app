@@ -3,7 +3,7 @@
   import { page } from "$app/stores";
   import { backend } from "$lib/store/backend";
   import { onMount, tick } from "svelte";
-  import { user, profile } from "$lib/store/user";
+  import { userData, profile } from "$lib/store/user";
   import { goto } from "$app/navigation";
   import { LoaderIcon } from "svelte-feather-icons";
   import type { UserProfile } from "$typings/user";
@@ -29,7 +29,7 @@
         location.origin + "/login/redirect",
       )
       .then(async (u: any) => {
-        $user = u;
+        $userData = u;
         // $backend.authStore.exportToCookie();
         console.log(u);
         await tick();
@@ -43,10 +43,10 @@
     const data: UserProfile | { name?: string; avatar?: Blob } = {};
     const form = new FormData();
 
-    if (!$profile?.name) form.append("name", $user.meta.name);
+    if (!$profile?.name) form.append("name", $userData.meta.name);
     if (!$profile?.avatar) {
       try {
-        const res = await fetch($user?.meta?.avatarUrl);
+        const res = await fetch($userData?.meta?.avatarUrl);
         const blob = await res.blob();
         // data.avatar = blob;
         form.append("avatar", blob);

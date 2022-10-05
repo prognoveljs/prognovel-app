@@ -1,6 +1,6 @@
 <script lang="ts">
   import coinSVG from "$lib/assets/svg/coin-1.svg";
-  import { profile, user } from "$lib/store/user";
+  import { profile, userData } from "$lib/store/user";
   import CoinButton from "./coin/CoinButton.svelte";
   import LogoutButton from "./logout/LogoutButton.svelte";
 </script>
@@ -15,10 +15,11 @@
       My coin
     </span>
     <span class="value">
-      {$user?.user?.profile?.coin ?? "--"}
+      {$userData?.user?.profile?.coin ?? "--"}
     </span>
     <CoinButton />
   </div>
+  <a href="/write/">Writer dashboard</a>
   <div class="opts">
     <LogoutButton />
   </div>
