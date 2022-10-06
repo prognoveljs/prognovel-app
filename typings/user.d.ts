@@ -7,16 +7,18 @@ export interface User {
     avatarUrl: string;
   };
   token: string;
-  user: {
-    id: string;
-    created: string;
-    updated: string;
-    email: string;
-    verified: boolean;
-    lastResetSentAt: string;
-    lastVerificationSentAt: string;
-    profile: UserProfile;
-  };
+  user: UserData;
+}
+
+export interface UserData {
+  id: string;
+  created: string;
+  updated: string;
+  email: string;
+  verified: boolean;
+  lastResetSentAt: string;
+  lastVerificationSentAt: string;
+  profile: UserProfile;
 }
 
 export interface UserProfile {

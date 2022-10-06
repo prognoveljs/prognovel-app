@@ -20,6 +20,7 @@
     <CoinButton />
   </div>
   <a href="/write/">Writer dashboard</a>
+  <a href="/user/{$userData?.user?.id}/">Profile page</a>
   <div class="opts">
     <LogoutButton />
   </div>

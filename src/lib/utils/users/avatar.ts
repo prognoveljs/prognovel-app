@@ -5,6 +5,13 @@ export function getGravatarURL(email: string, size?: number): string {
   return `https://www.gravatar.com/avatar/${MD5(email).toString()}`;
 }
 
+export function getPocketBaseAvatar(profileID: string, avatarID: string): string {
+  const url = new URL(import.meta.env.POCKETBASE_URL);
+  url.pathname = `/api/files/profiles/${profileID}/${avatarID}`;
+
+  return url.href;
+}
+
 export function getUser(email?: string) {
   return {
     name: "",

@@ -21,6 +21,8 @@ export function getBreadcrumbParentLabel(segment) {
       return "All Novels";
     case "devlog":
       return "Dev Logs";
+    case "user":
+      return "Users";
     default:
       return segment
         .split("-")
