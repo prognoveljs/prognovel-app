@@ -8,7 +8,7 @@
   import { generateAffiliateLink } from "$lib/utils/web-monetization/affiliate-link";
   import { windowLock, windowUnlock } from "$lib/utils/window/lock";
   import InstantAffiliateModal from "./InstantAffiliateModal.svelte";
-  import { isBrowser } from "$lib/store/states";
+  import { browser } from "$app/environment";
 
   export let title = "";
   let body;
@@ -17,7 +17,7 @@
   let generatedLink = "";
 
   function createAffiliateLink() {
-    if (!isBrowser) return;
+    if (!browser) return;
     generatedLink = generateAffiliateLink(
       (document.getElementById("generate-link-input") as HTMLInputElement).value,
     );
@@ -25,7 +25,7 @@
 
   showAffiliateReferrer.subscribe((show) => {
     if (!show) generatedLink = "";
-    if (!isBrowser) return;
+    if (!browser) return;
     if (show) {
       windowLock(body);
     } else {

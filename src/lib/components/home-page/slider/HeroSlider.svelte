@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { isBrowser, novelsData } from "$lib/store/states";
+  import { novelsData } from "$lib/store/states";
   import { novelList, novelSynopsises } from "$lib/utils/novel-page";
 
   import { onMount } from "svelte";

@@ -3,7 +3,7 @@
   import { windowLock, windowUnlock } from "$lib/utils/window/lock";
   import { scale, fade } from "svelte/transition";
   import { cubicIn, cubicOut } from "svelte/easing";
-  import { isBrowser } from "$lib/store/states";
+  import { browser } from "$app/environment";
 
   export let showModal: boolean;
   export let header: string = "";
@@ -16,10 +16,10 @@
 
   const dispatch = createEventDispatcher();
 
-  $: if (showModal === true && isBrowser) {
+  $: if (showModal === true && browser) {
     windowLock();
   }
-  $: if (showModal === false && isBrowser) {
+  $: if (showModal === false && browser) {
     windowUnlock();
   }
 

@@ -1,6 +1,6 @@
 import { get, set } from "idb-keyval";
-import { isBrowser } from "$lib/store/states";
 import { writable, Writable } from "svelte/store";
+import { browser } from "$app/environment";
 
 const IDB_FONT_WEIGHT = "reader-font-weight";
 export const fontWeight: Writable<number> = writable(100);
@@ -13,11 +13,11 @@ export async function fontWeightInit(): Promise<void> {
   fontWeight.set(weight);
 }
 
-if (isBrowser) {
+if (browser) {
   get(IDB_FONT_WEIGHT).then((weight: number | undefined) => {
     if (weight) fontWeight.set(weight);
     fontWeight.subscribe((weight: number) => {
-      if (!isBrowser) return;
+      if (!browser) return;
 
       const content = document.body as HTMLElement;
       if (!content) return;

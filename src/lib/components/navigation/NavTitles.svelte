@@ -12,14 +12,14 @@
   import { tick } from "svelte";
   import { currentNovel, siteMetadata } from "$lib/store/states";
   import { customBreadcrumbTitle } from "$lib/utils/navigation/custom-title";
-  import { isBrowser } from "$lib/store/states";
   import { path } from "$lib/store/states";
+  import { browser } from "$app/environment";
 
   $: isAtReadPage = $path && $path.startsWith("/read");
   $: segments = $path ? getBreadcrumbSegments($path) : [];
 
   let backButtonHref = "/"; // period means current relative url on sapper.
-  $: if ($path && isBrowser) {
+  $: if ($path && browser) {
     tick().then((r) => {
       getPreviousBreadcrumbLink().then((href) => (backButtonHref = href));
     });

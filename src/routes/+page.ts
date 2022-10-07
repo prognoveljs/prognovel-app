@@ -2,9 +2,9 @@ import { SITE_TITLE } from "$lib/_setting";
 import { get } from "idb-keyval";
 import { fetchSiteMetadata, getMetadataStore } from "$lib/utils/fetch-metadata";
 import { loadPartialNovelsMetadata, novelTitles } from "$lib/utils/novel-page";
-import { isBrowser } from "$lib/store/states";
 import { error } from "@sveltejs/kit";
 import type { NovelMetadata, NovelsMetadata, SiteMetadata, Bookmark } from "$typings";
+import { browser } from "$app/environment";
 
 interface PreloadData {
   status: number;
@@ -23,7 +23,7 @@ export async function load({ params, query }) {
   let bookmarkData: Bookmark[];
 
   url = `${import.meta.env.BACKEND_API}`;
-  if (isBrowser) {
+  if (browser) {
     const store = getMetadataStore();
     data = await get("homepage", store);
 

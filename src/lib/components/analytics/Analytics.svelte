@@ -3,15 +3,15 @@
   import { currentContent } from "$lib/store/read-page";
   import { currentNovel, novelsData } from "$lib/store/states";
   import { tick } from "svelte";
-  import { isBrowser } from "$lib/store/states";
   import { page } from "$app/stores";
+  import { browser } from "$app/environment";
 
   export let propertyId = import.meta.env.GA_TRACKING_ID;
 
   $: if ($page) {
     (async function () {
       await tick();
-      if (!isBrowser) return;
+      if (!browser) return;
       if (!propertyId) return;
       if ($page.error) return;
       while (chapterPageTitleIsLoading()) {

@@ -1,6 +1,6 @@
 /// <reference lib="webworker" />
 import { get, set } from "idb-keyval";
-import { validCacheKey } from "./utils";
+import { validCacheKey } from "./_cache";
 
 declare var self: any;
 

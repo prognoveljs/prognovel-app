@@ -1,4 +1,4 @@
-import { isBrowser } from "$lib/store/states";
+import { browser } from "$app/environment";
 import { checkTouchScreen } from "./check-touch";
 
 export function mobileInit() {
@@ -6,7 +6,7 @@ export function mobileInit() {
 }
 
 export function isMobileScreen() {
-  if (!isBrowser) return false;
+  if (!browser) return false;
 
   return window.innerWidth <= 767;
 }

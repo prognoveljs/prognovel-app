@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { isBrowser } from "$lib/store/states";
   import { currentContent } from "$lib/store/read-page";
   import { tick } from "svelte";
   import { ChapterState } from "$lib/utils/read-page/vars";
   import { path } from "$lib/store/states";
+  import { browser } from "$app/environment";
 
   export let isNavigatingBetweenPages: any = false;
 
@@ -14,7 +14,7 @@
   }
 
   async function stopLoading() {
-    if (!isBrowser) return;
+    if (!browser) return;
     const loadings: NodeListOf<HTMLElement> = document.body.querySelectorAll(
       ".topbar-loading-animation",
     );
@@ -38,7 +38,7 @@
   $: isLoading =
     ($currentContent?.meta?.status === ChapterState.Loading && onReadPage) ||
     (isNavigatingBetweenPages && !onReadPage);
-  $: if (isLoading && isBrowser) {
+  $: if (isLoading && browser) {
     startLoading();
   } else {
     tick().then(stopLoading);

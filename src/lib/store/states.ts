@@ -25,7 +25,7 @@ export const novelsData: Writable<NovelsMetadata> = writable({});
 // app state
 export const page: Writable<any> = writable({});
 export const path: Readable<string> = derived([page], ([currentPage]) => {
-  if (!isBrowser) return "";
+  if (!browser) return "";
   return currentPage?.url?.pathname || document.location.pathname;
 });
 
@@ -46,8 +46,6 @@ export const isSaveData: Writable<boolean> = writable(false);
 export const disableAnimations: Writable<boolean> = writable(false);
 
 export const showSettings: Writable<boolean> = writable(false);
-
-export const isBrowser: boolean = browser;
 
 export { isWEBP } from "$lib/utils/images";
 

@@ -5,9 +5,9 @@ import { fetchNovelMetadata } from "$lib/utils/fetch-metadata";
 import { fireDebounceFetchChapter } from "$lib/utils/read-page/fetch-content";
 import { toc, chapterTitles, chaptersWithSpoiler } from "./index";
 import type { ChapterTitles, ChapterTitlesChildren } from "./index";
-import { isBrowser } from "$lib/store/states";
+import { browser } from "$app/environment";
 
-if (isBrowser) {
+if (browser) {
   console.log("Subscribing novel metadata...");
   currentNovel.subscribe(async (novel) => {
     if (!novel) {

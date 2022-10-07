@@ -1,11 +1,10 @@
 import { browser } from "$app/environment";
-import { isBrowser } from "$lib/store/states";
 import { writable, Writable } from "svelte/store";
 
 export const isPWABannerActive: Writable<boolean> = writable(false);
 let pwaBanner;
 export const isLaunchOnPWA = () =>
-  isBrowser ? window.matchMedia("(display-mode: standalone)").matches : false;
+  browser ? window.matchMedia("(display-mode: standalone)").matches : false;
 
 export function registerPWABanner() {
   if (!browser) return;

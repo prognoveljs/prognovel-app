@@ -1,11 +1,12 @@
 <script lang="ts">
   import DescriptionInfo from "$lib/components/novel-page/DescriptionInfo.svelte";
-  import { currentNovel, isBrowser } from "$lib/store/states";
+  import { currentNovel } from "$lib/store/states";
   import { getContext } from "svelte";
   import type { NovelMetadata } from "$typings";
   import { handleBeginReadingButton, ReadNowObject } from "$lib/utils/novel-page";
   import ChapterNavigation from "$lib/components/navigation/chapter/ChapterNavigation.svelte";
   import { toc } from "$lib/store/read-page";
+  import { browser } from "$app/environment";
 
   let novelMetadata: NovelMetadata = getContext("novelMetadata");
   let showMore = false;
@@ -21,7 +22,7 @@
     lastReadAt = data?.lastReadAt;
   });
   $: isLinkReady = nextChapter;
-  $: disableLink = Boolean(!isBrowser || !isLinkReady);
+  $: disableLink = Boolean(!browser || !isLinkReady);
 </script>
 
 <article>

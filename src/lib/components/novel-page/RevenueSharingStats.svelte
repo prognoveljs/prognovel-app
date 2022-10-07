@@ -5,12 +5,12 @@
   import { showRevshareStats } from "$lib/store/novel-page";
   import { windowLock, windowUnlock } from "$lib/utils/window/lock";
   import { fade } from "svelte/transition";
-  import { isBrowser } from "$lib/store/states";
+  import { browser } from "$app/environment";
 
   let body;
 
   showRevshareStats.subscribe((show: boolean) => {
-    if (!isBrowser) return;
+    if (!browser) return;
     if (show) {
       windowLock(body);
     } else {

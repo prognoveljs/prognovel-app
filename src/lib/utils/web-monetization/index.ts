@@ -1,5 +1,5 @@
 import { derived, writable, readable, Readable, Writable, get as getStore } from "svelte/store";
-import { currentNovel, novelsData, siteMetadata, isBrowser } from "$lib/store/states";
+import { currentNovel, novelsData, siteMetadata } from "$lib/store/states";
 import {
   getCurrentPointerPool,
   getPaymentPointerSharePercentage,
@@ -11,6 +11,7 @@ import { getPoolWeightSum } from "webfunding/src/fund/utils";
 import { FORBIDDEN_NOVEL_ID } from "$lib/store/novel-page";
 import type { NovelMetadata, NovelsMetadata } from "$typings";
 import type { RevShareProfile, RevShareUser } from "$typings/novel";
+import { browser } from "$app/environment";
 
 interface WMPointer {
   address: string;
@@ -20,7 +21,6 @@ interface WMPointer {
 type RevShareStats = {
   [address: string]: { chance: number };
 };
-
 export let webMonetization;
 export const webfundingPool: Writable<RevShareProfile[]> = writable([]);
 
@@ -42,7 +42,7 @@ export const enablePremiumContent: Readable<boolean> = derived(
 export const supportMonetization: Readable<boolean> = readable<boolean | undefined>(
   undefined,
   (set) => {
-    if (!isBrowser) return;
+    if (!browser) return;
 
     if ((document as any).monetization) {
       set(true);
@@ -168,7 +168,7 @@ export function webMonetizationInit(): void {
 
   function runWebMonetization(): void {
     const monetization = (document as any)?.monetization;
-    if (!(isBrowser && monetization)) return;
+    if (!(browser && monetization)) return;
     console.log("💰 Web monetization initialized.");
 
     monetization.addEventListener("monetizationstart", (e) => {

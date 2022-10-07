@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { siteMetadata, isBrowser } from "$lib/store/states";
+  import { siteMetadata } from "$lib/store/states";
   import { getNovelBookCoverSrc, novelList, novelTitles } from "$lib/utils/novel-page";
   import Comments from "$lib/components/comments/disqus/Disqus.svelte";
   import NoDisqus from "../_NoDisqus.svelte";
   import { SITE_TITLE } from "$lib/_setting";
+  import { browser } from "$app/environment";
 
   $: hasDisqus = Boolean($siteMetadata?.disqus_id);
   const GENERAL_SLUG = "all";
@@ -43,7 +44,7 @@
       <h1><small>#</small> {novel === GENERAL_SLUG ? "General" : novelTitles[novel] || novel}</h1>
       <div class="comments">
         {#key novel}
-          {#if isBrowser}
+          {#if browser}
             <Comments src={$siteMetadata.disqus_id} identifier="disqussions" />
           {/if}
         {/key}

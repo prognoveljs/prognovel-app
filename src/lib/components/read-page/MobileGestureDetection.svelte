@@ -1,17 +1,17 @@
 <script lang="ts">
+  import { browser } from "$app/environment";
   import {
     disableNextChapter,
     disablePrevChapter,
     nextChapterLink,
     prevChapterLink,
   } from "$lib/store/read-page";
-  import { isBrowser } from "$lib/store/states";
   import { onMount, onDestroy } from "svelte";
 
   let mc;
   let Hammer;
 
-  const SWIPE_THRESHOLD = isBrowser ? document.body.clientWidth : 150;
+  const SWIPE_THRESHOLD = browser ? document.body.clientWidth : 150;
   const SWIPE_VELOCITY = 0.3;
 
   onMount(async () => {

@@ -13,7 +13,7 @@
   } from "$lib/utils/read-page";
   import Content from "$lib/components/read-page/content/ContentBody.svelte";
   import Options from "../../../_Options.svelte";
-  import { currentNovel, novelsData, isBrowser } from "$lib/store/states";
+  import { currentNovel, novelsData } from "$lib/store/states";
   import {
     currentChapter,
     currentBook,

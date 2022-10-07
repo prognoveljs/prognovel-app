@@ -1,7 +1,7 @@
-import { isBrowser } from "$lib/store/states";
+import { browser } from "$app/environment";
 
 export function windowLock(node?: HTMLElement): void {
-  if (!isBrowser) return;
+  if (!browser) return;
   document.body.style.top = `-${window.scrollY}px`;
   document.body.style.position = "fixed";
   document.body.style.height = "100vh";
@@ -10,7 +10,7 @@ export function windowLock(node?: HTMLElement): void {
 }
 
 export function windowUnlock(): void {
-  if (!isBrowser) return;
+  if (!browser) return;
   const scrollY: string = document.body.style.top;
   document.body.style.position = "";
   document.body.style.top = "";

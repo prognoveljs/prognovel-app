@@ -1,6 +1,5 @@
 <script lang="ts">
   import { registeredPlugins } from "$lib/store/read-page";
-  import { isBrowser } from "$lib/store/states";
   import { onMount } from "svelte";
 
   onMount(() => {

@@ -1,6 +1,6 @@
 import { writable, Writable } from "svelte/store";
 import { set, get } from "idb-keyval";
-import { isBrowser } from "$lib/store/states";
+import { browser } from "$app/environment";
 
 const IDB_FONT_SIZE: string = "reader-font-size";
 export const fontSize: Writable<number> = writable(100);
@@ -13,11 +13,11 @@ export async function fontSizeInit(): Promise<void> {
   fontSize.set(size);
 }
 
-if (isBrowser) {
+if (browser) {
   get(IDB_FONT_SIZE).then((size: number | undefined) => {
     if (size) fontSize.set(size);
     fontSize.subscribe((size: number) => {
-      if (!isBrowser) return;
+      if (!browser) return;
 
       const content = document.body as HTMLElement;
       if (!content) return;

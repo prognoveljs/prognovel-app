@@ -1,11 +1,12 @@
 import { get, set, createStore } from "idb-keyval";
 import { get as getStore } from "svelte/store";
 import { getRecentHistory, IDB_PREFIX_HISTORY_RECENT } from "$lib/utils/history";
-import { siteMetadata, isWEBP, novelsData, isBrowser } from "$lib/store/states";
+import { siteMetadata, isWEBP, novelsData } from "$lib/store/states";
 import { bookmarkList } from "./_store";
 import { fetchNovelMetadata } from "$lib/utils/fetch-metadata";
 import { getCoverURLPath } from "$lib/utils/images";
 import type { NovelMetadata, SiteMetadata, HistoryRecent, Bookmark } from "$typings";
+import { browser } from "$app/environment";
 
 const getBookmarkStore = () => createStore("novel-bookmark", "data");
 export const IDB_PREFIX_BOOKMARK_LIST: string = "bookmark-list";
@@ -164,11 +165,11 @@ async function getNovelFirstChapter(id: string) {
 }
 
 export function loadBookmark(): Promise<Bookmark[]> {
-  if (!isBrowser) return;
+  if (!browser) return;
 
   return new Promise((resolve, reject) => {
     getBookmarkDataAll().then((list) => {
-      if (list.length && isBrowser) {
+      if (list.length && browser) {
         resolve(list);
       } else {
         reject();

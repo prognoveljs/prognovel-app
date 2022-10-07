@@ -1,8 +1,8 @@
-import { isBrowser } from "$lib/store/states";
+import { browser } from "$app/environment";
 import { tick } from "svelte";
 
 export async function frameTick() {
-  if (!isBrowser) return;
+  if (!browser) return;
   await tick();
   await new Promise((resolve) => requestAnimationFrame(resolve));
   await new Promise((resolve) => requestAnimationFrame(resolve));

@@ -1,8 +1,5 @@
 import { version, files, build } from "$service-worker";
-//@ts-ignore
-import { validInstallAssets, validAssets } from "./utils";
-//@ts-ignore
-// import siteMetadata from "$cache/sitemetadata.json";
+import { validInstallAssets, validAssets } from "./_validity";
 
 export const ASSETS: string = `prognovel${version}`;
 const routesToCache: string[] = [

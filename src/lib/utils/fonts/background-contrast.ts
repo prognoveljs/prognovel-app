@@ -1,6 +1,6 @@
 import { writable, Writable } from "svelte/store";
 import { set, get } from "idb-keyval";
-import { isBrowser } from "$lib/store/states";
+import { browser } from "$app/environment";
 
 const IDB_COLOR_CONTRAST: string = "reader-background-contrast";
 export const colorContrast: Writable<number> = writable(100);
@@ -13,11 +13,11 @@ export async function colorContrastInit(): Promise<void> {
   colorContrast.set(contrast);
 }
 
-if (isBrowser) {
+if (browser) {
   get(IDB_COLOR_CONTRAST).then((contrast: number | undefined) => {
     if (contrast) colorContrast.set(contrast);
     colorContrast.subscribe((contrast: number) => {
-      if (!isBrowser) return;
+      if (!browser) return;
 
       const content = document.body as HTMLElement;
       if (!content) return;

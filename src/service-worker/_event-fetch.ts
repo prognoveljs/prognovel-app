@@ -1,7 +1,8 @@
 /// <reference lib="webworker" />
 import { prerender } from "./prerender";
 import { preload } from "./_vars";
-import { validFetchEvent, pickCache, normalizeURL } from "./utils";
+import { pickCache, normalizeURL } from "./utils";
+import { validFetchEvent } from "./_validity";
 import { pageNotPrerendered, redirect } from "./redirect";
 
 self.addEventListener("fetch", eventHandler);

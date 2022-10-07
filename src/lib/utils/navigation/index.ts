@@ -1,4 +1,4 @@
-import { isBrowser } from "$lib/store/states";
+import { browser } from "$app/environment";
 
 export {
   getBreadcrumbParentLabel,
@@ -8,7 +8,7 @@ export {
 } from "./breadcrumb";
 
 export function gotoPage(page: string) {
-  if (!page || !isBrowser) return;
+  if (!page || !browser) return;
   const a = document.createElement("a");
   a.href = page;
   a.click();

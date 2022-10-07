@@ -7,7 +7,7 @@
   import SkeletonShell from "$lib/components/SkeletonShell.svelte";
   import Avatar from "$lib/components/user/Avatar.svelte";
   import { newsData } from "$lib/store/news-page";
-  import { isBrowser, siteMetadata } from "$lib/store/states";
+  import { siteMetadata } from "$lib/store/states";
   import { SITE_TITLE } from "$lib/_setting";
   import { faFacebook, faReddit, faTwitter, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
