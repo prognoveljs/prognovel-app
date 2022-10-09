@@ -16,37 +16,40 @@ func Calculate(e *core.ServeEvent) error {
 		Method: http.MethodGet,
 		Path:   "/api/get-coin/:user-id",
 		Handler: func(c echo.Context) error {
+			collection, _ := e.App.Dao().FindCollectionByNameOrId("coins")
 			id := c.PathParam("user-id")
-			user, _ := e.App.Dao().FindUserById(id)
-			coin := user.Profile.GetIntDataValue("coin")
-			level := user.Profile.GetIntDataValue("level")
-			now := time.Now()
-			if level < 1 {
-				level = 1
+			var level int = 1
+
+			record, err := e.App.Dao().FindRecordsByExpr(collection, dbx.HashExp{
+				"user": id,
+			})
+
+			if len(record) == 0 {
+				return c.String(http.StatusBadRequest, "No user coin found in database.")
 			}
 
-			coin += get_coin_reward(level)
+			coin := record[0]
+			amount := coin.GetIntDataValue("amount")
+			now := time.Now()
+
+			amount += get_coin_reward(level)
 			delay := get_coin_delay(level)
 
-			_, err := e.App.Dao().DB().NewQuery(`UPDATE profiles 
-				SET coin = {:coin}, lastTimeCoinAcquired = {:last_acquired}, coinGetDelay = {:coin_delay}
-				WHERE id={:id}
-			`).Bind(dbx.Params{
-				"id":            user.Profile.Id,
-				"coin":          coin,
-				"last_acquired": now,
-				"coin_delay":    delay,
-			}).Execute()
+			coin.SetDataValue("amount", amount)
+			coin.SetDataValue("delay", delay)
+			coin.SetDataValue("last_time_acquired", now)
+
+			e.App.Dao().SaveRecord(coin)
 
 			if err != nil {
 				return c.String(http.StatusBadRequest, err.Error())
 			}
 
-			user.Profile.SetDataValue("coin", coin)
-			user.Profile.SetDataValue("lastTimeCoinAcquired", now)
-			user.Profile.SetDataValue("coinGetDelay", delay)
+			// user.Profile.SetDataValue("coin", coin)
+			// user.Profile.SetDataValue("lastTimeCoinAcquired", now)
+			// user.Profile.SetDataValue("coinGetDelay", delay)
 
-			return c.JSON(200, user)
+			return c.JSON(200, coin)
 		},
 		Middlewares: []echo.MiddlewareFunc{
 			apis.RequireAdminOrOwnerAuth("user-id"),

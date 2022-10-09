@@ -27,12 +27,12 @@
 </script>
 
 <svelte:head>
-  <title>User | {userData?.profile?.name}</title>
+  <title>User | {userData?.profile?.name || "..."}</title>
 </svelte:head>
 
 <section class="banner" />
 <div class="body">
-  <Avatar size={72} url={getPocketBaseAvatar(userData?.profile?.id, userData?.profile?.avatar)} />
+  <Avatar size={72} url={getPocketBaseAvatar(userData?.profile)} />
   <h1>{userData?.profile?.name || "--"}</h1>
   <div>join: {userData?.created ? new Date(userData?.created).toDateString() : ""}</div>
 </div>
@@ -98,8 +98,9 @@
   }
 
   .content {
+    --content-width: 60em;
     width: 100%;
-    max-width: 60em;
+    max-width: var(--content-width);
     margin: 2em auto;
     .tabs {
       display: flex;

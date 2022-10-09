@@ -1,7 +1,6 @@
 package user
 
 import (
-	"log"
 	"net/http"
 	"time"
 
@@ -44,7 +43,6 @@ func AvatarUpload(e *core.ServeEvent) error {
 
 func DefaultProfileValues(e *core.UserCreateEvent) error {
 	now := time.Now()
-	log.Print("Halloooo?????")
 
 	// _, err := global.ProgNovelApp.App.DB().NewQuery(`UPDATE profile
 	// 	SET lastTimeCoinAcquired = {:now}
@@ -68,8 +66,8 @@ type AuthMeta struct {
 
 func AuthDefaultProfileValues(e *core.UserAuthEvent) error {
 
-	log.Print(e.Meta)
-	log.Print(e.User.Profile.GetDataValue("name"))
+	// log.Print(e.Meta)
+	// log.Print(e.User.Profile.GetDataValue("name"))
 
 	return nil
 }

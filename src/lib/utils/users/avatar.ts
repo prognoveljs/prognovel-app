@@ -1,13 +1,14 @@
 import { MD5 } from "crypto-es/lib/md5.js";
 import type { GravatarProfile } from "$typings";
+import { UserProfile } from "$typings/user";
 
 export function getGravatarURL(email: string, size?: number): string {
   return `https://www.gravatar.com/avatar/${MD5(email).toString()}`;
 }
 
-export function getPocketBaseAvatar(profileID: string, avatarID: string): string {
+export function getPocketBaseAvatar(profile: UserProfile): string {
   const url = new URL(import.meta.env.POCKETBASE_URL);
-  url.pathname = `/api/files/profiles/${profileID}/${avatarID}`;
+  url.pathname = `/api/files/profiles/${profile?.id}/${profile?.avatar}`;
 
   return url.href;
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { browser } from "$app/environment";
-  import { profile, userData } from "$lib/store/user";
+  import { coin, profile, userData } from "$lib/store/user";
   import { refreshUser } from "$lib/utils/backend";
   import { tick } from "svelte";
   import { Button } from "carbon-components-svelte";
@@ -12,29 +12,16 @@
   // $: profileId = profile?.id;
   async function getDailyCoin() {
     forceDisableCoinButton = true;
-    await refreshUser();
-    await tick();
-    // if (!$profile.id) return;
-    const result: unknown = await $backend.send("/api/get-coin/" + $userData.user.id, {});
-    console.log(result);
-
-    // const result: unknown = await $backend.records.update("profiles", $profile.id, {
-    //   coin: ($profile.coin || 0) + 40,
-    //   lastTimeCoinAcquired: new Date(),
-    // });
-
-    userData.update((u) => {
-      u.user.profile = result as UserProfile;
-      return u;
-    });
+    coin.getCoin();
   }
 
+  $: console.log($coin);
+
   $: lastCoinAcquired =
-    new Date($profile?.lastTimeCoinAcquired).getTime() -
-    (new Date().getTimezoneOffset() / 60) * 36e5; // convert timezone offset
+    new Date(coin?.lastTimeAcquired).getTime() - (new Date().getTimezoneOffset() / 60) * 36e5; // convert timezone offset
   let dateNow = Date.now();
   $: lastCoinTimeDifference = Math.abs(dateNow - lastCoinAcquired) / 36e5;
-  $: remainingTime = $profile.coinGetDelay - lastCoinTimeDifference;
+  $: remainingTime = coin.delay - lastCoinTimeDifference;
   $: disabledCoinButton = remainingTime > 0;
   let forceDisableCoinButton = false;
 

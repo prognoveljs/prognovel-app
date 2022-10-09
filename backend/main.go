@@ -12,6 +12,7 @@ import (
 func main() {
 
 	global.ProgNovelApp.OnBeforeServe().Add(coin.Calculate)
+	global.ProgNovelApp.OnBeforeServe().Add(coin.Fetch)
 	global.ProgNovelApp.OnBeforeServe().Add(user.AvatarUpload)
 	// global.ProgNovelApp.OnBeforeServe().Add(image.OptimizeImageAndSave)
 	global.ProgNovelApp.OnUserBeforeCreateRequest().Add(user.DefaultProfileValues)
