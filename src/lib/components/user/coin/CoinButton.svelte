@@ -1,11 +1,7 @@
 <script lang="ts">
   import { browser } from "$app/environment";
-  import { coin, profile, userData } from "$lib/store/user";
-  import { refreshUser } from "$lib/utils/backend";
-  import { tick } from "svelte";
+  import { coin, coinGetDelay, lastTimeCoinAcquired } from "$lib/store/user-data/coin";
   import { Button } from "carbon-components-svelte";
-  import type { UserProfile } from "$typings/user";
-  import { backend } from "$lib/store/backend";
   import { ClockIcon } from "svelte-feather-icons";
 
   // $: profile = ($user?.user?.profile || {}) as UserProfile;
@@ -18,10 +14,10 @@
   $: console.log($coin);
 
   $: lastCoinAcquired =
-    new Date(coin?.lastTimeAcquired).getTime() - (new Date().getTimezoneOffset() / 60) * 36e5; // convert timezone offset
+    new Date($lastTimeCoinAcquired).getTime() - (new Date().getTimezoneOffset() / 60) * 36e5; // convert timezone offset
   let dateNow = Date.now();
   $: lastCoinTimeDifference = Math.abs(dateNow - lastCoinAcquired) / 36e5;
-  $: remainingTime = coin.delay - lastCoinTimeDifference;
+  $: remainingTime = $coinGetDelay - lastCoinTimeDifference;
   $: disabledCoinButton = remainingTime > 0;
   let forceDisableCoinButton = false;
 

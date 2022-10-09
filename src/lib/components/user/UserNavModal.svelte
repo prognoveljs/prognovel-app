@@ -1,6 +1,7 @@
 <script lang="ts">
   import coinSVG from "$lib/assets/svg/coin-1.svg";
-  import { coin, profile, userData } from "$lib/store/user";
+  import { profile, userData } from "$lib/store/user";
+  import { coin } from "$lib/store/user-data/coin";
   import CoinButton from "./coin/CoinButton.svelte";
   import LogoutButton from "./logout/LogoutButton.svelte";
 </script>

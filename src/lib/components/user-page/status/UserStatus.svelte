@@ -13,7 +13,7 @@
   let totalStatus = 0;
   let totalPages = 1;
   const MAX_STATUS_LENGTH = 120;
-  $: disabled = statusContent.length > MAX_STATUS_LENGTH;
+  $: disabled = statusContent.length > MAX_STATUS_LENGTH || !statusContent.length;
 
   $: allStatus = [];
   let pageIndex = 1;
