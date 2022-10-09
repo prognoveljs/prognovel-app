@@ -1,16 +1,22 @@
 <script lang="ts">
-  import { chapterTitles } from "$lib/store/read-page/read-page-state";
+  import { chapterTitles } from "$lib/store/read-page/state";
   import { fly } from "svelte/transition";
   import { faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
   import Icon from "$lib/components/Icon.svelte";
+  // import {
+  //   disableNextChapter,
+  //   disablePrevChapter,
+  //   nextChapterLink,
+  //   prevChapterLink,
+  // } from "$lib/store/read-page";
+  import { currentNovel } from "$lib/store/states";
+  import { replacePageTitleBookAndChapter } from "$lib/utils/read-page/history";
   import {
     disableNextChapter,
     disablePrevChapter,
     nextChapterLink,
     prevChapterLink,
-  } from "$lib/store/read-page";
-  import { currentNovel } from "$lib/store/states";
-  import { replacePageTitleBookAndChapter } from "$lib/utils/read-page/history";
+  } from "$lib/store/read-page/navigation";
 
   $: nextBookAndChapter = $nextChapterLink.split($currentNovel + "/")[1];
   $: nextBook = nextBookAndChapter.split("/")[0];

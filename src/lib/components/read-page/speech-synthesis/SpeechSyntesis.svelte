@@ -3,8 +3,6 @@
   import { faPause, faPlay, faStop, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
   import { onDestroy, onMount } from "svelte";
   import SpeechSynthesisButton from "./SpeechSynthesisButton.svelte";
-  import { currentChapterIndex, currentChapterTitle } from "$lib/store/read-page";
-  import { goto } from "$app/navigation";
 
   export let volumeAndChapter: string;
 

@@ -1,17 +1,26 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
+  // import {
+  //   currentChapterCursor,
+  //   toc,
+  //   disableNextChapter,
+  //   disablePrevChapter,
+  //   nextChapterLink,
+  //   prevChapterLink,
+  //   nextChapter,
+  //   prevChapter,
+  // } from "$lib/store/read-page";
+  import ChapterNavigation from "$lib/components/navigation/chapter/ChapterNavigation.svelte";
   import {
-    currentChapterCursor,
-    toc,
     disableNextChapter,
     disablePrevChapter,
-    nextChapterLink,
-    prevChapterLink,
+    infiniteLoading,
     nextChapter,
+    nextChapterLink,
     prevChapter,
-  } from "$lib/store/read-page";
-  import ChapterNavigation from "$lib/components/navigation/chapter/ChapterNavigation.svelte";
-  import { infiniteLoading } from "$lib/store/read-page";
+    prevChapterLink,
+  } from "$lib/store/read-page/navigation";
+  import { currentChapterCursor, toc } from "$lib/store/read-page/vars";
 
   const dispatch = createEventDispatcher();
 

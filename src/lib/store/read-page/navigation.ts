@@ -1,6 +1,6 @@
 import { derived, Readable, writable, Writable } from "svelte/store";
 import { currentNovel } from "$lib/store/states";
-import { currentBook, currentChapter, currentChapterCursor, toc } from "./read-page-current-vars";
+import { currentBook, currentChapter, currentChapterCursor, toc } from "./vars";
 import { handleBeginReadingButton, ReadNowObject } from "$lib/utils/novel-page";
 import { browser } from "$app/environment";
 import { get, set } from "idb-keyval";

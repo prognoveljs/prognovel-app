@@ -1,12 +1,14 @@
 <script lang="ts">
   import { ArrowRightIcon, CornerUpLeftIcon, ListIcon, RefreshCwIcon } from "svelte-feather-icons";
-  import { chaptersLoaded, chaptersWithSpoiler, chapterTitles } from "$lib/store/read-page";
+  // import { chaptersLoaded, chaptersWithSpoiler, chapterTitles } from "$lib/store/read-page";
   import { fly } from "svelte/transition";
   import { replacePageTitleBookAndChapter } from "$lib/utils/read-page/history";
   import { cubicOut } from "svelte/easing";
   import { currentNovel } from "$lib/store/states";
   import { createEventDispatcher } from "svelte";
-  import { getChapterStoreKey } from "$lib/utils/read-page";
+  import { chaptersLoaded } from "$lib/store/read-page/vars";
+  import { chaptersWithSpoiler, chapterTitles } from "$lib/store/read-page/state";
+  import { getChapterStoreKey } from "$lib/utils/read-page/navigation";
 
   export let backChapter = "";
   export let nextChapter = "";

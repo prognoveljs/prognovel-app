@@ -2,13 +2,13 @@
   import { onMount, onDestroy, tick, createEventDispatcher } from "svelte";
   import { cubicIn, cubicOut } from "svelte/easing";
   import { fly, fade } from "svelte/transition";
-  import { toc, chapterTitles } from "$lib/store/read-page";
   import { currentNovel, novelsData } from "$lib/store/states";
   import { windowLock, windowUnlock } from "$lib/utils/window/lock";
   import { isMobileScreen } from "$lib/utils/mobile";
   import { getCoverURLPath } from "$lib/utils/images";
-  import { chaptersLoaded, chaptersWithSpoiler, showTOC } from "$lib/store/read-page";
-  import { getChapterStoreKey } from "$lib/utils/read-page";
+  import { chaptersWithSpoiler, chapterTitles, showTOC } from "$lib/store/read-page/state";
+  import { chaptersLoaded, toc } from "$lib/store/read-page/vars";
+  import { getChapterStoreKey } from "$lib/utils/read-page/navigation";
 
   let width = 400;
   let body;

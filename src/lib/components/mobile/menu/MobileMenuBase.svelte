@@ -4,7 +4,7 @@
     showComments,
     showStatsAndOptions,
     showTOC,
-  } from "$lib/store/read-page/read-page-state";
+  } from "$lib/store/read-page/state";
   import { fly } from "svelte/transition";
   import { menuVariance, menuState, MenuState, MenuVariance } from "./_store";
   import ReadPageNav from "./MenuReadPageNavigation.svelte";
@@ -26,7 +26,7 @@
   import { showDownload } from "$lib/store/novel-page";
   import { path, showReadPageWindow, showSettings } from "$lib/store/states";
   import { showNovelPageWindow } from "$lib/store/novel-page";
-  import { readNowObjectData } from "$lib/store/read-page/read-page-navigation";
+  import { readNowObjectData } from "$lib/store/read-page/navigation";
   import ContinueReadPreventDialogue from "$lib/components/novel-page/menu/ContinueReadPreventDialogue.svelte";
   $: readPageActive = $showAdjustFont || $showStatsAndOptions || $showTOC || $showComments;
   $: buttonsLength = function () {

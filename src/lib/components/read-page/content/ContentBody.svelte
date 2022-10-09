@@ -8,13 +8,10 @@
     currentChapterIndex,
     toc,
     chaptersLoaded,
-    chapterTitles,
-    infiniteLoading,
     currentBook,
     currentChapter,
-  } from "$lib/store/read-page";
+  } from "$lib/store/read-page/vars";
   import { FONT_SIZE, LINE_HEIGHT, ChapterState } from "$lib/utils/read-page/vars";
-  import { getChapterStoreKey, setNovelRecentHistory } from "$lib/utils/read-page";
   import { onMount, tick } from "svelte";
   import { readPageSettingsInit } from "$lib/utils/fonts";
   import {
@@ -22,16 +19,23 @@
     isCurrentChapterLocked,
     isCurrentChapterMonetized,
   } from "$lib/utils/web-monetization";
-  import { contentRenderer, createContentDelay, renderContentReady } from "$lib/utils/read-page";
   import { pannable } from "$lib/utils/actions";
   import HasReadLotsOfContents from "$lib/components/misc/promotion/HasReadLotsOfContents.svelte";
   import ChapterLock from "$lib/components/read-page/ChapterLock.svelte";
-  import { showTOC } from "$lib/store/read-page";
   import { colorizedBackground } from "$lib/utils/fonts/background-hue";
   import ReadPageSkeletonShell from "$lib/components/read-page/ReadPageSkeletonShell.svelte";
   import { onDestroy } from "svelte";
   import InfiniteReadingBound from "../InfiniteReadingBound.svelte";
   import Observer from "svelte-intersection-observer";
+  import { chapterTitles, showTOC } from "$lib/store/read-page/state";
+  import { infiniteLoading } from "$lib/store/read-page/navigation";
+  import { getChapterStoreKey } from "$lib/utils/read-page/navigation";
+  import { setNovelRecentHistory } from "$lib/utils/read-page/history";
+  import {
+    contentRenderer,
+    createContentDelay,
+    renderContentReady,
+  } from "$lib/utils/read-page/render-content";
 
   export let bookAndChapterIndex: string = "";
   export let novel: string = "";

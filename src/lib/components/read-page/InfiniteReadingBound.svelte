@@ -1,6 +1,6 @@
 <script lang="ts">
   import { delay } from "$lib/utils/misc";
-  import { renderContentReady } from "$lib/utils/read-page";
+  import { renderContentReady } from "$lib/utils/read-page/render-content";
   import { createEventDispatcher, onMount } from "svelte";
   import Observer from "svelte-intersection-observer";
 

@@ -1,10 +1,12 @@
 <script lang="ts">
   import { isCurrentChapterLocked } from "$lib/utils/web-monetization";
   import { ChapterState } from "$lib/utils/read-page/vars";
-  import { chaptersLoaded, chaptersWithSpoiler, currentContent } from "$lib/store/read-page";
-  import { getChapterStoreKey } from "$lib/utils/read-page";
+  // import { chaptersLoaded, chaptersWithSpoiler, currentContent } from "$lib/store/read-page";
   import SpeechSyntesis from "$lib/components/read-page/speech-synthesis/SpeechSyntesis.svelte";
   import { currentNovel } from "$lib/store/states";
+  import { chaptersLoaded, currentContent } from "$lib/store/read-page/vars";
+  import { chaptersWithSpoiler } from "$lib/store/read-page/state";
+  import { getChapterStoreKey } from "$lib/utils/read-page/navigation";
 
   export let title: string;
   export let book = "";

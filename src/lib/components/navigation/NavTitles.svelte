@@ -2,7 +2,6 @@
   import Icon from "$lib/components/Icon.svelte";
   import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
   import { novelTitles } from "$lib/utils/novel-page";
-  import { chaptersAppended, currentChapter, currentChapterTitle } from "$lib/store/read-page";
   import {
     getBreadcrumbSegments,
     getBreadcrumbParentLabel,
@@ -14,6 +13,8 @@
   import { customBreadcrumbTitle } from "$lib/utils/navigation/custom-title";
   import { path } from "$lib/store/states";
   import { browser } from "$app/environment";
+  import { chaptersAppended } from "$lib/store/read-page/state";
+  import { currentChapter, currentChapterTitle } from "$lib/store/read-page/vars";
 
   $: isAtReadPage = $path && $path.startsWith("/read");
   $: segments = $path ? getBreadcrumbSegments($path) : [];

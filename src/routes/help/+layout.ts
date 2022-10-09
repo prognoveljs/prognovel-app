@@ -1,3 +1,5 @@
+export const prerender = true;
+
 /** @type {import('@sveltejs/kit').LayoutLoad} */
 export async function load({ params, fetch }) {
   const { slug } = params;

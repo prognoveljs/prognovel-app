@@ -1,13 +1,16 @@
 import { setNovelRecentHistory } from "./history";
 import { tick } from "svelte";
 import { get as getStore, writable, Writable } from "svelte/store";
-import { asyncTextRendering, toc, chaptersLoaded, infiniteLoading } from "$lib/store/read-page";
+// import { asyncTextRendering, toc, chaptersLoaded, infiniteLoading } from "$lib/store/read-page";
 import { isLaunchOnPWA } from "../pwa";
 import type { Chapter } from "$typings";
 import { getChapterStoreKey } from "./navigation";
 import { enablePremiumContent } from "$lib/utils/web-monetization";
 import { currentNovel } from "$lib/store/states";
 import { frameTick } from "../animation";
+import { asyncTextRendering } from "$lib/store/read-page/state";
+import { chaptersLoaded, toc } from "$lib/store/read-page/vars";
+import { infiniteLoading } from "$lib/store/read-page/navigation";
 
 type RenderContentReady = {
   [volumeAndChapter: string]: Promise<boolean>;

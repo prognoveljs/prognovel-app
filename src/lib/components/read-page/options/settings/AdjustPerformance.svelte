@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { asyncTextRendering } from "$lib/store/read-page";
+  import { asyncTextRendering } from "$lib/store/read-page/state";
   import { CpuIcon } from "svelte-feather-icons";
   import SectionHeader from "../body/SectionHeader.svelte";
 </script>

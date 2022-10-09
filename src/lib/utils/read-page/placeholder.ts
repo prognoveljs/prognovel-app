@@ -1,7 +1,7 @@
 import { FONT_SIZE, LINE_HEIGHT } from "./vars";
 import { ChapterState } from "./vars";
 import { get as getStore } from "svelte/store";
-import { chapterTitles } from "$lib/store/read-page";
+import { chapterTitles } from "$lib/store/read-page/state";
 import type { Chapter } from "$typings";
 
 export function getLoadingPlaceholder(novel = "", book = "", chapter = ""): Chapter {

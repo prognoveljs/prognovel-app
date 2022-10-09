@@ -1,6 +1,6 @@
 import { derived, Readable, Writable, writable, get as getStore } from "svelte/store";
 import { currentNovel, novelsData, siteMetadata, showSettings } from "./states";
-import { showTOC } from "./read-page/read-page-state";
+import { showTOC } from "./read-page/state";
 // export let revenueSharing = writable([]);
 export let genreFilter: Writable<string[]> = writable([]);
 export let entireSiteGenres: Readable<string[]> = derived([siteMetadata], ([metadata]) => {

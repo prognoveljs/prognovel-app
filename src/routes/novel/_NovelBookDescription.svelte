@@ -5,7 +5,7 @@
   import type { NovelMetadata } from "$typings";
   import { handleBeginReadingButton, ReadNowObject } from "$lib/utils/novel-page";
   import ChapterNavigation from "$lib/components/navigation/chapter/ChapterNavigation.svelte";
-  import { toc } from "$lib/store/read-page";
+  import { toc } from "$lib/store/read-page/vars";
   import { browser } from "$app/environment";
 
   let novelMetadata: NovelMetadata = getContext("novelMetadata");

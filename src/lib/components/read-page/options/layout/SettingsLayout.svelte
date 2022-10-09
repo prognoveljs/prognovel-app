@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { infiniteLoading } from "$lib/store/read-page";
+  import { infiniteLoading } from "$lib/store/read-page/navigation";
+
   function setInfiniteLoading(bool: boolean) {
     $infiniteLoading = bool;
   }

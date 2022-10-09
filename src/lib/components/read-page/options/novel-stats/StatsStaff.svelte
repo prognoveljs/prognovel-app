@@ -1,8 +1,6 @@
 <script lang="ts">
   import SkeletonShell from "$lib/components/SkeletonShell.svelte";
-  import { currentContent } from "$lib/store/read-page";
-  import { parseContributorsNames } from "$lib/utils/string";
-  import { enhanceRoleWithEmoji } from "$lib/utils/users/roles";
+  import { currentContent } from "$lib/store/read-page/vars";
   import StaffAvatar from "./StatsStaffAvatar.svelte";
 
   let wrapper: HTMLElement;

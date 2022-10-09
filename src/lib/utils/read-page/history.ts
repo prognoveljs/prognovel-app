@@ -2,7 +2,7 @@ import { saveRecent, IDB_PREFIX_HISTORY_RECENT } from "$lib/utils/history";
 import { get as getStore } from "svelte/store";
 import { liteNovelsMetadata } from "$lib/store/states";
 import { get } from "idb-keyval";
-import { toc } from "$lib/store/read-page";
+import { toc } from "$lib/store/read-page/vars";
 import { goto } from "$app/navigation";
 import type { HistoryRecent } from "$typings";
 

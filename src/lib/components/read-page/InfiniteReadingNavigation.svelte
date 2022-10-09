@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { showTOC } from "$lib/store/read-page";
-
+  import { showTOC } from "$lib/store/read-page/state";
   import { ListIcon } from "svelte-feather-icons";
   import { cubicIn, cubicOut } from "svelte/easing";
   import { fly } from "svelte/transition";
+
   let show = true;
   let timeout = startTimer();
   const HIDE_DELAY = 2500;

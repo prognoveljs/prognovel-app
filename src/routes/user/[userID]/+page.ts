@@ -1,7 +1,7 @@
 import { backend } from "$lib/store/backend";
 import { get as getStore } from "svelte/store";
 
-export let prerender = false;
+// export let prerender = false;
 
 /** @type {import('@sveltejs/kit').PageLoad} */
 export async function load({ params }) {

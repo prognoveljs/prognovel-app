@@ -8,12 +8,14 @@
   import type { UserData } from "$typings/user";
   import { Tab, TabContent, Tabs } from "carbon-components-svelte";
   import { onDestroy, setContext } from "svelte";
+  import { writable } from "svelte/store";
 
   export let data: {
     userData: UserData;
   };
   $: ({ userData } = data);
-  $: if (userData) setContext("userData", userData);
+  const userState = writable(userData);
+  setContext("userData", userState);
 
   $: if (userData?.profile?.name) $customBreadcrumbTitle = userData?.profile?.name;
 

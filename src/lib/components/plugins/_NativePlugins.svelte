@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { registeredPlugins } from "$lib/store/read-page";
+  import { registeredPlugins } from "$lib/store/read-page/state";
   import { onMount } from "svelte";
 
   onMount(() => {

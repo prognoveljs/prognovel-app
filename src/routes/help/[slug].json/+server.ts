@@ -3,6 +3,8 @@ import fm from "front-matter";
 import { readFileSync } from "fs";
 import { join, resolve } from "path";
 
+export const prerender = true;
+
 const thisDir = (slug: string) => "src/routes/help/" + slug;
 
 const thisSlug = (slug: string) => thisDir(slug).split("routes/")[1] + "/";

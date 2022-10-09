@@ -1,11 +1,12 @@
 <script lang="ts">
   import { browser } from "$app/environment";
-
   import Disqus from "$lib/components/comments/disqus/Disqus.svelte";
-  import { currentChapterCursor } from "$lib/store/read-page";
-  import { showComments } from "$lib/store/read-page/read-page-state";
+  // import { currentChapterCursor } from "$lib/store/read-page";
+  import { showComments } from "$lib/store/read-page/state";
+  import { currentChapterCursor } from "$lib/store/read-page/vars";
   import { siteMetadata } from "$lib/store/states";
   import { fade } from "svelte/transition";
+
   $: hasDisqus = Boolean($siteMetadata?.disqus_id);
 </script>
 

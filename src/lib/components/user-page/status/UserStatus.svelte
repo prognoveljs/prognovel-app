@@ -7,8 +7,11 @@
   import { getPocketBaseAvatar } from "$lib/utils/users/avatar";
   import { Button, PaginationNav, TextArea } from "carbon-components-svelte";
   import { SendAlt } from "carbon-icons-svelte";
-  import { onMount } from "svelte";
+  import { getContext, onMount } from "svelte";
+  import { Writable } from "svelte/store";
+  import type { UserData } from "$typings/user";
 
+  const pageUserData: Writable<UserData> = getContext("userData");
   let statusContent: string = "";
   let totalStatus = 0;
   let totalPages = 1;
@@ -55,7 +58,12 @@
 </script>
 
 {#if $userData?.user?.id}
-  <TextArea bind:value={statusContent} placeholder="What are you thinking today?" />
+  <TextArea
+    bind:value={statusContent}
+    placeholder={$userData?.user?.id === $pageUserData?.id
+      ? "What are you thinking today?"
+      : `Say something to ${$pageUserData?.profile?.name || "..."}`}
+  />
   <div class="cta">
     <em class="content-length" class:disabled>
       {statusContent.length}/{MAX_STATUS_LENGTH}

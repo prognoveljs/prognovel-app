@@ -2,7 +2,7 @@
   import SectionHeader from "../body/SectionHeader.svelte";
   import { Slider } from "carbon-components-svelte";
   import { fontWeight, fontSize } from "$lib/utils/fonts";
-  import { showAdjustFont } from "$lib/store/read-page/read-page-state";
+  import { showAdjustFont } from "$lib/store/read-page/state";
   import { MenuState, menuState } from "$lib/components/mobile/menu/_store";
   import { TypeIcon } from "svelte-feather-icons";
 

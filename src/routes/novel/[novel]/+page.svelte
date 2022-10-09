@@ -5,20 +5,20 @@
   import Book from "../_NovelBook.svelte";
   import Affiliate from "$lib/components/novel-page/Affiliate.svelte";
   import RevenueSharingStats from "$lib/components/novel-page/RevenueSharingStats.svelte";
-  import { toc, chaptersLoaded } from "$lib/store/read-page";
-  import { getChapterStoreKey, prefetchChapter } from "$lib/utils/read-page";
   import type { NovelMetadata } from "$typings";
   import { browser } from "$app/environment";
   import { novelDemographics, novelGenres } from "$lib/utils/novel-page";
   import { SITE_TITLE } from "$lib/_setting";
   import BackgroundPattern from "$lib/components/misc/BackgroundPattern.svelte";
   import { getCoverURLPath } from "$lib/utils/images";
+  import { chaptersLoaded, toc } from "$lib/store/read-page/vars";
+  import { getChapterStoreKey } from "$lib/utils/read-page/navigation";
+  import { prefetchChapter } from "$lib/utils/read-page/fetch-content";
 
   export let data;
 
   $: novel = data.novel;
   $: novelMetadata = data.novelMetadata as NovelMetadata;
-  $: console.log({ data });
   let affiliate = browser ? new URL(location.href).searchParams.get("affiliate") || "" : "";
   let affiliateName = browser ? new URL(location.href).searchParams.get("affiliateName") || "" : "";
 

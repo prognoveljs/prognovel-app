@@ -9,7 +9,7 @@
   import { novelsData } from "$lib/store/states";
   import { Tag } from "carbon-components-svelte";
   import { capsFirstLetter, parseChapterIndex } from "$lib/utils/string";
-  import { toc } from "$lib/store/read-page";
+  import { toc } from "$lib/store/read-page/vars";
   import type { NovelMetadata } from "$typings";
 
   const dispatch = createEventDispatcher();

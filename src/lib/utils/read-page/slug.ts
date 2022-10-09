@@ -1,4 +1,5 @@
-import { chaptersAppended, toc } from "$lib/store/read-page";
+import { toc } from "$lib/store/read-page/vars";
+import { chaptersAppended } from "$lib/store/read-page/state";
 import { get as getStore } from "svelte/store";
 
 export function getSlug(page, options = {}) {

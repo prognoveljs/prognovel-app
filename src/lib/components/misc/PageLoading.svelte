@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { currentContent } from "$lib/store/read-page";
   import { tick } from "svelte";
   import { ChapterState } from "$lib/utils/read-page/vars";
   import { path } from "$lib/store/states";
   import { browser } from "$app/environment";
+  import { currentContent } from "$lib/store/read-page/vars";
 
   export let isNavigatingBetweenPages: any = false;
 

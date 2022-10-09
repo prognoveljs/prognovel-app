@@ -13,7 +13,7 @@
     faChartArea,
     faMoneyBill,
   } from "@fortawesome/free-solid-svg-icons";
-  import { toc, showTOC } from "$lib/store/read-page";
+  import { toc } from "$lib/store/read-page/vars";
   import TOC from "$lib/components/read-page/ReadTableOfContent.svelte";
   import Icon from "$lib/components/Icon.svelte";
   import Share from "$lib/components/novel-page/Share.svelte";
@@ -23,6 +23,7 @@
   import DownloadWindow from "$lib/components/download/DownloadWindow.svelte";
   import { getContext } from "svelte";
   import type { NovelMetadata } from "$typings";
+  import { showTOC } from "$lib/store/read-page/state";
 
   export let novelMetadata: NovelMetadata = getContext("novelMetadata");
   export let id: string = getContext("id");

@@ -40,10 +40,7 @@ export default {
   ],
   kit: {
     adapter: adapter({
-      onError: ({ status, path, referrer, referenceType }) => {
-        if (path.startsWith("/blog")) throw new Error("Missing a blog page!");
-        console.warn(`${status} ${path}${referrer ? ` (${referenceType} from ${referrer})` : ""}`);
-      },
+      fallback: "200.html",
     }),
     prerender: {
       entries: ["*", ...(siteMetadata?.novels || []).map((novel) => `/novel/${novel}/`)],
