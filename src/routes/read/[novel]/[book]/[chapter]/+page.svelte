@@ -1,32 +1,37 @@
 <script lang="ts">
   import { onMount, tick, onDestroy } from "svelte";
   import { page } from "$app/stores";
-  import {
-    leavePage,
-    enterPage,
-    setChapterCursor,
-    prefetchNextChapter,
-    getNextChapter,
-    replacePageTitleBookAndChapter,
-    getChapterStoreKey,
-    prefetchChapter,
-  } from "$lib/utils/read-page";
   import Content from "$lib/components/read-page/content/ContentBody.svelte";
   import Options from "../../../_Options.svelte";
   import { currentNovel, novelsData } from "$lib/store/states";
-  import {
-    currentChapter,
-    currentBook,
-    currentContent,
-    toc,
-    chaptersAppended,
-  } from "$lib/store/read-page";
+  import // currentChapter,
+  // currentBook,
+  // currentContent,
+  // toc,
+  // chaptersAppended,
+  "$lib/store/read-page";
   import { SITE_TITLE } from "$lib/_setting";
   import NativePlugins from "$lib/components/plugins/_NativePlugins.svelte";
-  import { showTOC, infiniteLoading, chaptersLoaded } from "$lib/store/read-page";
   import TOC from "$lib/components/read-page/ReadTableOfContent.svelte";
   import InfiniteReadingEnd from "$lib/components/read-page/InfiniteReadingEnd.svelte";
   import InfiniteReadingNavigation from "$lib/components/read-page/InfiniteReadingNavigation.svelte";
+  import {
+    chaptersLoaded,
+    currentBook,
+    currentChapter,
+    currentContent,
+    toc,
+  } from "$lib/store/read-page/vars";
+  import { chaptersAppended, showTOC } from "$lib/store/read-page/state";
+  import { infiniteLoading } from "$lib/store/read-page/navigation";
+  import { enterPage, leavePage } from "$lib/utils/read-page/page";
+  import {
+    getChapterStoreKey,
+    getNextChapter,
+    setChapterCursor,
+  } from "$lib/utils/read-page/navigation";
+  import { prefetchChapter, prefetchNextChapter } from "$lib/utils/read-page/fetch-content";
+  import { replacePageTitleBookAndChapter } from "$lib/utils/read-page/history";
   // import { prefetchNextChapter } from "$lib/utils/read-page/fetch-content";
 
   $: ({ novel, book, chapter } = $page.params);
