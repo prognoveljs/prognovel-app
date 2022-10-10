@@ -2,7 +2,6 @@
   import { fly } from "svelte/transition";
   import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
   import Icon from "$lib/components/Icon.svelte";
-  import { getCoverURLPath, isWEBP } from "$lib/utils/images";
   import { currentNovel, novelsData, path } from "$lib/store/states";
   import { novelCoverPlaceholders } from "$lib/utils/novel-page";
   import { onMount } from "svelte";

@@ -1,10 +1,10 @@
 import { get, set, createStore } from "idb-keyval";
 import { get as getStore } from "svelte/store";
 import { getRecentHistory, IDB_PREFIX_HISTORY_RECENT } from "$lib/utils/history";
-import { siteMetadata, isWEBP, novelsData } from "$lib/store/states";
+import { siteMetadata, novelsData } from "$lib/store/states";
 import { bookmarkList } from "./_store";
 import { fetchNovelMetadata } from "$lib/utils/fetch-metadata";
-import { getCoverURLPath } from "$lib/utils/images";
+import { getCoverURLPath, isWEBP } from "$lib/utils/images";
 import type { NovelMetadata, SiteMetadata, HistoryRecent, Bookmark } from "$typings";
 import { browser } from "$app/environment";
 

@@ -1,6 +1,7 @@
 import { derived, Readable, Writable, writable, get as getStore } from "svelte/store";
 import { currentNovel, novelsData, siteMetadata, showSettings } from "./states";
 import { showTOC } from "./read-page/state";
+import { createDerivedNovelsMetadata } from "$lib/utils/novel-page";
 // export let revenueSharing = writable([]);
 export let genreFilter: Writable<string[]> = writable([]);
 export let entireSiteGenres: Readable<string[]> = derived([siteMetadata], ([metadata]) => {
@@ -28,6 +29,10 @@ export const FORBIDDEN_NOVEL_ID = ["all"];
 export const showRevshareStats: Writable<boolean> = writable(false);
 export const showAffiliateReferrer: Writable<boolean> = writable(false);
 export const showDownload: Writable<boolean> = writable(false);
+
+export const liteNovelsMetadata: Readable<any> = derived(siteMetadata, ($meta: SiteMetadata) => {
+  return createDerivedNovelsMetadata($meta);
+});
 
 const novelPageState = [
   showTOC,

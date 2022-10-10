@@ -1,11 +1,11 @@
-import { novelsData, siteMetadata } from "$lib/store/states";
+import { novelsData } from "$lib/store/states";
 import { derived, get as getStore, Readable } from "svelte/store";
 import { fetchNovelMetadata } from "$lib/utils/fetch-metadata";
 import { getCoverURLPath } from "$lib/utils/images";
 import { getNovelRecentHistory } from "$lib/utils/read-page/history";
 import { toc } from "$lib/store/read-page/vars";
-import type { HistoryRecent, NovelsMetadata, SiteMetadata } from "$typings";
 
+import type { HistoryRecent, NovelsMetadata, SiteMetadata } from "$typings";
 export function getNovelBookCoverSrc(
   novel: string,
   type: "jpeg" | "jpg" | "png" | "webp" = "webp",
