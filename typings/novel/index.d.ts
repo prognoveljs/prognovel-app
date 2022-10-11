@@ -1,3 +1,5 @@
+type novelID = string;
+
 export type NovelsMetadata = {
   [novel: string]: NovelMetadata;
 };
@@ -49,4 +51,17 @@ interface BookCover {
     jpeg: string;
   };
   placeholder: string;
+}
+
+export interface Volume {
+  id: string;
+  title: string;
+  novel_parent: novelID;
+  blurb?: string;
+  order?: number;
+  is_published?: boolean;
+  cover_png?: string;
+  cover_webp?: string;
+  created?: DOMHighResTimeStamp;
+  updated?: DOMHighResTimeStamp;
 }

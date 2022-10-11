@@ -24,6 +24,7 @@
 
     .body {
       padding: 2em;
+      position: relative;
 
       :global(h1) {
         display: block;
