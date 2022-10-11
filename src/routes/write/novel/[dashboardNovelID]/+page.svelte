@@ -22,6 +22,7 @@
 
   let newVolumeModal = false;
   let showVolumeChapterList;
+  let volumeTitle = "";
 </script>
 
 <h1>{novelData?.title}</h1>
@@ -37,7 +38,14 @@
     {/each}
   {:then [volumes]}
     {#each volumes?.items || [] as volume, index}
-      <VolumeContainer on:click={() => (showVolumeChapterList = volume?.id)} {volume} {index} />
+      <VolumeContainer
+        on:click={() => {
+          volumeTitle = volume?.title || "";
+          showVolumeChapterList = volume?.id;
+        }}
+        {volume}
+        {index}
+      />
     {/each}
   {:catch error}
     <!-- promise was rejected -->
@@ -59,6 +67,7 @@
     <!-- content here -->
     <VolumeChapterList
       volumeId={showVolumeChapterList}
+      title={volumeTitle}
       on:close={() => (showVolumeChapterList = null)}
     />
   {/if}
