@@ -7,18 +7,22 @@
   export let data;
   $: ({ id, novelData } = data);
 
-  $: getChapterList = $backend.records.getList("chapters", 1, 20, {
-    filter: `novelParent="${id}"`,
-    sort: "+order",
-  });
-  $: getVolumeList = $backend.records.getList("volumes", 1, 20, {
-    filter: `novelParent="${id}"`,
-    sort: "+order",
-  });
+  $: getChapterList = $backend
+    ? $backend?.records?.getList("chapters", 1, 20, {
+        filter: `novelParent="${id}"`,
+        sort: "+order",
+      })
+    : [];
+  $: getVolumeList = $backend
+    ? $backend?.records?.getList("volumes", 1, 20, {
+        filter: `novelParent="${id}"`,
+        sort: "+order",
+      })
+    : [];
 </script>
 
-<h1>{novelData.title}</h1>
-{novelData.synopsis}
+<h1>{novelData?.title}</h1>
+{novelData?.synopsis}
 
 <div class="chapter-container">
   {#await Promise.all([getVolumeList, getChapterList])}

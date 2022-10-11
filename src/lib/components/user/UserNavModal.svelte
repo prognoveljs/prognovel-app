@@ -2,6 +2,7 @@
   import coinSVG from "$lib/assets/svg/coin-1.svg";
   import { profile, userData } from "$lib/store/user";
   import { coin } from "$lib/store/user-data/coin";
+  import { Edit3Icon, UserIcon } from "svelte-feather-icons";
   import CoinButton from "./coin/CoinButton.svelte";
   import LogoutButton from "./logout/LogoutButton.svelte";
 </script>
@@ -20,8 +21,10 @@
     </span>
     <CoinButton />
   </div>
-  <a href="/write/">Writer dashboard</a>
-  <a href="/user/{$userData?.user?.id}/">Profile page</a>
+  <div class="links">
+    <a href="/write/"><Edit3Icon /> Writer dashboard</a>
+    <a href="/user/{$userData?.user?.id}/"><UserIcon /> Profile page</a>
+  </div>
   <div class="opts">
     <LogoutButton />
   </div>
@@ -29,6 +32,7 @@
 
 <style lang="scss">
   section {
+    --padding-side: 12px;
     --opacity: 0;
     display: flex;
     position: fixed;
@@ -36,7 +40,7 @@
     top: calc(var(--header-height) - 4px);
     width: 20em;
     background-color: var(--foreground-color);
-    padding: 12px;
+    padding: 12px var(--padding-side);
     padding-top: 1.5em;
     transform: translateY(-100%) translateZ(0);
     z-index: -1;
@@ -67,6 +71,30 @@
       .value {
         font-weight: 700;
         margin-right: 0.5em;
+      }
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      margin: 1em 0 1em;
+      a {
+        display: flex;
+        align-items: center;
+        padding: var(--padding-side);
+        margin: 0 calc(-1 * var(--padding-side));
+        background-color: #0002;
+        gap: 1em;
+
+        :global {
+          svg {
+            opacity: 0.75;
+          }
+        }
+
+        &:hover {
+          color: var(--primary-color-lighten-2);
+        }
       }
     }
 

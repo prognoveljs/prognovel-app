@@ -25,17 +25,36 @@
 
 <style lang="scss">
   section {
+    --outline-color: transparent;
     // margin-right: 1em;
     display: flex;
     align-items: center;
     width: 36px;
     height: 100%;
 
-    &:hover,
+    :global {
+      .avatar {
+        outline: 2px solid var(--outline-color);
+      }
+    }
+    &:hover {
+      :global {
+        .avatar {
+          --outline-color: hsla(#{$hsl}, 0.6);
+        }
+      }
+    }
+
+    &:focus-within,
     &:focus {
-      :global(.user-modal) {
-        --opacity: 1;
-        transform: translateY(0);
+      :global {
+        .avatar {
+          --outline-color: var(--primary-color);
+        }
+        .user-modal {
+          --opacity: 1;
+          transform: translateY(0);
+        }
       }
     }
 

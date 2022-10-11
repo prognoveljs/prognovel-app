@@ -92,8 +92,7 @@
   <button {disabled} on:click={createAccount}> Create account </button>
   {#if errorMessage}
     <div class="error">
-      Error creating account. If you've logged in the email with social login before, your account
-      might be already in our database.
+      Password based account is not ready yet. Please use our social login in the meantime.
     </div>
   {/if}
 </section>
