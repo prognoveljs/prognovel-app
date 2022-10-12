@@ -33,18 +33,22 @@
   let invalidIndex;
   let indexInvalidText;
 
+  $: hot_data = {
+    title,
+    index,
+    content,
+    is_monetized,
+    is_published,
+    title_spoiler,
+  };
+
   async function createChapter() {
     try {
       await checkConflictingIndex();
       await $backend.records.create("chapters", {
         volume_parent,
         novel_parent,
-        title,
-        index,
-        content,
-        is_monetized,
-        is_published,
-        title_spoiler,
+        ...hot_data,
       });
       refreshVolumeChapterList();
       dispatch("close");
@@ -57,14 +61,7 @@
     try {
       await checkConflictingIndex();
       console.log("Updating", id);
-      await $backend.records.update("chapters", id, {
-        title,
-        index,
-        content,
-        is_monetized,
-        is_published,
-        title_spoiler,
-      });
+      await $backend.records.update("chapters", id, hot_data);
       refreshVolumeChapterList();
       dispatch("close");
     } catch (error) {
@@ -148,6 +145,14 @@
       />
       <TextInput {readonly} bind:value={title} labelText="Chapter title" />
     </span>
+    <div class="toggle-group">
+      <Toggle bind:toggled={is_monetized} labelA="Not monetized" labelB="Currently monetized" />
+      <Toggle
+        bind:toggled={title_spoiler}
+        labelA="Chapter title spoiler off"
+        labelB="Chapter title spoiler on"
+      />
+    </div>
     <div style="margin-top: 1.5em" />
     <TextArea {readonly} labelText="Chapter content" bind:value={content} />
   </section>
@@ -172,10 +177,17 @@
     background-color: var(--foreground-color);
     z-index: $zIndex;
     padding: 3em 6em 2em 2em;
+
     .title-and-index {
       display: grid;
       gap: 1em;
       grid-template-columns: 10em 1fr;
+    }
+
+    .toggle-group {
+      display: grid;
+      grid-template-columns: 11.5em 12em;
+      gap: 1em;
     }
 
     :global {
