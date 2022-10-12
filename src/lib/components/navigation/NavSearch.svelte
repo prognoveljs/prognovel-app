@@ -36,7 +36,7 @@
 
 <svelte:window
   on:keyup={(e) => {
-    if (e.key === "/") input.focus();
+    if (e.key === "/" && document.activeElement === document.body) input.focus();
     if (e.key === "Escape" && document.activeElement === input) input.blur();
   }}
 />
