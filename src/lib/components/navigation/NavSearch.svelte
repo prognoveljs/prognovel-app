@@ -1,12 +1,7 @@
 <script lang="ts">
-  import { siteMetadata } from "$lib/store/states";
-  import { fly, fade } from "svelte/transition";
-  import { getCoverURLPath } from "$lib/utils/images";
-  import { stringSearch } from "$lib/utils/string";
   import IconSvg from "$lib/components/IconSVG.svelte";
   import searchIcon from "$lib/assets/feather-icons/search.svg?raw";
 
-  import { frameTick } from "$lib/utils/animation";
   import NavSearchResult from "./NavSearchResult.svelte";
   import { SITE_TITLE } from "$lib/_setting";
   import { XCircleIcon } from "svelte-feather-icons";
