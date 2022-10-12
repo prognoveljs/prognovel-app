@@ -7,6 +7,7 @@
   import NewVolumeModals from "$lib/components/write-page/novel/NewVolumeModals.svelte";
   import VolumeContainer from "$lib/components/write-page/novel/VolumeContainer.svelte";
   import VolumeChapterList from "$lib/components/write-page/novel/VolumeChapterList.svelte";
+  import ChapterCanvas from "$lib/components/write-page/chapter/ChapterCanvas.svelte";
 
   export let data;
   let refreshKey = 1;
@@ -22,6 +23,7 @@
 
   let newVolumeModal = false;
   let showVolumeChapterList;
+  let showChapterCanvas;
   let volumeTitle = "";
 </script>
 
@@ -47,14 +49,14 @@
         {index}
       />
     {/each}
+    <div class="volume-add" on:click={() => (newVolumeModal = true)}>
+      <PlusCircleIcon size="70" />
+      Add new volume
+    </div>
   {:catch error}
     <!-- promise was rejected -->
   {/await}
   <!-- {/key} -->
-  <div class="volume-add" on:click={() => (newVolumeModal = true)}>
-    <PlusCircleIcon size="70" />
-    Add new volume
-  </div>
   {#if newVolumeModal}
     <NewVolumeModals
       novelParent={id}
@@ -64,11 +66,19 @@
   {/if}
 
   {#if showVolumeChapterList}
-    <!-- content here -->
     <VolumeChapterList
       volumeId={showVolumeChapterList}
       title={volumeTitle}
       on:close={() => (showVolumeChapterList = null)}
+      on:chapterevent={(e) => (showChapterCanvas = e.detail)}
+    />
+  {/if}
+
+  {#if showChapterCanvas}
+    <ChapterCanvas
+      novel_parent={id}
+      data={showChapterCanvas}
+      on:close={() => (showChapterCanvas = null)}
     />
   {/if}
 </div>

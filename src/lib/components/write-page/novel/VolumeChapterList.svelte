@@ -13,7 +13,7 @@
   } from "carbon-components-svelte";
   import { createEventDispatcher } from "svelte";
   import { PlusIcon } from "svelte-feather-icons";
-  import { TrashCan } from "carbon-icons-svelte";
+  import { Edit, TrashCan } from "carbon-icons-svelte";
   import { cubicIn, cubicOut } from "svelte/easing";
   import { fade, fly } from "svelte/transition";
   // import FlexSearch from "flexsearch";
@@ -22,7 +22,7 @@
 
   export let volumeId;
   export let title = "";
-  let refreshKey: number = 1;
+  export let refreshKey: number = 1;
   let page = 1;
   let itemPerPage = 20;
   let el: HTMLElement;
@@ -41,6 +41,7 @@
     refreshKey && $backend?.records
       ? $backend?.records?.getList("chapters", page, itemPerPage, {
           filter: `volume_parent = "${volumeId}"`,
+          sort: "+index",
         })
       : new Promise(() => {});
 
@@ -50,6 +51,13 @@
       i.updated = new Date(i.updated).toDateString();
       return i;
     });
+  }
+
+  function appendVolumeData(data: any) {
+    try {
+      data.volume_parent = volumeId;
+    } catch (error) {}
+    return data;
   }
 
   let selectedRowIds = [];
@@ -88,12 +96,14 @@
       rows={mapRows(list).filter(searchFilter)}
       batchSelection
       headers={[
+        { key: "index", value: "Ch. Index" },
         { key: "title", value: "Chapter title" },
         { key: "is_monetized", value: "Web Monetization" },
-        { key: "title_spoiler", value: "Spoiler chapter title" },
+        { key: "title_spoiler", value: "Spoiler " },
         { key: "created", value: "Creation date" },
         { key: "updated", value: "Modified date" },
         { key: "is_published", value: "Published?" },
+        { key: "action", value: "" },
       ]}
     >
       <Toolbar>
@@ -109,10 +119,23 @@
             </ToolbarMenuItem>
             <ToolbarMenuItem hasDivider danger>Stop all</ToolbarMenuItem>
           </ToolbarMenu> -->
-          <Button icon={PlusIcon}>New Chapter</Button>
+          <Button icon={PlusIcon} on:click={() => dispatch("chapterevent", appendVolumeData({}))}
+            >New Chapter</Button
+          >
         </ToolbarContent>
-      </Toolbar></DataTable
-    >
+      </Toolbar>
+      <svelte:fragment slot="cell" let:row let:cell>
+        {#if cell.key === "action"}
+          <Button
+            kind="ghost"
+            icon={Edit}
+            on:click={() => dispatch("chapterevent", appendVolumeData(row))}>Edit</Button
+          >
+        {:else}
+          {cell.value}
+        {/if}
+      </svelte:fragment>
+    </DataTable>
   {:catch error}
     <!-- promise was rejected -->
   {/await}
