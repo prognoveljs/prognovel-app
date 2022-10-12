@@ -12,17 +12,19 @@
     ToolbarSearch,
   } from "carbon-components-svelte";
   import { createEventDispatcher } from "svelte";
-  import { PlusIcon } from "svelte-feather-icons";
+  import { CheckSquareIcon, PlusIcon, XCircleIcon, XIcon } from "svelte-feather-icons";
   import { Edit, TrashCan } from "carbon-icons-svelte";
   import { cubicIn, cubicOut } from "svelte/easing";
   import { fade, fly } from "svelte/transition";
+  import { volumeRefreshKey } from "$lib/store/write-page";
+  import { refreshVolumeChapterList } from "$lib/utils/write-page/volume";
   // import FlexSearch from "flexsearch";
 
   const dispatch = createEventDispatcher();
 
+  export let novel_parent;
   export let volumeId;
   export let title = "";
-  export let refreshKey: number = 1;
   let page = 1;
   let itemPerPage = 20;
   let el: HTMLElement;
@@ -38,9 +40,9 @@
   };
 
   $: getChapterList =
-    refreshKey && $backend?.records
+    $volumeRefreshKey && $backend?.records
       ? $backend?.records?.getList("chapters", page, itemPerPage, {
-          filter: `volume_parent = "${volumeId}"`,
+          filter: `volume_parent = "${volumeId}" && novel_parent = "${novel_parent}"`,
           sort: "+index",
         })
       : new Promise(() => {});
@@ -53,11 +55,21 @@
     });
   }
 
-  function appendVolumeData(data: any) {
+  function openChapter(data: any) {
     try {
       data.volume_parent = volumeId;
     } catch (error) {}
-    return data;
+    dispatch("chapterevent", data);
+  }
+
+  async function deleteChapters() {
+    console.log(selectedRowIds);
+    if (!selectedRowIds?.length) return;
+    // TODO - Batch delete
+    const row = selectedRowIds[0];
+    await $backend.records.delete("chapters", row);
+    selectedRowIds = [];
+    refreshVolumeChapterList();
   }
 
   let selectedRowIds = [];
@@ -103,12 +115,11 @@
         { key: "created", value: "Creation date" },
         { key: "updated", value: "Modified date" },
         { key: "is_published", value: "Published?" },
-        { key: "action", value: "" },
       ]}
     >
       <Toolbar>
         <ToolbarBatchActions>
-          <Button icon={TrashCan}>Delete</Button>
+          <Button icon={TrashCan} on:click={deleteChapters}>Delete</Button>
         </ToolbarBatchActions>
         <ToolbarContent>
           <ToolbarSearch bind:value={search} />
@@ -119,21 +130,20 @@
             </ToolbarMenuItem>
             <ToolbarMenuItem hasDivider danger>Stop all</ToolbarMenuItem>
           </ToolbarMenu> -->
-          <Button icon={PlusIcon} on:click={() => dispatch("chapterevent", appendVolumeData({}))}
-            >New Chapter</Button
-          >
+          <Button icon={PlusIcon} on:click={() => openChapter({})}>New Chapter</Button>
         </ToolbarContent>
       </Toolbar>
       <svelte:fragment slot="cell" let:row let:cell>
-        {#if cell.key === "action"}
-          <Button
-            kind="ghost"
-            icon={Edit}
-            on:click={() => dispatch("chapterevent", appendVolumeData(row))}>Edit</Button
-          >
-        {:else}
-          {cell.value}
-        {/if}
+        <div class="clickable-row" on:click={() => openChapter(row)} />
+        <span>
+          {#if cell.value === false}
+            <XCircleIcon />
+          {:else if cell.value === true}
+            <CheckSquareIcon />
+          {:else}
+            {cell.value}
+          {/if}
+        </span>
       </svelte:fragment>
     </DataTable>
   {:catch error}
@@ -164,6 +174,15 @@
           bottom: 0.125rem;
         }
       }
+
+      td {
+        position: relative;
+        isolation: isolate;
+        span {
+          position: relative;
+          z-index: 2;
+        }
+      }
     }
 
     strong {
@@ -179,6 +198,13 @@
       :global(html.light) & {
         color: var(--primary-color-darken-2);
       }
+    }
+
+    .clickable-row {
+      // background-color: red;
+      position: absolute;
+      inset: 0;
+      // z-index: 1;
     }
   }
 </style>

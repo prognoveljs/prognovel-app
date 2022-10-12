@@ -1,8 +1,18 @@
 <script lang="ts">
   import { backend } from "$lib/store/backend";
-  import { Button, ButtonSet, NumberInput, TextArea, TextInput } from "carbon-components-svelte";
+  import { backendReady } from "$lib/utils/backend";
+  import { refreshVolumeChapterList } from "$lib/utils/write-page/volume";
+  import {
+    Button,
+    ButtonSet,
+    NumberInput,
+    TextArea,
+    TextInput,
+    Toggle,
+    ToggleSmall,
+  } from "carbon-components-svelte";
   import { AddAlt } from "carbon-icons-svelte";
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
   import { cubicIn, cubicOut } from "svelte/easing";
   import { fade, fly } from "svelte/transition";
 
@@ -16,31 +26,86 @@
   let title = data?.title ?? "";
   let index = data?.index ?? 1;
   let content = data?.content ?? "";
+  let is_published = data?.is_published ?? false;
+  let is_monetized = data?.is_monetized ?? false;
+  let title_spoiler = data?.title_spoiler ?? false;
+  let readonly = !!id;
+  let invalidIndex;
+  let indexInvalidText;
 
   async function createChapter() {
     try {
+      await checkConflictingIndex();
       await $backend.records.create("chapters", {
         volume_parent,
         novel_parent,
         title,
         index,
         content,
+        is_monetized,
+        is_published,
+        title_spoiler,
       });
-      dispatch("chapterlistrefresh");
+      refreshVolumeChapterList();
       dispatch("close");
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async function editChapter() {
     try {
+      await checkConflictingIndex();
+      console.log("Updating", id);
       await $backend.records.update("chapters", id, {
         title,
         index,
         content,
+        is_monetized,
+        is_published,
+        title_spoiler,
       });
-      dispatch("chapterlistrefresh");
+      refreshVolumeChapterList();
       dispatch("close");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  onMount(async () => {
+    if (id) getLatestData();
+  });
+
+  async function getLatestData() {
+    await backendReady;
+    try {
+      const d = await $backend.records.getOne("chapters", id);
+
+      title = d.title;
+      index = d.index;
+      content = d.content;
+      is_published = d.is_published;
+      is_monetized = d.is_monetized;
+      title_spoiler = d.title_spoiler;
+
+      readonly = false;
     } catch (error) {}
+  }
+
+  async function checkConflictingIndex() {
+    if (index <= 0) {
+      invalidIndex = index;
+      indexInvalidText = `Chapter index must greater than 0.`;
+      throw indexInvalidText;
+    }
+    const res = await $backend.records.getList("chapters", 1, 10, {
+      filter: `volume_parent = "${volume_parent}" && novel_parent = "${novel_parent}" && index = "${index}" && id != "${id}"`,
+    });
+    if (res?.totalItems) {
+      invalidIndex = index;
+      indexInvalidText = `Chapter index ${index} already exists.`;
+      throw indexInvalidText;
+    }
   }
 </script>
 
@@ -66,14 +131,30 @@
     opacity: 1,
   }}
 >
-  <span class="title-and-index">
-    <NumberInput hideSteppers min={0} bind:value={index} label="Ch. Index" />
-    <TextInput bind:value={title} labelText="Chapter title" />
-  </span>
-  <div style="margin-top: 1em" />
-  <TextArea labelText="Chapter content" bind:value={content} />
+  <section>
+    <span class="title-and-index">
+      <NumberInput
+        invalid={!!indexInvalidText || index <= 0}
+        invalidText={!!indexInvalidText ? indexInvalidText : "Must positive number."}
+        on:change={() => {
+          invalidIndex = null;
+          indexInvalidText = null;
+        }}
+        {readonly}
+        hideSteppers
+        min={0}
+        bind:value={index}
+        label="Ch. Index"
+      />
+      <TextInput {readonly} bind:value={title} labelText="Chapter title" />
+    </span>
+    <div style="margin-top: 1.5em" />
+    <TextArea {readonly} labelText="Chapter content" bind:value={content} />
+  </section>
+
   <ButtonSet class="cta">
-    <Button icon={AddAlt} on:click={id ? editChapter : createChapter}
+    <Toggle class="publish" bind:toggled={is_published} labelA="Unpublished" labelB="Published" />
+    <Button skeleton={readonly} icon={AddAlt} on:click={id ? editChapter : createChapter}
       >{id ? "Submit changes" : "Create chapter"}</Button
     >
   </ButtonSet>
@@ -97,13 +178,26 @@
       grid-template-columns: 10em 1fr;
     }
 
-    :global(.cta) {
-      margin-top: 1.5em;
-      display: flex;
-      justify-content: end;
-    }
-    :global(.bx--form-requirement) {
-      margin: 0;
+    :global {
+      .cta {
+        margin-top: 1.5em;
+        display: flex;
+        justify-content: end;
+
+        .publish {
+          width: 11em;
+          flex: none;
+          user-select: none;
+        }
+      }
+      .bx--form-requirement {
+        margin: 0;
+      }
+      .bx--number[data-invalid] .bx--number__input-wrapper ~ .bx--form-requirement {
+        width: max-content;
+        position: absolute;
+        bottom: -1.5em;
+      }
     }
   }
 

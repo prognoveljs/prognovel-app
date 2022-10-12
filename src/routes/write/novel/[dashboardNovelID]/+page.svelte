@@ -1,7 +1,5 @@
 <script lang="ts">
   import { backend } from "$lib/store/backend";
-  import { page } from "$app/stores";
-  import { userData } from "$lib/store/user";
   import SkeletonShell from "$lib/components/SkeletonShell.svelte";
   import { PlusCircleIcon } from "svelte-feather-icons";
   import NewVolumeModals from "$lib/components/write-page/novel/NewVolumeModals.svelte";
@@ -67,6 +65,7 @@
 
   {#if showVolumeChapterList}
     <VolumeChapterList
+      novel_parent={id}
       volumeId={showVolumeChapterList}
       title={volumeTitle}
       on:close={() => (showVolumeChapterList = null)}
