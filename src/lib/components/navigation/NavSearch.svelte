@@ -13,7 +13,6 @@
   function onBlur() {
     setTimeout(() => {
       const activeEl = document.activeElement;
-      console.log(activeEl.classList);
       if (
         activeEl.classList.contains("search-result-item") ||
         activeEl.classList.contains("result-body") ||
@@ -31,7 +30,8 @@
 
 <svelte:window
   on:keyup={(e) => {
-    if (e.key === "/" && document.activeElement === document.body) input.focus();
+    if (e.key === "/" && (document.activeElement === document.body || !document.activeElement))
+      input.focus();
     if (e.key === "Escape" && document.activeElement === input) input.blur();
   }}
 />

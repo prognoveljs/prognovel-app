@@ -4,7 +4,7 @@
   import { userData } from "$lib/store/user";
 
   $: if ($userData?.user?.id) {
-    goto(`/user/${$userData?.user?.id}/`);
+    goto(`/profile/${$userData?.user?.id}/`);
   }
 </script>
 

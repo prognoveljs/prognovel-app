@@ -26,7 +26,6 @@ export function createCoin() {
     delay: null,
     subscribe,
     setter(data) {
-      console.log({ coinData: data });
       lastTimeCoinAcquired.set(data?.last_time_acquired);
       coinGetDelay.set(data?.delay);
       set(data?.amount);

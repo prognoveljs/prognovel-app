@@ -9,9 +9,10 @@
   import { SendAlt } from "carbon-icons-svelte";
   import { getContext, onMount } from "svelte";
   import { Writable } from "svelte/store";
-  import type { UserData } from "$typings/user";
+  import type { UserData, UserProfile } from "$typings/user";
+  import { backendReady } from "$lib/utils/backend";
 
-  const pageUserData: Writable<UserData> = getContext("userData");
+  const pageProfileData: Writable<UserProfile> = getContext("profileData");
   let statusContent: string = "";
   let totalStatus = 0;
   let totalPages = 1;
@@ -19,22 +20,23 @@
   $: disabled = statusContent.length > MAX_STATUS_LENGTH || !statusContent.length;
 
   $: allStatus = [];
-  let pageIndex = 1;
-  $: if (pageIndex + 1 && browser) getAllStatus();
-
-  // $: console.log({ allStatus });
+  let pageIndex = 0;
+  $: if (pageIndex + 1 && $backend && $page?.params?.profileID) getAllStatus();
 
   async function getAllStatus() {
-    const res = await $backend?.records?.getList("comments", pageIndex + 1, 10, {
-      filter: `urlKey="${$page.url.pathname}"`,
-      expand: "userProfile",
-      sort: "-created",
-    });
-    if (!res?.items) return;
-    allStatus = res.items;
-    totalStatus = res.totalItems;
-    totalPages = res.totalPages;
-    console.log(res);
+    try {
+      const res = await $backend?.records?.getList("comments", pageIndex + 1, 10, {
+        filter: `urlKey="${$page.url.pathname}"`,
+        expand: "userProfile",
+        sort: "-created",
+      });
+      if (!res?.items) return;
+      allStatus = res.items;
+      totalStatus = res.totalItems;
+      totalPages = res.totalPages;
+    } catch (error) {
+      console.error("Error showing status items", error);
+    }
   }
 
   async function createStatus() {
@@ -60,9 +62,9 @@
 {#if $userData?.user?.id}
   <TextArea
     bind:value={statusContent}
-    placeholder={$userData?.user?.id === $pageUserData?.id
+    placeholder={$userData?.user?.id === $pageProfileData?.id
       ? "What are you thinking today?"
-      : `Say something to ${$pageUserData?.profile?.name || "..."}`}
+      : `Say something to ${$pageProfileData?.name || "..."}`}
   />
   <div class="cta">
     <em class="content-length" class:disabled>
@@ -72,12 +74,23 @@
   </div>
 {/if}
 
+<!-- TODO - sanitize user status HTML -->
 <section class="status-container">
   {#each allStatus as status}
     <div class="status-body">
-      <Avatar url={getPocketBaseAvatar(status?.["@expand"]?.userProfile)} />
+      <a
+        href="/profile/{status?.['@expand']?.userProfile?.id}/"
+        disabled={!status?.["@expand"]?.userProfile?.id}
+      >
+        <Avatar size={40} url={getPocketBaseAvatar(status?.["@expand"]?.userProfile)} />
+      </a>
       <div class="status-content">
-        <strong>{status?.["@expand"]?.userProfile?.name || ""}</strong>
+        <a
+          href="/profile/{status?.['@expand']?.userProfile?.id}/"
+          disabled={!status?.["@expand"]?.userProfile?.id}
+        >
+          {status?.["@expand"]?.userProfile?.name || ""}
+        </a>
         {status?.content || ""}
       </div>
     </div>
@@ -118,9 +131,10 @@
       display: flex;
       // flex-direction: column;
       min-height: 4em;
-      gap: 2em;
+      gap: 1.2em;
 
-      strong {
+      a {
+        font-weight: 700;
         display: block;
         line-height: 1;
       }
@@ -131,7 +145,8 @@
     position: fixed;
     bottom: 0;
     background-color: var(--background-color);
-    width: var(--content-width);
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 10;
   }
 </style>

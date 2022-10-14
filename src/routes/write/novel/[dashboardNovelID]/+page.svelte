@@ -6,18 +6,21 @@
   import VolumeContainer from "$lib/components/write-page/novel/VolumeContainer.svelte";
   import VolumeChapterList from "$lib/components/write-page/novel/VolumeChapterList.svelte";
   import ChapterCanvas from "$lib/components/write-page/chapter/ChapterCanvas.svelte";
+  import { page } from "$app/stores";
 
-  export let data;
   let refreshKey = 1;
-  $: ({ id, novelData } = data);
 
+  $: id = $page?.params?.dashboardNovelID;
+  $: getNovelData = (
+    $backend && id ? $backend.records.getOne("novels", id) : new Promise(() => {})
+  ) as Promise<any>;
   $: getVolumeList =
-    refreshKey && $backend
+    refreshKey && $backend && id
       ? $backend?.records?.getList("volumes", 1, 20, {
           filter: `novel_parent="${id}"`,
           // sort: "+order",
         })
-      : [];
+      : { items: [] };
 
   let newVolumeModal = false;
   let showVolumeChapterList;
@@ -25,8 +28,12 @@
   let volumeTitle = "";
 </script>
 
-<h1>{novelData?.title}</h1>
-{novelData?.synopsis}
+{#await getNovelData}
+  <!-- skeleton -->
+{:then novel}
+  <h1>{novel?.title || ""}</h1>
+  {novel?.synopsis || ""}
+{/await}
 
 <div class="chapter-container">
   <!-- {#key refreshKey} -->

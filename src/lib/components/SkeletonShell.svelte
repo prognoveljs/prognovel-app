@@ -11,13 +11,14 @@
 
   let idClip = getUniqueId();
   let idGradient = getUniqueId();
+  export let elClass = "";
 
   function getUniqueId() {
     return Math.random().toString(36).substring(2);
   }
 </script>
 
-<svg {width} {height} aria-label={ariaLabel} preserveAspectRatio="none" {style}>
+<svg class={elClass} {width} {height} aria-label={ariaLabel} preserveAspectRatio="none" {style}>
   <rect fill="url(#{idGradient})" clip-path="url(#{idClip})" {width} {height} x="0" y="0" />
   <defs>
     <clipPath id={idClip}>

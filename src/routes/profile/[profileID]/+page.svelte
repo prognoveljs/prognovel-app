@@ -1,42 +1,80 @@
 <script lang="ts">
+  import { page } from "$app/stores";
+  import SkeletonShell from "$lib/components/SkeletonShell.svelte";
   import UserContact from "$lib/components/user-page/contact/UserContact.svelte";
   import UserFavorite from "$lib/components/user-page/favorite/UserFavorite.svelte";
   import UserStatus from "$lib/components/user-page/status/UserStatus.svelte";
   import Avatar from "$lib/components/user/Avatar.svelte";
-  import { customBreadcrumbTitle } from "$lib/utils/navigation/custom-title";
+  import { backend } from "$lib/store/backend";
+  import {
+    customBreadcrubChildren,
+    customBreadcrumbTitle,
+  } from "$lib/utils/navigation/custom-title";
   import { getPocketBaseAvatar } from "$lib/utils/users/avatar";
-  import type { UserData } from "$typings/user";
+  import { formatDate } from "$lib/utils/users/profile";
+  import type { UserData, UserProfile } from "$typings/user";
   import { Tab, TabContent, Tabs } from "carbon-components-svelte";
   import { onDestroy, setContext } from "svelte";
-  import { writable } from "svelte/store";
+  import { Writable, writable } from "svelte/store";
 
-  export let data: {
-    userData: UserData;
+  // export let data: {
+  //   userData: UserData;
+  // };
+  $: id = $page?.params?.profileID;
+  $: getUserProfile = ($backend && id ? fetchUserData(id) : new Promise(() => {})) as Promise<any>;
+
+  const userProfile: Writable<UserProfile> = writable({});
+  setContext("profileData", userProfile);
+
+  $: if ($userProfile?.name) $customBreadcrumbTitle = $userProfile?.name;
+  $customBreadcrubChildren = {
+    profile: {
+      label: "All Users",
+      href: "/users/",
+    },
   };
-  $: ({ userData } = data);
-  const userState = writable(userData);
-  setContext("userData", userState);
-
-  $: if (userData?.profile?.name) $customBreadcrumbTitle = userData?.profile?.name;
-
   onDestroy(() => {
     $customBreadcrumbTitle = "";
+    $customBreadcrubChildren = {};
   });
 
-  $: console.log({ userData });
+  async function fetchUserData(id: string) {
+    try {
+      const res = (await $backend.records.getOne("profiles", id)) as UserProfile;
+
+      userProfile.set(res);
+      return res;
+    } catch (error) {
+      console.error("Error fetching user data", error);
+      // throw error;
+    }
+  }
+
   type tab = "status" | "favorite" | "contact";
   let selectedTab: tab = "status";
 </script>
 
 <svelte:head>
-  <title>User | {userData?.profile?.name || "..."}</title>
+  <title>User | {$userProfile?.name || "..."}</title>
 </svelte:head>
 
 <section class="banner" />
 <div class="body">
-  <Avatar size={72} url={getPocketBaseAvatar(userData?.profile)} />
-  <h1>{userData?.profile?.name || "--"}</h1>
-  <div>join: {userData?.created ? new Date(userData?.created).toDateString() : ""}</div>
+  {#await getUserProfile}
+    <!-- skeleton shell -->
+    <SkeletonShell elClass="skeleton" height={180}>
+      <rect width="72" height="72" x="54" y="32" rx="36" ry="36" />
+      <rect width="100%" height="1.6em" x="0" y="62%" rx="4" ry="4" />
+      <rect width="2.1em" height="1em" x="0.8em" y="81%" rx="4" ry="4" />
+      <rect width="7.5em" height="1em" x="3.25em" y="81%" rx="4" ry="4" />
+    </SkeletonShell>
+  {:then profile}
+    <Avatar size={72} url={getPocketBaseAvatar(profile)} />
+    <h1>{profile?.name || "--"}</h1>
+    <div>join: {formatDate(profile?.created)}</div>
+  {:catch error}
+    <!-- promise was rejected -->
+  {/await}
 </div>
 
 <div class="content">
@@ -89,13 +127,24 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    transform: translateY(-110%) translateX(-50%);
+    justify-content: end;
+    transform: translateY(-105%) translateX(-50%);
     left: 50%;
+    height: 180px;
+    width: 180px;
 
     // right: 50%;
 
     h1 {
       margin: 0;
+      width: max-content;
+    }
+
+    :global(.skeleton) {
+      position: absolute;
+      bottom: -7%;
+      left: 50%;
+      transform: translateX(-50%);
     }
   }
 

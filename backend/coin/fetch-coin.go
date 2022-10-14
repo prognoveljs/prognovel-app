@@ -1,7 +1,6 @@
 package coin
 
 import (
-	"log"
 	"net/http"
 	"time"
 
@@ -28,7 +27,6 @@ func Fetch(e *core.ServeEvent) error {
 			coin, err := e.App.Dao().FindRecordsByExpr(collection, dbx.HashExp{
 				"user": id,
 			})
-			log.Print("Fetching coin... 3")
 
 			if err != nil {
 				return c.String(http.StatusBadRequest, err.Error())

@@ -13,13 +13,12 @@ export let PocketBase;
 let pbModule;
 
 export async function connectDatabase() {
-  console.log("db", URL);
-  console.log("Trying to connect to database...", db_url);
   if (!HAS_DB_ENV) return;
   pbModule = await import("pocketbase");
   PocketBase = pbModule.default as Client;
   backend.set(new PocketBase("http://127.0.0.1:8090"));
   backendReady = Promise.resolve("");
+  console.log("Finish connecting to database.");
   loadUserFromCookies();
 }
 

@@ -9,8 +9,6 @@ export async function refreshUser(): Promise<User> {
   const newUserData = (await getStore(backend).users.refresh()) as unknown as User;
   userData.set(newUserData);
 
-  console.log(getStore(userData));
-
   return newUserData;
 }
 

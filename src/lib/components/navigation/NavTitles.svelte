@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Icon from "$lib/components/Icon.svelte";
   import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
   import { novelTitles } from "$lib/utils/novel-page";
@@ -10,7 +10,10 @@
   } from "$lib/utils/navigation";
   import { tick } from "svelte";
   import { currentNovel, siteMetadata } from "$lib/store/states";
-  import { customBreadcrumbTitle } from "$lib/utils/navigation/custom-title";
+  import {
+    customBreadcrubChildren,
+    customBreadcrumbTitle,
+  } from "$lib/utils/navigation/custom-title";
   import { path } from "$lib/store/states";
   import { browser } from "$app/environment";
   import { chaptersAppended } from "$lib/store/read-page/state";
@@ -25,6 +28,13 @@
       getPreviousBreadcrumbLink().then((href) => (backButtonHref = href));
     });
   }
+
+  function getPrevSegmentLink(prev: string, index: number) {
+    return (
+      $customBreadcrubChildren?.[prev]?.href ||
+      `/${segments.filter((s) => segments.indexOf(s) <= index).join("/")}/`
+    );
+  }
 </script>
 
 {#key $siteMetadata}
@@ -38,15 +48,12 @@
       <Icon icon={faChevronLeft} size={"1.5em"} />
     </a>
 
-    <!-- confusing as hell XD -->
     {#each segments as segment, i}
       <!-- on general pages -->
       {#if !isAtReadPage}
-        <!-- sad face :( -->
         {#if i + 1 < segments.length}
-          <a
-            href={"/" + segments.filter((s) => segments.indexOf(s) <= i).join("/")}
-            sveltekit:prefetch>{getBreadcrumbParentLabel(segment)}</a
+          <a href={getPrevSegmentLink(segment, i)} sveltekit:prefetch
+            >{getBreadcrumbParentLabel(segment)}</a
           >
         {:else if segments[0] === "/novel" && i !== 0}
           <span class:single={segments.length === 1}>{novelTitles[segment]}</span>

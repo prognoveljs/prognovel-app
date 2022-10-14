@@ -1,4 +1,3 @@
-import { browser } from "$app/environment";
 import { backend } from "$lib/store/backend";
 import { backendReady } from "$lib/utils/backend";
 import { get as getStore } from "svelte/store";
@@ -7,15 +6,15 @@ import { get as getStore } from "svelte/store";
 
 /** @type {import('@sveltejs/kit').PageLoad} */
 export async function load({ params }) {
-  // if (browser) await backendReady;
+  // await backendReady;
   // const apiBackend = getStore(backend);
   // try {
   //   if (!apiBackend) throw "Backend has not yet established.";
-  //   let novelData = await getStore(backend)?.records?.getOne("novels", params.dashboardNovelID);
+  //   let userData = await getStore(backend)?.users.getOne(params.userID);
   //   return {
   //     status: 200,
-  //     novelData,
-  //     id: params.dashboardNovelID,
+  //     userData,
+  //     id: params.userID,
   //   };
   // } catch (error) {
   //   return {
@@ -24,6 +23,5 @@ export async function load({ params }) {
   //   };
   // }
 
-  //
   return {};
 }

@@ -11,8 +11,6 @@
     coin.getCoin();
   }
 
-  $: console.log($coin);
-
   $: lastCoinAcquired =
     new Date($lastTimeCoinAcquired).getTime() - (new Date().getTimezoneOffset() / 60) * 36e5; // convert timezone offset
   let dateNow = Date.now();

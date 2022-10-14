@@ -23,7 +23,7 @@
   </div>
   <div class="links">
     <a href="/write/"><Edit3Icon /> Writer dashboard</a>
-    <a href="/user/{$userData?.user?.id}/"><UserIcon /> Profile page</a>
+    <a href="/profile/{$userData?.user?.profile?.id}/"><UserIcon /> Profile page</a>
   </div>
   <div class="opts">
     <LogoutButton />
