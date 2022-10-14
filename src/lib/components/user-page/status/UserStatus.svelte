@@ -82,7 +82,9 @@
         href="/profile/{status?.['@expand']?.userProfile?.id}/"
         disabled={!status?.["@expand"]?.userProfile?.id}
       >
-        <Avatar size={40} url={getPocketBaseAvatar(status?.["@expand"]?.userProfile)} />
+        {#key status}
+          <Avatar size={40} url={getPocketBaseAvatar(status?.["@expand"]?.userProfile)} />
+        {/key}
       </a>
       <div class="status-content">
         <a
@@ -144,9 +146,20 @@
   .sticky-bottom {
     position: fixed;
     bottom: 0;
+    left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
     background-color: var(--background-color);
-    left: 50%;
-    transform: translateX(-50%);
+
     z-index: 10;
+    height: 48px;
+
+    :global {
+      .bx--pagination-nav {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
   }
 </style>
