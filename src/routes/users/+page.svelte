@@ -24,6 +24,7 @@
 </script>
 
 <article style="--avatar-size: {AVATAR_SIZE};">
+  <h1>All Users</h1>
   {#await getUsers()}
     <!-- promise is pending -->
   {:then users}
@@ -35,7 +36,7 @@
             {userProfile?.name}
           </div>
           <div class="join">
-            {formatDate(userProfile?.created)}
+            Join: {formatDate(userProfile?.created)}
           </div>
         </div>
       </a>
@@ -57,8 +58,13 @@
     display: flex;
     flex-direction: column;
 
+    h1 {
+      font-weight: 700;
+      margin-bottom: 1em;
+    }
+
     a {
-      padding: 1em 2em;
+      padding: 1em 2em 1em 0;
       display: flex;
       gap: 0.8em;
       text-decoration: none;
@@ -76,6 +82,17 @@
 
         :global(html.light) & {
           color: var(--primary-color-darken-4);
+        }
+      }
+
+      .join {
+        opacity: 0.7;
+      }
+
+      &:hover {
+        .name {
+          text-decoration: underline;
+          filter: brightness(120%);
         }
       }
     }
