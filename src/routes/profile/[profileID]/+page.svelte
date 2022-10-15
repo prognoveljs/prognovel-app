@@ -1,6 +1,8 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import SkeletonShell from "$lib/components/SkeletonShell.svelte";
+  import Tab from "$lib/components/Tab.svelte";
+  import Tabs from "$lib/components/Tabs.svelte";
   import UserContact from "$lib/components/user-page/contact/UserContact.svelte";
   import UserFavorite from "$lib/components/user-page/favorite/UserFavorite.svelte";
   import UserStatus from "$lib/components/user-page/status/UserStatus.svelte";
@@ -13,7 +15,6 @@
   import { getPocketBaseAvatar } from "$lib/utils/users/avatar";
   import { formatDate } from "$lib/utils/users/profile";
   import type { UserData, UserProfile } from "$typings/user";
-  import { Tab, TabContent, Tabs } from "carbon-components-svelte";
   import { onDestroy, setContext } from "svelte";
   import { Writable, writable } from "svelte/store";
 
@@ -78,24 +79,21 @@
 </div>
 
 <div class="content">
-  <div class="tabs">
-    <div on:click={() => (selectedTab = "status")} class:selected={selectedTab === "status"}>
-      Status
-    </div>
-    <div on:click={() => (selectedTab = "favorite")} class:selected={selectedTab === "favorite"}>
-      Favorite Works
-    </div>
-    <div on:click={() => (selectedTab = "contact")} class:selected={selectedTab === "contact"}>
-      Contact
-    </div>
-  </div>
-  {#if selectedTab === "status"}
-    <UserStatus />
-  {:else if selectedTab === "favorite"}
-    <UserFavorite />
-  {:else if selectedTab === "contact"}
-    <UserContact />
-  {/if}
+  <Tabs
+    selected="status"
+    let:tab
+    tabs={[{ label: "Status" }, { label: "Favorite works" }, { label: "Contact info" }]}
+  >
+    <Tab id="status" {tab}>
+      <UserStatus />
+    </Tab>
+    <Tab id="favorite_works" {tab}>
+      <UserFavorite />
+    </Tab>
+    <Tab id="contact_info" {tab}>
+      <UserContact />
+    </Tab>
+  </Tabs>
 </div>
 
 <style lang="scss">
@@ -153,31 +151,5 @@
     width: 100%;
     max-width: var(--content-width);
     margin: 2em auto;
-    .tabs {
-      display: flex;
-      gap: 0.5em;
-      margin-bottom: 1em;
-
-      div {
-        --border-color: #fff4;
-        --background-color: transparent;
-        padding: 0.5em 1em;
-        border-bottom: 2px solid var(--border-color);
-        background-color: var(--background-color);
-        position: relative;
-        cursor: pointer;
-        user-select: none;
-
-        &:hover {
-          --border-color: hsla(#{$hsl}, 0.6);
-          --background-color: hsla(#{$hsl}, 0.075);
-        }
-
-        &.selected {
-          --border-color: var(--primary-color);
-          --background-color: hsla(#{$hsl}, 0.2);
-        }
-      }
-    }
   }
 </style>

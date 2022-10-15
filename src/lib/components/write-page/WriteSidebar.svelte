@@ -2,6 +2,7 @@
   import {
     CompassIcon,
     DollarSignIcon,
+    Edit2Icon,
     PieChartIcon,
     SettingsIcon,
     StarIcon,
@@ -11,6 +12,7 @@
   import { page } from "$app/stores";
   import { userData } from "$lib/store/user";
   import WriteSidebarNovelList from "./WriteSidebarNovelList.svelte";
+  import { Edit } from "carbon-icons-svelte";
   // import Button from "../buttons/Button.svelte";
 </script>
 
@@ -21,13 +23,17 @@
     <CompassIcon />
     Overview
   </a>
-  <a href="/write/analytics/" class:selected={$page.routeId == "write/analytics"}>
-    <PieChartIcon />
-    Data and analytics</a
+  <a href="/write/my-posts/" class:selected={$page.routeId == "write/my-posts"}>
+    <Edit2Icon />
+    My posts</a
   >
   <a href="/write/my-teams/" class:selected={$page.routeId == "write/my-teams"}>
     <UsersIcon />
     My teams</a
+  >
+  <a href="/write/analytics/" class:selected={$page.routeId == "write/analytics"}>
+    <PieChartIcon />
+    Data and analytics</a
   >
   <a href="/write/subscriptions/" class:selected={$page.routeId == "write/subscriptions"}>
     <StarIcon />

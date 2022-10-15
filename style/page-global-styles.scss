@@ -77,6 +77,9 @@
   backdrop-filter: blur(8px);
   opacity: var(--opacity, 1);
 }
+
 .screen-overlay.fixed {
   position: fixed;
 }
+
+@import "global/components";

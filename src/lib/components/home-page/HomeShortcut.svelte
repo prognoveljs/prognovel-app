@@ -10,7 +10,7 @@
 
 <div class="shortcut">
   <div class="head">
-    <div class="tabs">
+    <div class="bookmark-tabs">
       <span
         class="bookmark {select === 'bookmark' ? 'select' : ''}"
         on:click={() => (select = "bookmark")}
@@ -84,7 +84,7 @@
         }
       }
 
-      .tabs {
+      .bookmark-tabs {
         position: absolute;
         bottom: 4px;
         left: 0;

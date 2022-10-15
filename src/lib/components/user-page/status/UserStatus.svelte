@@ -62,7 +62,7 @@
 {#if $userData?.user?.id}
   <TextArea
     bind:value={statusContent}
-    placeholder={$userData?.user?.id === $pageProfileData?.id
+    placeholder={$userData?.user?.profile?.id === $pageProfileData?.id
       ? "What are you thinking today?"
       : `Say something to ${$pageProfileData?.name || "..."}`}
   />
