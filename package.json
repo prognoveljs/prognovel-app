@@ -41,6 +41,7 @@
 		"pocketbase": "^0.7.0",
 		"rxjs": "^7.5.5",
 		"sharp": "^0.29.3",
+		"short-uuid": "^4.2.0",
 		"surrealdb.js": "^0.3.1",
 		"svelte-feather-icons": "^4.0.0",
 		"svelte-forms": "^2.3.1",

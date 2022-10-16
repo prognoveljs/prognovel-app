@@ -1,6 +1,7 @@
 <script lang="ts">
   import { backend } from "$lib/store/backend";
   import { backendReady } from "$lib/utils/backend";
+  import { showErrorMessage } from "$lib/utils/error";
   import { refreshVolumeChapterList } from "$lib/utils/write-page/volume";
   import {
     Button,
@@ -53,7 +54,7 @@
       refreshVolumeChapterList();
       dispatch("close");
     } catch (error) {
-      console.error(error);
+      showErrorMessage({ message: error });
     }
   }
 
@@ -65,7 +66,7 @@
       refreshVolumeChapterList();
       dispatch("close");
     } catch (error) {
-      console.error(error);
+      showErrorMessage({ message: error });
     }
   }
 
@@ -86,7 +87,9 @@
       title_spoiler = d.title_spoiler;
 
       readonly = false;
-    } catch (error) {}
+    } catch (error) {
+      showErrorMessage({ message: error });
+    }
   }
 
   async function checkConflictingIndex() {
@@ -95,13 +98,19 @@
       indexInvalidText = `Chapter index must greater than 0.`;
       throw indexInvalidText;
     }
-    const res = await $backend.records.getList("chapters", 1, 10, {
-      filter: `volume_parent = "${volume_parent}" && novel_parent = "${novel_parent}" && index = "${index}" && id != "${id}"`,
-    });
-    if (res?.totalItems) {
-      invalidIndex = index;
-      indexInvalidText = `Chapter index ${index} already exists.`;
-      throw indexInvalidText;
+
+    try {
+      const res = await $backend.records.getList("chapters", 1, 10, {
+        filter: `volume_parent = "${volume_parent}" && novel_parent = "${novel_parent}" && index = "${index}" && id != "${id}"`,
+      });
+
+      if (res?.totalItems) {
+        invalidIndex = index;
+        indexInvalidText = `Chapter index ${index} already exists.`;
+        throw indexInvalidText;
+      }
+    } catch (error) {
+      showErrorMessage({ message: error });
     }
   }
 </script>

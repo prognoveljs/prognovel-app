@@ -7,12 +7,17 @@
   import VolumeChapterList from "$lib/components/write-page/novel/VolumeChapterList.svelte";
   import ChapterCanvas from "$lib/components/write-page/chapter/ChapterCanvas.svelte";
   import { page } from "$app/stores";
+  import { showErrorMessage } from "$lib/utils/error";
 
   let refreshKey = 1;
 
   $: id = $page?.params?.dashboardNovelID;
   $: getNovelData = (
-    $backend && id ? $backend.records.getOne("novels", id) : new Promise(() => {})
+    $backend && id
+      ? $backend.records.getOne("novels", id).catch((err) => {
+          showErrorMessage({ message: err });
+        })
+      : new Promise(() => {})
   ) as Promise<any>;
   $: getVolumeList =
     refreshKey && $backend && id

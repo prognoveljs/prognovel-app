@@ -48,3 +48,5 @@ export function showReadPageWindow(state: any): void {
     });
   state.set(!Boolean(getStore(state)));
 }
+
+export const errorMessages: Writable<any[]> = writable([]);

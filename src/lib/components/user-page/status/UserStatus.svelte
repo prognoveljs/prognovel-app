@@ -11,6 +11,7 @@
   import { Writable } from "svelte/store";
   import type { UserData, UserProfile } from "$typings/user";
   import { backendReady } from "$lib/utils/backend";
+  import { showErrorMessage } from "$lib/utils/error";
 
   const pageProfileData: Writable<UserProfile> = getContext("profileData");
   let statusContent: string = "";
@@ -25,9 +26,9 @@
 
   async function getAllStatus() {
     try {
-      const res = await $backend?.records?.getList("comments", pageIndex + 1, 10, {
-        filter: `urlKey="${$page.url.pathname}"`,
-        expand: "userProfile",
+      const res = await $backend?.records?.getList("status", pageIndex + 1, 10, {
+        filter: `url_key="${$page.url.pathname}"`,
+        expand: "user_profile",
         sort: "-created",
       });
       if (!res?.items) return;
@@ -35,7 +36,7 @@
       totalStatus = res.totalItems;
       totalPages = res.totalPages;
     } catch (error) {
-      console.error("Error showing status items", error);
+      showErrorMessage({ message: error });
     }
   }
 
@@ -43,15 +44,17 @@
     try {
       let content = statusContent;
       statusContent = "";
-      await $backend.records.create("comments", {
-        urlKey: $page.url.pathname,
-        userProfile: $userData?.user?.profile?.id,
+      await $backend.records.create("status", {
+        url_key: $page.url.pathname,
+        user_profile: $userData?.user?.profile?.id,
         user: $userData?.user?.id,
         content,
       });
 
       getAllStatus();
-    } catch (error) {}
+    } catch (error) {
+      showErrorMessage({ message: error });
+    }
   }
 
   onMount(() => {
@@ -79,19 +82,19 @@
   {#each allStatus as status}
     <div class="status-body">
       <a
-        href="/profile/{status?.['@expand']?.userProfile?.id}/"
-        disabled={!status?.["@expand"]?.userProfile?.id}
+        href="/profile/{status?.['@expand']?.user_profile?.id}/"
+        disabled={!status?.["@expand"]?.user_profile?.id}
       >
         {#key status}
-          <Avatar size={40} url={getPocketBaseAvatar(status?.["@expand"]?.userProfile)} />
+          <Avatar size={40} url={getPocketBaseAvatar(status?.["@expand"]?.user_profile)} />
         {/key}
       </a>
       <div class="status-content">
         <a
-          href="/profile/{status?.['@expand']?.userProfile?.id}/"
-          disabled={!status?.["@expand"]?.userProfile?.id}
+          href="/profile/{status?.['@expand']?.user_profile?.id}/"
+          disabled={!status?.["@expand"]?.user_profile?.id}
         >
-          {status?.["@expand"]?.userProfile?.name || ""}
+          {status?.["@expand"]?.user_profile?.name || ""}
         </a>
         {status?.content || ""}
       </div>

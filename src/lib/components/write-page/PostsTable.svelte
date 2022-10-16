@@ -14,6 +14,8 @@
   import { TrashCan } from "carbon-icons-svelte";
   import { CheckSquareIcon, PlusIcon, XCircleIcon } from "svelte-feather-icons";
   import { postRefreshKey } from "$lib/store/write-page";
+  import { errorMessages } from "$lib/store/states";
+  import { showErrorMessage } from "$lib/utils/error";
 
   export let filter = ``;
   let page = 1;
@@ -31,9 +33,14 @@
 
   $: getPostList =
     $postRefreshKey && $backend?.records && $userData?.user?.id
-      ? ($backend?.records?.getList("posts", page, itemsPerPage, {
-          filter: `user = "${$userData?.user?.id}" ${filter ? `&& ${filter}` : ""}`,
-        }) as Promise<any>)
+      ? ($backend?.records
+          ?.getList("posts", page, itemsPerPage, {
+            filter: `user = "${$userData?.user?.id}" ${filter ? `&& ${filter}` : ""}`,
+            expand: "novel_parent",
+          })
+          .catch((err) => {
+            showErrorMessage({ message: err });
+          }) as Promise<any>)
       : new Promise(() => {});
 
   export let headers = [

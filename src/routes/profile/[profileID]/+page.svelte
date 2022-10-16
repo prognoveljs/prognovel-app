@@ -8,6 +8,7 @@
   import UserStatus from "$lib/components/user-page/status/UserStatus.svelte";
   import Avatar from "$lib/components/user/Avatar.svelte";
   import { backend } from "$lib/store/backend";
+  import { showErrorMessage } from "$lib/utils/error";
   import {
     customBreadcrubChildren,
     customBreadcrumbTitle,
@@ -22,7 +23,13 @@
   //   userData: UserData;
   // };
   $: id = $page?.params?.profileID;
-  $: getUserProfile = ($backend && id ? fetchUserData(id) : new Promise(() => {})) as Promise<any>;
+  $: getUserProfile = (
+    $backend && id
+      ? fetchUserData(id).catch((err) => {
+          showErrorMessage({ message: err });
+        })
+      : new Promise(() => {})
+  ) as Promise<any>;
 
   const userProfile: Writable<UserProfile> = writable({});
   setContext("profileData", userProfile);
@@ -46,8 +53,7 @@
       userProfile.set(res);
       return res;
     } catch (error) {
-      console.error("Error fetching user data", error);
-      // throw error;
+      showErrorMessage({ message: error });
     }
   }
 

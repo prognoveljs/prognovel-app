@@ -3,6 +3,7 @@
   import Avatar from "$lib/components/user/Avatar.svelte";
   import { backend } from "$lib/store/backend";
   import { backendReady } from "$lib/utils/backend";
+  import { showErrorMessage } from "$lib/utils/error";
   import { getPocketBaseAvatar } from "$lib/utils/users/avatar";
   import { formatDate } from "$lib/utils/users/profile";
   import { PaginationNav } from "carbon-components-svelte";
@@ -16,10 +17,17 @@
   let itemsPerPage = 20;
   $: getUsers = async (): Promise<any> => {
     if (!$backend) return new Promise(() => {});
-    const res = await $backend?.records.getList("profiles", pageIndex + 1, itemsPerPage);
-    totalPages = res.totalPages;
-    console.log(res);
-    return res;
+
+    try {
+      const res = await $backend?.records.getList("profiles", pageIndex + 1, itemsPerPage);
+      totalPages = res.totalPages;
+      console.log(res);
+      return res;
+    } catch (error) {
+      showErrorMessage({ message: `Failed to load profile list` });
+    }
+
+    return new Promise(() => {});
   };
 </script>
 

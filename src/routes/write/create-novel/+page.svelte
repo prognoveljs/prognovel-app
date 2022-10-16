@@ -7,6 +7,7 @@
   import { Button, ButtonSet, TextArea, TextInput } from "carbon-components-svelte";
   import { Save, Send, SendAlt, SendAltFilled } from "carbon-icons-svelte";
   import { novelIndex } from "$lib/components/write-page/_shared";
+  import { showErrorMessage } from "$lib/utils/error";
 
   let title = "";
   let synopsis = "";
@@ -18,16 +19,20 @@
   $: isValidData = title && synopsis.length >= SYNOPSIS_MIN_LENGTH;
 
   async function createNovel(e: Event) {
-    await $backend.records.create("novels", {
-      title,
-      synopsis,
-      genres,
-      tags,
-      views: 0,
-      author: $userData.user.id,
-    });
-    $novelIndex = $novelIndex + 1;
-    goto("/write/novel/");
+    try {
+      await $backend.records.create("novels", {
+        title,
+        synopsis,
+        genres,
+        tags,
+        views: 0,
+        author: $userData.user.id,
+      });
+      $novelIndex = $novelIndex + 1;
+      goto("/write/novel/");
+    } catch (error) {
+      showErrorMessage({ message: error });
+    }
   }
 </script>
 

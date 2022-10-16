@@ -20,6 +20,7 @@
   import "@skeleton-elements/svelte/skeleton-elements.css";
   import PwaHeader from "$lib/components/pwa/PWAHeader.svelte";
   import { browser } from "$app/environment";
+  import ErrorMessages from "$lib/components/errors/ErrorMessages.svelte";
 
   $: $currentPage = $page;
   $: $currentNovel = FORBIDDEN_NOVEL_ID.includes($page?.params?.novel)
@@ -71,6 +72,7 @@
 <Analytics />
 <MobileMenuBase />
 <PwaHeader />
+<ErrorMessages />
 
 <style lang="scss">
   // @import "../../style/cssVariables.scss";

@@ -6,10 +6,13 @@
   import { userData } from "$lib/store/user";
   import { page } from "$app/stores";
   import { novelIndex } from "./_shared";
+  import { showErrorMessage } from "$lib/utils/error";
 
   $: getNovelsData =
     $backend && $userData?.user?.id && $novelIndex
-      ? (getNovelList() as Promise<any>)
+      ? (getNovelList().catch((err) => {
+          showErrorMessage({ message: err });
+        }) as Promise<any>)
       : new Promise(() => {});
 
   function getNovelList() {
