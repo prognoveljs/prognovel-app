@@ -11,6 +11,8 @@
 		"build": "npm run populate && vite build && node plugins/onbuild/finish",
 		"preview": "vite preview",
 		"test": "playwright test",
+		"pocketbase:create-migration": "go run backend/main.go migrate create \"migration\"",
+		"pocketbase:migrate": "go run backend/main.go migrate collections",
 		"format": "prettier --write src/**/*.{ts,js,svelte} --plugin-search-dir=.",
 		"sveltekit-upgrade": "pnpm add -D @sveltejs/kit@next @sveltejs/adapter-static@next svelte-preprocess@latest vite@latest"
 	},
@@ -18,6 +20,7 @@
 		"@fortawesome/free-brands-svg-icons": "^5.15.3",
 		"@fortawesome/free-regular-svg-icons": "^5.15.3",
 		"@fortawesome/free-solid-svg-icons": "^5.15.3",
+		"@paypal/paypal-js": "^5.1.1",
 		"@skeleton-elements/svelte": "^2.0.0",
 		"carbon-components-svelte": "^0.59.0",
 		"carbon-icons-svelte": "^11.3.0",

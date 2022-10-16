@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { getContext } from "svelte";
-  import type { UserData, UserProfile } from "$typings/user";
+  import { getContext, tick } from "svelte";
+  import type { UserProfile } from "$typings/user";
 
-  let userData: UserProfile = getContext("profileData");
+  let profile: UserProfile = getContext("profileData");
 </script>
 
 <!-- email: {userData?.email || ""} -->

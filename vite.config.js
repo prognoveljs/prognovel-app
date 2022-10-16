@@ -25,6 +25,7 @@ export default {
   ],
   optimizeDeps: {
     include: [],
+    // exclude: ["@paypal/paypal-js"],
     esbuildOptions: {},
   },
   ssr: {

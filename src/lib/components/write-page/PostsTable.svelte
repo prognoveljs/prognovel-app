@@ -1,0 +1,92 @@
+<script lang="ts">
+  import { backend } from "$lib/store/backend";
+  import { userData } from "$lib/store/user";
+  import { formatDate } from "$lib/utils/users/profile";
+  import {
+    Button,
+    DataTable,
+    DataTableSkeleton,
+    Toolbar,
+    ToolbarBatchActions,
+    ToolbarContent,
+    ToolbarSearch,
+  } from "carbon-components-svelte";
+  import { TrashCan } from "carbon-icons-svelte";
+  import { CheckSquareIcon, PlusIcon, XCircleIcon } from "svelte-feather-icons";
+  import { postRefreshKey } from "$lib/store/write-page";
+
+  export let filter = ``;
+  let page = 1;
+  let itemsPerPage = 10;
+  let search = "";
+  const TOP_OFFSET = 200;
+  $: searchFilter = (i) => {
+    if (!search) return true;
+    try {
+      return (i?.title as string)?.toLowerCase().includes(search);
+    } catch (err) {
+      return true;
+    }
+  };
+
+  $: getPostList =
+    $postRefreshKey && $backend?.records && $userData?.user?.id
+      ? ($backend?.records?.getList("posts", page, itemsPerPage, {
+          filter: `user = "${$userData?.user?.id}" ${filter ? `&& ${filter}` : ""}`,
+        }) as Promise<any>)
+      : new Promise(() => {});
+
+  export let headers = [
+    { key: "title", value: "Chapter title" },
+    { key: "is_monetized", value: "Web Monetization" },
+    { key: "created", value: "Creation date" },
+    { key: "updated", value: "Modified date" },
+    { key: "is_published", value: "Published?" },
+  ];
+
+  function renderList(list: any): any[] {
+    return (list?.items || []).map((l) => {
+      l.created = formatDate(l.created);
+      l.updated = formatDate(l.updated);
+      return l;
+    });
+  }
+  function openPost(data: any) {}
+
+  function deletePosts() {}
+</script>
+
+{#await getPostList}
+  <DataTableSkeleton {headers} rows={itemsPerPage} />
+{:then list}
+  <DataTable {headers} rows={renderList(list).filter(searchFilter)}>
+    <Toolbar>
+      <ToolbarBatchActions>
+        <Button icon={TrashCan} on:click={deletePosts}>Delete</Button>
+      </ToolbarBatchActions>
+      <ToolbarContent>
+        <ToolbarSearch bind:value={search} />
+        <!-- <ToolbarMenu>
+          <ToolbarMenuItem primaryFocus>Restart all</ToolbarMenuItem>
+          <ToolbarMenuItem href="https://cloud.ibm.com/docs/loadbalancer-service">
+            API documentation
+          </ToolbarMenuItem>
+          <ToolbarMenuItem hasDivider danger>Stop all</ToolbarMenuItem>
+        </ToolbarMenu> -->
+        <Button icon={PlusIcon} on:click={() => openPost({})}>New Post</Button>
+      </ToolbarContent>
+    </Toolbar>
+    <svelte:fragment slot="cell" let:row let:cell>
+      <div class="clickable-row" on:click={() => openPost(row)} />
+      <span>
+        {#if cell.value === false}
+          <XCircleIcon />
+        {:else if cell.value === true}
+          <CheckSquareIcon />
+        {:else}
+          {cell.value}
+        {/if}
+      </span>
+    </svelte:fragment></DataTable
+  >
+{/await}

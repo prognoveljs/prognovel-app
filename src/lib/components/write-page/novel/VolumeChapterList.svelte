@@ -18,6 +18,7 @@
   import { fade, fly } from "svelte/transition";
   import { volumeRefreshKey } from "$lib/store/write-page";
   import { refreshVolumeChapterList } from "$lib/utils/write-page/volume";
+  import { formatDate } from "$lib/utils/users/profile";
   // import FlexSearch from "flexsearch";
 
   const dispatch = createEventDispatcher();
@@ -26,7 +27,7 @@
   export let volumeId;
   export let title = "";
   let page = 1;
-  let itemPerPage = 20;
+  let itemsPerPage = 20;
   let el: HTMLElement;
   let search = "";
   const TOP_OFFSET = 200;
@@ -41,16 +42,16 @@
 
   $: getChapterList =
     $volumeRefreshKey && $backend?.records
-      ? $backend?.records?.getList("chapters", page, itemPerPage, {
+      ? $backend?.records?.getList("chapters", page, itemsPerPage, {
           filter: `volume_parent = "${volumeId}" && novel_parent = "${novel_parent}"`,
           sort: "+index",
         })
       : new Promise(() => {});
 
   function mapRows(list: any): any[] {
-    return list?.items?.map((i) => {
-      i.created = new Date(i.created).toDateString();
-      i.updated = new Date(i.updated).toDateString();
+    return (list?.items || []).map((i) => {
+      i.created = formatDate(i.created);
+      i.updated = formatDate(i.updated);
       return i;
     });
   }
@@ -73,6 +74,16 @@
   }
 
   let selectedRowIds = [];
+
+  let headers = [
+    { key: "index", value: "Ch. Index" },
+    { key: "title", value: "Chapter title" },
+    { key: "is_monetized", value: "Web Monetization" },
+    { key: "title_spoiler", value: "Spoiler " },
+    { key: "created", value: "Creation date" },
+    { key: "updated", value: "Modified date" },
+    { key: "is_published", value: "Published?" },
+  ];
 </script>
 
 <div
@@ -100,22 +111,14 @@
 >
   <strong>{title}</strong>
   {#await getChapterList}
-    <DataTableSkeleton />
+    <DataTableSkeleton {headers} />
   {:then list}
     <DataTable
       sortable
       bind:selectedRowIds
       rows={mapRows(list).filter(searchFilter)}
       batchSelection
-      headers={[
-        { key: "index", value: "Ch. Index" },
-        { key: "title", value: "Chapter title" },
-        { key: "is_monetized", value: "Web Monetization" },
-        { key: "title_spoiler", value: "Spoiler " },
-        { key: "created", value: "Creation date" },
-        { key: "updated", value: "Modified date" },
-        { key: "is_published", value: "Published?" },
-      ]}
+      {headers}
     >
       <Toolbar>
         <ToolbarBatchActions>

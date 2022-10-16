@@ -6,6 +6,8 @@ import (
 	"prognovel/backend/coin"
 	"prognovel/backend/user"
 
+	_ "prognovel/migrations"
+
 	"github.com/ReneKroon/ttlcache"
 )
 
