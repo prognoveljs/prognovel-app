@@ -17,6 +17,7 @@
 		"sveltekit-upgrade": "pnpm add -D @sveltejs/kit@next @sveltejs/adapter-static@next svelte-preprocess@latest vite@latest"
 	},
 	"dependencies": {
+		"@editorjs/editorjs": "^2.25.0",
 		"@fortawesome/free-brands-svg-icons": "^5.15.3",
 		"@fortawesome/free-regular-svg-icons": "^5.15.3",
 		"@fortawesome/free-solid-svg-icons": "^5.15.3",
@@ -28,6 +29,7 @@
 		"crypto-es": "^1.2.7",
 		"date-fns": "^2.28.0",
 		"dotenv": "^8.6.0",
+		"editorjs-html": "^3.4.2",
 		"extract-zip": "^2.0.1",
 		"front-matter": "^4.0.2",
 		"globby": "^13.1.1",
@@ -60,6 +62,7 @@
 		"@sveltejs/kit": "1.0.0-next.481",
 		"@types/aws-lambda": "^8.10.93",
 		"@types/js-cookie": "^3.0.2",
+		"@types/medium-editor": "^5.0.5",
 		"@types/ws": "^8.5.3",
 		"autoprefixer": "^10.4.4",
 		"carbon-preprocess-svelte": "^0.8.2",

@@ -10,12 +10,14 @@
     TextArea,
     TextInput,
     Toggle,
-    ToggleSmall,
   } from "carbon-components-svelte";
   import { AddAlt } from "carbon-icons-svelte";
-  import { createEventDispatcher, onMount } from "svelte";
+  import { createEventDispatcher, onMount, tick } from "svelte";
   import { cubicIn, cubicOut } from "svelte/easing";
   import { fade, fly } from "svelte/transition";
+  import TextEditor from "../TextEditor.svelte";
+  import editorHTML from "editorjs-html";
+  import { delay } from "$lib/utils/misc";
 
   const dispatch = createEventDispatcher();
 
@@ -23,48 +25,66 @@
   export let data: any = {};
   export let novel_parent: string = "";
   let volume_parent: string = data?.volume_parent;
-  let id = data?.id;
   let title = data?.title ?? "";
   let index = data?.index ?? 1;
   let content = data?.content ?? "";
   let is_published = data?.is_published ?? false;
   let is_monetized = data?.is_monetized ?? false;
   let title_spoiler = data?.title_spoiler ?? false;
-  let readonly = !!id;
   let invalidIndex;
   let indexInvalidText;
+  $: id = data?.id;
+  $: editor_data = {};
+
+  let readonly = !!id;
 
   $: hot_data = {
     title,
     index,
     content,
+    editor_data,
     is_monetized,
     is_published,
     title_spoiler,
   };
 
-  async function createChapter() {
+  interface SubmitOpts {
+    isDraft?: boolean;
+  }
+  async function createChapter(opts: SubmitOpts = {}) {
+    let data = JSON.parse(JSON.stringify(hot_data));
+    if (opts?.isDraft) delete data.content;
+
     try {
       await checkConflictingIndex();
-      await $backend.records.create("chapters", {
+      const res = await $backend.records.create("chapters", {
         volume_parent,
         novel_parent,
-        ...hot_data,
+        ...data,
       });
-      refreshVolumeChapterList();
-      dispatch("close");
+      id = res.id;
+
+      if (!opts?.isDraft) {
+        refreshVolumeChapterList();
+        dispatch("close");
+      }
     } catch (error) {
       showErrorMessage({ message: error });
     }
   }
 
-  async function editChapter() {
+  async function editChapter(opts: SubmitOpts = {}) {
+    let data = JSON.parse(JSON.stringify(hot_data));
+    if (opts?.isDraft) delete data.content;
+    console.log({ data, opts });
     try {
       await checkConflictingIndex();
-      console.log("Updating", id);
-      await $backend.records.update("chapters", id, hot_data);
-      refreshVolumeChapterList();
-      dispatch("close");
+      await $backend.records.update("chapters", id, data);
+
+      if (!opts?.isDraft) {
+        refreshVolumeChapterList();
+        dispatch("close");
+      }
     } catch (error) {
       showErrorMessage({ message: error });
     }
@@ -82,6 +102,7 @@
       title = d.title;
       index = d.index;
       content = d.content;
+      editor_data = d.editor_data;
       is_published = d.is_published;
       is_monetized = d.is_monetized;
       title_spoiler = d.title_spoiler;
@@ -99,16 +120,25 @@
       throw indexInvalidText;
     }
 
-    try {
-      const res = await $backend.records.getList("chapters", 1, 10, {
-        filter: `volume_parent = "${volume_parent}" && novel_parent = "${novel_parent}" && index = "${index}" && id != "${id}"`,
-      });
+    const res = await $backend.records.getList("chapters", 1, 10, {
+      filter: `volume_parent = "${volume_parent}" && novel_parent = "${novel_parent}" && index = "${index}" && id != "${id}"`,
+    });
 
-      if (res?.totalItems) {
-        invalidIndex = index;
-        indexInvalidText = `Chapter index ${index} already exists.`;
-        throw indexInvalidText;
-      }
+    if (res?.totalItems) {
+      invalidIndex = index;
+      indexInvalidText = `Chapter index ${index} already exists.`;
+      throw indexInvalidText;
+    }
+  }
+
+  async function submit(e: any, opts: SubmitOpts = {}) {
+    try {
+      const editorData = await e.detail.editor.save();
+      const parsedData = editorHTML().parse(editorData) || [];
+      editor_data = editorData;
+      content = parsedData.join("");
+      await tick();
+      return id ? editChapter(opts) : createChapter(opts);
     } catch (error) {
       showErrorMessage({ message: error });
     }
@@ -163,15 +193,33 @@
       />
     </div>
     <div style="margin-top: 1.5em" />
-    <TextArea {readonly} labelText="Chapter content" bind:value={content} />
   </section>
 
-  <ButtonSet class="cta">
-    <Toggle class="publish" bind:toggled={is_published} labelA="Unpublished" labelB="Published" />
-    <Button skeleton={readonly} icon={AddAlt} on:click={id ? editChapter : createChapter}
-      >{id ? "Submit changes" : "Create chapter"}</Button
+  {#if !(id && JSON.stringify(editor_data) === "{}")}
+    <TextEditor
+      on:primary-event={async (e) => submit(e)}
+      on:secondary-event={async (e) => submit(e, { isDraft: true })}
+      ctaButtonPrimaryLabel={id ? "Submit changes" : "Create chapter"}
+      data={editor_data}
+      on:ready={async (e) => {
+        try {
+          e.detail.el.focus();
+          e.detail.editor.toolbar.open();
+        } catch (error) {
+          showErrorMessage({ message: error });
+        }
+      }}
     >
-  </ButtonSet>
+      <div slot="cta">
+        <Toggle
+          class="publish"
+          bind:toggled={is_published}
+          labelA="Unpublished"
+          labelB="Published"
+        />
+      </div>
+    </TextEditor>
+  {/if}
 </article>
 
 <style lang="scss">
@@ -186,6 +234,7 @@
     background-color: var(--foreground-color);
     z-index: $zIndex;
     padding: 3em 6em 2em 2em;
+    overflow-y: scroll;
 
     .title-and-index {
       display: grid;

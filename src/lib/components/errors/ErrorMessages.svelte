@@ -1,8 +1,6 @@
 <script lang="ts">
   import { errorMessages } from "$lib/store/states";
   import { ToastNotification } from "carbon-components-svelte";
-
-  $: console.log($errorMessages);
 </script>
 
 <section>

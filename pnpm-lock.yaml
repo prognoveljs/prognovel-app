@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@cloudflare/workers-types': ^3.5.0
+  '@editorjs/editorjs': ^2.25.0
   '@fortawesome/free-brands-svg-icons': ^5.15.3
   '@fortawesome/free-regular-svg-icons': ^5.15.3
   '@fortawesome/free-solid-svg-icons': ^5.15.3
@@ -14,6 +15,7 @@ specifiers:
   '@sveltejs/kit': 1.0.0-next.481
   '@types/aws-lambda': ^8.10.93
   '@types/js-cookie': ^3.0.2
+  '@types/medium-editor': ^5.0.5
   '@types/ws': ^8.5.3
   autoprefixer: ^10.4.4
   carbon-components-svelte: ^0.59.0
@@ -24,6 +26,7 @@ specifiers:
   date-fns: ^2.28.0
   disqus-svelte: ^1.0.9
   dotenv: ^8.6.0
+  editorjs-html: ^3.4.2
   extract-zip: ^2.0.1
   front-matter: ^4.0.2
   globby: ^13.1.1
@@ -63,6 +66,7 @@ specifiers:
   ws: ^8.5.0
 
 dependencies:
+  '@editorjs/editorjs': 2.25.0
   '@fortawesome/free-brands-svg-icons': 5.15.4
   '@fortawesome/free-regular-svg-icons': 5.15.4
   '@fortawesome/free-solid-svg-icons': 5.15.4
@@ -74,6 +78,7 @@ dependencies:
   crypto-es: 1.2.7
   date-fns: 2.29.2
   dotenv: 8.6.0
+  editorjs-html: 3.4.2
   extract-zip: 2.0.1
   front-matter: 4.0.2
   globby: 13.1.2
@@ -106,6 +111,7 @@ devDependencies:
   '@sveltejs/kit': 1.0.0-next.481_svelte@3.49.0+vite@3.1.0
   '@types/aws-lambda': 8.10.102
   '@types/js-cookie': 3.0.2
+  '@types/medium-editor': 5.0.5
   '@types/ws': 8.5.3
   autoprefixer: 10.4.8_postcss@8.4.16
   carbon-preprocess-svelte: 0.8.2_x3y2lyioxqlolfdfa75f6lh7ve
@@ -131,6 +137,14 @@ packages:
   /@cloudflare/workers-types/3.14.1:
     resolution: {integrity: sha512-B1/plF62pt+H2IJHvApK8fdOJAVsvojvacuac8x8s+JIyqbropMyqNqHTKLm3YD8ZFLGwYeFTudU+PQ7vGvBdA==}
     dev: true
+
+  /@editorjs/editorjs/2.25.0:
+    resolution: {integrity: sha512-TEu7h7EPh6Lx2VGIM1jVn2dky23TbpVJBd3AGvXcam1lyHuJwZ1iydbsQGF9pFkHSCiaQptTfIjZ8Y24v47Wag==}
+    dependencies:
+      codex-notifier: 1.1.2
+      codex-tooltip: 1.0.5
+      nanoid: 3.3.4
+    dev: false
 
   /@esbuild/linux-loong64/0.14.54:
     resolution: {integrity: sha512-bZBrLAIX1kpWelV0XemxBZllyRmM6vgFQQG2GdNb+r3Fkp0FOh1NJSvekXDs7jq70k4euu1cryLMfU+mTXlEpw==}
@@ -308,6 +322,10 @@ packages:
 
   /@types/js-cookie/3.0.2:
     resolution: {integrity: sha512-6+0ekgfusHftJNYpihfkMu8BWdeHs9EOJuGcSofErjstGPfPGEu9yTu4t460lTzzAMl2cM5zngQJqPMHbbnvYA==}
+    dev: true
+
+  /@types/medium-editor/5.0.5:
+    resolution: {integrity: sha512-iufODxGqPu78eZxOolGtc790n00LIZOeTVvdhX4ka+owG+/bdUnqcI59fTuW/JJavkIpYqCAFj7WKnJxJhQS6w==}
     dev: true
 
   /@types/node/18.7.13:
@@ -552,6 +570,14 @@ packages:
       source-map: 0.6.1
     dev: false
 
+  /codex-notifier/1.1.2:
+    resolution: {integrity: sha512-DCp6xe/LGueJ1N5sXEwcBc3r3PyVkEEDNWCVigfvywAkeXcZMk9K41a31tkEFBW0Ptlwji6/JlAb49E3Yrxbtg==}
+    dev: false
+
+  /codex-tooltip/1.0.5:
+    resolution: {integrity: sha512-IuA8LeyLU5p1B+HyhOsqR6oxyFQ11k3i9e9aXw40CrHFTRO2Y1npNBVU3W1SvhKAbUU7R/YikUBdcYFP0RcJag==}
+    dev: false
+
   /color-convert/1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
     dependencies:
@@ -707,6 +733,10 @@ packages:
   /dotenv/8.6.0:
     resolution: {integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==}
     engines: {node: '>=10'}
+    dev: false
+
+  /editorjs-html/3.4.2:
+    resolution: {integrity: sha512-Gy8FV4oHMvnPDXLsdpZYW0Dgjaagff9bPd28/WW9aFdy87FvktJxQz8H+NKpxiGcGoNY27MmjFffurK2yhXjEg==}
     dev: false
 
   /electron-to-chromium/1.4.233:
@@ -1793,7 +1823,6 @@ packages:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
-    dev: true
 
   /nanoid/4.0.0:
     resolution: {integrity: sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==}
