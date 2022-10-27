@@ -14,10 +14,11 @@
   import { AddAlt } from "carbon-icons-svelte";
   import { createEventDispatcher, onMount, tick } from "svelte";
   import { cubicIn, cubicOut } from "svelte/easing";
-  import { fade, fly } from "svelte/transition";
+  import { fade, fly, scale } from "svelte/transition";
   import TextEditor from "../TextEditor.svelte";
   import editorHTML from "editorjs-html";
   import { delay } from "$lib/utils/misc";
+  import { XCircleIcon } from "svelte-feather-icons";
 
   const dispatch = createEventDispatcher();
 
@@ -33,8 +34,14 @@
   let title_spoiler = data?.title_spoiler ?? false;
   let invalidIndex;
   let indexInvalidText;
+  let hasChange = false;
   $: id = data?.id;
   $: editor_data = {};
+  $: isInvalidChapterIndex = !!indexInvalidText || index <= 0;
+  $: isInvalidChapterTitle = !title?.length;
+  $: isInvalidChapterContent = !content?.length;
+
+  $: disableSubmit = isInvalidChapterContent || isInvalidChapterIndex || isInvalidChapterTitle;
 
   let readonly = !!id;
 
@@ -64,10 +71,7 @@
       });
       id = res.id;
 
-      if (!opts?.isDraft) {
-        refreshVolumeChapterList();
-        dispatch("close");
-      }
+      wrapChapterSave(opts);
     } catch (error) {
       showErrorMessage({ message: error });
     }
@@ -81,12 +85,18 @@
       await checkConflictingIndex();
       await $backend.records.update("chapters", id, data);
 
-      if (!opts?.isDraft) {
-        refreshVolumeChapterList();
-        dispatch("close");
-      }
+      wrapChapterSave(opts);
     } catch (error) {
       showErrorMessage({ message: error });
+    }
+  }
+
+  function wrapChapterSave(opts: SubmitOpts = {}) {
+    if (!opts?.isDraft) {
+      refreshVolumeChapterList();
+      dispatch("close");
+    } else {
+      hasChange = true;
     }
   }
 
@@ -145,101 +155,181 @@
   }
 </script>
 
-<div
-  in:fade={{ duration: 300 }}
-  out:fade={{ duration: 600 }}
-  class="screen-overlay"
-  on:click={() => dispatch("close")}
-/>
+<div in:fade={{ duration: 300 }} out:fade={{ duration: 600 }} class="screen-overlay" />
 
-<article
-  bind:this={el}
-  in:fly={{
-    duration: 300,
-    x: -el.clientWidth,
-    easing: cubicOut,
-    opacity: 1,
-  }}
-  out:fly={{
-    duration: 600,
-    x: -el.clientWidth,
-    easing: cubicIn,
-    opacity: 1,
-  }}
->
-  <section>
-    <span class="title-and-index">
-      <NumberInput
-        invalid={!!indexInvalidText || index <= 0}
-        invalidText={!!indexInvalidText ? indexInvalidText : "Must positive number."}
-        on:change={() => {
-          invalidIndex = null;
-          indexInvalidText = null;
-        }}
-        {readonly}
-        hideSteppers
-        min={0}
-        bind:value={index}
-        label="Ch. Index"
-      />
-      <TextInput {readonly} bind:value={title} labelText="Chapter title" />
-    </span>
-    <div class="toggle-group">
-      <Toggle bind:toggled={is_monetized} labelA="Not monetized" labelB="Currently monetized" />
-      <Toggle
-        bind:toggled={title_spoiler}
-        labelA="Chapter title spoiler off"
-        labelB="Chapter title spoiler on"
-      />
-    </div>
-    <div style="margin-top: 1.5em" />
-  </section>
-
-  {#if !(id && JSON.stringify(editor_data) === "{}")}
-    <TextEditor
-      on:primary-event={async (e) => submit(e)}
-      on:secondary-event={async (e) => submit(e, { isDraft: true })}
-      ctaButtonPrimaryLabel={id ? "Submit changes" : "Create chapter"}
-      data={editor_data}
-      on:ready={async (e) => {
-        try {
-          e.detail.el.focus();
-          e.detail.editor.toolbar.open();
-        } catch (error) {
-          showErrorMessage({ message: error });
-        }
-      }}
-    >
-      <div slot="cta">
+<div class="container-wrapper">
+  <article
+    bind:this={el}
+    in:scale={{
+      duration: 225,
+      start: 0.925,
+      easing: cubicOut,
+      opacity: 0,
+    }}
+    out:scale={{
+      duration: 600,
+      start: 0.95,
+      easing: cubicIn,
+      opacity: 0,
+    }}
+  >
+    <section class="header">
+      <span class="title-and-index">
+        <div>
+          <input
+            {readonly}
+            bind:value={index}
+            min="0"
+            type="number"
+            name="chapter-canvas-index"
+            id="chapter-canvas-index"
+            class:invalid={isInvalidChapterIndex}
+          />
+          <span class="label">Ch. index </span>
+        </div>
+        <div>
+          <input
+            type="text"
+            {readonly}
+            bind:value={title}
+            id="chapter-canvas-title"
+            class:invalid={isInvalidChapterTitle}
+          />
+          <span class="label">Chapter title </span>
+        </div>
+      </span>
+      <div class="toggle-group">
+        <Toggle bind:toggled={is_monetized} labelA="Not monetized" labelB="Currently monetized" />
         <Toggle
-          class="publish"
-          bind:toggled={is_published}
-          labelA="Unpublished"
-          labelB="Published"
+          bind:toggled={title_spoiler}
+          labelA="Chapter title spoiler off"
+          labelB="Chapter title spoiler on"
         />
       </div>
-    </TextEditor>
-  {/if}
-</article>
+    </section>
+
+    {#if !(id && JSON.stringify(editor_data) === "{}")}
+      <div style="margin-top:1em;" />
+      <TextEditor
+        size="24px"
+        on:primary-event={async (e) => submit(e)}
+        on:secondary-event={async (e) => submit(e, { isDraft: true })}
+        disablePrimary={disableSubmit}
+        disableSecondary={disableSubmit}
+        ctaButtonPrimaryLabel={id ? "Submit changes" : "Create chapter"}
+        data={editor_data}
+        on:ready={async (e) => {
+          try {
+            e.detail.el.focus();
+            e.detail.editor.toolbar.open();
+          } catch (error) {
+            showErrorMessage({ message: error });
+          }
+        }}
+        on:change={() => (hasChange = true)}
+      >
+        <div slot="cta">
+          <Toggle
+            class="publish"
+            bind:toggled={is_published}
+            labelA="Unpublished"
+            labelB="Published"
+          />
+        </div>
+      </TextEditor>
+    {/if}
+    <div
+      in:fly={{
+        duration: 300,
+        easing: cubicOut,
+        delay: 200,
+        y: -4,
+      }}
+      out:fly={{
+        duration: 350,
+        easing: cubicIn,
+        delay: 0,
+        y: -2,
+      }}
+      class="close"
+      on:click={() => dispatch("close")}
+    >
+      <XCircleIcon size="32" />
+    </div>
+  </article>
+</div>
 
 <style lang="scss">
   $zIndex: 12;
-  article {
-    position: absolute;
+  .container-wrapper {
+    --bg-color: #fff;
+    --padding-top: 3em;
+    --padding-bottom: 1em;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 65em;
-    max-width: 70%;
+    width: 100%;
+    // max-width: 70%;
     height: 100%;
-    background-color: var(--foreground-color);
-    z-index: $zIndex;
-    padding: 3em 6em 2em 2em;
+    display: flex;
+    gap: 1.25em;
+    z-index: 9999999999999999;
+    isolation: isolate;
+    background-color: var(--bg-color);
     overflow-y: scroll;
+  }
+
+  article {
+    z-index: $zIndex;
+    padding: 0 6em 2em var(--padding-bottom);
+    width: 100%;
+    max-width: 70em;
+    margin: 0 auto;
+
+    .header {
+      background-color: var(--bg-color);
+      position: sticky;
+      top: 0;
+      padding-top: var(--padding-top);
+      padding-bottom: 0.5em;
+      z-index: 5;
+    }
 
     .title-and-index {
       display: grid;
-      gap: 1em;
+      gap: 2em;
       grid-template-columns: 10em 1fr;
+
+      div {
+        position: relative;
+        display: flex;
+
+        input {
+          width: 100%;
+          --border-color: #0002;
+          font-size: 3em;
+          border: none;
+          outline: none;
+          border-bottom: 1px solid var(--border-color);
+          padding-bottom: 0.33em;
+
+          &:active,
+          &:focus {
+            --border-color: var(--primary-color);
+          }
+
+          &.invalid {
+            background-color: #a222;
+          }
+        }
+
+        .label {
+          position: absolute;
+          top: -2em;
+          left: 0;
+          color: #2227;
+        }
+      }
     }
 
     .toggle-group {
@@ -248,11 +338,43 @@
       gap: 1em;
     }
 
+    /* width */
+    &::-webkit-scrollbar {
+      width: 0.4rem;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      // box-shadow: inset 0 0 5px grey;
+      // border-radius: 10px;
+      background-color: #fff2;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      --opacity: 0.6;
+      background-color: hsla(#{$hsl}, var(--opacity));
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        --opacity: 0.8;
+      }
+    }
+
     :global {
+      .editorjs {
+        min-height: 100vh;
+      }
+
       .cta {
         margin-top: 1.5em;
         display: flex;
         justify-content: end;
+        position: sticky;
+        bottom: 0;
+        padding-bottom: var(--padding-bottom);
+        background-color: var(--bg-color);
+        z-index: 5;
 
         .publish {
           width: 11em;
@@ -260,14 +382,35 @@
           user-select: none;
         }
       }
+
       .bx--form-requirement {
         margin: 0;
       }
+
       .bx--number[data-invalid] .bx--number__input-wrapper ~ .bx--form-requirement {
         width: max-content;
         position: absolute;
         bottom: -1.5em;
       }
+
+      .bx--toggle-input__label {
+        color: #444;
+      }
+    }
+  }
+
+  .close {
+    opacity: 0.75;
+    color: rgb(224, 85, 85);
+    cursor: pointer;
+    z-index: $zIndex + 1;
+    position: fixed;
+    height: min-content;
+    top: 2em;
+    right: 2em;
+
+    &:hover {
+      opacity: 1;
     }
   }
 

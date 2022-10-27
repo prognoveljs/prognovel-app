@@ -19,3 +19,4 @@ export const WEB_MONETIZATION_VERIFY: boolean | undefined =
 export const IMAGE_RESIZER_SERVICE: string = import.meta.env.IMAGE_RESIZER_SERVICE;
 export const SITE_TITLE: string = import.meta.env.SITE_TITLE;
 export const STATIC_SITE_METADATA = import.meta.env.SITE_METADATA;
+export const IS_BACKEND_POCKETBASE: boolean = !!import.meta.env.POCKETBASE_URL;

@@ -84,15 +84,15 @@
       on:chapterevent={(e) => (showChapterCanvas = e.detail)}
     />
   {/if}
-
-  {#if showChapterCanvas}
-    <ChapterCanvas
-      novel_parent={id}
-      data={showChapterCanvas}
-      on:close={() => (showChapterCanvas = null)}
-    />
-  {/if}
 </div>
+
+{#if showChapterCanvas}
+  <ChapterCanvas
+    novel_parent={id}
+    data={showChapterCanvas}
+    on:close={() => (showChapterCanvas = null)}
+  />
+{/if}
 
 <style lang="scss">
   .chapter-container {

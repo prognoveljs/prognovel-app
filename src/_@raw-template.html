@@ -28,5 +28,17 @@
     "
   >
     %sveltekit.body% %css.lazy%
+
+    <script
+      defer
+      onload="loadCognitoMembership()"
+      src="https://www.cognitoforms.com/s/bbN8iw1MJUqjPe6aHn-_rw"
+    ></script>
+    <script>
+      function loadCognitoMembership() {
+        Cognito.load("forms", { id: "90", entry: { Topic: "Membership" } });
+        console.log("Cognito loaded", Cognito);
+      }
+    </script>
   </body>
 </html>
