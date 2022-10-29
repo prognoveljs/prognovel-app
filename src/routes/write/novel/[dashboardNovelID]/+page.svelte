@@ -5,7 +5,7 @@
   import NewVolumeModals from "$lib/components/write-page/novel/NewVolumeModals.svelte";
   import VolumeContainer from "$lib/components/write-page/novel/VolumeContainer.svelte";
   import VolumeChapterList from "$lib/components/write-page/novel/VolumeChapterList.svelte";
-  import ChapterCanvas from "$lib/components/write-page/chapter/ChapterCanvas.svelte";
+  import ChapterCanvas from "$lib/components/write-page/chapter/ChapterCanvas2.svelte";
   import { page } from "$app/stores";
   import { showErrorMessage } from "$lib/utils/error";
 

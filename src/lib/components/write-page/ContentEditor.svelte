@@ -1,69 +1,34 @@
 <script lang="ts">
   import { backend } from "$lib/store/backend";
-  import { backendReady } from "$lib/utils/backend";
   import { showErrorMessage } from "$lib/utils/error";
   import { refreshVolumeChapterList } from "$lib/utils/write-page/volume";
-  import {
-    Button,
-    ButtonSet,
-    NumberInput,
-    TextArea,
-    TextInput,
-    Toggle,
-  } from "carbon-components-svelte";
-  import { AddAlt } from "carbon-icons-svelte";
   import { createEventDispatcher, onMount, tick } from "svelte";
   import { cubicIn, cubicOut } from "svelte/easing";
   import { fade, fly, scale } from "svelte/transition";
-  import TextEditor from "../TextEditor.svelte";
+  import TextEditor from "./TextEditor.svelte";
   import editorHTML from "editorjs-html";
-  import { delay } from "$lib/utils/misc";
+  import { Toggle } from "carbon-components-svelte";
   import { XCircleIcon } from "svelte-feather-icons";
+  import { backendReady } from "$lib/utils/backend";
 
-  const dispatch = createEventDispatcher();
-
-  let el: HTMLElement;
-  export let data: any = {};
-  export let novel_parent: string = "";
-  let volume_parent: string = data?.volume_parent;
-  let title = data?.title ?? "";
-  let index = data?.index ?? 1;
-  let content = data?.content ?? "";
-  let is_published = data?.is_published ?? false;
-  let is_monetized = data?.is_monetized ?? false;
-  let title_spoiler = data?.title_spoiler ?? false;
-  let invalidIndex;
-  let indexInvalidText;
   let hasChange = false;
-  $: id = data?.id;
-  $: editor_data = {};
-  $: isInvalidChapterIndex = !!indexInvalidText || index <= 0;
-  $: isInvalidChapterTitle = !title?.length;
-  $: isInvalidChapterContent = !content?.length;
+  let el: HTMLElement;
+  const dispatch = createEventDispatcher();
+  export let beforeContentSave: Function = async () => {};
+  export let id = "";
+  export let referenceData = {};
+  export let rawData: any = {};
+  export let disableSubmit = false;
+  export let is_published = false;
+  export let tableKey = "posts";
+  let content = "";
 
-  $: disableSubmit = isInvalidChapterContent || isInvalidChapterIndex || isInvalidChapterTitle;
-
-  let readonly = !!id;
-
-  $: hot_data = {
-    title,
-    index,
-    content,
-    editor_data,
-    is_monetized,
-    is_published,
-    title_spoiler,
-  };
-
-  interface SubmitOpts {
-    isDraft?: boolean;
-  }
   async function createChapter(key: string, raw_data: any, opts: SubmitOpts = {}) {
     let data = JSON.parse(JSON.stringify(raw_data));
     if (opts?.isDraft) delete data.content;
 
     try {
-      await checkConflictingIndex();
+      await beforeContentSave();
       const res = await $backend.records.create(key, data);
       id = res.id;
 
@@ -78,7 +43,7 @@
     if (opts?.isDraft) delete data.content;
     console.log({ data, opts });
     try {
-      await checkConflictingIndex();
+      await beforeContentSave();
       await $backend.records.update(key, id, data);
 
       wrapChapterSave(opts);
@@ -96,68 +61,47 @@
     }
   }
 
-  onMount(async () => {
-    if (id) getLatestData();
-  });
-
-  async function getLatestData() {
-    await backendReady;
-    try {
-      const d = await $backend.records.getOne("chapters", id);
-
-      title = d.title;
-      index = d.index;
-      content = d.content;
-      editor_data = d.editor_data;
-      is_published = d.is_published;
-      is_monetized = d.is_monetized;
-      title_spoiler = d.title_spoiler;
-
-      readonly = false;
-    } catch (error) {
-      showErrorMessage({ message: error });
-    }
-  }
-
-  async function checkConflictingIndex() {
-    if (index <= 0) {
-      invalidIndex = index;
-      indexInvalidText = `Chapter index must greater than 0.`;
-      throw indexInvalidText;
-    }
-
-    const res = await $backend.records.getList("chapters", 1, 10, {
-      filter: `volume_parent = "${volume_parent}" && novel_parent = "${novel_parent}" && index = "${index}" && id != "${id}"`,
-    });
-
-    if (res?.totalItems) {
-      invalidIndex = index;
-      indexInvalidText = `Chapter index ${index} already exists.`;
-      throw indexInvalidText;
-    }
-  }
-
   async function submit(e: any, opts: SubmitOpts = {}) {
     try {
       const editorData = await e.detail.editor.save();
       const parsedData = editorHTML().parse(editorData) || [];
-      editor_data = editorData;
+      rawData.editor_data = editorData;
       content = parsedData.join("");
       await tick();
+
+      dispatch("submit");
       return id
-        ? editChapter("chapters", hot_data, opts)
+        ? editChapter(tableKey, rawData, opts)
         : createChapter(
-            "chapters",
+            tableKey,
             {
-              volume_parent,
-              novel_parent,
-              ...hot_data,
+              ...referenceData,
+              ...rawData,
             },
             opts,
           );
     } catch (error) {
       showErrorMessage({ message: error });
     }
+  }
+
+  onMount(async () => {
+    if (id) await getLatestData();
+    dispatch("ready");
+  });
+
+  async function getLatestData() {
+    await backendReady;
+    try {
+      const d = await $backend.records.getOne(tableKey, id);
+      dispatch("latestdata", d);
+    } catch (error) {
+      showErrorMessage({ message: error });
+    }
+  }
+
+  interface SubmitOpts {
+    isDraft?: boolean;
   }
 </script>
 
@@ -180,41 +124,10 @@
     }}
   >
     <section class="header">
-      <span class="title-and-index">
-        <div>
-          <input
-            {readonly}
-            bind:value={index}
-            min="0"
-            type="number"
-            name="chapter-canvas-index"
-            id="chapter-canvas-index"
-            class:invalid={isInvalidChapterIndex}
-          />
-          <span class="label">Ch. index </span>
-        </div>
-        <div>
-          <input
-            type="text"
-            {readonly}
-            bind:value={title}
-            id="chapter-canvas-title"
-            class:invalid={isInvalidChapterTitle}
-          />
-          <span class="label">Chapter title </span>
-        </div>
-      </span>
-      <div class="toggle-group">
-        <Toggle bind:toggled={is_monetized} labelA="Not monetized" labelB="Currently monetized" />
-        <Toggle
-          bind:toggled={title_spoiler}
-          labelA="Chapter title spoiler off"
-          labelB="Chapter title spoiler on"
-        />
-      </div>
+      <slot name="header"><!-- optional fallback --></slot>
     </section>
 
-    {#if !(id && JSON.stringify(editor_data) === "{}")}
+    {#if !(id && JSON.stringify(rawData?.editor_data) === "{}")}
       <div style="margin-top:1em;" />
       <TextEditor
         size="24px"
@@ -223,7 +136,7 @@
         disablePrimary={disableSubmit}
         disableSecondary={disableSubmit}
         ctaButtonPrimaryLabel={id ? "Submit changes" : "Create chapter"}
-        data={editor_data}
+        data={rawData?.editor_data}
         on:ready={async (e) => {
           try {
             e.detail.el.focus();
@@ -244,25 +157,26 @@
         </div>
       </TextEditor>
     {/if}
-    <div
-      in:fly={{
-        duration: 300,
-        easing: cubicOut,
-        delay: 200,
-        y: -4,
-      }}
-      out:fly={{
-        duration: 350,
-        easing: cubicIn,
-        delay: 0,
-        y: -2,
-      }}
-      class="close"
-      on:click={() => dispatch("close")}
-    >
-      <XCircleIcon size="32" />
-    </div>
   </article>
+  <div
+    in:fly={{
+      duration: 300,
+      easing: cubicOut,
+      delay: 200,
+      y: -4,
+    }}
+    out:fly={{
+      duration: 350,
+      easing: cubicIn,
+      delay: 0,
+      y: -2,
+    }}
+    class="close"
+    on:click={() => dispatch("close")}
+  >
+    <XCircleIcon size="32" />
+  </div>
+  <slot contendata={{ ...referenceData, ...rawData }} />
 </div>
 
 <style lang="scss">
@@ -299,17 +213,8 @@
       padding-top: var(--padding-top);
       padding-bottom: 0.5em;
       z-index: 5;
-    }
 
-    .title-and-index {
-      display: grid;
-      gap: 2em;
-      grid-template-columns: 10em 1fr;
-
-      div {
-        position: relative;
-        display: flex;
-
+      :global {
         input {
           width: 100%;
           --border-color: #0002;
@@ -327,21 +232,21 @@
           &.invalid {
             background-color: #a222;
           }
+
+          & + .label {
+            position: absolute;
+            top: -2em;
+            left: 0;
+            color: #2227;
+          }
         }
 
-        .label {
-          position: absolute;
-          top: -2em;
-          left: 0;
-          color: #2227;
+        .toggle-group {
+          display: grid;
+          grid-template-columns: 11.5em 12em;
+          gap: 1em;
         }
       }
-    }
-
-    .toggle-group {
-      display: grid;
-      grid-template-columns: 11.5em 12em;
-      gap: 1em;
     }
 
     /* width */
@@ -412,8 +317,8 @@
     z-index: $zIndex + 1;
     position: fixed;
     height: min-content;
-    top: 2em;
-    right: 2em;
+    top: 18px;
+    right: 24px;
 
     &:hover {
       opacity: 1;
