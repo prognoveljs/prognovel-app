@@ -51,7 +51,7 @@
   function mapRows(list: any): any[] {
     return (list?.items || []).map((i) => {
       i.created = formatDate(i.created);
-      i.updated = formatDate(i.updated);
+      i.published_at = i.published_at ? formatDate(i.published_at) : "--";
       return i;
     });
   }
@@ -81,7 +81,7 @@
     { key: "is_monetized", value: "Web Monetization" },
     { key: "title_spoiler", value: "Spoiler " },
     { key: "created", value: "Creation date" },
-    { key: "updated", value: "Modified date" },
+    { key: "published_at", value: "Modified date" },
     { key: "is_published", value: "Published?" },
   ];
 </script>

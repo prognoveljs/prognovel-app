@@ -25,12 +25,18 @@
 
   async function createChapter(key: string, raw_data: any, opts: SubmitOpts = {}) {
     let data = JSON.parse(JSON.stringify(raw_data));
-    if (opts?.isDraft) delete data.content;
+
+    if (opts?.isDraft) {
+      delete data.content;
+    } else {
+      data.published_at = new Date();
+    }
 
     try {
       await beforeContentSave();
       const res = await $backend.records.create(key, data);
       id = res.id;
+      dispatch("updateid", id);
 
       wrapChapterSave(opts);
     } catch (error) {
@@ -40,8 +46,13 @@
 
   async function editChapter(key: string, raw_data: any, opts: SubmitOpts = {}) {
     let data = JSON.parse(JSON.stringify(raw_data));
-    if (opts?.isDraft) delete data.content;
-    console.log({ data, opts });
+
+    if (opts?.isDraft) {
+      delete data.content;
+    } else {
+      data.published_at = new Date();
+    }
+
     try {
       await beforeContentSave();
       await $backend.records.update(key, id, data);
@@ -54,8 +65,7 @@
 
   function wrapChapterSave(opts: SubmitOpts = {}) {
     if (!opts?.isDraft) {
-      refreshVolumeChapterList();
-      dispatch("close");
+      close();
     } else {
       hasChange = true;
     }
@@ -89,6 +99,11 @@
     if (id) await getLatestData();
     dispatch("ready");
   });
+
+  function close() {
+    refreshVolumeChapterList();
+    dispatch("close");
+  }
 
   async function getLatestData() {
     await backendReady;
@@ -172,7 +187,7 @@
       y: -2,
     }}
     class="close"
-    on:click={() => dispatch("close")}
+    on:click={close}
   >
     <XCircleIcon size="32" />
   </div>

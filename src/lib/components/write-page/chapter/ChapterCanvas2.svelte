@@ -76,6 +76,7 @@
   tableKey="chapters"
   on:close
   on:latestdata={updateData}
+  on:updateid={(e) => (id = e.detail)}
 >
   <div slot="header">
     <span class="title-and-index">
