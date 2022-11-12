@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"prognovel/backend/api"
 	global "prognovel/backend/app"
 	"prognovel/backend/coin"
 	"prognovel/backend/user"
@@ -16,6 +17,7 @@ func main() {
 	global.ProgNovelApp.OnBeforeServe().Add(coin.Calculate)
 	global.ProgNovelApp.OnBeforeServe().Add(coin.Fetch)
 	global.ProgNovelApp.OnBeforeServe().Add(user.AvatarUpload)
+	global.ProgNovelApp.OnBeforeServe().Add(api.NovelRoute)
 	// global.ProgNovelApp.OnBeforeServe().Add(image.OptimizeImageAndSave)
 	global.ProgNovelApp.OnUserBeforeCreateRequest().Add(user.DefaultProfileValues)
 	global.ProgNovelApp.OnUserAuthRequest().Add(user.AuthDefaultProfileValues)
