@@ -1,6 +1,10 @@
 dev:
 	export CGO_CFLAGS_ALLOW="-Xpreprocessor"
-	go run ./src/backend serve
+	go run ./backend serve
+
+upgrade:
+	export CGO_CFLAGS_ALLOW="-Xpreprocessor"
+	go run ./backend upgrade
 
 watch:
 	export CGO_CFLAGS_ALLOW="-Xpreprocessor"

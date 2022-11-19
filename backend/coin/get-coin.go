@@ -16,11 +16,10 @@ func Calculate(e *core.ServeEvent) error {
 		Method: http.MethodGet,
 		Path:   "/api/get-coin/:user-id",
 		Handler: func(c echo.Context) error {
-			collection, _ := e.App.Dao().FindCollectionByNameOrId("coins")
 			id := c.PathParam("user-id")
 			var level int = 1
 
-			record, err := e.App.Dao().FindRecordsByExpr(collection, dbx.HashExp{
+			record, err := e.App.Dao().FindRecordsByExpr("coins", dbx.HashExp{
 				"user": id,
 			})
 
@@ -29,15 +28,15 @@ func Calculate(e *core.ServeEvent) error {
 			}
 
 			coin := record[0]
-			amount := coin.GetIntDataValue("amount")
+			amount := coin.GetInt("amount")
 			now := time.Now()
 
 			amount += get_coin_reward(level)
 			delay := get_coin_delay(level)
 
-			coin.SetDataValue("amount", amount)
-			coin.SetDataValue("delay", delay)
-			coin.SetDataValue("last_time_acquired", now)
+			coin.Set("amount", amount)
+			coin.Set("delay", delay)
+			coin.Set("last_time_acquired", now)
 
 			e.App.Dao().SaveRecord(coin)
 

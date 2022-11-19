@@ -16,14 +16,14 @@ func AvatarUpload(e *core.ServeEvent) error {
 		Path:   "/api/avatar-upload/:user-id",
 		Handler: func(c echo.Context) error {
 			id := c.PathParam("user-id")
-			user, _ := e.App.Dao().FindUserById(id)
+			user, _ := e.App.Dao().FindRecordById("user", id)
 			avatar_url := c.QueryParam("avatar_url")
 
 			_, err := e.App.Dao().DB().NewQuery(`UPDATE profiles
 				SET avatar = {:avatar_url}
 				WHERE id={:id}
 			`).Bind(dbx.Params{
-				"id":         user.Profile.Id,
+				"id":         user.Id,
 				"avatar_url": avatar_url,
 			}).Execute()
 
@@ -41,33 +41,17 @@ func AvatarUpload(e *core.ServeEvent) error {
 	return nil
 }
 
-func DefaultProfileValues(e *core.UserCreateEvent) error {
-	now := time.Now()
+func DefaultProfileValues(e *core.RecordCreateEvent) error {
+	if e.Record.Collection().Name == "users" {
 
-	// _, err := global.ProgNovelApp.App.DB().NewQuery(`UPDATE profile
-	// 	SET lastTimeCoinAcquired = {:now}
-	// `).Bind(dbx.Params{
-	// 	"id":  e.User.Id,
-	// 	"now": now,
-	// }).Execute()
+		now := time.Now()
 
-	// if err != nil {
-	// 	return nil
-	// }
-
-	e.User.Profile.SetDataValue("lastTimeCoinAcquired", now)
+		e.Record.Set("lastTimeCoinAcquired", now)
+	}
 
 	return nil
 }
 
 type AuthMeta struct {
 	name string
-}
-
-func AuthDefaultProfileValues(e *core.UserAuthEvent) error {
-
-	// log.Print(e.Meta)
-	// log.Print(e.User.Profile.GetDataValue("name"))
-
-	return nil
 }

@@ -28,30 +28,8 @@ func APIInitRoute(e *core.ServeEvent) error {
 		Method: http.MethodGet,
 		Path:   "/api/init",
 		Handler: func(c echo.Context) error {
-			id := c.PathParam("novel-id")
-			collection, err := e.App.Dao().FindCollectionByNameOrId("novels")
 
-			if err != nil {
-				return c.String(http.StatusBadRequest, err.Error())
-			}
-
-			novel, err := e.App.Dao().FindRecordById(collection, id, nil)
-
-			if err != nil {
-				return c.String(http.StatusBadRequest, err.Error())
-			}
-
-			result := make(map[string]interface{})
-
-			result["title"] = novel.GetStringDataValue("title")
-			result["synopsis"] = novel.GetStringDataValue("synopsis")
-			result["demographic"] = novel.GetStringDataValue("demographic")
-
-			author_id := novel.GetStringDataValue("author")
-			author, _ := e.App.Dao().FindUserById(author_id)
-			result["author"] = author.Profile.GetDataValue("name")
-
-			return c.JSON(http.StatusOK, result)
+			return c.JSON(http.StatusOK, "result")
 		},
 		Middlewares: []echo.MiddlewareFunc{
 			// apis.RequireAdminOrOwnerAuth("user-id"),

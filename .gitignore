@@ -7,6 +7,7 @@ yarn-error.log
 .svelte-kit
 build
 pb_data
+pb_data_backup
 /tmp
 /__build-stats__/
 /workers/node_modules/

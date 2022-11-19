@@ -71,34 +71,26 @@ func APINovelRoute(e *core.ServeEvent) error {
 		Path:   "/api/novel/:novel-id",
 		Handler: func(c echo.Context) error {
 			novel_id := c.PathParam("novel-id")
-			collection, err := e.App.Dao().FindCollectionByNameOrId("novels")
-			volumes_col, err := e.App.Dao().FindCollectionByNameOrId("volumes")
-			chapters_col, err := e.App.Dao().FindCollectionByNameOrId("chapters")
+			novel, err := e.App.Dao().FindRecordById("novels", novel_id, nil)
+			author_id := novel.GetString("author")
+			author, _ := e.App.Dao().FindRecordById("profiles", author_id)
 
 			if err != nil {
 				return c.String(http.StatusBadRequest, err.Error())
 			}
 
-			novel, err := e.App.Dao().FindRecordById(collection, novel_id, nil)
-			author_id := novel.GetStringDataValue("author")
-			author, _ := e.App.Dao().FindUserById(author_id)
-
-			if err != nil {
-				return c.String(http.StatusBadRequest, err.Error())
-			}
-
-			genres := strings.Split(novel.GetStringDataValue("genres"), ",")
-			tags := strings.Split(novel.GetStringDataValue("tags"), ",")
+			genres := strings.Split(novel.GetString("genres"), ",")
+			tags := strings.Split(novel.GetString("tags"), ",")
 			chapterTitles := make(map[string]map[string]string)
 			chapters := []string{}
-			volumes, _ := e.App.Dao().FindRecordsByExpr(volumes_col, dbx.HashExp{
+			volumes, _ := e.App.Dao().FindRecordsByExpr("volumes", dbx.HashExp{
 				"novel_parent": novel_id,
 			})
 			sort.Stable(Records(volumes))
 
 			for _, volume := range volumes {
 				vol_id := volume.Id
-				chapter_records, _ := e.App.Dao().FindRecordsByExpr(chapters_col, dbx.HashExp{
+				chapter_records, _ := e.App.Dao().FindRecordsByExpr("volumes", dbx.HashExp{
 					"volume_parent": vol_id,
 					"novel_parent":  novel_id,
 				})
@@ -106,7 +98,7 @@ func APINovelRoute(e *core.ServeEvent) error {
 				chapterTitles[vol_id] = make(map[string]string)
 				for _, chapter := range chapter_records {
 					ch_id := chapter.Id
-					chapterTitles[vol_id][ch_id] = chapter.GetStringDataValue("title")
+					chapterTitles[vol_id][ch_id] = chapter.GetString("title")
 					chapters = append(chapters, vol_id+"/"+ch_id)
 				}
 			}
@@ -129,14 +121,14 @@ func APINovelRoute(e *core.ServeEvent) error {
 			}
 
 			result := ApiResult{
-				Title:       novel.GetStringDataValue("title"),
-				Synopsis:    novel.GetStringDataValue("synopsis"),
-				Demographic: novel.GetStringDataValue("demographic"),
-				Author:      author.Profile.GetStringDataValue("name"),
+				Title:       novel.GetString("title"),
+				Synopsis:    novel.GetString("synopsis"),
+				Demographic: novel.GetString("demographic"),
+				Author:      author.GetString("name"),
 				Author_Data: AuthorData{
-					ID:     author.Profile.Id,
-					Name:   author.Profile.GetStringDataValue("name"),
-					Avatar: author.Profile.GetStringDataValue("avatar"),
+					ID:     author.Id,
+					Name:   author.GetString("name"),
+					Avatar: author.GetString("avatar"),
 				},
 				Genre:         genres,
 				Tags:          tags,
@@ -146,7 +138,7 @@ func APINovelRoute(e *core.ServeEvent) error {
 				Cover: Cover{
 					Book: CoverBook{
 						Jpeg: CoverImageSizes{
-							Small:  novel.GetStringDataValue("cover_jpeg_1x"),
+							Small:  novel.GetString("cover_jpeg_1x"),
 							Medium: "",
 							Large:  "",
 						},
@@ -182,6 +174,6 @@ type Records []*models.Record
 
 func (a Records) Len() int { return len(a) }
 func (a Records) Less(i, j int) bool {
-	return a[i].GetIntDataValue("order") < a[j].GetIntDataValue("order")
+	return a[i].GetInt("order") < a[j].GetInt("order")
 }
 func (a Records) Swap(i, j int) { a[i], a[j] = a[j], a[i] }

@@ -24,7 +24,7 @@ func Fetch(e *core.ServeEvent) error {
 				return c.String(http.StatusBadRequest, err.Error())
 			}
 
-			coin, err := e.App.Dao().FindRecordsByExpr(collection, dbx.HashExp{
+			coin, err := e.App.Dao().FindRecordsByExpr("coins", dbx.HashExp{
 				"user": id,
 			})
 
@@ -34,10 +34,10 @@ func Fetch(e *core.ServeEvent) error {
 
 			if len(coin) == 0 {
 				record := models.NewRecord(collection)
-				record.SetDataValue("amount", 0)
-				record.SetDataValue("delay", 0)
-				record.SetDataValue("user", id)
-				record.SetDataValue("last_time_acquired", time.Now())
+				record.Set("amount", 0)
+				record.Set("delay", 0)
+				record.Set("user", id)
+				record.Set("last_time_acquired", time.Now())
 
 				if err := e.App.Dao().SaveRecord(record); err != nil {
 					return c.String(http.StatusBadRequest, err.Error())
