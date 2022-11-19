@@ -142,6 +142,26 @@ func APINovelRoute(e *core.ServeEvent) error {
 				Tags:          tags,
 				ChapterTitles: chapterTitles,
 				Chapters:      chapters,
+				TotalChapter:  len(chapters),
+				Cover: Cover{
+					Book: CoverBook{
+						Jpeg: CoverImageSizes{
+							Small:  novel.GetStringDataValue("cover_jpeg_1x"),
+							Medium: "",
+							Large:  "",
+						},
+						Webp: CoverImageSizes{
+							Small:  "",
+							Medium: "",
+							Large:  "",
+						},
+					},
+					Thumbnail: CoverThumbnail{
+						Jpeg: "",
+						Webp: "",
+					},
+					Placeholder: "",
+				},
 			}
 
 			// result := ApiResult{
