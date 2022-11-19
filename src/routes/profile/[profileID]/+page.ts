@@ -10,7 +10,7 @@ export async function load({ params }) {
   // const apiBackend = getStore(backend);
   // try {
   //   if (!apiBackend) throw "Backend has not yet established.";
-  //   let userData = await getStore(backend)?.users.getOne(params.userID);
+  //   let userData = await getStore(backend)?.collection("users").getOne(params.userID);
   //   return {
   //     status: 200,
   //     userData,

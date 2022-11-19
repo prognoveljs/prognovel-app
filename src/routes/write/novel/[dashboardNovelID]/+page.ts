@@ -11,7 +11,7 @@ export async function load({ params }) {
   // const apiBackend = getStore(backend);
   // try {
   //   if (!apiBackend) throw "Backend has not yet established.";
-  //   let novelData = await getStore(backend)?.records?.getOne("novels", params.dashboardNovelID);
+  //   let novelData = await getStore(backend)?.collection('novels')?.getOne(params.dashboardNovelID);
   //   return {
   //     status: 200,
   //     novelData,

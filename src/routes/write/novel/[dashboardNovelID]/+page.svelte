@@ -14,14 +14,17 @@
   $: id = $page?.params?.dashboardNovelID;
   $: getNovelData = (
     $backend && id
-      ? $backend.records.getOne("novels", id).catch((err) => {
-          showErrorMessage({ message: err });
-        })
+      ? $backend
+          .collection("novels")
+          .getOne(id)
+          .catch((err) => {
+            showErrorMessage({ message: err });
+          })
       : new Promise(() => {})
   ) as Promise<any>;
   $: getVolumeList =
     refreshKey && $backend && id
-      ? $backend?.records?.getList("volumes", 1, 20, {
+      ? $backend?.collection("volumes")?.getList(1, 20, {
           filter: `novel_parent="${id}"`,
           // sort: "+order",
         })

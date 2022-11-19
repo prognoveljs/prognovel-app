@@ -16,7 +16,7 @@
   async function login() {
     try {
       loading = true;
-      await $backend.users.authViaEmail(email, password);
+      await $backend.collection("users").authViaEmail(email, password);
     } catch (error) {
     } finally {
       loading = false;

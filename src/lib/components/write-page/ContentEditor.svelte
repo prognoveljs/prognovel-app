@@ -34,7 +34,7 @@
 
     try {
       await beforeContentSave();
-      const res = await $backend.records.create(key, data);
+      const res = await $backend.collection(key).create(data);
       id = res.id;
       dispatch("updateid", id);
 
@@ -55,7 +55,7 @@
 
     try {
       await beforeContentSave();
-      await $backend.records.update(key, id, data);
+      await $backend.collection(key).update(id, data);
 
       wrapChapterSave(opts);
     } catch (error) {
@@ -108,7 +108,7 @@
   async function getLatestData() {
     await backendReady;
     try {
-      const d = await $backend.records.getOne(tableKey, id);
+      const d = await $backend.collection(tableKey).getOne(id);
       dispatch("latestdata", d);
     } catch (error) {
       showErrorMessage({ message: error });

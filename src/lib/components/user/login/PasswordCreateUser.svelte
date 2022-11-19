@@ -20,7 +20,7 @@
     errorMessage = "";
     try {
       loading = true;
-      const user = await $backend.users.create({
+      const user = await $backend.collection("users").create({
         email,
         password,
         passwordConfirm,
@@ -29,11 +29,11 @@
       console.log({ user });
 
       // set user profile data
-      const updatedProfile = await $backend.records.update("profiles", user.profile.id, {
+      const updatedProfile = await $backend.collection("users").update(user.profile.id, {
         name: nickname,
       });
 
-      await $backend.users.requestVerification(email);
+      await $backend.collection("users").requestVerification(email);
     } catch (err) {
       errorMessage = err;
       console.error(err);

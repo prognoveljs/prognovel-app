@@ -19,7 +19,7 @@
     if (!$backend) return new Promise(() => {});
 
     try {
-      const res = await $backend?.records.getList("profiles", pageIndex + 1, itemsPerPage);
+      const res = await $backend?.collection("users").getList(pageIndex + 1, itemsPerPage);
       totalPages = res.totalPages;
       console.log(res);
       return res;

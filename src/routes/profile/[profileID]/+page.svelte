@@ -48,7 +48,7 @@
 
   async function fetchUserData(id: string) {
     try {
-      const res = (await $backend.records.getOne("profiles", id)) as UserProfile;
+      const res = (await $backend.collection("users").getOne(id)) as UserProfile;
 
       userProfile.set(res);
       return res;

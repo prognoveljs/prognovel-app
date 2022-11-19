@@ -26,7 +26,7 @@
 
   async function getAllStatus() {
     try {
-      const res = await $backend?.records?.getList("status", pageIndex + 1, 10, {
+      const res = await $backend?.collection("status")?.getList(pageIndex + 1, 10, {
         filter: `url_key="${$page.url.pathname}"`,
         expand: "user_profile",
         sort: "-created",
@@ -44,7 +44,7 @@
     try {
       let content = statusContent;
       statusContent = "";
-      await $backend.records.create("status", {
+      await $backend.collection("status").create({
         url_key: $page.url.pathname,
         user_profile: $userData?.user?.profile?.id,
         user: $userData?.user?.id,

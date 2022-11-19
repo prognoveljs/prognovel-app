@@ -25,9 +25,12 @@
   };
 
   $: if (!methods.length && $backend) {
-    $backend.users.listAuthMethods().then((m) => {
-      methods = [...(m?.authProviders || [])];
-    });
+    $backend
+      .collection("users")
+      .listAuthMethods()
+      .then((m) => {
+        methods = [...(m?.authProviders || [])];
+      });
   }
 
   const PROVIDER_SORT = ["google", "discord", "facebook", "twitter", "github", "gitlab"];

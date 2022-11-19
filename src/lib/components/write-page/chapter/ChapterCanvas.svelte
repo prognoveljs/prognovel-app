@@ -64,7 +64,7 @@
 
     try {
       await checkConflictingIndex();
-      const res = await $backend.records.create(key, data);
+      const res = await $backend.collection(key).create(data);
       id = res.id;
 
       wrapChapterSave(opts);
@@ -79,7 +79,7 @@
     console.log({ data, opts });
     try {
       await checkConflictingIndex();
-      await $backend.records.update(key, id, data);
+      await $backend.collection(key).update(id, data);
 
       wrapChapterSave(opts);
     } catch (error) {
@@ -103,7 +103,7 @@
   async function getLatestData() {
     await backendReady;
     try {
-      const d = await $backend.records.getOne("chapters", id);
+      const d = await $backend.collection("chapters").getOne(id);
 
       title = d.title;
       index = d.index;
@@ -126,7 +126,7 @@
       throw indexInvalidText;
     }
 
-    const res = await $backend.records.getList("chapters", 1, 10, {
+    const res = await $backend.collection("chapters").getList(1, 10, {
       filter: `volume_parent = "${volume_parent}" && novel_parent = "${novel_parent}" && index = "${index}" && id != "${id}"`,
     });
 

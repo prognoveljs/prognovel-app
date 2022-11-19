@@ -43,7 +43,7 @@
       throw indexInvalidText;
     }
 
-    const res = await $backend.records.getList("chapters", 1, 10, {
+    const res = await $backend.collection("chapters").getList(1, 10, {
       filter: `volume_parent = "${volume_parent}" && novel_parent = "${novel_parent}" && index = "${index}" && id != "${id}"`,
     });
 

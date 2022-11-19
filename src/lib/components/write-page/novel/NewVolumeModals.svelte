@@ -14,7 +14,7 @@
   async function createVolume() {
     if (!novelParent) return;
     try {
-      await $backend.records.create("volumes", {
+      await $backend.collection("volumes").create({
         novel_parent: novelParent,
         order,
         title,

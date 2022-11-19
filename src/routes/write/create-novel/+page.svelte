@@ -20,7 +20,7 @@
 
   async function createNovel(e: Event) {
     try {
-      await $backend.records.create("novels", {
+      await $backend.collection("novels").create({
         title,
         synopsis,
         genres,

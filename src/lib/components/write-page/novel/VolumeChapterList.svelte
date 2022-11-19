@@ -41,8 +41,8 @@
   };
 
   $: getChapterList =
-    $volumeRefreshKey && $backend?.records
-      ? $backend?.records?.getList("chapters", page, itemsPerPage, {
+    $volumeRefreshKey && $backend?.collection
+      ? $backend?.collection("chapters")?.getList(page, itemsPerPage, {
           filter: `volume_parent = "${volumeId}" && novel_parent = "${novel_parent}"`,
           sort: "+index",
         })
@@ -68,7 +68,7 @@
     if (!selectedRowIds?.length) return;
     // TODO - Batch delete
     const row = selectedRowIds[0];
-    await $backend.records.delete("chapters", row);
+    await $backend.collection("chapters").delete(row);
     selectedRowIds = [];
     refreshVolumeChapterList();
   }

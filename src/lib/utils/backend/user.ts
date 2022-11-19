@@ -6,7 +6,9 @@ import { backend } from "$lib/store/backend";
 import type { User, UserProfile } from "$typings/user";
 
 export async function refreshUser(): Promise<User> {
-  const newUserData = (await getStore(backend).users.refresh()) as unknown as User;
+  const newUserData = (await getStore(backend)
+    .collection("users")
+    .authRefresh()) as unknown as User;
   userData.set(newUserData);
 
   return newUserData;
@@ -19,7 +21,7 @@ export async function updateProfile(
   let result;
   const $profile = getStore(profile);
   if (updateDatabase) {
-    result = await getStore(backend).records.update("profiles", $profile.id, profileData);
+    result = await getStore(backend).collection("users").update($profile.id, profileData);
   }
 
   userData.update(($userData: User) => {
@@ -40,7 +42,7 @@ if (browser) {
     if (!$userData || !browser) return;
 
     if ($userData?.user?.profile && $userData?.user?.profile?.name === undefined) {
-      const newData: unknown = await getStore(backend).users.refresh();
+      const newData: unknown = await getStore(backend).collection("users").authRefresh();
       updateProfile((newData as User).user.profile);
     }
 

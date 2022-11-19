@@ -16,7 +16,7 @@
       : new Promise(() => {});
 
   function getNovelList() {
-    return $backend.records.getList("novels", 1, 30, {
+    return $backend.collection("novels").getList(1, 30, {
       filter: `author="${$userData?.user?.id}"`,
       sort: "-updated",
     });
