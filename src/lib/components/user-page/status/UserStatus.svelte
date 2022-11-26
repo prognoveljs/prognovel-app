@@ -3,17 +3,17 @@
   import { page } from "$app/stores";
   import Avatar from "$lib/components/user/Avatar.svelte";
   import { backend } from "$lib/store/backend";
-  import { userData } from "$lib/store/user";
+  import { profile, userData } from "$lib/store/user";
   import { getPocketBaseAvatar } from "$lib/utils/users/avatar";
   import { Button, PaginationNav, TextArea } from "carbon-components-svelte";
   import { SendAlt } from "carbon-icons-svelte";
   import { getContext, onMount } from "svelte";
   import { Writable } from "svelte/store";
-  import type { UserData, UserProfile } from "$typings/user";
+  import type { UserData } from "$typings/user";
   import { backendReady } from "$lib/utils/backend";
   import { showErrorMessage } from "$lib/utils/error";
 
-  const pageProfileData: Writable<UserProfile> = getContext("profileData");
+  const pageProfileData: Writable<UserData> = getContext("profileData");
   let statusContent: string = "";
   let totalStatus = 0;
   let totalPages = 1;
@@ -46,8 +46,8 @@
       statusContent = "";
       await $backend.collection("status").create({
         url_key: $page.url.pathname,
-        user_profile: $userData?.user?.profile?.id,
-        user: $userData?.user?.id,
+        user_profile: $profile?.id,
+        user: $profile?.id,
         content,
       });
 
@@ -62,12 +62,12 @@
   });
 </script>
 
-{#if $userData?.user?.id}
+{#if $profile?.id}
   <TextArea
     bind:value={statusContent}
-    placeholder={$userData?.user?.profile?.id === $pageProfileData?.id
+    placeholder={$profile?.id === $pageProfileData?.id
       ? "What are you thinking today?"
-      : `Say something to ${$pageProfileData?.name || "..."}`}
+      : `Say something to ${$pageProfileData?.username || "..."}`}
   />
   <div class="cta">
     <em class="content-length" class:disabled>
@@ -94,7 +94,7 @@
           href="/profile/{status?.['@expand']?.user_profile?.id}/"
           disabled={!status?.["@expand"]?.user_profile?.id}
         >
-          {status?.["@expand"]?.user_profile?.name || ""}
+          {status?.["@expand"]?.user_profile?.username || ""}
         </a>
         {status?.content || ""}
       </div>

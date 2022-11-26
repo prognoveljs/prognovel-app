@@ -1,6 +1,5 @@
 <script lang="ts">
   import { getContext, tick } from "svelte";
-  import type { UserData, UserProfile } from "$typings/user";
   import { paypalClient } from "$lib/utils/payments/paypal";
   import { browser } from "$app/environment";
 

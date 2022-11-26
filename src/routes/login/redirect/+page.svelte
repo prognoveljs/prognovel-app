@@ -6,7 +6,7 @@
   import { userData, profile } from "$lib/store/user";
   import { goto } from "$app/navigation";
   import { LoaderIcon } from "svelte-feather-icons";
-  import type { UserProfile } from "$typings/user";
+  import type { UserData } from "$typings/user";
   import { updateProfile } from "$lib/utils/backend/user";
   const url = new URL($page.url.href.replace("redirect/?", "redirect?"));
   let data;
@@ -20,8 +20,9 @@
       ...data,
       authProvider,
     };
-    $backend.users
-      .authViaOAuth2(
+    $backend
+      .collection("users")
+      .authWithOAuth2(
         authProvider.name,
         url.searchParams.get("code"),
         authProvider.codeVerifier,
@@ -31,7 +32,7 @@
       .then(async (u: any) => {
         $userData = u;
         // $backend.authStore.exportToCookie();
-        console.log(u);
+        console.log($userData);
         await tick();
         await normalizeUserData();
         goto("/");
@@ -40,10 +41,9 @@
   }
 
   async function normalizeUserData() {
-    const data: UserProfile | { name?: string; avatar?: Blob } = {};
     const form = new FormData();
 
-    if (!$profile?.name) form.append("name", $userData.meta.name);
+    if (!$profile?.username) form.append("name", $userData.meta?.username || $userData.meta?.name);
     if (!$profile?.avatar) {
       try {
         const res = await fetch($userData?.meta?.avatarUrl);

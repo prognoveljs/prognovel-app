@@ -1,6 +1,6 @@
 <script lang="ts">
   import { backend } from "$lib/store/backend";
-  import { userData } from "$lib/store/user";
+  import { profile, userData } from "$lib/store/user";
   import { formatDate } from "$lib/utils/users/profile";
   import {
     Button,
@@ -32,12 +32,12 @@
       return true;
     }
   };
-
   $: getPostList =
-    $postRefreshKey && $backend?.records && $userData?.user?.id
-      ? ($backend?.records
-          ?.getList("posts", page, itemsPerPage, {
-            filter: `user = "${$userData?.user?.id}" ${filter ? `&& ${filter}` : ""}`,
+    $postRefreshKey && $backend?.collection && $profile?.id
+      ? ($backend
+          ?.collection("posts")
+          ?.getList(page, itemsPerPage, {
+            filter: `user = "${$profile?.id}" ${filter ? `&& ${filter}` : ""}`,
             expand: "novel_parent",
           })
           .catch((err) => {

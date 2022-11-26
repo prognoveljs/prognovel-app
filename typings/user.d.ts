@@ -7,7 +7,7 @@ export interface User {
     avatarUrl: string;
   };
   token: string;
-  user: UserData;
+  record: UserData;
 }
 
 export interface UserData {
@@ -18,27 +18,29 @@ export interface UserData {
   verified?: boolean;
   lastResetSentAt?: string;
   lastVerificationSentAt?: string;
-  profile?: UserProfile;
+  // record?: UserProfile;
+  username?: string;
+  avatar?: string;
 }
 
-export interface UserProfile {
-  id?: string;
-  created?: string;
-  updated?: string;
-  avatar?: string;
-  name?: string;
-  userId?: string;
-  coin?: number;
-  coinGetDelay?: number;
-  lastTimeCoinAcquired?: number | string;
-  lastTimeLeveledUP?: number | string;
-  exp?: number;
-  level?: number;
-  contributionPoint?: number;
-  "@collectionId"?: string;
-  "@collectionName"?: string;
-  "@expand"?: any;
-}
+// export interface UserProfile {
+//   id?: string;
+//   created?: string;
+//   updated?: string;
+//   avatar?: string;
+//   name?: string;
+//   userId?: string;
+//   coin?: number;
+//   coinGetDelay?: number;
+//   lastTimeCoinAcquired?: number | string;
+//   lastTimeLeveledUP?: number | string;
+//   exp?: number;
+//   level?: number;
+//   contributionPoint?: number;
+//   "@collectionId"?: string;
+//   "@collectionName"?: string;
+//   "@expand"?: any;
+// }
 
 export interface GravatarProfile {
   id?: string;

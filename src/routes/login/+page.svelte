@@ -1,10 +1,10 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import LoginModal from "$lib/components/user/login/LoginModal.svelte";
-  import { userData } from "$lib/store/user";
+  import { profile, userData } from "$lib/store/user";
 
-  $: if ($userData?.user?.id) {
-    goto(`/profile/${$userData?.user?.id}/`);
+  $: if ($profile?.id) {
+    goto(`/profile/${$profile?.id}/`);
   }
 </script>
 

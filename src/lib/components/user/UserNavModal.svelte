@@ -9,7 +9,7 @@
 
 <section class="user-modal">
   <div class="name">
-    Welcome {$profile?.name || "..."}
+    Welcome {$profile?.username || "..."}
   </div>
   <div class="coin">
     <span class="label">
@@ -23,7 +23,7 @@
   </div>
   <div class="links">
     <a href="/write/"><Edit3Icon /> Writer dashboard</a>
-    <a href="/profile/{$userData?.user?.profile?.id}/"><UserIcon /> Profile page</a>
+    <a href="/profile/{$profile?.id}/"><UserIcon /> Profile page</a>
   </div>
   <div class="opts">
     <LogoutButton />

@@ -3,13 +3,13 @@
   import { Button } from "carbon-components-svelte";
   import AddFilled from "carbon-icons-svelte/lib/AddFilled.svelte";
   import { backend } from "$lib/store/backend";
-  import { userData } from "$lib/store/user";
+  import { profile, userData } from "$lib/store/user";
   import { page } from "$app/stores";
   import { novelIndex } from "./_shared";
   import { showErrorMessage } from "$lib/utils/error";
 
   $: getNovelsData =
-    $backend && $userData?.user?.id && $novelIndex
+    $backend && $profile?.id && $novelIndex
       ? (getNovelList().catch((err) => {
           showErrorMessage({ message: err });
         }) as Promise<any>)
@@ -17,7 +17,7 @@
 
   function getNovelList() {
     return $backend.collection("novels").getList(1, 30, {
-      filter: `author="${$userData?.user?.id}"`,
+      filter: `author="${$profile?.id}"`,
       sort: "-updated",
     });
   }

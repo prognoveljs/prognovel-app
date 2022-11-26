@@ -1,17 +1,18 @@
 import { browser } from "$app/environment";
 import { get as getStore, Writable, writable } from "svelte/store";
-import { userData } from "$lib/store/user";
+import { profile, userData } from "$lib/store/user";
 import type { User } from "$typings/user";
 import { backend } from "../backend";
+import { UserProfile } from "carbon-icons-svelte";
 
 export const coin = createCoin();
 export const lastTimeCoinAcquired: Writable<DOMHighResTimeStamp> = writable(Date.now());
 export const coinGetDelay: Writable<number> = writable(0);
 
 if (browser) {
-  userData.subscribe((u: User) => {
-    if (u?.user?.id && u?.user?.id !== coin.userId) {
-      coin.userId = u?.user?.id;
+  profile.subscribe(($profile) => {
+    if ($profile?.id && $profile?.id !== coin.userId) {
+      coin.userId = $profile?.id;
       coin.fetchValue();
     }
   });
@@ -32,20 +33,14 @@ export function createCoin() {
     },
     async fetchValue() {
       try {
-        const data = await getStore(backend).send(
-          "/api/fetch-coin/" + getStore(userData)?.user?.id,
-          {},
-        );
+        const data = await getStore(backend).send("/api/fetch-coin/" + getStore(profile)?.id, {});
         this.setter(data);
       } catch (error) {
         console.error("Coin error:", error);
       }
     },
     async getCoin() {
-      const data = await getStore(backend).send(
-        "/api/get-coin/" + getStore(userData)?.user?.id,
-        {},
-      );
+      const data = await getStore(backend).send("/api/get-coin/" + getStore(profile)?.id, {});
       this.setter(data);
     },
     // set() {},

@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
   import Icon from "$lib/components/Icon.svelte";
   import { backend } from "$lib/store/backend";
-  import { userData } from "$lib/store/user";
+  import { profile, userData } from "$lib/store/user";
   import { faPlus } from "@fortawesome/free-solid-svg-icons";
   import { Button, ButtonSet, TextArea, TextInput } from "carbon-components-svelte";
   import { Save, Send, SendAlt, SendAltFilled } from "carbon-icons-svelte";
@@ -17,7 +17,6 @@
   const SYNOPSIS_MIN_LENGTH = 20;
 
   $: isValidData = title && synopsis.length >= SYNOPSIS_MIN_LENGTH;
-
   async function createNovel(e: Event) {
     try {
       await $backend.collection("novels").create({
@@ -26,7 +25,7 @@
         genres,
         tags,
         views: 0,
-        author: $userData.user.id,
+        author: $profile.id,
       });
       $novelIndex = $novelIndex + 1;
       goto("/write/novel/");

@@ -15,7 +15,7 @@
   } from "$lib/utils/navigation/custom-title";
   import { getPocketBaseAvatar } from "$lib/utils/users/avatar";
   import { formatDate } from "$lib/utils/users/profile";
-  import type { UserData, UserProfile } from "$typings/user";
+  import type { UserData } from "$typings/user";
   import { onDestroy, setContext } from "svelte";
   import { Writable, writable } from "svelte/store";
 
@@ -31,10 +31,10 @@
       : new Promise(() => {})
   ) as Promise<any>;
 
-  const userProfile: Writable<UserProfile> = writable({});
+  const userProfile: Writable<UserData> = writable({});
   setContext("profileData", userProfile);
 
-  $: if ($userProfile?.name) $customBreadcrumbTitle = $userProfile?.name;
+  $: if ($userProfile?.username) $customBreadcrumbTitle = $userProfile?.username;
   $customBreadcrubChildren = {
     profile: {
       label: "All Users",
@@ -48,7 +48,7 @@
 
   async function fetchUserData(id: string) {
     try {
-      const res = (await $backend.collection("users").getOne(id)) as UserProfile;
+      const res = (await $backend.collection("users").getOne(id)) as UserData;
 
       userProfile.set(res);
       return res;
@@ -62,7 +62,7 @@
 </script>
 
 <svelte:head>
-  <title>User | {$userProfile?.name || "..."}</title>
+  <title>User | {$userProfile?.username || "..."}</title>
 </svelte:head>
 
 <section class="banner" />
@@ -77,7 +77,7 @@
     </SkeletonShell>
   {:then profile}
     <Avatar size={72} url={getPocketBaseAvatar(profile)} />
-    <h1>{profile?.name || "--"}</h1>
+    <h1>{profile?.username || "--"}</h1>
     <div>join: {formatDate(profile?.created)}</div>
   {:catch error}
     <!-- promise was rejected -->

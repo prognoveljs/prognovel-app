@@ -3,7 +3,7 @@ import { profile, userData } from "$lib/store/user";
 import Cookies from "js-cookie";
 import { get as getStore } from "svelte/store";
 import { backend } from "$lib/store/backend";
-import type { User, UserProfile } from "$typings/user";
+import type { User, UserData } from "$typings/user";
 
 export async function refreshUser(): Promise<User> {
   const newUserData = (await getStore(backend)
@@ -15,17 +15,17 @@ export async function refreshUser(): Promise<User> {
 }
 
 export async function updateProfile(
-  profileData: UserProfile | any,
+  profileData: UserData | any,
   updateDatabase: boolean = false,
 ): Promise<void> {
   let result;
   const $profile = getStore(profile);
   if (updateDatabase) {
-    result = await getStore(backend).collection("users").update($profile.id, profileData);
+    result = await getStore(backend).collection("users").update($profile?.id, profileData);
   }
 
   userData.update(($userData: User) => {
-    $userData.user.profile = result || profileData;
+    $userData.record = result || profileData;
     return $userData;
   });
 }
@@ -41,12 +41,12 @@ if (browser) {
   userData.subscribe(async ($userData) => {
     if (!$userData || !browser) return;
 
-    if ($userData?.user?.profile && $userData?.user?.profile?.name === undefined) {
+    if ($userData?.record && $userData?.record?.username === undefined) {
       const newData: unknown = await getStore(backend).collection("users").authRefresh();
-      updateProfile((newData as User).user.profile);
+      updateProfile((newData as User).record);
     }
 
-    if ($userData?.user?.profile) {
+    if ($userData?.record) {
       const cookie = getStore(backend).authStore.exportToCookie();
       Cookies.set("pb_auth", cookie.split("=")[1]);
       // console.log({ cookie });

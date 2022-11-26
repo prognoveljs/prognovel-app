@@ -41,7 +41,7 @@
         <Avatar size={parseFloat(AVATAR_SIZE)} url={getPocketBaseAvatar(userProfile)} />
         <div class="meta">
           <div class="name">
-            {userProfile?.name}
+            {userProfile?.username}
           </div>
           <div class="join">
             Join: {formatDate(userProfile?.created)}
