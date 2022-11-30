@@ -20,6 +20,7 @@ func main() {
 	global.ProgNovelApp.OnBeforeServe().Add(api.APIChapterRoute)
 	global.ProgNovelApp.OnBeforeServe().Add(api.APINovelRoute)
 	global.ProgNovelApp.OnBeforeServe().Add(api.APIInitRoute)
+	global.ProgNovelApp.OnBeforeServe().Add(api.PaymentRoute)
 	// global.ProgNovelApp.OnBeforeServe().Add(image.OptimizeImageAndSave)
 	global.ProgNovelApp.OnRecordBeforeCreateRequest().Add(user.DefaultProfileValues)
 
