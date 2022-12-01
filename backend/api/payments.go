@@ -4,10 +4,12 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strconv"
 
 	global "prognovel/backend/app"
 
 	"github.com/labstack/echo/v5"
+	"github.com/pocketbase/dbx"
 	"github.com/pocketbase/pocketbase/core"
 )
 
@@ -77,9 +79,45 @@ func PaymentRoute(e *core.ServeEvent) error {
 
 func checkout(c echo.Context, notif PaypalNotif) error {
 	detail := notif.Resource.Purchase_Units[0]
-	amount := detail.Amount.Value
-	log.Print(amount, detail)
-	global.ProgNovelApp.App.Dao()
+	amount, err := strconv.Atoi(detail.Amount.Value)
+
+	if err != nil {
+		return c.String(http.StatusInternalServerError, "Error processing poayment amount type.")
+	}
+
+	user_id := detail.User_ID
+
+	if user_id == "" || amount == 0 {
+		return c.String(http.StatusUnprocessableEntity, "Required field not found.")
+	}
+
+	coin_amount := calculateCoinAmount(amount, detail.Amount.Currency_Code)
+
+	record, err := global.ProgNovelApp.App.Dao().FindRecordsByExpr("coin", dbx.HashExp{
+		"user": user_id,
+	})
+
+	if err != nil {
+		return c.String(http.StatusInternalServerError, "Error processing coin on database table.")
+	}
+
+	coin_current := record[0].GetInt("coin")
+	record[0].Set("coin", coin_current+coin_amount)
+
+	err = global.ProgNovelApp.App.Dao().SaveRecord(record[0])
+
+	if err != nil {
+		return c.String(http.StatusInternalServerError, "Error saving coin record on database.")
+	}
 
 	return c.String(200, "Webhook received")
+}
+
+func calculateCoinAmount(amount int, currency string) int {
+	switch currency {
+	case "USD":
+		return amount * 5
+	}
+
+	return 0
 }
