@@ -28,10 +28,11 @@
     try {
       const res = await $backend?.collection("status")?.getList(pageIndex + 1, 10, {
         filter: `url_key="${$page.url.pathname}"`,
-        expand: "user_profile",
+        expand: "user",
         sort: "-created",
       });
       if (!res?.items) return;
+
       allStatus = res.items;
       totalStatus = res.totalItems;
       totalPages = res.totalPages;
@@ -40,13 +41,14 @@
     }
   }
 
+  $: console.log(allStatus);
+
   async function createStatus() {
     try {
       let content = statusContent;
       statusContent = "";
       await $backend.collection("status").create({
         url_key: $page.url.pathname,
-        user_profile: $profile?.id,
         user: $profile?.id,
         content,
       });
@@ -81,20 +83,14 @@
 <section class="status-container">
   {#each allStatus as status}
     <div class="status-body">
-      <a
-        href="/profile/{status?.['@expand']?.user_profile?.id}/"
-        disabled={!status?.["@expand"]?.user_profile?.id}
-      >
+      <a href="/profile/{status?.expand?.user?.id}/" disabled={!status?.expand?.user?.id}>
         {#key status}
-          <Avatar size={40} url={getPocketBaseAvatar(status?.["@expand"]?.user_profile)} />
+          <Avatar size={40} url={getPocketBaseAvatar(status?.expand?.user)} />
         {/key}
       </a>
       <div class="status-content">
-        <a
-          href="/profile/{status?.['@expand']?.user_profile?.id}/"
-          disabled={!status?.["@expand"]?.user_profile?.id}
-        >
-          {status?.["@expand"]?.user_profile?.username || ""}
+        <a href="/profile/{status?.expand?.user?.id}/" disabled={!status?.expand?.user?.id}>
+          {status?.expand?.user?.username || ""}
         </a>
         {status?.content || ""}
       </div>
