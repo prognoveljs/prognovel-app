@@ -6,6 +6,7 @@ import ProgNovelCSS from "./plugins/onbuild/themes/css-global.js";
 import { join, resolve } from "path";
 import { dynamicImport } from "vite-plugin-dynamic-import";
 import { viteCommonjs } from "@originjs/vite-plugin-commonjs";
+import CustomHmr from "./plugins/vite/custom-hmr.js";
 
 export default {
   build: {
@@ -21,6 +22,7 @@ export default {
     ProgNovelCSS(),
     optimizeImports(),
     dynamicImport(),
+    CustomHmr(),
     // process.env.NODE_ENV === "production" && optimizeCss(),
   ],
   optimizeDeps: {

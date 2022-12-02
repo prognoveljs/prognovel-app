@@ -1,4 +1,4 @@
-@import 'style/scss/color';
+@import "style/scss/color";
 
 $primary-color-hue: 15;
 $primary-color-saturate: 100%;
@@ -38,10 +38,11 @@ $primary-color: hsl($primary-color-hue, $primary-color-saturate, $primary-color-
   --primary-color-lighten-2: #{colorLighten(3, 10)};
   --primary-color-lighten-3: #{colorLighten(8, 24)};
   --primary-color-lighten-4: #{colorLighten(16, 36)};
-  --foreground-color: #444;
-  --foreground-color-alpha: #4440;
-  --background-color: #333;
-  --background-color-alpha: #3330;
+  // --foreground-color: hsla(#{$primary-color-hue}, 20%, 50%, 1);
+  --foreground-color: #222;
+  --foreground-color-alpha: #2220;
+  --background-color: #111;
+  --background-color-alpha: #1110;
   --text-body-color: #fffd;
   --text-head-color: #fff;
 
