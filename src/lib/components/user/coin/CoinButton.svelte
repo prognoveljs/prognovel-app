@@ -10,8 +10,9 @@
     coin.getCoin();
   }
 
-  $: lastCoinAcquired =
-    new Date($lastTimeCoinAcquired).getTime() - (new Date().getTimezoneOffset() / 60) * 36e5; // convert timezone offset
+  // $: lastCoinAcquired =
+  //   new Date($lastTimeCoinAcquired).getTime() - (new Date().getTimezoneOffset() / 60) * 36e5; // convert timezone offset
+  $: lastCoinAcquired = new Date($lastTimeCoinAcquired).getTime();
   let dateNow = Date.now();
   $: lastCoinTimeDifference = Math.abs(dateNow - lastCoinAcquired) / 36e5;
   $: remainingTime = $coinGetDelay - lastCoinTimeDifference;
