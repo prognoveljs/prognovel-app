@@ -3,6 +3,7 @@
   import { showErrorMessage } from "$lib/utils/error";
   import EditorJS from "@editorjs/editorjs";
   import { Button, ButtonSet } from "carbon-components-svelte";
+  import { formatDistance } from "date-fns";
   import { uuid } from "short-uuid";
   import { createEventDispatcher, onMount, tick } from "svelte";
 
@@ -18,6 +19,7 @@
   export let data = {} as any;
   export let size = "18px";
   export let autofocus: boolean = false;
+  export let saved;
   onMount(async () => {
     hash = uuid();
     await tick();
@@ -47,15 +49,24 @@
   <!-- ... -->
 </section>
 
-<ButtonSet class="cta">
-  <slot name="cta"><!-- optional fallback --></slot>
-  {#if ctaButtonSecondaryLabel}
-    <Button disabled={disableSecondary} kind="secondary" on:click={secondaryEvent}
-      >{ctaButtonSecondaryLabel}</Button
-    >
-  {/if}
-  <Button disabled={disablePrimary} on:click={primaryEvent}>{ctaButtonPrimaryLabel}</Button>
-</ButtonSet>
+<div class="bottom">
+  <ButtonSet class="cta">
+    <slot name="cta"><!-- optional fallback --></slot>
+    {#if ctaButtonSecondaryLabel}
+      <Button disabled={disableSecondary} kind="secondary" on:click={secondaryEvent}
+        >{ctaButtonSecondaryLabel}</Button
+      >
+    {/if}
+    <Button disabled={disablePrimary} on:click={primaryEvent}>{ctaButtonPrimaryLabel}</Button>
+  </ButtonSet>
+  <div class="saved">
+    {#if saved}
+      last saved {formatDistance(new Date(saved), new Date(), { addSuffix: true })}
+    {:else}
+      ...
+    {/if}
+  </div>
+</div>
 <slot {editor} />
 
 <style lang="scss">
@@ -80,6 +91,23 @@
 
     :global(.cta) {
       display: flex;
+    }
+  }
+
+  .bottom {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-bottom: var(--padding-bottom);
+    gap: 0.2em;
+
+    .saved {
+      // background-color: red;
+      color: #0008;
+      font-style: italic;
     }
   }
 </style>

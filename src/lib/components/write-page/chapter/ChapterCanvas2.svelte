@@ -56,15 +56,15 @@
 
   function updateData(e) {
     const { detail } = e;
-    console.log(e);
+    console.log(detail);
 
-    title = detail.title;
-    index = detail.index;
+    title = detail.editor_data?.title ?? detail.title;
+    index = detail.editor_data?.index ?? detail.index;
     content = detail.content;
     editor_data = detail.editor_data;
-    is_monetized = detail.is_monetized;
-    is_published = detail.is_published;
-    title_spoiler = detail.title_spoiler;
+    is_monetized = detail.editor_data?.is_monetized ?? detail.is_monetized;
+    is_published = detail.editor_data?.is_published ?? detail.is_published;
+    title_spoiler = detail.editor_data?.title_spoiler ?? detail.title_spoiler;
   }
 </script>
 

@@ -8,7 +8,7 @@ export default function CustomHmr() {
         console.log("reloading scss file...", file);
 
         server.ws.send({
-          type: "full-build",
+          type: "full-build ",
           path: "*",
         });
       }

@@ -19,18 +19,14 @@
   export let referenceData = {};
   export let rawData: any = {};
   export let disableSubmit = false;
-  export let is_published = false;
   export let tableKey = "posts";
+  let is_published = false;
   let content = "";
 
-  async function createChapter(key: string, raw_data: any, opts: SubmitOpts = {}) {
-    let data = JSON.parse(JSON.stringify(raw_data));
+  $: lastSavedContent = rawData?.editor_data?.$saved;
 
-    if (opts?.isDraft) {
-      delete data.content;
-    } else {
-      data.published_at = new Date();
-    }
+  async function createChapter(key: string, raw_data: any, opts: SubmitOpts = {}) {
+    let data = cloneDataWithCleanedRaw(raw_data, opts);
 
     try {
       await beforeContentSave();
@@ -45,13 +41,7 @@
   }
 
   async function editChapter(key: string, raw_data: any, opts: SubmitOpts = {}) {
-    let data = JSON.parse(JSON.stringify(raw_data));
-
-    if (opts?.isDraft) {
-      delete data.content;
-    } else {
-      data.published_at = new Date();
-    }
+    let data = cloneDataWithCleanedRaw(raw_data, opts);
 
     try {
       await beforeContentSave();
@@ -75,7 +65,9 @@
     try {
       const editorData = await e.detail.editor.save();
       const parsedData = editorHTML().parse(editorData) || [];
-      rawData.editor_data = editorData;
+      const { editor_data: _, content: __, ...metadata } = rawData;
+      rawData.editor_data = { ...editorData, ...metadata, $saved: new Date() };
+      rawData.is_published = is_published;
       content = parsedData.join("");
       await tick();
 
@@ -115,8 +107,27 @@
     }
   }
 
+  function cloneDataWithCleanedRaw(raw_data: any, opts: SubmitOpts = {}) {
+    let data = JSON.parse(JSON.stringify(raw_data));
+    if (opts?.isDraft) {
+      playDraftSaveAnimation();
+      return { editor_data: data.editor_data };
+    }
+
+    data.published_at = new Date();
+
+    return data;
+  }
+
   interface SubmitOpts {
     isDraft?: boolean;
+  }
+
+  let draftSaveAnimation = false;
+  async function playDraftSaveAnimation() {
+    draftSaveAnimation = true;
+    await tick();
+    draftSaveAnimation = false;
   }
 </script>
 
@@ -152,6 +163,7 @@
         disableSecondary={disableSubmit}
         ctaButtonPrimaryLabel={id ? "Submit changes" : "Create chapter"}
         data={rawData?.editor_data}
+        saved={lastSavedContent}
         on:ready={async (e) => {
           try {
             e.detail.el.focus();
@@ -194,12 +206,18 @@
   <slot contendata={{ ...referenceData, ...rawData }} />
 </div>
 
+{#if draftSaveAnimation}
+  <div class="draft-saved" out:fade={{ duration: 2000, easing: cubicIn }}>
+    <span> saved... </span>
+  </div>
+{/if}
+
 <style lang="scss">
   $zIndex: 12;
   .container-wrapper {
     --bg-color: #fff;
     --padding-top: 3em;
-    --padding-bottom: 1em;
+    --padding-bottom: 0.5em;
     position: fixed;
     top: 0;
     left: 0;
@@ -296,11 +314,8 @@
         margin-top: 1.5em;
         display: flex;
         justify-content: end;
-        position: sticky;
-        bottom: 0;
-        padding-bottom: var(--padding-bottom);
+
         background-color: var(--bg-color);
-        z-index: 5;
 
         .publish {
           width: 11em;
@@ -342,5 +357,25 @@
 
   .screen-overlay {
     z-index: $zIndex - 1;
+  }
+
+  .draft-saved {
+    position: fixed;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999999999999;
+    width: 100%;
+    left: 0;
+    pointer-events: none;
+
+    span {
+      font-size: 3em;
+      padding: 0.25em 1.5em;
+      border-radius: 8px;
+      background-color: #ccc;
+      color: #0007;
+    }
   }
 </style>
