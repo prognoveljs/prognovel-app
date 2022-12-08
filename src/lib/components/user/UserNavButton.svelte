@@ -3,7 +3,7 @@
   import { userData, avatarUrl } from "$lib/store/user";
   import { LogInIcon } from "svelte-feather-icons";
   import LoginModal from "./login/LoginModal.svelte";
-  import UserNavModal from "./UserNavModal.svelte";
+  import UserNavModal from "./UserNavModalContainer.svelte";
 
   let showLoginModal = false;
 </script>

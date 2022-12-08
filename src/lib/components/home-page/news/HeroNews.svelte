@@ -17,20 +17,20 @@
 
 <article id="news">
   {#if news.length}
-    {#each news.slice(0, 3) as news, i}
-      <a class="news-item" href="/news/{news.id}">
+    {#each news.slice(0, 3) as anews, i}
+      <a class="news-item" href="/news/{anews.id}">
         {#if i}
           <div class="horizontal-line" />
         {/if}
-        <h3>{news.title}</h3>
+        <h3>{anews.title}</h3>
         <div class="item-wrapper">
           <div class="author">
-            <Avatar email={news?.author?.email} size={32} />
-            <span>{news?.author?.name || "Admin"}</span>
+            <Avatar email={anews?.author?.email} size={32} />
+            <span>{anews?.author?.name || "Admin"}</span>
           </div>
           <div class="date">
             <!-- <Icon icon={faCalendarAlt} size="1.15em" paddingBottom="2px" marginRight="4px" /> -->
-            {formatDistance(new Date(news.date), new Date(), { addSuffix: true })}
+            {formatDistance(new Date(anews.date), new Date(), { addSuffix: true })}
           </div>
         </div>
       </a>
