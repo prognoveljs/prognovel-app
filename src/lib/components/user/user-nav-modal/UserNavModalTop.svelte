@@ -63,6 +63,14 @@
       bottom: 1em;
     }
 
+    .name {
+      font-weight: 500;
+      margin: {
+        top: 0.25em;
+        bottom: 0.65em;
+      }
+    }
+
     .coin {
       display: flex;
       align-items: center;
@@ -75,7 +83,6 @@
         position: relative;
         display: flex;
         align-items: center;
-        font-weight: 500;
 
         img {
           margin-right: 8px;
