@@ -243,9 +243,17 @@
       background-color: var(--bg-color);
       position: sticky;
       top: 0;
-      padding-top: var(--padding-top);
-      padding-bottom: 0.5em;
       z-index: 5;
+      margin: {
+        left: -10em;
+        right: -10em;
+      }
+      padding: {
+        top: var(--padding-top);
+        bottom: 0.5em;
+        left: 10em;
+        right: 10em;
+      }
 
       :global {
         input {

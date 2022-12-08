@@ -58,7 +58,7 @@
       display: block;
     }
     @import "shared";
-    background-color: #0002;
+    background-color: #6665;
     min-height: 100%;
     padding: 2em;
 

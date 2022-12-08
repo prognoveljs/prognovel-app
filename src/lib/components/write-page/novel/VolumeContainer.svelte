@@ -14,10 +14,18 @@
 
 <style lang="scss">
   .volume {
-    background-color: #0002;
+    --border-color: hsla(#{$hsl}, 0.4);
+    background-color: #3335;
+    border: 2px solid var(--border-color);
     padding: 1.5em 1em;
     border-radius: var(--border-radius);
     position: relative;
+    cursor: pointer;
+
+    &:hover {
+      --border-color: hsla(#{$hsl}, 0.8);
+      background-color: #3337;
+    }
 
     h2 {
       margin-top: 0.3em;
