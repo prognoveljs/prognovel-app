@@ -58,3 +58,10 @@ export function snakeCase(str: string): string {
     .map((x) => x.toLowerCase())
     .join("_");
 }
+
+export function getTextContentFromHTMLString(elementTag: string, htmlString: string) {
+  // const regex = /<template[^>]*>(.*?)<\/template>/;
+  const regex = new RegExp(`<${elementTag}[^>]*>(.*?)<\/${elementTag}>`);
+
+  return regex.exec(htmlString)[1];
+}
