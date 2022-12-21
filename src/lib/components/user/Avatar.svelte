@@ -8,6 +8,7 @@
   export let round = true;
   export let email = "";
   export let url = "";
+  export let elClass = "";
   let visible = false;
   $: img = url || (email ? getGravatarURL(email, size) : "/img/avatar-placeholder.svg");
 
@@ -21,7 +22,14 @@
   });
 </script>
 
-<div class="avatar" style="width: {size}px; height: {size}px;" class:round>
+<div
+  on:click
+  on:focus
+  on:blur
+  class="avatar {elClass}"
+  style="width: {size}px; height: {size}px;"
+  class:round
+>
   {#if img && visible}
     {#await fetchImage() then src}<img {src} alt={name} />{/await}
   {/if}

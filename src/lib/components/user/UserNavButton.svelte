@@ -6,12 +6,37 @@
   import UserNavModal from "./UserNavModalContainer.svelte";
 
   let showLoginModal = false;
+  let showUserNavModal = false;
+  const NAV_MODAL_ID = "user-nav-modal";
+  let avatarBtnEl: HTMLElement;
+
+  console.log(showUserNavModal);
+  function onMouseClick(e: MouseEvent) {
+    // console.log(e);
+    const el = e.target as HTMLElement;
+    if (el.id === NAV_MODAL_ID) return;
+    if (el === avatarBtnEl) return;
+    if (document.getElementById(NAV_MODAL_ID).contains(el)) return;
+
+    showUserNavModal = false;
+  }
 </script>
 
-<section class:loggedIn={Boolean($userData)} tabindex="0">
+<svelte:window on:click|capture={onMouseClick} />
+
+<section
+  bind:this={avatarBtnEl}
+  class:loggedIn={Boolean($userData)}
+  tabindex="0"
+  on:click={() => {
+    showUserNavModal = true;
+  }}
+>
   {#if $userData}
-    <Avatar url={$avatarUrl} size={36} />
-    <UserNavModal />
+    <Avatar elClass={showUserNavModal ? "active" : ""} url={$avatarUrl} size={36} />
+    {#if showUserNavModal}
+      <UserNavModal id={NAV_MODAL_ID} />
+    {/if}
   {:else if import.meta.env.POCKETBASE_URL}
     <a href="/login" on:click|preventDefault={() => (showLoginModal = true)}>
       <LogInIcon />
@@ -35,25 +60,13 @@
     :global {
       .avatar {
         outline: 2px solid var(--outline-color);
-      }
-    }
-    &:hover {
-      :global {
-        .avatar {
+
+        &:hover {
           --outline-color: hsla(#{$hsl}, 0.6);
         }
-      }
-    }
 
-    &:focus-within,
-    &:focus {
-      :global {
-        .avatar {
+        &.active {
           --outline-color: var(--primary-color);
-        }
-        .user-modal {
-          --opacity: 1;
-          transform: translateY(0);
         }
       }
     }

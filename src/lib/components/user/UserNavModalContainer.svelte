@@ -2,9 +2,18 @@
   import UserNavModalTop from "./user-nav-modal/UserNavModalTop.svelte";
   import UserNavModalLinks from "./user-nav-modal/UserNavModalLinks.svelte";
   import UserNavModalBottom from "./user-nav-modal/UserNavModalBottom.svelte";
+  import { fly } from "svelte/transition";
+
+  export let id: string = "user-nav-modal";
 </script>
 
-<section class="user-modal">
+<section
+  in:fly={{ duration: 400, y: 12, opacity: 0 }}
+  out:fly={{ duration: 400, y: 12, opacity: 0 }}
+  on:blur
+  tabindex="0"
+  {id}
+>
   <UserNavModalTop />
   <UserNavModalLinks />
   <div class="opts">
@@ -18,16 +27,16 @@
     // --padding-top: 1.5em;
     --padding-top: 0.8em;
     --padding-bottom: 1em;
-    --opacity: 0;
+    --opacity: 1;
     --border-radius: 4px;
     display: flex;
     position: fixed;
     right: 0.85em;
-    top: calc(var(--header-height) - 0.7em);
+    top: calc(var(--header-height) - 0.9em);
+    // transform: translateY(20%) translateZ(0);
     width: 20em;
     background-color: var(--foreground-color);
     padding: var(--padding-top) var(--padding-side) var(--padding-bottom);
-    transform: translateY(-100%) translateZ(0);
     z-index: 999999999999999;
     opacity: var(--opacity);
     transition: all 0.4s ease-in-out;

@@ -1,5 +1,27 @@
 # ProgNovel Changelog
 
+# 0.9.0
+
+This version has a major breaking change where ProgNovel transitioning from full edge JAMstack web app to a more traditional with a web app with monolith backend. This change is taken due to consideration of low adoption and not-quite ready JAMstack ecosystem which make deployment complicated to many webmaster.
+
+📌 **BREAKING CHANGES:**
+- Backend no longer requires to be deployed in Cloudflare Workers
+- **ProgNovel's Cloudflare Workers backend is now obselete** and may breaks in production.
+- **Dropping ProgNovel CLI** in favor of user dashboard and backend connected text editor for content management.
+- Some features (such as rev shares) might be missing temporary during the transition period
+
+🎉 FEATURES ADDED:
+- Backend now provides user authentication features that can be linked with Social Sign In Oauth (Google, Twitter, Microsoft, Facebook, Github, Discord, etc)
+- Webmaster now can allow regular users to upload their own novels and contents
+- Add (a very early phase) coin system, along with free daily coin
+- Add user profile feature
+- Add user status feature
+- Users now can follow each other
+- Users now can follow novels
+
+🎨 UI/UX IMPROVEMENTS:
+- Now with darker background as default
+
 # 0.8.0
 
 This version adds "Infinite Reading" option that will load chapters automatically on page scroll instead of clicking next chapter button. One chapter per page with next button is now "Classic Mode" and can be switched to "Infinite Reading" in read page's setting Layout and Themes section. Note that this is still too early to say that Infinite Reading mode is bug free so if you encounter any bugs, please raise an issue at https://github.com/prognoveljs/prognovel-app/issues.
