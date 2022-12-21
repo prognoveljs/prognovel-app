@@ -15,7 +15,7 @@
     // console.log(e);
     const el = e.target as HTMLElement;
     if (el.id === NAV_MODAL_ID) return;
-    if (el === avatarBtnEl) return;
+    if (el === avatarBtnEl || avatarBtnEl.contains(el)) return;
     if (document.getElementById(NAV_MODAL_ID).contains(el)) return;
 
     showUserNavModal = false;
