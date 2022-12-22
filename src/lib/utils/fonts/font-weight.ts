@@ -1,4 +1,4 @@
-import { get, set } from "idb-keyval";
+import { get as getIDB, set as setIDB } from "idb-keyval";
 import { writable, Writable } from "svelte/store";
 import { browser } from "$app/environment";
 
@@ -6,7 +6,7 @@ const IDB_FONT_WEIGHT = "reader-font-weight";
 export const fontWeight: Writable<number> = writable(100);
 
 export async function fontWeightInit(): Promise<void> {
-  const weight = (await get(IDB_FONT_WEIGHT)) as number;
+  const weight = (await getIDB(IDB_FONT_WEIGHT)) as number;
 
   if (!weight) return;
   // TODO throttle save to IndexedDB
@@ -14,7 +14,7 @@ export async function fontWeightInit(): Promise<void> {
 }
 
 if (browser) {
-  get(IDB_FONT_WEIGHT).then((weight: number | undefined) => {
+  getIDB(IDB_FONT_WEIGHT).then((weight: number | undefined) => {
     if (weight) fontWeight.set(weight);
     fontWeight.subscribe((weight: number) => {
       if (!browser) return;
@@ -25,7 +25,7 @@ if (browser) {
       content.style.setProperty("--readPageFontWeight", (weight / 100).toString());
 
       // TODO debounce font weight save
-      set(IDB_FONT_WEIGHT, weight);
+      setIDB(IDB_FONT_WEIGHT, weight);
     });
   });
 }

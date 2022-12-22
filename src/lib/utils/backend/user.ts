@@ -1,14 +1,12 @@
 import { browser } from "$app/environment";
 import { profile, userData } from "$lib/store/user";
 import Cookies from "js-cookie";
-import { get as getStore } from "svelte/store";
+import { get } from "svelte/store";
 import { backend } from "$lib/store/backend";
 import type { User, UserData } from "$typings/user";
 
 export async function refreshUser(): Promise<User> {
-  const newUserData = (await getStore(backend)
-    .collection("users")
-    .authRefresh()) as unknown as User;
+  const newUserData = (await get(backend).collection("users").authRefresh()) as unknown as User;
   userData.set(newUserData);
 
   return newUserData;
@@ -19,9 +17,9 @@ export async function updateProfile(
   updateDatabase: boolean = false,
 ): Promise<void> {
   let result;
-  const $profile = getStore(profile);
+  const $profile = get(profile);
   if (updateDatabase) {
-    result = await getStore(backend).collection("users").update($profile?.id, profileData);
+    result = await get(backend).collection("users").update($profile?.id, profileData);
   }
 
   userData.update(($userData: User) => {
@@ -32,7 +30,7 @@ export async function updateProfile(
 
 export async function loadUserFromCookies() {
   const cookie = Cookies.get("pb_auth");
-  const pb = getStore(backend);
+  const pb = get(backend);
   pb.authStore.loadFromCookie(`pb_auth=${cookie}`);
   await refreshUser();
 }
@@ -42,12 +40,12 @@ if (browser) {
     if (!$userData || !browser) return;
 
     if ($userData?.record && $userData?.record?.username === undefined) {
-      const newData: unknown = await getStore(backend).collection("users").authRefresh();
+      const newData: unknown = await get(backend).collection("users").authRefresh();
       updateProfile((newData as User).record);
     }
 
     if ($userData?.record) {
-      const cookie = getStore(backend).authStore.exportToCookie();
+      const cookie = get(backend).authStore.exportToCookie();
       Cookies.set("pb_auth", cookie.split("=")[1]);
       // console.log({ cookie });
     }
@@ -55,7 +53,7 @@ if (browser) {
 }
 
 export function logoutUser() {
-  const pb = getStore(backend);
+  const pb = get(backend);
   pb.authStore.clear();
 
   Cookies.remove("pb_auth");

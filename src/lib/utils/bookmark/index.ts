@@ -1,5 +1,5 @@
-import { get, set, createStore } from "idb-keyval";
-import { get as getStore } from "svelte/store";
+import { get as getIDB, set as setIDB, createStore } from "idb-keyval";
+import { get } from "svelte/store";
 import { getRecentHistory, IDB_PREFIX_HISTORY_RECENT } from "$lib/utils/history";
 import { siteMetadata, novelsData } from "$lib/store/states";
 import { bookmarkList } from "./_store";
@@ -49,18 +49,18 @@ export async function removeBookmark(id: string): Promise<void> {
   //   filterAsync = (await import(/* webpackChunkName: "js-coroutines" */ "js-coroutines")).filterAsync;
   // const newList = (await filterAsync(list, (book: Bookmark) => book.id !== id)) as string[];
   const newList = list.filter((book: string) => book === id);
-  await set(IDB_PREFIX_BOOKMARK_LIST, newList, getBookmarkStore());
+  await setIDB(IDB_PREFIX_BOOKMARK_LIST, newList, getBookmarkStore());
   bookmarkList.set(newList);
 }
 
 export async function getBookmarkData(id: string): Promise<Bookmark> {
   let progress = 0;
-  let list: string[] = getStore(bookmarkList);
+  let list: string[] = get(bookmarkList);
   if (list?.length) await bookmarkInit();
 
   // if (!findAsync)
   //   findAsync = (await import(/* webpackChunkName: "js-coroutines" */ "js-coroutines")).findAsync;
-  const meta: SiteMetadata | {} = getStore(siteMetadata);
+  const meta: SiteMetadata | {} = get(siteMetadata);
   const novelsMetadata: NovelMetadata[] = "novelsMetadata" in meta ? meta.novelsMetadata : [];
   if (!novelsMetadata.length) throw new Error("novelsMetadata is empty.");
   const recentHistory: HistoryRecent = await getRecentHistory(id);
@@ -105,7 +105,7 @@ export async function getBookmarkDataAll(): Promise<Bookmark[]> {
 export async function getBookmarkList(): Promise<string[]> {
   let list;
   try {
-    list = (await get(IDB_PREFIX_BOOKMARK_LIST, getBookmarkStore())) as string[];
+    list = (await getIDB(IDB_PREFIX_BOOKMARK_LIST, getBookmarkStore())) as string[];
   } catch (error) {
     console.error("Error reading bookmark list from IndexedDB.");
     throw new Error(error);
@@ -128,7 +128,7 @@ export async function appendBookmarkList(id: string): Promise<void> {
   if (await isBookmarkExist(id, list)) return;
 
   const newList = [id, ...list];
-  await set(IDB_PREFIX_BOOKMARK_LIST, newList, getBookmarkStore());
+  await setIDB(IDB_PREFIX_BOOKMARK_LIST, newList, getBookmarkStore());
   bookmarkList.set(newList);
 }
 
@@ -139,7 +139,7 @@ export async function getBookmarkLastRead(
   id: string,
   opts?: GetBookmarkLastReadOptions,
 ): Promise<string> {
-  const list: HistoryRecent[] = await get(IDB_PREFIX_HISTORY_RECENT);
+  const list: HistoryRecent[] = await getIDB(IDB_PREFIX_HISTORY_RECENT);
   if (!list) return await returnEmpty();
 
   const history: HistoryRecent = list.find((item) => item.id === id);
@@ -156,7 +156,7 @@ export async function getBookmarkLastRead(
 }
 
 async function getNovelFirstChapter(id: string) {
-  let meta = getStore(novelsData);
+  let meta = get(novelsData);
   if (!meta[id]) {
     meta[id] = await fetchNovelMetadata(id);
   }

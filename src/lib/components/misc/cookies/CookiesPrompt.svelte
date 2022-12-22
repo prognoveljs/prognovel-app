@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
   import { fly } from "svelte/transition";
   import { cubicIn } from "svelte/easing";
-  import { set } from "idb-keyval";
+  import { set as setIDB } from "idb-keyval";
   import { onMount } from "svelte";
 
   let blobCookieImg;
@@ -24,16 +24,16 @@
   const cookieYes = async () => {
     show = false;
     // load analytic here
-    await set("cookies-accept", true);
+    await setIDB("cookies-accept", true);
   };
   const cookieNo = async () => {
     show = false;
-    await set("cookies-accept", false);
+    await setIDB("cookies-accept", false);
   };
 </script>
 
 {#if show}
-  <div class="cookies" transition:fly={{ duration: 625, y: 100, ease: cubicIn }}>
+  <div class="cookies" transition:fly={{ duration: 625, y: 100, easing: cubicIn }}>
     <div>
       <div class:angry={state === "cookie-no"} class="blob">
         <img src={blobCookieImg} alt="Cookie Blob" />
@@ -43,14 +43,14 @@
       </div>
       {#if state === "explain"}
         <p>
-          Want some internet cookies? We're using cookie magic to gather your basic data like visit stats and
-          time spent so we can calculate stuff in our analytics. We do this because make better website and
-          send you personalized ads.
+          Want some internet cookies? We're using cookie magic to gather your basic data like visit
+          stats and time spent so we can calculate stuff in our analytics. We do this because make
+          better website and send you personalized ads.
         </p>
       {:else if state === "cookie-yes"}
         <p>
-          Don't worry, we promise we're gonna take a good care of your data and not to use it irresponsible
-          like selling to third party entities and other shady stuff.
+          Don't worry, we promise we're gonna take a good care of your data and not to use it
+          irresponsible like selling to third party entities and other shady stuff.
         </p>
       {:else if state === "cookie-no"}
         <p>

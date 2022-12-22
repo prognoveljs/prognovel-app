@@ -1,5 +1,5 @@
 import { downloadProgress, downloadCount, downloadNovel, downloadErrors } from "./store";
-import { get as getStore } from "svelte/store";
+import { get } from "svelte/store";
 import { toc } from "$lib/store/read-page/vars";
 import { offlineDB } from "./db";
 import type { Chapter } from "$typings";
@@ -17,7 +17,7 @@ async function fetchChapter(url: string, novel: string, book: string, chapter: s
   }
 
   downloadProgress.update((value) => value + 1);
-  console.log("Downloading", getStore(downloadProgress), "of", getStore(downloadCount));
+  console.log("Downloading", get(downloadProgress), "of", get(downloadCount));
   await offlineDB.set(novel, `${book}/${chapter}`, data[`${book}/${chapter}`]);
 }
 
@@ -43,7 +43,7 @@ interface DownloadRetry {
 }
 
 async function retryDownload(chapter: string) {
-  const retries = getStore(downloadErrors);
+  const retries = get(downloadErrors);
   downloadErrors.set([]);
 
   retries.forEach(async ({ url, chapter, novel }) => {
@@ -69,8 +69,8 @@ function batchDownload({ novel, chapters }) {
 }
 
 export function startDownload(downloadedNovel, novel, test = false) {
-  let progress = getStore(downloadProgress);
-  let chapterList = getStore(toc) as string[];
+  let progress = get(downloadProgress);
+  let chapterList = get(toc) as string[];
 
   if (!chapterList) return;
 

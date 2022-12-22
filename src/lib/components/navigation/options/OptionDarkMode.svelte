@@ -5,7 +5,7 @@
   import { scale } from "svelte/transition";
   import { onMount } from "svelte";
   import { cubicOut } from "svelte/easing";
-  import { get, set } from "idb-keyval";
+  import { get as getIDB, set as setIDB } from "idb-keyval";
 
   const DARK_MODE_DEFAULT = true;
 
@@ -14,7 +14,7 @@
 
   async function changeMode() {
     darkMode = !darkMode;
-    await set("darkMode", darkMode);
+    await setIDB("darkMode", darkMode);
     // const carbonCSS = darkMode ? "carbon-css/g90.css" : "carbon-css/g10.css";
     // (document.querySelector("#carbon-css") as HTMLLinkElement).href = `/style/${carbonCSS}`;
 
@@ -26,7 +26,7 @@
   }
 
   onMount(async () => {
-    const dark = await get("darkMode");
+    const dark = await getIDB("darkMode");
     if (dark !== undefined) {
       darkMode = dark;
     } else {

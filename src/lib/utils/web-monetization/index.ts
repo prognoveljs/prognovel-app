@@ -1,4 +1,4 @@
-import { derived, writable, readable, Readable, Writable, get as getStore } from "svelte/store";
+import { derived, writable, readable, Readable, Writable, get } from "svelte/store";
 import { currentNovel, novelsData, siteMetadata } from "$lib/store/states";
 import {
   getCurrentPointerPool,
@@ -105,15 +105,15 @@ export const revShareUsersLite: Readable<RevShareUser[]> = derived(
 let currentPool;
 export async function updatePaymentPointers(novel: string = "") {
   if (FORBIDDEN_NOVEL_ID.includes(novel)) novel = "";
-  let novelStore = getStore(novelsData)[novel];
-  let global_payment_pointers = getStore(siteMetadata).global_payment_pointers;
+  let novelStore = get(novelsData)[novel];
+  let global_payment_pointers = get(siteMetadata).global_payment_pointers;
   await new Promise((resolve) => {
     if ((!novel || novelStore) && global_payment_pointers) {
       resolve("");
     } else {
       let timer = setInterval(() => {
-        if (novel) novelStore = getStore(novelsData)[novel];
-        global_payment_pointers = getStore(siteMetadata).global_payment_pointers;
+        if (novel) novelStore = get(novelsData)[novel];
+        global_payment_pointers = get(siteMetadata).global_payment_pointers;
         if ((!novel || novelStore) && global_payment_pointers) {
           clearInterval(timer);
           resolve("");
@@ -121,10 +121,9 @@ export async function updatePaymentPointers(novel: string = "") {
       }, 300);
     }
   });
-  if (getStore(currentNovel) !== novel) return;
+  if (get(currentNovel) !== novel) return;
 
-  const websiteStaffBias =
-    getStore(siteMetadata).limit_global_payment_pointers_share_in_novel || "15%";
+  const websiteStaffBias = get(siteMetadata).limit_global_payment_pointers_share_in_novel || "15%";
   const novelStaffRevshare = (novelStore?.rev_share || []).map((data) => {
     return {
       ...data,

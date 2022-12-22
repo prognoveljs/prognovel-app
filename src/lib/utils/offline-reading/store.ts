@@ -1,4 +1,4 @@
-import { writable, get as getStore } from "svelte/store";
+import { writable, get } from "svelte/store";
 
 export const downloadProgress = writable(undefined);
 export const downloadCount = writable(undefined);
@@ -13,8 +13,8 @@ export function clearDownload(clearError = false) {
 }
 
 downloadProgress.subscribe(() => {
-  const progress = getStore(downloadProgress);
-  const count = getStore(downloadCount);
+  const progress = get(downloadProgress);
+  const count = get(downloadCount);
 
   if (progress >= count && progress !== undefined) {
   }

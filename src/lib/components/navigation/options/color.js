@@ -1,15 +1,15 @@
-import { writable, get as getStore } from "svelte/store";
-import { set, get } from "idb-keyval";
+import { writable, get } from "svelte/store";
+import { set as setIDB } from "idb-keyval";
 
 export const activeColor = writable("");
 
 export function setColor(hue, saturate, light, button) {
   const name = button.dataset.colorName;
 
-  if (name !== getStore(activeColor)) {
+  if (name !== get(activeColor)) {
     updateColorDOM(hue, saturate, light);
-    set("primary-color", { hue, saturate, light });
-    set("theme-active-color", name);
+    setIDB("primary-color", { hue, saturate, light });
+    setIDB("theme-active-color", name);
     activeColor.set(name);
     console.log("Changing color theme to", name);
   }

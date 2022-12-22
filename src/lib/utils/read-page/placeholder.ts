@@ -1,11 +1,11 @@
 import { FONT_SIZE, LINE_HEIGHT } from "./vars";
 import { ChapterState } from "./vars";
-import { get as getStore } from "svelte/store";
+import { get } from "svelte/store";
 import { chapterTitles } from "$lib/store/read-page/state";
 import type { Chapter } from "$typings";
 
 export function getLoadingPlaceholder(novel = "", book = "", chapter = ""): Chapter {
-  const titles = novel && book && chapter ? getStore(chapterTitles) : {};
+  const titles = novel && book && chapter ? get(chapterTitles) : {};
   return {
     title: titles?.[novel]?.[book]?.[chapter] || "Loading...",
     html: `
@@ -58,7 +58,7 @@ export function getLoadingPlaceholder(novel = "", book = "", chapter = ""): Chap
 }
 
 export function getErrorPlaceholder(novel = "", book = "", chapter = ""): Chapter {
-  const titles = novel && book && chapter ? getStore(chapterTitles) : {};
+  const titles = novel && book && chapter ? get(chapterTitles) : {};
   return {
     title: titles?.[novel]?.[book]?.[chapter] || "Error when reaching server",
     html: `

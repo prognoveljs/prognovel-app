@@ -6,7 +6,7 @@
  *
  */
 
-import { derived, writable, Writable, Readable, get as getStore } from "svelte/store";
+import { derived, writable, Writable, Readable, get } from "svelte/store";
 
 import { showAdjustFont, showComments, showStatsAndOptions, showTOC } from "./read-page/state";
 import { browser } from "$app/environment";
@@ -46,7 +46,7 @@ export function showReadPageWindow(state: any): void {
     .forEach((show) => {
       show.set(false);
     });
-  state.set(!Boolean(getStore(state)));
+  state.set(!Boolean(get(state)));
 }
 
 export const errorMessages: Writable<any[]> = writable([]);

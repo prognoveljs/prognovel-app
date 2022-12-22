@@ -1,6 +1,6 @@
 import { setNovelRecentHistory } from "./history";
 import { tick } from "svelte";
-import { get as getStore, writable, Writable } from "svelte/store";
+import { get, writable, Writable } from "svelte/store";
 // import { asyncTextRendering, toc, chaptersLoaded, infiniteLoading } from "$lib/store/read-page";
 import { isLaunchOnPWA } from "../pwa";
 import type { Chapter } from "$typings";
@@ -18,12 +18,12 @@ type RenderContentReady = {
 export const renderContentReady: Writable<RenderContentReady> = writable({});
 
 export function createContentDelay(novel: string, chapterIndex: string): Promise<any> {
-  const last = (getStore(toc) ?? []).slice(-3);
+  const last = (get(toc) ?? []).slice(-3);
   const includes = last.includes(chapterIndex);
   const [book, chapter] = chapterIndex.split("/");
-  const content: Chapter = getStore(chaptersLoaded)[getChapterStoreKey(novel, book, chapter)];
+  const content: Chapter = get(chaptersLoaded)[getChapterStoreKey(novel, book, chapter)];
 
-  if (includes && !content.monetization && !isLaunchOnPWA() && !getStore(enablePremiumContent)) {
+  if (includes && !content.monetization && !isLaunchOnPWA() && !get(enablePremiumContent)) {
     lastContent = `Ads: ${chapterIndex}`;
     return new Promise(() => {});
   } else {
@@ -76,7 +76,7 @@ export function contentRenderer(
   lastContent = JSON.stringify(content);
 
   tick().then(() => {
-    if (getStore(asyncTextRendering)) {
+    if (get(asyncTextRendering)) {
       _asyncTextRendering(content.html);
     } else {
       // TODO - Improve security when using innerHTML
@@ -86,7 +86,7 @@ export function contentRenderer(
       complete();
     }
 
-    if (!getStore(infiniteLoading)) {
+    if (!get(infiniteLoading)) {
       _updateNovelRecentHistory();
     }
   });

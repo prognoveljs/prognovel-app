@@ -1,4 +1,4 @@
-import { get as getStore } from "svelte/store";
+import { get } from "svelte/store";
 import { offlineDB } from "$lib/utils/offline-reading/db";
 // import { chaptersLoaded, chaptersAppended, toc, currentChapterCursor } from "$lib/store/read-page";
 import { getLoadingPlaceholder, getErrorPlaceholder } from "./placeholder";
@@ -58,9 +58,9 @@ export async function fetch_chapter(
 }
 
 export async function prefetchNextChapter() {
-  const tableOfContent: string[] = getStore(toc);
-  const novel = getStore(currentNovel);
-  const cursor = (getStore(currentChapterCursor) as number) + 1;
+  const tableOfContent: string[] = get(toc);
+  const novel = get(currentNovel);
+  const cursor = (get(currentChapterCursor) as number) + 1;
   const next = tableOfContent[cursor];
 
   if (import.meta.env.IS_STATIC_API && next && novel && cursor < tableOfContent.length - 1)
@@ -72,7 +72,7 @@ export async function prefetchChapter(
   book: string,
   chapter: string,
 ): Promise<Chapter | null> {
-  let dataLoaded = getStore(chaptersLoaded);
+  let dataLoaded = get(chaptersLoaded);
   let thisChapter = `${book}/${chapter}`;
   let data;
   let isFetchFailed = false;
@@ -89,7 +89,7 @@ export async function prefetchChapter(
   }
 
   async function useDynamicAPI(): Promise<Chapter | null> {
-    const chapterList = getStore(toc) as string[];
+    const chapterList = get(toc) as string[];
     if (!chapterList.length) {
       // BUGFIX - this will wait for TOC to be available and restart fetching chapter
       // sometimes it could happen when reading read page, where the chapter is being
@@ -97,7 +97,7 @@ export async function prefetchChapter(
       debounceFetchingChapter = { novel, book, chapter };
       return;
     }
-    const appendedChapters = getStore(chaptersAppended) as string[];
+    const appendedChapters = get(chaptersAppended) as string[];
     const isLastAppendedChapter = appendedChapters.slice(-1)[0] === `${book}/${chapter}`;
     if (appendedChapters.includes(thisChapter) && !isLastAppendedChapter) return;
 
@@ -164,7 +164,7 @@ export function appendChapter(
   },
 ) {
   const key = getChapterStoreKey(novel, book, chapter);
-  const store: any = getStore(chaptersLoaded);
+  const store: any = get(chaptersLoaded);
   data = normalizeMeta(data);
 
   if (meta.failed) {
@@ -196,6 +196,6 @@ export function appendChapter(
 
 if (browser) {
   (window as any).showLoadedChapters = () => {
-    console.log(getStore(chaptersLoaded));
+    console.log(get(chaptersLoaded));
   };
 }

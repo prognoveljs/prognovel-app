@@ -1,5 +1,5 @@
 import { novelsData } from "$lib/store/states";
-import { derived, get as getStore, Readable } from "svelte/store";
+import { derived, get, Readable } from "svelte/store";
 import { fetchNovelMetadata } from "$lib/utils/fetch-metadata";
 import { getCoverURLPath } from "$lib/utils/images";
 import { getNovelRecentHistory } from "$lib/utils/read-page/history";
@@ -14,7 +14,7 @@ export function getNovelBookCoverSrc(
 }
 
 export async function getNovelFirstChapter(novel: string): Promise<string> {
-  let novelsMetadata: NovelsMetadata = getStore(novelsData);
+  let novelsMetadata: NovelsMetadata = get(novelsData);
 
   if (!novelsMetadata[novel]) {
     novelsMetadata[novel] = await fetchNovelMetadata(novel);
@@ -52,7 +52,7 @@ export const novelCoverPlaceholders: {
  * @returns NovelsMetadata
  */
 export function loadPartialNovelsMetadata(siteMetadata: SiteMetadata): NovelsMetadata {
-  const novelsMetadata: NovelsMetadata = getStore(novelsData);
+  const novelsMetadata: NovelsMetadata = get(novelsData);
   const novelList: string[] = siteMetadata.novels;
 
   novelList.forEach((novel) => {
@@ -79,7 +79,7 @@ export interface ReadNowObject extends HistoryRecent {
   link: string;
 }
 export async function handleBeginReadingButton(novel: string): Promise<ReadNowObject> {
-  const tableOfContent: string[] = getStore(toc);
+  const tableOfContent: string[] = get(toc);
   if (!tableOfContent.length) return;
   const recent = await getNovelRecentHistory(novel);
 

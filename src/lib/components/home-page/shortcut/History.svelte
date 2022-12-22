@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { get } from "idb-keyval";
+  import { get as getIDB } from "idb-keyval";
   import { IDB_PREFIX_HISTORY_RECENT } from "$lib/utils/history";
   import { formatDistanceToNow } from "date-fns";
   import { siteMetadata } from "$lib/store/states";
@@ -13,7 +13,7 @@
   let history: HistoryRecent[] = [];
 
   onMount(async () => {
-    const saved: HistoryRecent[] = await get(IDB_PREFIX_HISTORY_RECENT);
+    const saved: HistoryRecent[] = await getIDB(IDB_PREFIX_HISTORY_RECENT);
     if (saved) {
       history = saved;
     }

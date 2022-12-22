@@ -6,7 +6,7 @@
   import iconList from "$lib/assets/feather-icons/menu.svg?raw";
   import DisplayList from "./novel-list/DisplayList.svelte";
   import { browser } from "$app/environment";
-  import { set } from "idb-keyval";
+  import { set as setIDB } from "idb-keyval";
   import { onMount } from "svelte";
   import SkeletonShell from "../SkeletonShell.svelte";
 
@@ -22,7 +22,7 @@
 
   function selectMode(mode: DisplayMode) {
     displayMode = mode;
-    set("novel-list-display", mode);
+    setIDB("novel-list-display", mode);
   }
 </script>
 
@@ -38,14 +38,14 @@
     </h2>
     <div class="options">
       <IconSvg
-        on:click={() => selectMode("grid")}
-        --color={displayMode === "grid" ? SELECTED_COLOR : "currentColor"}
-        data={iconGrid}
-      />
-      <IconSvg
         on:click={() => selectMode("list")}
         --color={displayMode === "list" ? SELECTED_COLOR : "currentColor"}
         data={iconList}
+      />
+      <IconSvg
+        on:click={() => selectMode("grid")}
+        --color={displayMode === "grid" ? SELECTED_COLOR : "currentColor"}
+        data={iconGrid}
       />
     </div>
   </div>

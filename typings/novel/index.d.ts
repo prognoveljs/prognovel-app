@@ -65,3 +65,12 @@ export interface Volume {
   created?: DOMHighResTimeStamp;
   updated?: DOMHighResTimeStamp;
 }
+
+export type novelsStats = {
+  [id: string]: {
+    views?: number;
+    likes?: number;
+    rating?: number;
+    followers?: number;
+  };
+};

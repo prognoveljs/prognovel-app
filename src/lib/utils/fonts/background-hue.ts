@@ -1,5 +1,5 @@
 import { writable, Writable } from "svelte/store";
-import { set, get } from "idb-keyval";
+import { set as setIDB, get as getIDB } from "idb-keyval";
 import { browser } from "$app/environment";
 
 const IDB_COLOR_HUE: string = "reader-background-hue";
@@ -13,8 +13,8 @@ export const colorHue: Writable<number> = writable(DEFAULT_HUE);
 export const colorizedBackground: Writable<boolean> = writable(false);
 
 export async function colorHueInit(): Promise<void> {
-  const hue = (await get(IDB_COLOR_HUE)) as number;
-  const useHue = (await get(IDB_USE_COLOR_HUE)) as boolean;
+  const hue = (await getIDB(IDB_COLOR_HUE)) as number;
+  const useHue = (await getIDB(IDB_USE_COLOR_HUE)) as boolean;
 
   if (hue) colorHue.set(hue);
   if (useHue !== null) colorizedBackground.set(useHue);
@@ -22,7 +22,7 @@ export async function colorHueInit(): Promise<void> {
 }
 
 if (browser) {
-  get(IDB_COLOR_HUE).then((hue: number | undefined) => {
+  getIDB(IDB_COLOR_HUE).then((hue: number | undefined) => {
     if (hue) colorHue.set(hue);
     colorHue.subscribe((hue: number) => {
       if (!browser) return;
@@ -33,17 +33,17 @@ if (browser) {
       content.style.setProperty("--readPageColorHue", hue.toString());
 
       // TODO debounce font size save
-      set(IDB_COLOR_HUE, hue);
+      setIDB(IDB_COLOR_HUE, hue);
     });
   });
 
-  get(IDB_USE_COLOR_HUE).then((useHue: boolean | undefined) => {
+  getIDB(IDB_USE_COLOR_HUE).then((useHue: boolean | undefined) => {
     if (useHue) colorizedBackground.set(useHue);
     colorizedBackground.subscribe((useHue: boolean) => {
       if (!browser) return;
       console.log(useHue);
       // TODO debounce font size save
-      set(IDB_USE_COLOR_HUE, useHue);
+      setIDB(IDB_USE_COLOR_HUE, useHue);
     });
   });
 }

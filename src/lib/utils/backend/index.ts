@@ -1,8 +1,6 @@
 import { browser } from "$app/environment";
 import { backend } from "$lib/store/backend";
 import { loadUserFromCookies } from "./user";
-// import { writable, Writable, get as getStore } from "svelte/store";
-// import Surreal from "pocketbase";
 
 export let backendReady = new Promise(() => {});
 const URL: string = import.meta.env.POCKETBASE_URL;

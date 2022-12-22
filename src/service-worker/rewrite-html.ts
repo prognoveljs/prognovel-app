@@ -1,14 +1,14 @@
 import { DEFAULT_PRIMARY_COLOR, colorRegex } from "$lib/utils/color/_vars";
-import { get } from "idb-keyval";
+import { get as getIDB } from "idb-keyval";
 import type { Color } from "$typings";
 
 export const rewriteHTML = async (response: Response, preload = {}) => {
   try {
     console.time("sw-indexeddb-fetch");
     let [darkMode, primaryColor, novelListDisplay] = await Promise.all([
-      get("darkMode"),
-      get("primary-color"),
-      get("novel-list-display"),
+      getIDB("darkMode"),
+      getIDB("primary-color"),
+      getIDB("novel-list-display"),
     ]);
     console.timeEnd("sw-indexeddb-fetch");
     // let darkMode: boolean | undefined = (await get("darkMode")) ?? true;

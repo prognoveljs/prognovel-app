@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
   import { onMount } from "svelte";
-  import { get } from "idb-keyval";
+  import { get as getIDB } from "idb-keyval";
   import { activeColor } from "./color";
   import ColorsButton from "./OptionColorsButton.svelte";
 
@@ -13,7 +13,7 @@
 
   async function initColors() {
     const res = await fetch("/style/color-themes.json");
-    $activeColor = (await get("theme-active-color")) || "basic";
+    $activeColor = (await getIDB("theme-active-color")) || "basic";
 
     let obj;
     let tempColors = [];
@@ -33,7 +33,9 @@
 </script>
 
 <h5 aria-roledescription="label">Color themes</h5>
-<div style="grid-template-columns: repeat(auto-fill, {size}); grid-template-rows: repeat(auto-fill, {size});">
+<div
+  style="grid-template-columns: repeat(auto-fill, {size}); grid-template-rows: repeat(auto-fill, {size});"
+>
   {#if colors.length}
     {#each colors as color}
       <ColorsButton {...color} />

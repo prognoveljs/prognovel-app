@@ -1,6 +1,6 @@
-import { get as getStore } from "svelte/store";
+import { get } from "svelte/store";
 import { siteMetadata, novelsData } from "$lib/store/states";
-import { set, get, createStore } from "idb-keyval";
+import { set as setIDB, get as getIDB, createStore } from "idb-keyval";
 import type { SiteMetadata, NovelMetadata } from "$typings";
 
 export const getMetadataStore = () => createStore("app-metadata", "api");
@@ -14,11 +14,11 @@ export async function fetchSiteMetadata(): Promise<SiteMetadata> {
   try {
     const response = await fetch(url.href);
     data = await response.json();
-    await set(IDB_HOMEPAGE_PREFIX, data, getMetadataStore());
+    await setIDB(IDB_HOMEPAGE_PREFIX, data, getMetadataStore());
   } catch (err) {
     console.error("Failed to fetch site metadata from server.");
     try {
-      data = await get(IDB_HOMEPAGE_PREFIX, getMetadataStore());
+      data = await getIDB(IDB_HOMEPAGE_PREFIX, getMetadataStore());
     } catch (error) {
       console.error("Error reading site metadata from IndexedDB.");
       throw new Error(error);
@@ -53,10 +53,10 @@ export async function fetchNovelMetadata(id: string): Promise<NovelMetadata> {
     const response = await fetch(url.href);
     data = await response.json();
     // console.log("🚀 fetching novel metadata", data);
-    await set(IDB_NOVEL_PREFIX + id, data, getMetadataStore());
+    await setIDB(IDB_NOVEL_PREFIX + id, data, getMetadataStore());
   } catch (err) {
     console.error(`Failed to fetch ${id} from server.`);
-    data = await get(IDB_NOVEL_PREFIX + id, getMetadataStore());
+    data = await getIDB(IDB_NOVEL_PREFIX + id, getMetadataStore());
     if (!data) {
       const staleResponse = await fetch(`/publish/${id}/metadata.json`);
       data = await staleResponse.json();
@@ -71,7 +71,7 @@ export async function fetchNovelMetadata(id: string): Promise<NovelMetadata> {
 }
 
 export async function getLocalNovelMetadataCache(id: string): Promise<NovelMetadata> {
-  const data: NovelMetadata = await get(IDB_NOVEL_PREFIX + id, getMetadataStore());
+  const data: NovelMetadata = await getIDB(IDB_NOVEL_PREFIX + id, getMetadataStore());
 
   // console.log("💾 loading novel metadata", data);
   updateNovelMeta(id, data);
@@ -85,7 +85,7 @@ function updateNovelMeta(id: string, data: NovelMetadata, source = "") {
     return;
   }
 
-  const update = getStore(novelsData);
+  const update = get(novelsData);
   update[id] = data;
   novelsData.set(update);
 }

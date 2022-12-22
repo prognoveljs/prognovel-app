@@ -31,7 +31,7 @@
 // read-page-trigger.ts
 
 import { novelsData, currentNovel } from "$lib/store/states";
-import { get as getStore } from "svelte/store";
+import { get } from "svelte/store";
 import { tick } from "svelte";
 import { fetchNovelMetadata } from "$lib/utils/fetch-metadata";
 import { fireDebounceFetchChapter } from "$lib/utils/read-page/fetch-content";
@@ -47,7 +47,7 @@ if (browser) {
       toc.set([]);
       return;
     }
-    let meta: any = getStore(novelsData);
+    let meta: any = get(novelsData);
     meta[novel] = await fetchNovelMetadata(novel);
     updateChapterTitles(novel, meta[novel].chapterTitles);
     toc.set(meta[novel].chapters);
@@ -58,7 +58,7 @@ if (browser) {
 
 async function updateChapterTitles(novel: string, freshChapterTitles?: ChapterTitles) {
   let data: ChapterTitles;
-  let titles = getStore(chapterTitles);
+  let titles = get(chapterTitles);
   if (titles[novel]) return;
 
   if (freshChapterTitles) {
@@ -91,7 +91,7 @@ async function updateChapterTitles(novel: string, freshChapterTitles?: ChapterTi
     },
     {},
   );
-  titles = getStore(chapterTitles) ?? {};
+  titles = get(chapterTitles) ?? {};
   titles[novel] = novelChapterTitles;
   chapterTitles.set(titles);
 }

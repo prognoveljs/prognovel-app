@@ -1,4 +1,4 @@
-import { writable, get as getStore, derived, Readable, Writable } from "svelte/store";
+import { writable, get, derived, Readable, Writable } from "svelte/store";
 import type { Chapter } from "$typings";
 
 export const toc: Writable<string[]> = writable([]);

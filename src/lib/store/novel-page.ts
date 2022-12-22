@@ -1,7 +1,8 @@
-import { derived, Readable, Writable, writable, get as getStore } from "svelte/store";
+import { derived, Readable, Writable, writable, get } from "svelte/store";
 import { currentNovel, novelsData, siteMetadata, showSettings } from "./states";
 import { showTOC } from "./read-page/state";
 import { createDerivedNovelsMetadata } from "$lib/utils/novel-page";
+import type { novelsStats } from "$typings/novel";
 // export let revenueSharing = writable([]);
 export let genreFilter: Writable<string[]> = writable([]);
 export let entireSiteGenres: Readable<string[]> = derived([siteMetadata], ([metadata]) => {
@@ -30,6 +31,9 @@ export const showRevshareStats: Writable<boolean> = writable(false);
 export const showAffiliateReferrer: Writable<boolean> = writable(false);
 export const showDownload: Writable<boolean> = writable(false);
 
+export const liteNovelsStats: Writable<novelsStats> = writable({});
+
+// TODO - OBSELETE
 export const liteNovelsMetadata: Readable<any> = derived(siteMetadata, ($meta: SiteMetadata) => {
   return createDerivedNovelsMetadata($meta);
 });
@@ -41,13 +45,14 @@ const novelPageState = [
   showSettings,
   showDownload,
 ];
+
 export function showNovelPageWindow(state: any): void {
   novelPageState
     .filter((s) => s !== state)
     .forEach((show) => {
       show.set(false);
     });
-  state.set(!Boolean(getStore(state)));
+  state.set(!Boolean(get(state)));
 
   // test
 }

@@ -1,4 +1,4 @@
-import { get, set, del, keys, createStore, Store } from "idb-keyval";
+import { get as getIDB, set as setIDB, del, keys, createStore, Store } from "idb-keyval";
 import type { Chapter } from "$typings";
 
 /** Offline database to store chapters
@@ -9,11 +9,11 @@ import type { Chapter } from "$typings";
  */
 export const offlineDB = {
   async get(novel: string, chapterIndex: string): Promise<Chapter> {
-    return await get(chapterIndex, this.getStore(novel));
+    return await getIDB(chapterIndex, this.getStore(novel));
   },
 
   async set(novel: string, chapterIndex: string, value: Chapter): Promise<void> {
-    await set(chapterIndex, value, this.getStore(novel));
+    await setIDB(chapterIndex, value, this.getStore(novel));
   },
 
   async delete(novel: string, chapterIndex: string = undefined): Promise<void> {

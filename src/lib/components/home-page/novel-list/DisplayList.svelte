@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { liteNovelsStats } from "$lib/store/novel-page";
   import {
     getNovelBookCoverSrc,
     novelCoverSubtitle,
@@ -6,30 +7,51 @@
     novelTitles,
     tagColorizer,
   } from "$lib/utils/novel-page";
-  import thumbsUpIcon from "$lib/assets/feather-icons/thumbs-up.svg?raw";
-  import listIcon from "$lib/assets/feather-icons/list.svg?raw";
-  import IconSvg from "$lib/components/IconSVG.svelte";
+  import { EyeIcon, ThumbsUpIcon, UsersIcon } from "svelte-feather-icons";
 
   const list = import.meta.env.IS_DEMO ? Array(6).fill("yashura-legacy") : novelList;
 </script>
 
 <section class="list">
-  {#each list as novel, listIndex}
+  {#each list as novelID, listIndex}
     <div class="item" style="--index: {listIndex ? listIndex : listIndex + 1};">
-      <a href="/novel/{novel}">
-        <img src={getNovelBookCoverSrc(novel)} alt={novelTitles[novel]} width="64" height="64" />
-        <div class="title">
+      <a href="/novel/{novelID}">
+        <img
+          src={getNovelBookCoverSrc(novelID)}
+          alt={novelTitles[novelID]}
+          width="64"
+          height="64"
+        />
+        <section class="title">
           <div>
             <div class="subtitle">
-              {#each $novelCoverSubtitle[novel].split(" ") as tag, tagIndex}
+              {#each $novelCoverSubtitle[novelID].split(" ") as tag, tagIndex}
                 <span style="--delay: {tagIndex}; color:{tagColorizer(tag)};">
                   {tag}
                 </span>
               {/each}
             </div>
-            <h3>{novelTitles[novel]}</h3>
+            <h3>{novelTitles[novelID]}</h3>
           </div>
-        </div>
+        </section>
+        <section class="views">
+          <span>
+            <EyeIcon size="18" /> views
+          </span>
+          <strong>{$liteNovelsStats[novelID]?.views ?? "--"}</strong>
+        </section>
+        <section class="likes">
+          <span>
+            <ThumbsUpIcon size="18" /> likes
+          </span>
+          <strong>{$liteNovelsStats[novelID]?.likes ?? "--"}</strong>
+        </section>
+        <section class="followers">
+          <span>
+            <UsersIcon size="18" /> followers
+          </span>
+          <strong>{$liteNovelsStats[novelID]?.followers ?? "--"}</strong>
+        </section>
       </a>
     </div>
   {/each}
@@ -49,7 +71,7 @@
       --overlay-color: #0006;
       a {
         display: grid;
-        grid-template-columns: 64px minmax(0, 4fr) 1fr 1fr;
+        grid-template-columns: 64px minmax(0, 4fr) 1fr 1fr 1fr;
         gap: 12px;
         align-items: center;
         padding: 8px;
@@ -59,10 +81,12 @@
           grid-template-columns: 64px minmax(0, 4fr) 1fr 1fr;
         }
       }
+
       border-radius: 4px;
       background-color: var(--foreground-color);
       transition: all 0.16s ease-in;
       position: relative;
+      padding-right: 2em;
 
       counter-increment: section;
       z-index: var(--index);
@@ -153,6 +177,32 @@
       @include screen("tablet") {
         margin-bottom: 12px;
         border: 2px solid var(--primary-color-lighten-3);
+      }
+
+      .views,
+      .likes,
+      .followers {
+        line-height: 1.2;
+        text-align: center;
+        align-self: flex-start;
+
+        span {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0.725;
+
+          :global(svg) {
+            margin-right: 0.4em;
+            opacity: 0.6;
+          }
+        }
+
+        strong {
+          display: block;
+          font-size: 1.5em;
+          line-height: 1.5;
+        }
       }
     }
   }

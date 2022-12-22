@@ -1,5 +1,5 @@
 import { browser } from "$app/environment";
-import { get as getStore, Writable, writable } from "svelte/store";
+import { get, Writable, writable } from "svelte/store";
 import { profile, userData } from "$lib/store/user";
 import type { User } from "$typings/user";
 import { backend } from "../backend";
@@ -33,14 +33,14 @@ export function createCoin() {
     },
     async fetchValue() {
       try {
-        const data = await getStore(backend).send("/api/fetch-coin/" + getStore(profile)?.id, {});
+        const data = await get(backend).send("/api/fetch-coin/" + get(profile)?.id, {});
         this.setter(data);
       } catch (error) {
         console.error("Coin error:", error);
       }
     },
     async getCoin() {
-      const data = await getStore(backend).send("/api/get-coin/" + getStore(profile)?.id, {});
+      const data = await get(backend).send("/api/get-coin/" + get(profile)?.id, {});
       this.setter(data);
     },
     // set() {},

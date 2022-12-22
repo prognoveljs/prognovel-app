@@ -1,12 +1,12 @@
 import { writable, Writable } from "svelte/store";
-import { set, get } from "idb-keyval";
+import { set as setIDB, get as getIDB } from "idb-keyval";
 import { browser } from "$app/environment";
 
 const IDB_FONT_SIZE: string = "reader-font-size";
 export const fontSize: Writable<number> = writable(100);
 
 export async function fontSizeInit(): Promise<void> {
-  const size = (await get(IDB_FONT_SIZE)) as number;
+  const size = (await getIDB(IDB_FONT_SIZE)) as number;
 
   if (!size) return;
   // TODO throttle save to IndexedDB
@@ -14,7 +14,7 @@ export async function fontSizeInit(): Promise<void> {
 }
 
 if (browser) {
-  get(IDB_FONT_SIZE).then((size: number | undefined) => {
+  getIDB(IDB_FONT_SIZE).then((size: number | undefined) => {
     if (size) fontSize.set(size);
     fontSize.subscribe((size: number) => {
       if (!browser) return;
@@ -25,7 +25,7 @@ if (browser) {
       content.style.setProperty("--readPageFontCustomRatio", (size / 100).toString());
 
       // TODO debounce font size save
-      set(IDB_FONT_SIZE, size);
+      setIDB(IDB_FONT_SIZE, size);
     });
   });
 }

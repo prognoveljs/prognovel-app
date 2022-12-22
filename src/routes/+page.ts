@@ -1,5 +1,5 @@
 import { SITE_TITLE } from "$lib/_setting";
-import { get } from "idb-keyval";
+import { get as getIDB } from "idb-keyval";
 import { fetchSiteMetadata, getMetadataStore } from "$lib/utils/fetch-metadata";
 import { loadPartialNovelsMetadata, novelTitles } from "$lib/utils/novel-page";
 import { error } from "@sveltejs/kit";
@@ -25,7 +25,7 @@ export async function load({ params, query }) {
   url = `${import.meta.env.BACKEND_API}`;
   if (browser) {
     const store = getMetadataStore();
-    data = await get("homepage", store);
+    data = await getIDB("homepage", store);
 
     if (!data) {
       // @ts-ignore

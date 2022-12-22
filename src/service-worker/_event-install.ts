@@ -1,5 +1,5 @@
 /// <reference lib="webworker" />
-import { get } from "idb-keyval";
+import { get as getIDB } from "idb-keyval";
 import { assets } from "./_vars";
 
 declare var self: any;
@@ -11,7 +11,7 @@ self.addEventListener("install", (event: FetchEvent) => {
 async function initCache(event): Promise<void> {
   const cache: Cache = await caches.open(assets.name);
   const files = assets.cache.files();
-  const hasInstalled = await get("service-worker-installed");
+  const hasInstalled = await getIDB("service-worker-installed");
   const broadcast = new BroadcastChannel("service-worker");
   let downloaded = 0;
 

@@ -1,6 +1,6 @@
 import { tick } from "svelte";
 import { isMobileScreen } from "$lib/utils/mobile";
-import { get as getStore } from "svelte/store";
+import { get } from "svelte/store";
 import { customBreadcrubChildren } from "./custom-title";
 
 export function getBreadcrumbSegments(path) {
@@ -16,7 +16,7 @@ export function getBreadcrumbSegments(path) {
 
 const stopWords = ["of", "for", "the", "and", "to", "with"];
 export function getBreadcrumbParentLabel(segment) {
-  const custom = getStore(customBreadcrubChildren);
+  const custom = get(customBreadcrubChildren);
   if (custom?.[segment]) return custom?.[segment]?.label;
   switch (segment) {
     case "discussions":

@@ -1,6 +1,6 @@
 import { toc } from "$lib/store/read-page/vars";
 import { chaptersAppended } from "$lib/store/read-page/state";
-import { get as getStore } from "svelte/store";
+import { get } from "svelte/store";
 
 export function getSlug(page, options = {}) {
   const slug = page.params.slug;
@@ -36,7 +36,7 @@ export function getChapterUrl(
   chapter: string,
   prefetch: number = 0,
 ): string {
-  let chapterList = getStore(toc) as string[];
+  let chapterList = get(toc) as string[];
   const start = chapterList.findIndex((ch) => ch === `${book}/${chapter}`);
   const end = start + prefetch + 1;
   let list = chapterList.slice(start, end);

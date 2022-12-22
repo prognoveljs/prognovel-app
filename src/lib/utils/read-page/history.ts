@@ -1,15 +1,15 @@
 import { saveRecent, IDB_PREFIX_HISTORY_RECENT } from "$lib/utils/history";
-import { get as getStore } from "svelte/store";
+import { get } from "svelte/store";
 import { liteNovelsMetadata } from "$lib/store/novel-page";
-import { get } from "idb-keyval";
+import { get as getIDB } from "idb-keyval";
 import { toc } from "$lib/store/read-page/vars";
 import { goto } from "$app/navigation";
 import type { HistoryRecent } from "$typings";
 
 let findIndexAsync;
 export async function setNovelRecentHistory(novel: string, chapter: string) {
-  const recent: HistoryRecent[] = await get(IDB_PREFIX_HISTORY_RECENT);
-  const chapterList: string[] = getStore(toc);
+  const recent: HistoryRecent[] = await getIDB(IDB_PREFIX_HISTORY_RECENT);
+  const chapterList: string[] = get(toc);
   let novelHistory: HistoryRecent;
   let cursorOld: number | Number = -1;
   // if (!findIndexAsync)
@@ -31,7 +31,7 @@ export async function setNovelRecentHistory(novel: string, chapter: string) {
 }
 
 export async function getNovelRecentHistory(novel: string): Promise<HistoryRecent> {
-  const history: HistoryRecent[] = await get(IDB_PREFIX_HISTORY_RECENT);
+  const history: HistoryRecent[] = await getIDB(IDB_PREFIX_HISTORY_RECENT);
   let novelHistory: HistoryRecent;
   if (history && history.length) {
     novelHistory = history.filter((obj) => obj.id === novel)[0];
@@ -51,7 +51,7 @@ export function setBrowserHistory(
   chIndex: string,
   { title, init, path }: HistoryOptions,
 ) {
-  let titles = getStore(liteNovelsMetadata);
+  let titles = get(liteNovelsMetadata);
   let novelTitle = titles?.[novel]?.title ?? novel;
 
   if (!init) {

@@ -3,16 +3,16 @@ import { currentNovel } from "$lib/store/states";
 import { currentBook, currentChapter, currentChapterCursor, toc } from "./vars";
 import { handleBeginReadingButton, ReadNowObject } from "$lib/utils/novel-page";
 import { browser } from "$app/environment";
-import { get, set } from "idb-keyval";
+import { get as getIDB, set as setIDB } from "idb-keyval";
 
 export const infiniteLoading: Writable<boolean> = writable(false);
 
 if (browser) {
-  get("infinite-loading").then((infinite) => {
+  getIDB("infinite-loading").then((infinite) => {
     infiniteLoading.set(infinite);
   });
   infiniteLoading.subscribe((infinite) => {
-    set("infinite-loading", infinite);
+    setIDB("infinite-loading", infinite);
   });
 }
 
