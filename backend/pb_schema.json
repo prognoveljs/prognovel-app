@@ -280,7 +280,7 @@
     "listRule": "",
     "viewRule": "",
     "createRule": "@request.auth.id = author.id",
-    "updateRule": "@request.auth.role.novelAccess.id = id || @request.auth.id = author.id",
+    "updateRule": "@request.auth.id = author.id",
     "deleteRule": "@request.auth.id = author.id",
     "options": {}
   },
@@ -353,9 +353,9 @@
     ],
     "listRule": "",
     "viewRule": "",
-    "createRule": "@request.auth.id = novel_parent.author.id || @request.auth.role.novel_access.id = novel_parent.id",
-    "updateRule": "@request.auth.id = novel_parent.author.id || @request.auth.role.novel_access.id = novel_parent.id",
-    "deleteRule": "@request.auth.id = novel_parent.author.id || @request.auth.role.novel_access.id = novel_parent.id",
+    "createRule": "@request.auth.id = novel_parent.author.id ",
+    "updateRule": "@request.auth.id = novel_parent.author.id ",
+    "deleteRule": "@request.auth.id = novel_parent.author.id",
     "options": {}
   },
   {
@@ -492,9 +492,9 @@
     ],
     "listRule": "",
     "viewRule": "",
-    "createRule": "@request.auth.role.novel_access.id = novel_parent.id || novel_parent.author.id = @request.auth.id",
-    "updateRule": "@request.auth.role.novel_access.id = novel_parent.id || novel_parent.author.id = @request.auth.id",
-    "deleteRule": "@request.auth.role.novel_access.id = novel_parent.id || novel_parent.author.id = @request.auth.id",
+    "createRule": "novel_parent.author.id = @request.auth.id",
+    "updateRule": "novel_parent.author.id = @request.auth.id",
+    "deleteRule": "novel_parent.author.id = @request.auth.id",
     "options": {}
   },
   {
