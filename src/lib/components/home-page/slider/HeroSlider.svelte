@@ -7,9 +7,9 @@
   const AUTO_NAVIGATE_DELAY = 5000;
   let cursor = 0;
   let timer;
-  $: highlightNovels = novelList as string;
+  $: highlightNovels = [] as string[];
   // $: highlightNovels = ["yashura-legacy", "yashura-legacy"];
-  $: novelDataWithSynopsis = $novelsData?.[highlightNovels[cursor]] ? $novelsData : novelSynopsises;
+  $: novelDataWithSynopsis = $novelsData?.[highlightNovels[cursor]] ? $novelsData : {};
 
   onMount(() => {
     timer = setInterval(autoNavigate, AUTO_NAVIGATE_DELAY);
