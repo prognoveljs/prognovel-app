@@ -22,9 +22,9 @@
 
   export let data;
 
-  $: novelList = data.novelList as string[];
-  $: sitemetadata = data.sitemetadata as SiteMetadata & PreloadData;
-  $: novelsMetadata = data.novelsMetadata as NovelsMetadata;
+  $: novelList = (data.novelList as string[]) ?? [];
+  $: sitemetadata = (data.sitemetadata as SiteMetadata & PreloadData) ?? {};
+  $: novelsMetadata = (data.novelsMetadata as NovelsMetadata) ?? {};
   $: bookmarkData = data.bookmarkData as Bookmark[];
 
   setContext("data_static", {

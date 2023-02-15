@@ -7,13 +7,6 @@ import purgeCSS from "@fullhuman/postcss-purgecss";
 import { optimizeImports } from "carbon-preprocess-svelte";
 import { readFileSync } from "fs";
 
-let siteMetadata;
-try {
-  siteMetadata = JSON.parse(readFileSync("./.cache/assets/publish/sitemetadata.json", "utf-8"));
-} catch (error) {
-  console.error(error);
-}
-
 /** @type {import('@sveltejs/kit').Config} */
 export default {
   extensions: [".svelte", ".svx"],
@@ -42,9 +35,9 @@ export default {
     adapter: adapter({
       fallback: "200.html",
     }),
-    prerender: {
-      entries: ["*", ...(siteMetadata?.novels || []).map((novel) => `/novel/${novel}/`)],
-    },
+    // prerender: {
+    //   entries: ["*"],
+    // },
     trailingSlash: "always",
     // vite: {
 

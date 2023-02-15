@@ -23,27 +23,27 @@ export async function getNovelFirstChapter(novel: string): Promise<string> {
   return novelsMetadata[novel].chapters?.[0] ?? "";
 }
 
-export const novelList: string[] = import.meta.env.NOVEL_LIST;
+// export const novelList: string[] = import.meta.env.NOVEL_LIST ?? [];
 
-export const novelTitles: {
-  [novel: string]: string;
-} = import.meta.env.NOVEL_TITLES;
+// export const novelTitles: {
+//   [novel: string]: string;
+// } = import.meta.env.NOVEL_TITLES ?? {};
 
-export const novelGenres: {
-  [novel: string]: string[];
-} = import.meta.env.NOVEL_GENRES;
+// export const novelGenres: {
+//   [novel: string]: string[];
+// } = import.meta.env.NOVEL_GENRES ?? {};
 
-export const novelDemographics: {
-  [novel: string]: string;
-} = import.meta.env.NOVEL_DEMOGRAPHICS;
+// export const novelDemographics: {
+//   [novel: string]: string;
+// } = import.meta.env.NOVEL_DEMOGRAPHICS ?? {};
 
-export const novelSynopsises: {
-  [novel: string]: string;
-} = import.meta.env.NOVEL_SYNOPSISES;
+// export const novelSynopsises: {
+//   [novel: string]: string;
+// } = import.meta.env.NOVEL_SYNOPSISES ?? {};
 
-export const novelCoverPlaceholders: {
-  [novel: string]: string;
-} = import.meta.env.NOVEL_COVER_PLACEHOLDERS;
+// export const novelCoverPlaceholders: {
+//   [novel: string]: string;
+// } = import.meta.env.NOVEL_COVER_PLACEHOLDERS ?? {};
 /**
  * Load novels metadata from memory. If a novel data hasn't been fetched from API, it will
  * returns the short version from parent site metadata that contains novel title, author, chapter numbers,
@@ -98,9 +98,9 @@ export async function handleBeginReadingButton(novel: string): Promise<ReadNowOb
 export const novelCoverSubtitle: Readable<{
   [novel: string]: string;
 }> = derived([novelsData], (novel_data) => {
-  return novelList.reduce((result, novel: string) => {
-    const genres: string[] = novel_data?.[novel] || novelGenres[novel] || [];
-    const demographic: string = novel_data?.[novel] || novelDemographics[novel] || "";
+  return Object.keys(novelsData).reduce((result, novel: string) => {
+    const genres: string[] = novel_data?.[novel] || [];
+    const demographic: string = novel_data?.[novel] || "";
     const subtitle = demographic ? `#${demographic}` : "";
     result[novel] =
       subtitle +

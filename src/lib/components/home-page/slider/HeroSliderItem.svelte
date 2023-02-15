@@ -1,24 +1,23 @@
 <script lang="ts">
   import { scale } from "svelte/transition";
   import { goto, prefetch } from "$app/navigation";
-  import {
-    novelCoverPlaceholders,
-    novelCoverSubtitle,
-    novelSynopsises,
-    novelTitles,
-    tagColorizer,
-  } from "$lib/utils/novel-page";
+  import { novelCoverSubtitle, tagColorizer } from "$lib/utils/novel-page";
   import { onMount } from "svelte";
   import BookCover from "$lib/components/BookCover.svelte";
+  import { novelsData } from "$lib/store/states";
+  import { BLANK_IMAGE } from "$lib/utils/images";
 
   export let novel: string;
   export let index: number;
   export let sliderIndex: number;
-  export let data: any;
+  let data = $novelsData?.[novel];
+  let novelTitle: string = data?.title || "";
+  let synopsis: string = data?.synopsis;
+  let placeholder = data?.cover?.placeholder ?? BLANK_IMAGE;
   let node;
 
   onMount(async () => {
-    prefetch("/novel/" + novel);
+    if (novel) prefetch("/novel/" + novel);
   });
 </script>
 
@@ -37,22 +36,22 @@
   on:click={() => goto("/novel/" + novel)}
   class="wrapper"
 >
-  <img class="bg-image" src={novelCoverPlaceholders[novel]} alt={novelTitles[novel]} />
+  <img class="bg-image" src={placeholder} alt={novelTitle} />
   <div class="content-wrapper">
     <div class="left">
       <BookCover {novel} width="100%" />
       <div class="subtitle">
-        {#each $novelCoverSubtitle[novel].split(" ") as tag, tagIndex}
+        {#each ($novelCoverSubtitle?.[novel] || "").split(" ") as tag, tagIndex}
           <span style="--delay: {tagIndex}; color:{tagColorizer(tag)};">
-            {tag}
+            {tag || ""}
           </span>
         {/each}
       </div>
     </div>
     <div class="right">
-      <h2>{novelTitles[novel]}</h2>
+      <h2>{novelTitle}</h2>
       <div class="blurb">
-        {@html data?.synopsis || novelSynopsises[novel]}
+        {@html synopsis || ""}
       </div>
     </div>
   </div>

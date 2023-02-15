@@ -4,11 +4,10 @@
 	"version": "0.8.0",
 	"type": "module",
 	"scripts": {
-		"populate": "node plugins/onbuild/populate/assets && node plugins/onbuild/populate/copy-assets",
 		"dev:frontend": "vite dev --host",
 		"dev:backend": "./bin/air serve",
 		"dev": "run-p \"dev:*\"",
-		"build": "npm run populate && vite build && node plugins/onbuild/finish",
+		"build": "vite build",
 		"preview": "vite preview",
 		"test": "playwright test",
 		"pocketbase:create-migration": "go run backend/main.go migrate create \"migration\"",

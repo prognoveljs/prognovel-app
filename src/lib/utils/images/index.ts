@@ -3,6 +3,9 @@ import { NOVEL_BANNER_HEIGHT, IMAGE_RESIZER_SERVICE } from "$lib/_setting";
 export let isWEBP: boolean;
 const BANNER_IMAGE_FETCH_TIMEOUT = 10000; // in ms
 
+export const BLANK_IMAGE =
+  "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+
 export async function initImageTypeSupport(): Promise<boolean> {
   isWEBP = true;
 

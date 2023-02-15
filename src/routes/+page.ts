@@ -37,23 +37,18 @@ export async function load({ params, query }) {
     // bookmarkData = await loadBookmark();
     data.status = 200;
   } else {
-    const path = await import("path");
-    const fs = await import("fs");
-    const readJson = (filePath) => {
-      return JSON.parse(fs.readFileSync(path.join(import.meta.env.CACHE_PATH, filePath), "utf-8"));
-    };
     try {
-      try {
-        data = readJson("assets/publish/sitemetadata.json");
-      } catch (error) {
-        data.message = error;
-      }
-      data.novels.forEach((novel) => {
-        const novelTemp: NovelMetadata = readJson(`assets/publish/${novel}/metadata.json`);
-        // TODO check if adding all option of metadata is overkill
-        // TODO strip synopsis and other metadata from novels
-        novelsMetadata[novel] = novelTemp;
-      });
+      // try {
+      //   data = readJson("assets/publish/sitemetadata.json");
+      // } catch (error) {
+      //   data.message = error;
+      // }
+      // data.novels.forEach((novel) => {
+      //   const novelTemp: NovelMetadata = readJson(`assets/publish/${novel}/metadata.json`);
+      //   // TODO check if adding all option of metadata is overkill
+      //   // TODO strip synopsis and other metadata from novels
+      //   novelsMetadata[novel] = novelTemp;
+      // });
       data.status = 200;
     } catch (err) {
       console.log("Error reading site metadata!");
@@ -66,10 +61,7 @@ export async function load({ params, query }) {
   if (data.status === 200) {
     return {
       status: data.status,
-      sitemetadata: data,
-      novelList: data.novels,
       bookmarkData,
-      novelsMetadata,
     };
   } else {
     throw error(data.status, data.message);

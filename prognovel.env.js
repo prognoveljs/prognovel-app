@@ -7,68 +7,20 @@ import env from "dotenv";
 env.config();
 
 export default () => {
-  const CACHE_PATH = ".cache";
-  const SITE_METADATA = JSON.parse(
-    readFileSync(join(CACHE_PATH, "/assets/publish/sitemetadata.json"), "utf-8"),
-  );
-  const NOVELS_METADATA = (SITE_METADATA?.novels || []).reduce((result, novel) => {
-    result[novel] = JSON.parse(
-      readFileSync(join(CACHE_PATH, "/assets/publish", novel, "metadata.json"), "utf-8"),
-    );
-    return result;
-  }, {});
   const BACKEND_API = process.env.BACKEND_API || "http://localhost";
   const IS_STATIC_API = (process.env.BACKEND_API || "").includes(".pages.dev");
   return EnvironmentPlugin(
     {
       BASE_PATH: process.cwd(),
-      CACHE_PATH,
       BACKEND_API,
       IS_STATIC_API,
-      SITE_TITLE: SITE_METADATA?.site_title || "ProgNovel App",
-      IMAGE_RESIZER_SERVICE: SITE_METADATA?.image_resizer_service || "",
+      SITE_TITLE: process.env.SITE_TITLE || "ProgNovel App",
       GA_TRACKING_ID: process.env.GA_TRACKING_ID || "",
       PAYPAL_CLIENT_ID: process.env.PAYPAL_CLIENT_ID || "",
       IS_DEMO: process.env.IS_DEMO || false,
-      NOVEL_LIST: SITE_METADATA?.novels || [],
-      STATIC_BANNER_IMAGES: IS_STATIC_API || isValidHttpUrl(SITE_METADATA.image_resizer_service),
       // app vars from build time
-      SITE_METADATA,
       POCKETBASE_URL: process.env.POCKETBASE_URL || "",
-      // chunks of novels metadata
-      NOVEL_TITLES: Object.keys(NOVELS_METADATA).reduce((list, novel) => {
-        list[novel] = NOVELS_METADATA[novel].title;
-        return list;
-      }, {}),
-      NOVEL_GENRES: Object.keys(NOVELS_METADATA).reduce((list, novel) => {
-        list[novel] = NOVELS_METADATA[novel].genre;
-        return list;
-      }, {}),
-      NOVEL_DEMOGRAPHICS: Object.keys(NOVELS_METADATA).reduce((list, novel) => {
-        list[novel] = NOVELS_METADATA[novel].demographic;
-        return list;
-      }, {}),
-      NOVEL_AUTHORS: Object.keys(NOVELS_METADATA).reduce((list, novel) => {
-        list[novel] = NOVELS_METADATA[novel].author;
-        return list;
-      }, {}),
-      NOVEL_TAGS: Object.keys(NOVELS_METADATA).reduce((list, novel) => {
-        list[novel] = NOVELS_METADATA[novel].tags;
-        return list;
-      }, {}),
-      NOVEL_SYNOPSISES: Object.keys(NOVELS_METADATA).reduce((list, novel) => {
-        list[novel] = NOVELS_METADATA[novel].synopsis;
-        return list;
-      }, {}),
       CSS_VARIABLES: readCSSVariables(),
-      // misc
-      NOVEL_COVER_PLACEHOLDERS: Object.keys(NOVELS_METADATA)
-        .slice(0, process.env.MAX_NOVEL_PLACEHOLDER || 10)
-        .reduce((placeholder, novel) => {
-          const data = readFileSync(`${CACHE_PATH}/assets/publish/${novel}/placeholder.jpeg`);
-          placeholder[novel] = `data:image/jpeg;base64,${data.toString("base64")}`;
-          return placeholder;
-        }, {}),
     },
 
     {

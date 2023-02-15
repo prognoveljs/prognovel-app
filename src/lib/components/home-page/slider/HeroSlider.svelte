@@ -1,6 +1,5 @@
 <script lang="ts">
   import { novelsData } from "$lib/store/states";
-  import { novelList, novelSynopsises } from "$lib/utils/novel-page";
 
   import { onMount } from "svelte";
   import HeroSliderItem from "./HeroSliderItem.svelte";
@@ -50,12 +49,7 @@
   <!-- {JSON.stringify(data)} -->
   <div>
     {#key cursor}
-      <HeroSliderItem
-        novel={highlightNovels[cursor]}
-        {sliderIndex}
-        index={sliderIndex}
-        data={novelDataWithSynopsis[highlightNovels[cursor]]}
-      />
+      <HeroSliderItem novel={highlightNovels[cursor]} {sliderIndex} index={sliderIndex} />
     {/key}
   </div>
   <div class="navigate-buttons">
