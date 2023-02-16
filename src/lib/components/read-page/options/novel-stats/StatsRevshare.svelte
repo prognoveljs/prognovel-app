@@ -1,6 +1,6 @@
 <script lang="ts">
   import { currentNovel, novelsData } from "$lib/store/states";
-  import { novelTitles } from "$lib/utils/novel-page";
+  import { novelTitles } from "$lib/store/novel-page";
   import { revShareUsersLite } from "$lib/utils/web-monetization";
   import RevshareAvatar from "./StatsRevshareAvatar.svelte";
   import { AlertCircleIcon } from "svelte-feather-icons";
@@ -37,7 +37,7 @@
     <AlertCircleIcon size="32" />
     <div>
       Revenue sharing is based how many times a contributors (such as author, editor, proofreader)
-      being credited in chapters in {novelTitles[$currentNovel]}. This only applies for splitting
+      being credited in chapters in {$novelTitles[$currentNovel]}. This only applies for splitting
       revenue from <a href="https://webmonetization.org/">Web Monetization</a> streams in real-time.
     </div>
   </div>

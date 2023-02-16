@@ -3,7 +3,22 @@ import { currentNovel, novelsData, siteMetadata, showSettings } from "./states";
 import { showTOC } from "./read-page/state";
 import { createDerivedNovelsMetadata } from "$lib/utils/novel-page";
 import type { novelsStats } from "$typings/novel";
+import type { SiteMetadata } from "$typings";
 // export let revenueSharing = writable([]);
+
+export let novelTitles: Readable<{
+  [title: string]: string;
+}> = derived([novelsData], ([data]) => {
+  return Object.keys(data).reduce((prev, cur) => {
+    prev[cur] = data[cur]?.title;
+    return prev;
+  }, {});
+});
+
+export let novelList: Readable<string[]> = derived([novelsData], ([data]) => {
+  return Object.keys(data);
+});
+
 export let genreFilter: Writable<string[]> = writable([]);
 export let entireSiteGenres: Readable<string[]> = derived([siteMetadata], ([metadata]) => {
   if (!metadata?.novelsMetadata) return [];

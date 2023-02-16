@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { siteMetadata } from "$lib/store/states";
-  import { novelCoverSubtitle, novelList, novelTitles } from "$lib/utils/novel-page";
+  import { novelsData, siteMetadata } from "$lib/store/states";
+  import { novelCoverSubtitle } from "$lib/utils/novel-page";
   import { NOVEL_COVER_WIDTH, NOVEL_COVER_HEIGHT } from "$lib/_setting";
   import Cover from "$lib/components/BookCover.svelte";
   import Icon from "$lib/components/Icon.svelte";
   import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+  import { novelList, novelTitles } from "$lib/store/novel-page";
 
   const MAX_NOVEL_LISTED = 6;
   const novelListMock = Array(10).fill("yashura-legacy");
@@ -27,12 +28,12 @@
   class="grid"
   style="grid-template-columns: repeat(auto-fill, {NOVEL_COVER_WIDTH}px); grid-template-rows: {NOVEL_COVER_HEIGHT}px;"
 >
-  {#each novelList.slice(0, MAX_NOVEL_LISTED) as novel}
+  {#each $novelList.slice(0, MAX_NOVEL_LISTED) as novel}
     <a
-      sveltekit:prefetch
+      data-sveltekit-preload-data
       href="/novel/{novel}"
       class="novel"
-      aria-label={novelTitles[novel]}
+      aria-label={$novelTitles[novel]}
       on:mouseover={onHover}
       on:focus
     >
@@ -40,13 +41,13 @@
         showTitle={true}
         showSub={true}
         sub={$novelCoverSubtitle[novel]}
-        title={novelTitles[novel]}
+        title={$novelTitles[novel]}
         {novel}
       />
     </a>
   {/each}
 </div>
-{#if novelList.length > MAX_NOVEL_LISTED}
+{#if $novelList.length > MAX_NOVEL_LISTED}
   <div class="flex">
     <a class="see-all" href="/novel"
       >see all

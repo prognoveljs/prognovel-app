@@ -4,7 +4,7 @@
   import { IDB_PREFIX_HISTORY_RECENT } from "$lib/utils/history";
   import { formatDistanceToNow } from "date-fns";
   import { siteMetadata } from "$lib/store/states";
-  import { novelTitles } from "$lib/utils/novel-page";
+  import { novelTitles } from "$lib/store/novel-page";
   import Icon from "$lib/components/Icon.svelte";
   import { faClock } from "@fortawesome/free-regular-svg-icons";
   import { getCoverURLPath, isWEBP } from "$lib/utils/images";
@@ -28,7 +28,7 @@
           src={getCoverURLPath(novel.id, { width: 128, height: 128 }, isWEBP ? "webp" : "jpeg")}
           alt={novel.id}
         />
-        <span class="title">{novelTitles[novel.id] || novel.id}</span>
+        <span class="title">{$novelTitles[novel.id] || novel.id}</span>
         <span class="chapter"
           >Ch
           {novel.lastChapterRead

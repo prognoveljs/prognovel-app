@@ -2,11 +2,11 @@
   import Icon from "$lib/components/Icon.svelte";
   import { faFire } from "@fortawesome/free-solid-svg-icons";
   import { siteMetadata } from "$lib/store/states";
+  import { novelList } from "$lib/store/novel-page";
   // import { novelUpdatesMock } from "./_mock";
 
   export let grid = "";
   export let seeAllLink = "";
-  $: novelList = ($siteMetadata || {}).novels || [];
 
   const preloadShell = `height: 18px; width: 85%; background: var(--text-body-color);
       opacity: 0.15; margin: 12px; margin-top: 32px;`;
@@ -22,7 +22,7 @@
       <a href={seeAllLink}>See all</a>
     {/if}
   </figcaption>
-  {#if !novelList || !$siteMetadata.novelsMetadata}
+  {#if !$novelList?.length || !$siteMetadata.novelsMetadata}
     {#each Array(4).fill(preloadShell) as preload}
       <div style={preload} />
     {/each}
@@ -34,7 +34,7 @@
     </ul>
     <div class="list">
       {#each $siteMetadata.novelsMetadata as novel}
-        <a sveltekit:prefetch href="/novel/{novel.id}">
+        <a data-sveltekit-preload-data href="/novel/{novel.id}">
           <span>
             {novel.title}
           </span>
@@ -44,7 +44,7 @@
       {/each}
     </div>
     <!-- {#each novelUpdatesMock as novel}
-      <a sveltekit:prefetch disabled="" aria-disabled="true" href="/novel/{novel.id}">
+      <a data-sveltekit-preload-data disabled="" aria-disabled="true" href="/novel/{novel.id}">
         {novel.title}
         <span>{novel.author || "--"}</span>
         <span class="chapters"> <span>{novel.totalChapter}</span> <span>chapters</span> </span>

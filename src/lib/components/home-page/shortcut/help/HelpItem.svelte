@@ -5,7 +5,7 @@
   export let link;
 </script>
 
-<a class="help-item" sveltekit:prefetch href={link}>
+<a class="help-item" data-sveltekit-preload-data href={link}>
   <span>
     <slot />
   </span>

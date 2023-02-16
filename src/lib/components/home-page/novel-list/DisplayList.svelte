@@ -1,60 +1,63 @@
 <script lang="ts">
-  import { liteNovelsStats } from "$lib/store/novel-page";
-  import {
-    getNovelBookCoverSrc,
-    novelCoverSubtitle,
-    novelList,
-    novelTitles,
-    tagColorizer,
-  } from "$lib/utils/novel-page";
+  import SkeletonShell from "$lib/components/SkeletonShell.svelte";
+  import { liteNovelsStats, novelList, novelTitles } from "$lib/store/novel-page";
+  import { novelsData } from "$lib/store/states";
+  import { getNovelBookCoverSrc, novelCoverSubtitle, tagColorizer } from "$lib/utils/novel-page";
   import { EyeIcon, ThumbsUpIcon, UsersIcon } from "svelte-feather-icons";
 
-  const list = import.meta.env.IS_DEMO ? Array(6).fill("yashura-legacy") : novelList;
+  const list = import.meta.env.IS_DEMO ? Array(6).fill("yashura-legacy") : $novelList;
 </script>
 
 <section class="list">
-  {#each list as novelID, listIndex}
-    <div class="item" style="--index: {listIndex ? listIndex : listIndex + 1};">
-      <a href="/novel/{novelID}">
-        <img
-          src={getNovelBookCoverSrc(novelID)}
-          alt={novelTitles[novelID]}
-          width="64"
-          height="64"
-        />
-        <section class="title">
-          <div>
-            <div class="subtitle">
-              {#each $novelCoverSubtitle[novelID].split(" ") as tag, tagIndex}
-                <span style="--delay: {tagIndex}; color:{tagColorizer(tag)};">
-                  {tag}
-                </span>
-              {/each}
+  {#if $novelList?.length}
+    {#each list as novelID, listIndex}
+      <div class="item" style="--index: {listIndex ? listIndex : listIndex + 1};">
+        <a href="/novel/{novelID}">
+          <img
+            src={getNovelBookCoverSrc(novelID)}
+            alt={$novelTitles[novelID]}
+            width="64"
+            height="64"
+          />
+          <section class="title">
+            <div>
+              <div class="subtitle">
+                {#each $novelCoverSubtitle[novelID].split(" ") as tag, tagIndex}
+                  <span style="--delay: {tagIndex}; color:{tagColorizer(tag)};">
+                    {tag}
+                  </span>
+                {/each}
+              </div>
+              <h3>{$novelTitles[novelID]}</h3>
             </div>
-            <h3>{novelTitles[novelID]}</h3>
-          </div>
-        </section>
-        <section class="views">
-          <span>
-            <EyeIcon size="18" /> views
-          </span>
-          <strong>{$liteNovelsStats[novelID]?.views ?? "--"}</strong>
-        </section>
-        <section class="likes">
-          <span>
-            <ThumbsUpIcon size="18" /> likes
-          </span>
-          <strong>{$liteNovelsStats[novelID]?.likes ?? "--"}</strong>
-        </section>
-        <section class="followers">
-          <span>
-            <UsersIcon size="18" /> followers
-          </span>
-          <strong>{$liteNovelsStats[novelID]?.followers ?? "--"}</strong>
-        </section>
-      </a>
-    </div>
-  {/each}
+          </section>
+          <section class="views">
+            <span>
+              <EyeIcon size="18" /> views
+            </span>
+            <strong>{$liteNovelsStats[novelID]?.views ?? "--"}</strong>
+          </section>
+          <section class="likes">
+            <span>
+              <ThumbsUpIcon size="18" /> likes
+            </span>
+            <strong>{$liteNovelsStats[novelID]?.likes ?? "--"}</strong>
+          </section>
+          <section class="followers">
+            <span>
+              <UsersIcon size="18" /> followers
+            </span>
+            <strong>{$liteNovelsStats[novelID]?.followers ?? "--"}</strong>
+          </section>
+        </a>
+      </div>
+    {/each}
+  {:else}
+    sasd
+    {#each Array(4).fill("") as item}
+      <SkeletonShell height={120} />
+    {/each}
+  {/if}
 </section>
 
 <style lang="scss">

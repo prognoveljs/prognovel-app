@@ -1,9 +1,10 @@
 <script lang="ts">
   import BookCover from "$lib/components/BookCover.svelte";
+  import { novelTitles } from "$lib/store/novel-page";
   import { showTOC } from "$lib/store/read-page/state";
   import { toc } from "$lib/store/read-page/vars";
   import { currentNovel, path } from "$lib/store/states";
-  import { handleBeginReadingButton, novelTitles, ReadNowObject } from "$lib/utils/novel-page";
+  import { handleBeginReadingButton, ReadNowObject } from "$lib/utils/novel-page";
   import { replacePageTitleBookAndChapter } from "$lib/utils/read-page/history";
   import { windowLock, windowUnlock } from "$lib/utils/window/lock";
   import { formatDistance } from "date-fns";
@@ -59,7 +60,7 @@
 >
   <BookCover novel={$currentNovel} />
   <p>
-    Last time you read {novelTitles[$currentNovel]} is at {replacePageTitleBookAndChapter(
+    Last time you read {$novelTitles[$currentNovel]} is at {replacePageTitleBookAndChapter(
       `${volume}`,
       true,
     )}, Chapter {((chapter || "").split("chapter-")[1] || "").replace("-", ".")} ({lastReadAtText})

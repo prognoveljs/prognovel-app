@@ -9,7 +9,7 @@
 <div class="container-center">
   <h1>404 - Not found</h1>
   <p>Looks like the page you're looking for doesn't exist... maybe look again from homepage?</p>
-  <a href="/" sveltekit:prefetch>Go back home</a>
+  <a href="/" data-sveltekit-preload-data>Go back home</a>
 </div>
 
 <style>

@@ -23,31 +23,39 @@
 <nav>
   {#if !preload}
     <a
-      sveltekit:prefetch
+      data-sveltekit-preload-data
       class={$path === undefined || homePageChildren.includes($path) ? "selected" : ""}
       href="/"
     >
       <Icon icon={faHome} size={"24px"} />
       <span class="tooltip" aria-hidden="true">home</span>
     </a>
-    <a sveltekit:prefetch class={$path.startsWith("/updates") ? "selected" : ""} href="/updates">
+    <a
+      data-sveltekit-preload-data
+      class={$path.startsWith("/updates") ? "selected" : ""}
+      href="/updates"
+    >
       <Icon icon={faBolt} size={"24px"} />
       <span class="tooltip" aria-hidden="true">all updates</span>
     </a>
     <a
-      sveltekit:prefetch
+      data-sveltekit-preload-data
       class={$path.startsWith("/discussions") ? "selected" : ""}
       href="/discussions/all"
     >
       <Icon icon={faCommentAlt} size={"24px"} />
       <span class="tooltip" aria-hidden="true">discussions</span>
     </a>
-    <a sveltekit:prefetch class={$path.startsWith("/novel") ? "selected" : ""} href="/novel">
+    <a
+      data-sveltekit-preload-data
+      class={$path.startsWith("/novel") ? "selected" : ""}
+      href="/novel"
+    >
       <Icon icon={faBook} size={"24px"} />
       <span class="tooltip" aria-hidden="true">all novels</span>
     </a>
     <hr />
-    <a sveltekit:prefetch class={$path.startsWith("/help") ? "selected" : ""} href="/help">
+    <a data-sveltekit-preload-data class={$path.startsWith("/help") ? "selected" : ""} href="/help">
       <Icon icon={faQuestion} size={"24px"} />
       <span class="tooltip" aria-hidden="true">help </span>
     </a>

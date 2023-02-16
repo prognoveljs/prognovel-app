@@ -1,4 +1,5 @@
 <script lang="ts">
+  import SkeletonShell from "$lib/components/SkeletonShell.svelte";
   import { novelsData } from "$lib/store/states";
 
   import { onMount } from "svelte";
@@ -45,20 +46,24 @@
     });
 </script>
 
-<section on:mouseleave={mouseLeave} on:mouseenter={mouseEnter}>
-  <!-- {JSON.stringify(data)} -->
-  <div>
-    {#key cursor}
-      <HeroSliderItem novel={highlightNovels[cursor]} {sliderIndex} index={sliderIndex} />
-    {/key}
-  </div>
-  <div class="navigate-buttons">
-    {#each highlightNovels as novel, i}
-      <span on:click={() => navigate(i)} class:selected={cursor === i} />
-      <!-- content here -->
-    {/each}
-  </div>
-</section>
+{#if highlightNovels?.length}
+  <section on:mouseleave={mouseLeave} on:mouseenter={mouseEnter}>
+    <!-- {JSON.stringify(data)} -->
+    <div>
+      {#key cursor}
+        <HeroSliderItem novel={highlightNovels[cursor]} {sliderIndex} index={sliderIndex} />
+      {/key}
+    </div>
+    <div class="navigate-buttons">
+      {#each highlightNovels as novel, i}
+        <span on:click={() => navigate(i)} class:selected={cursor === i} />
+        <!-- content here -->
+      {/each}
+    </div>
+  </section>
+{:else}
+  <SkeletonShell height={400} />
+{/if}
 
 <style lang="scss">
   section {

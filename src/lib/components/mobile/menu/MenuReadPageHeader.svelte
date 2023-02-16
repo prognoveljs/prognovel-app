@@ -30,7 +30,7 @@
         duration: 140,
       }}
       href={backURL}
-      sveltekit:prefetch
+      data-sveltekit-preload-data
       class="back"
     >
       <Icon icon={faChevronLeft} size="2em" />

@@ -41,7 +41,7 @@
 
 <a
   bind:this={el}
-  sveltekit:prefetch
+  data-sveltekit-preload-data
   in:fly={{ duration: 125, y: 12, delay: 50 * index }}
   out:fly={{ duration: 80, y: -20, delay: 30 * index }}
   id="search-{novel.id}"

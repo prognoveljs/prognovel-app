@@ -36,9 +36,9 @@
   </div>
   <Stacks />
   <div class="misc">
-    <a sveltekit:prefetch href="/privacy">privacy policy</a>
-    <a sveltekit:prefetch href="/dmca">DMCA</a>
-    <a sveltekit:prefetch href="/help">user help</a>
+    <a data-sveltekit-preload-data href="/privacy">privacy policy</a>
+    <a data-sveltekit-preload-data href="/dmca">DMCA</a>
+    <a data-sveltekit-preload-data href="/help">user help</a>
     <strong style="display: block;">
       <small>&copy; Copyright {COPYRIGHT_YEAR}, ProgNovel</small>
     </strong>

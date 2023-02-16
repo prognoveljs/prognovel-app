@@ -20,7 +20,7 @@
         <div>
           &#x1F5A5; <a href="https://community.webmonetization.org/prognovel">Dev Logs</a>
         </div>
-        <div>&#x1F6A9; <a href="/roadmap" sveltekit:prefetch>Roadmaps</a></div>
+        <div>&#x1F6A9; <a href="/roadmap" data-sveltekit-preload-data>Roadmaps</a></div>
         <div>
           🚀 <a href="https://github.com/prognoveljs/prognovel-app">Self-host ProgNovel</a>
         </div>

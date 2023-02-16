@@ -1,10 +1,11 @@
 <script lang="ts">
   import { siteMetadata } from "$lib/store/states";
-  import { getNovelBookCoverSrc, novelList, novelTitles } from "$lib/utils/novel-page";
+  import { getNovelBookCoverSrc } from "$lib/utils/novel-page";
   import Comments from "$lib/components/comments/disqus/Disqus.svelte";
   import NoDisqus from "../_NoDisqus.svelte";
   import { SITE_TITLE } from "$lib/_setting";
   import { browser } from "$app/environment";
+  import { novelList, novelTitles } from "$lib/store/novel-page";
 
   $: hasDisqus = Boolean($siteMetadata?.disqus_id);
   const GENERAL_SLUG = "all";
@@ -14,7 +15,7 @@
 </script>
 
 <svelte:head>
-  <title>Discussion{novelTitles[novel] ? ` - ${novelTitles[novel]}` : ""} | {SITE_TITLE}</title>
+  <title>Discussion{$novelTitles[novel] ? ` - ${$novelTitles[novel]}` : ""} | {SITE_TITLE}</title>
 </svelte:head>
 
 {#if hasDisqus}
@@ -24,16 +25,16 @@
         <a class="general" href="/discussions/all" class:selected={novel === GENERAL_SLUG}>
           <strong>General</strong></a
         >
-        {#each novelList as novelID}
+        {#each $novelList as novelID}
           <a
             style="--bg: {getNovelBookCoverSrc(novelID)};"
             href="/discussions/{novelID}"
             class:selected={novelID === novel}
           >
-            <img src={getNovelBookCoverSrc(novelID)} alt={novelTitles[novelID]} />
+            <img src={getNovelBookCoverSrc(novelID)} alt={$novelTitles[novelID]} />
             <div class="metadata">
               <strong>
-                {novelTitles?.[novelID] || ""}
+                {$novelTitles?.[novelID] || ""}
               </strong>
             </div>
           </a>
@@ -41,7 +42,7 @@
       </div>
     </section>
     <section class="body">
-      <h1><small>#</small> {novel === GENERAL_SLUG ? "General" : novelTitles[novel] || novel}</h1>
+      <h1><small>#</small> {novel === GENERAL_SLUG ? "General" : $novelTitles[novel] || novel}</h1>
       <div class="comments">
         {#key novel}
           {#if browser}
