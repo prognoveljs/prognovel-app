@@ -16,7 +16,7 @@ export let novelTitles: Readable<{
 });
 
 export let novelList: Readable<string[]> = derived([novelsData], ([data]) => {
-  return Object.keys(data);
+  return Object.keys(data) || [];
 });
 
 export let genreFilter: Writable<string[]> = writable([]);

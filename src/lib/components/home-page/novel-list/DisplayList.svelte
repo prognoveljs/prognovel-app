@@ -1,4 +1,5 @@
 <script lang="ts">
+  import BookCover from "$lib/components/BookCover.svelte";
   import SkeletonShell from "$lib/components/SkeletonShell.svelte";
   import { liteNovelsStats, novelList, novelTitles } from "$lib/store/novel-page";
   import { novelsData } from "$lib/store/states";
@@ -13,16 +14,11 @@
     {#each list as novelID, listIndex}
       <div class="item" style="--index: {listIndex ? listIndex : listIndex + 1};">
         <a href="/novel/{novelID}">
-          <img
-            src={getNovelBookCoverSrc(novelID)}
-            alt={$novelTitles[novelID]}
-            width="64"
-            height="64"
-          />
+          <BookCover novel={novelID} width="100%" style="padding-top: 0 !important;" />
           <section class="title">
             <div>
               <div class="subtitle">
-                {#each $novelCoverSubtitle[novelID].split(" ") as tag, tagIndex}
+                {#each ($novelCoverSubtitle?.[novelID] ?? "").split(" ") as tag, tagIndex}
                   <span style="--delay: {tagIndex}; color:{tagColorizer(tag)};">
                     {tag}
                   </span>

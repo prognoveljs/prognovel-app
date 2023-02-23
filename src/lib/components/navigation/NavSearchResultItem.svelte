@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { novelCoverPlaceholders } from "$lib/utils/novel-page";
+  // import { novelCoverPlaceholders } from "$lib/utils/novel-page";
   import { frameTick } from "$lib/utils/animation";
   import { getCoverURLPath } from "$lib/utils/images";
   import { prefetch, prefetchRoutes } from "$app/navigation";
   import { fade, fly } from "svelte/transition";
   import { isMobileScreen } from "$lib/utils/mobile";
+  import SkeletonShell from "../SkeletonShell.svelte";
 
   export let index = 0;
   export let novel = { id: "", title: "" };
@@ -37,6 +38,8 @@
       }
     }
   }
+
+  let loading = true;
 </script>
 
 <a
@@ -56,8 +59,10 @@
 >
   <div class="content-wrapper">
     <div class="cover" style="--cover-size: 128px;">
-      <img src={novelCoverPlaceholders[novel.id]} alt="" aria-hidden="true" class="placeholder" />
-      <picture>
+      {#if loading}
+        <SkeletonShell height="100%" width="100%" />
+      {/if}
+      <picture on:load={() => (loading = false)} class:loading>
         <source
           srcset={getCoverURLPath(novel.id, { width: 128, height: 128 }, "webp")}
           type="image/webp"

@@ -3,14 +3,15 @@
   import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
   import Icon from "$lib/components/Icon.svelte";
   import { currentNovel, novelsData, path } from "$lib/store/states";
-  import { novelCoverPlaceholders } from "$lib/utils/novel-page";
+  // import { novelCoverPlaceholders } from "$lib/utils/novel-page";
   import { onMount } from "svelte";
   import { waitForNovelCoverLoading } from "$lib/utils/images/novel-cover";
+  import { getNovelBookCoverSrc } from "$lib/utils/novel-page";
 
   $: novelTitle = $novelsData?.[$currentNovel]?.title;
   $: backURL = $path.startsWith("/read") ? `/novel/${$currentNovel}` : "/";
 
-  let novelCover = novelCoverPlaceholders[$currentNovel];
+  let novelCover = getNovelBookCoverSrc($currentNovel);
 
   onMount(async () => {
     novelCover = await waitForNovelCoverLoading($currentNovel);
