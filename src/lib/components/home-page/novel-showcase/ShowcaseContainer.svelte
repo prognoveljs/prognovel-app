@@ -59,6 +59,7 @@
           padding: 3em var(--padding-side) 2em;
           background-color: #fff1;
           border: 2px solid hsla(#{$hsl}, var(--border-opacity));
+
           // text-decoration: none;
           // width: calc(var(--cover-width) + #{$padding-left * 2});
 
@@ -68,7 +69,7 @@
           }
         }
 
-        :global(.stats-flex) {
+        :global(.stats-grid) {
           opacity: 1 !important;
         }
       }
