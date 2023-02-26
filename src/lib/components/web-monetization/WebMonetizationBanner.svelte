@@ -22,13 +22,12 @@
   section {
     position: relative;
     overflow: hidden;
-    margin-top: 24px;
+    margin: 12em auto 5em;
     width: 100%;
     padding: 24px;
     padding-bottom: 12px;
     // padding-right: 200px;
     background: var(--foreground-color);
-    margin-bottom: 3em;
     box-shadow: 0 4px 12px #0002;
     border-radius: 4px;
   }

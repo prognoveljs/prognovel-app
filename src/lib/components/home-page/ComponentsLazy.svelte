@@ -2,15 +2,25 @@
   import UpdatesModule from "$lib/components/updates-page/UpdatesModule.svelte";
   import WebMonetizationBanner from "$lib/components/web-monetization/WebMonetizationBanner.svelte";
   import ProgNovelPromo from "$lib/components/home-page/ProgNovelPromo.svelte";
-  import HomeNovels from "./HomeNovels.svelte";
+  import Updates from "./HomeUpdates.svelte";
   import ShowcaseContainer from "./novel-showcase/ShowcaseContainer.svelte";
+  import HomeTrending from "./HomeTrending.svelte";
+  import HomeExploreByGenre from "./HomeExploreByGenre.svelte";
 </script>
 
 <section class="contain">
-  <ShowcaseContainer />
+  <HomeTrending />
   <WebMonetizationBanner />
-  <HomeNovels grid={"novels"} />
-  <UpdatesModule seeAllLink="updates" />
+  <Updates grid={"novels"} />
+  <HomeExploreByGenre />
 </section>
 
-<ProgNovelPromo />
+<!-- <ProgNovelPromo /> -->
+
+<div class="bottom" />
+
+<style lang="scss">
+  .bottom {
+    padding-bottom: 7em;
+  }
+</style>

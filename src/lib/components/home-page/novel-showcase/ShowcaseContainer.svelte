@@ -3,6 +3,9 @@
   import SectionHeaderLabel from "../misc/SectionHeaderLabel.svelte";
   import ShowcaseNovelItem from "./ShowcaseNovelItem.svelte";
 
+  export let label = "Trending novels this week";
+  export let emoji = "🔥";
+
   const HIGHLIGHT_COVER_SIZE = "280px";
   let novelList: string[] = [
     "yashura-legacy",
@@ -17,7 +20,11 @@
 </script>
 
 <article>
-  <SectionHeaderLabel --width="8em" label="Trending novels this week" emoji="🔥" />
+  <SectionHeaderLabel --width="8em" {label} {emoji}>
+    <slot>
+      <div />
+    </slot>
+  </SectionHeaderLabel>
   <div class="flex">
     <a
       class="highlight"

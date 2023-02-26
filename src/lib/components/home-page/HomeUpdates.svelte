@@ -31,9 +31,8 @@
   class="container contain"
   style="grid-area: {grid}; min-height: {NOVEL_COVER_HEIGHT + 50}px;"
 >
-  <div class="flex">
-    <SectionHeaderLabel label="Browse our novel" emoji="🌟" />
-    <div class="options">
+  <SectionHeaderLabel label="New updates" emoji="🌟">
+    <!-- <div class="options">
       <IconSvg
         on:click={() => selectMode("list")}
         --color={displayMode === "list" ? SELECTED_COLOR : "currentColor"}
@@ -44,21 +43,11 @@
         --color={displayMode === "grid" ? SELECTED_COLOR : "currentColor"}
         data={iconGrid}
       />
-    </div>
-  </div>
+    </div> -->
+  </SectionHeaderLabel>
+
   <section class="list">
-    {#if displayMode === "grid"}
-      <DisplayGrid />
-    {:else if displayMode === "list"}
-      <DisplayList />
-    {:else}
-      <SkeletonShell>
-        <!-- skeleton shell -->
-        {#each Array(4).fill("") as item, i}
-          <rect width="20%" height="80px" x="100%" y="{84 * (i + 1)}px" rx="4" ry="4" />
-        {/each}
-      </SkeletonShell>
-    {/if}
+    <DisplayList />
   </section>
 </section>
 
@@ -74,22 +63,16 @@
       position: relative;
     }
 
-    &::after {
-      content: "";
-      position: absolute;
-      width: 500%;
-      height: 100px;
-      background: linear-gradient(to bottom, #0002 20%, #0000);
-      top: 2px;
-      left: -200%;
-      opacity: 0.6;
-    }
-  }
-
-  .flex {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    // &::after {
+    //   content: "";
+    //   position: absolute;
+    //   width: 500%;
+    //   height: 100px;
+    //   background: linear-gradient(to bottom, #0002 20%, #0000);
+    //   top: 2px;
+    //   left: -200%;
+    //   opacity: 0.6;
+    // }
 
     .options {
       position: relative;

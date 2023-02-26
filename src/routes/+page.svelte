@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount, setContext } from "svelte";
   import GenerateHTML from "$lib/components/_HTML.svelte";
-  import HomeNovels from "$lib/components/home-page/HomeNovels.svelte";
   import HomeShortcut from "$lib/components/home-page/HomeShortcut.svelte";
   import LazyComponentsSkeletonShell from "$lib/components/home-page/_LazyComponentsSkeletonShell.svelte";
   import { loadHomepageLazyComponents } from "$lib/utils/preload.js";
@@ -77,6 +76,7 @@
     width: calc(100% - var(--shortcut-width));
     left: var(--shortcut-width);
     position: relative;
+    overflow: hidden;
 
     @include screen("tablet") {
       width: 100%;

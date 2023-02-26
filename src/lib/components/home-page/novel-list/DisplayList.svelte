@@ -6,14 +6,14 @@
   import { getNovelBookCoverSrc, novelCoverSubtitle, tagColorizer } from "$lib/utils/novel-page";
   import { EyeIcon, ThumbsUpIcon, UsersIcon } from "svelte-feather-icons";
 
-  const list = import.meta.env.IS_DEMO ? Array(6).fill("yashura-legacy") : $novelList;
+  const list = $novelList?.length ? $novelList : Array(6).fill("");
 </script>
 
 <section class="list">
   {#if $novelList?.length}
     {#each list as novelID, listIndex}
       <div class="item" style="--index: {listIndex ? listIndex : listIndex + 1};">
-        <a href="/novel/{novelID}">
+        <a href="/novel/{novelID}" class:disabled={!novelID}>
           <BookCover novel={novelID} width="100%" style="padding-top: 0 !important;" />
           <section class="title">
             <div>
@@ -24,7 +24,11 @@
                   </span>
                 {/each}
               </div>
-              <h3>{$novelTitles[novelID]}</h3>
+              {#if novelID}
+                <h3>{$novelTitles[novelID]}</h3>
+              {:else}
+                <SkeletonShell width="200px" height="24px" />
+              {/if}
             </div>
           </section>
           <section class="views">
@@ -75,6 +79,10 @@
         align-items: center;
         padding: 8px;
         text-decoration: none;
+
+        &.disabled {
+          pointer-events: none;
+        }
 
         @include screen("mobile") {
           grid-template-columns: 64px minmax(0, 4fr) 1fr 1fr;
@@ -135,6 +143,7 @@
         z-index: calc(var(--index));
         pointer-events: none;
       }
+
       :global(html.light) & {
         --overlay-color: #0003;
 
