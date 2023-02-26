@@ -38,7 +38,7 @@
   });
 
   onMount(async () => {
-    if (!sitemetadata.fresh) fetchSiteMetadata();
+    // if (!sitemetadata.fresh) fetchSiteMetadata();
   });
 </script>
 
@@ -53,14 +53,13 @@
       <section class="hero">
         <!-- <h1>{SITE_TITLE}</h1> -->
         <HomeHero />
-        <HomeNovels {novelsMetadata} grid={"novels"} />
       </section>
     </div>
   </div>
 </div>
 
 <div class="lazy-component">
-  <!-- load lazy components -->
+  <div class="horizontal-line" />
   {#await loadHomepageLazyComponents()}
     <LazyComponentsSkeletonShell />
   {:then component}
@@ -89,6 +88,19 @@
       width: 100%;
       left: 0;
       margin: 0 auto;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 500%;
+      min-height: 500px;
+      height: 100%;
+      background-color: var(--background-color);
+      top: 2px;
+      left: -200%;
+      opacity: 0.6;
+      z-index: -1;
     }
   }
 </style>

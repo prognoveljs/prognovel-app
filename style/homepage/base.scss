@@ -16,7 +16,7 @@
 .container {
   display: flex;
   width: 100%;
-  min-height: 100vh;
+  // min-height: 100vh;
   overflow: hidden;
   // overflow-x: hidden;
   // max-width: var(--max-width);
@@ -28,7 +28,7 @@
     width: calc(100% - var(--shortcut-width));
     left: var(--shortcut-width);
     position: relative;
-    min-height: 100vh;
+    // min-height: 100vh;
 
     @include screen("tablet") {
       width: 100%;
@@ -79,6 +79,17 @@
       }
     }
   }
+}
+
+.horizontal-line {
+  $thickness: 2.5px;
+  position: absolute;
+  width: 180%;
+  left: -40%;
+  top: 0;
+  height: $thickness;
+  background: linear-gradient(to right, #fff0, #fff5, #fff0);
+  border-radius: math.div($thickness, 2);
 }
 
 @import "globals";

@@ -9,6 +9,7 @@
   import { set as setIDB } from "idb-keyval";
   import { onMount } from "svelte";
   import SkeletonShell from "../SkeletonShell.svelte";
+  import SectionHeaderLabel from "./misc/SectionHeaderLabel.svelte";
 
   export let grid;
   type DisplayMode = "grid" | "list";
@@ -30,12 +31,8 @@
   class="container contain"
   style="grid-area: {grid}; min-height: {NOVEL_COVER_HEIGHT + 50}px;"
 >
-  <div class="horizontal-line" />
   <div class="flex">
-    <h2>
-      <div>🌟</div>
-      Browse<br /> our novels
-    </h2>
+    <SectionHeaderLabel label="Browse our novel" emoji="🌟" />
     <div class="options">
       <IconSvg
         on:click={() => selectMode("list")}
@@ -67,26 +64,16 @@
 
 <style lang="scss">
   .container {
-    margin-top: 5em;
+    // margin-top: 5em;
     padding-top: 3em;
     // background-color: #0002;
     position: relative;
+    margin-bottom: 7em;
 
     .list {
       position: relative;
     }
 
-    &::before {
-      content: "";
-      position: absolute;
-      width: 500%;
-      min-height: 500px;
-      height: 100%;
-      background-color: var(--background-color);
-      top: 2px;
-      left: -200%;
-      opacity: 0.6;
-    }
     &::after {
       content: "";
       position: absolute;
@@ -97,53 +84,12 @@
       left: -200%;
       opacity: 0.6;
     }
-    .horizontal-line {
-      $thickness: 2.5px;
-      position: absolute;
-      width: 180%;
-      left: -40%;
-      top: 0;
-      height: $thickness;
-      background: linear-gradient(to right, #fff0, #fff5, #fff0);
-      border-radius: math.div($thickness, 2);
-    }
   }
 
   .flex {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    h2 {
-      line-height: 0.9;
-      padding-bottom: 0.5em;
-      margin-bottom: 0.8em;
-      opacity: 0.7;
-
-      div {
-        margin-bottom: 0.4em;
-      }
-
-      position: relative;
-      z-index: 2;
-
-      &::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 2em;
-        height: 4px;
-        background-color: var(--primary-color);
-        opacity: 0.7;
-      }
-
-      :global {
-        html.light & {
-          font-weight: 700;
-        }
-      }
-    }
 
     .options {
       position: relative;
