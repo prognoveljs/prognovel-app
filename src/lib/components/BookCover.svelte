@@ -1,7 +1,7 @@
 <script lang="ts">
   import { novelsData } from "$lib/store/states";
   import { getCoverURLPath } from "$lib/utils/images";
-  import { NOVEL_COVER_ASPECT_RATIO, NOVEL_COVER_HEIGHT, NOVEL_COVER_WIDTH } from "$lib/_setting";
+  import { NOVEL_COVER_ASPECT_RATIO, NOVEL_COVER_WIDTH } from "$lib/_setting";
   import SkeletonShell from "./SkeletonShell.svelte";
   // import { novelCoverPlaceholders } from "$lib/utils/novel-page";
 
@@ -15,7 +15,7 @@
   export let size: "medium" | "small" | "" = "";
   export let width: number | string = NOVEL_COVER_WIDTH + "px";
 
-  const ASPECT_RATIO = import.meta?.env?.COVER_ASPECT_RATIO || 1;
+  const ASPECT_RATIO = NOVEL_COVER_ASPECT_RATIO;
 
   export let style = "";
 
@@ -44,15 +44,6 @@
     } catch (error) {}
   }
 </script>
-
-<!-- <div
-  class="book-cover image {size}"
-  class:isNovelPageCover
-  style="--width: var(--wrapper-width, {width});--aspect-ratio: {NOVEL_COVER_ASPECT_RATIO}; {width ===
-  '100%'
-    ? '--padding-top:' + height + ';height:0;'
-    : 'height: ' + height}"
-> -->
 
 <div
   class="book-cover image {size}"

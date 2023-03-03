@@ -113,7 +113,7 @@
           cursor: pointer;
 
           &:hover {
-            background-color: hsla(var(--primary-color-h), 100%, 40%, #{$buttonOpacity/2});
+            background-color: hsla(var(--primary-color-h), 100%, 40%, calc(#{$buttonOpacity} / 2));
           }
 
           &.checked {

@@ -7,7 +7,7 @@
   import RevenueSharingStats from "$lib/components/novel-page/RevenueSharingStats.svelte";
   import type { NovelMetadata } from "$typings";
   import { browser } from "$app/environment";
-  import { novelDemographics, novelGenres } from "$lib/utils/novel-page";
+  import { novelDemographics, novelGenres } from "$lib/store/novel-page";
   import { SITE_TITLE } from "$lib/_setting";
   import BackgroundPattern from "$lib/components/misc/BackgroundPattern.svelte";
   import { getCoverURLPath } from "$lib/utils/images";
@@ -54,7 +54,7 @@
   <meta property="og:book:author" content={novelMetadata.author} />
   <meta
     property="og:book:tag"
-    content={[novelDemographics[novel], ...novelGenres[novel]].join(", ")}
+    content={[$novelDemographics[novel], ...$novelGenres[novel]].join(", ")}
   />
   <meta
     property="og:image"

@@ -19,6 +19,24 @@ export let novelList: Readable<string[]> = derived([novelsData], ([data]) => {
   return Object.keys(data) || [];
 });
 
+export let novelDemographics: Readable<{
+  [novel: string]: string;
+}> = derived([novelsData], ([data]) => {
+  return Object.keys(data).reduce((prev, cur) => {
+    prev[cur] = data[cur]?.demographic;
+    return prev;
+  }, {});
+});
+
+export let novelGenres: Readable<{
+  [novel: string]: string;
+}> = derived([novelsData], ([data]) => {
+  return Object.keys(data).reduce((prev, cur) => {
+    prev[cur] = data[cur]?.genre;
+    return prev;
+  }, {});
+});
+
 export let genreFilter: Writable<string[]> = writable([]);
 export let entireSiteGenres: Readable<string[]> = derived([siteMetadata], ([metadata]) => {
   if (!metadata?.novelsMetadata) return [];

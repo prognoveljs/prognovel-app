@@ -1,7 +1,8 @@
 <script lang="ts">
+  import { browser } from "$app/environment";
   import { frameTick } from "$lib/utils/animation";
   import { showErrorMessage } from "$lib/utils/error";
-  import EditorJS from "@editorjs/editorjs";
+  // import EditorJS from "@editorjs/editorjs";
   import { Button, ButtonSet } from "carbon-components-svelte";
   import { formatDistance } from "date-fns";
   import { uuid } from "short-uuid";
@@ -10,8 +11,9 @@
   const dispatch = createEventDispatcher();
   let hash = "";
   $: selector = `editor-${hash}`;
-  let editor: EditorJS;
+  let editor;
   let el: HTMLElement;
+  let EditorJS;
   export let ctaButtonPrimaryLabel = "Publish";
   export let ctaButtonSecondaryLabel = "Save draft";
   export let disablePrimary: boolean = false;
@@ -21,6 +23,8 @@
   export let autofocus: boolean = false;
   export let saved;
   onMount(async () => {
+    if (!browser) return;
+    EditorJS = (await import("@editorjs/editorjs")).default;
     hash = uuid();
     await tick();
     editor = new EditorJS({

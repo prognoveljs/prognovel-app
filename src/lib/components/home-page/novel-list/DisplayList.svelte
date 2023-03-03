@@ -53,10 +53,11 @@
       </div>
     {/each}
   {:else}
-    sasd
-    {#each Array(4).fill("") as item}
-      <SkeletonShell height={120} />
-    {/each}
+    <div class="loading">
+      {#each Array(4).fill("") as item}
+        <SkeletonShell height={84} />
+      {/each}
+    </div>
   {/if}
 </section>
 
@@ -212,6 +213,13 @@
           line-height: 1.5;
         }
       }
+    }
+
+    .loading {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6em;
+      opacity: 0.8;
     }
   }
 </style>

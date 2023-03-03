@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { browser } from "$app/environment";
   import { backend } from "$lib/store/backend";
   import { Toggle } from "carbon-components-svelte";
   import ContentEditor from "../ContentEditor.svelte";
@@ -68,51 +69,53 @@
   }
 </script>
 
-<ContentEditor
-  {rawData}
-  referenceData={{ volume_parent, novel_parent }}
-  {id}
-  beforeContentSave={checkConflictingIndex}
-  tableKey="chapters"
-  on:close
-  on:latestdata={updateData}
-  on:updateid={(e) => (id = e.detail)}
->
-  <div slot="header">
-    <span class="title-and-index">
-      <div>
-        <input
-          {readonly}
-          bind:value={index}
-          min="0"
-          type="number"
-          name="chapter-canvas-index"
-          id="chapter-canvas-index"
-          class:invalid={isInvalidChapterIndex}
+{#if browser}
+  <ContentEditor
+    {rawData}
+    referenceData={{ volume_parent, novel_parent }}
+    {id}
+    beforeContentSave={checkConflictingIndex}
+    tableKey="chapters"
+    on:close
+    on:latestdata={updateData}
+    on:updateid={(e) => (id = e.detail)}
+  >
+    <div slot="header">
+      <span class="title-and-index">
+        <div>
+          <input
+            {readonly}
+            bind:value={index}
+            min="0"
+            type="number"
+            name="chapter-canvas-index"
+            id="chapter-canvas-index"
+            class:invalid={isInvalidChapterIndex}
+          />
+          <span class="label">Ch. index </span>
+        </div>
+        <div>
+          <input
+            type="text"
+            {readonly}
+            bind:value={title}
+            id="chapter-canvas-title"
+            class:invalid={isInvalidChapterTitle}
+          />
+          <span class="label">Chapter title </span>
+        </div>
+      </span>
+      <div class="toggle-group">
+        <Toggle bind:toggled={is_monetized} labelA="Not monetized" labelB="Currently monetized" />
+        <Toggle
+          bind:toggled={title_spoiler}
+          labelA="Chapter title spoiler off"
+          labelB="Chapter title spoiler on"
         />
-        <span class="label">Ch. index </span>
       </div>
-      <div>
-        <input
-          type="text"
-          {readonly}
-          bind:value={title}
-          id="chapter-canvas-title"
-          class:invalid={isInvalidChapterTitle}
-        />
-        <span class="label">Chapter title </span>
-      </div>
-    </span>
-    <div class="toggle-group">
-      <Toggle bind:toggled={is_monetized} labelA="Not monetized" labelB="Currently monetized" />
-      <Toggle
-        bind:toggled={title_spoiler}
-        labelA="Chapter title spoiler off"
-        labelB="Chapter title spoiler on"
-      />
     </div>
-  </div>
-</ContentEditor>
+  </ContentEditor>
+{/if}
 
 <style lang="scss">
   .title-and-index {

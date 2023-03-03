@@ -42,6 +42,9 @@ export default {
     // vite: {
 
     // },
+    prerender: {
+      onError: "continue",
+    },
     files: {
       serviceWorker: "src/service-worker.ts",
     },

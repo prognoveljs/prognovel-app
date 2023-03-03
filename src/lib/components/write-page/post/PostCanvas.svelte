@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { browser } from "$app/environment";
   import { backend } from "$lib/store/backend";
   import { Toggle } from "carbon-components-svelte";
   import ContentEditor from "../ContentEditor.svelte";
@@ -45,28 +46,30 @@
   }
 </script>
 
-<ContentEditor
-  {rawData}
-  referenceData={{ volume_parent, novel_parent }}
-  {id}
-  beforeContentSave={checkConflictingIndex}
-  tableKey="posts"
-  on:close
-  on:latestdata={updateData}
-  on:updateid={(e) => (id = e.detail)}
->
-  <div slot="header">
-    <span class="title-and-index">
-      <div>
-        <input type="text" {readonly} bind:value={title} class:invalid={isInvalidPostTitle} />
-        <span class="label">Post title </span>
+{#if browser}
+  <ContentEditor
+    {rawData}
+    referenceData={{ volume_parent, novel_parent }}
+    {id}
+    beforeContentSave={checkConflictingIndex}
+    tableKey="posts"
+    on:close
+    on:latestdata={updateData}
+    on:updateid={(e) => (id = e.detail)}
+  >
+    <div slot="header">
+      <span class="title-and-index">
+        <div>
+          <input type="text" {readonly} bind:value={title} class:invalid={isInvalidPostTitle} />
+          <span class="label">Post title </span>
+        </div>
+      </span>
+      <div class="toggle-group">
+        <Toggle bind:toggled={is_monetized} labelA="Not monetized" labelB="Currently monetized" />
       </div>
-    </span>
-    <div class="toggle-group">
-      <Toggle bind:toggled={is_monetized} labelA="Not monetized" labelB="Currently monetized" />
     </div>
-  </div>
-</ContentEditor>
+  </ContentEditor>
+{/if}
 
 <style lang="scss">
   .title-and-index {
