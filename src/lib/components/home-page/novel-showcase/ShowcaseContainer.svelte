@@ -5,18 +5,10 @@
 
   export let label = "Trending novels this week";
   export let emoji = "🔥";
+  export let isLoading: boolean = true;
 
   const HIGHLIGHT_COVER_SIZE = "280px";
-  let novelList: string[] = [
-    "yashura-legacy",
-    "yashura-legacy",
-    "yashura-legacy",
-    "yashura-legacy",
-    "yashura-legacy",
-    "yashura-legacy",
-    "yashura-legacy",
-    "yashura-legacy",
-  ];
+  let novelList: string[] = Array(9).fill("");
 </script>
 
 <article>
@@ -26,20 +18,11 @@
     </slot>
   </SectionHeaderLabel>
   <div class="flex">
-    <a
-      class="highlight"
-      style="--cover-width: {HIGHLIGHT_COVER_SIZE};"
-      href="/novel/{novelList[0]}"
-    >
-      <ShowcaseNovelItem
-        --width={HIGHLIGHT_COVER_SIZE}
-        novel={novelList[0]}
-        isHighlight={true}
-        synopsis="Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure esse quibusdam ipsum tenetur temporibus! Explicabo repellat aspernatur nisi, quos, magni doloribus impedit, numquam maxime rem aperiam eos sed vel odio."
-      />
-    </a>
+    <div class="highlight">
+      <ShowcaseNovelItem --width={HIGHLIGHT_COVER_SIZE} novel={novelList[0]} isHighlight={true} />
+    </div>
     <section class="list">
-      {#each (novelList ?? []).slice(1) as novel}
+      {#each (novelList || []).slice(1) as novel}
         <ShowcaseNovelItem --width="120px" --font-size="1.6em" {novel} />
       {/each}
     </section>
@@ -58,8 +41,11 @@
       .highlight {
         --padding-side: 25px;
         position: relative;
-        height: 500px;
         text-decoration: none;
+
+        :global(a) {
+          height: 500px;
+        }
 
         :global(.showcase-item-wrapper) {
           --border-opacity: 0.2;

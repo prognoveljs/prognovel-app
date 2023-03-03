@@ -14,13 +14,8 @@
   export let isNovelPageCover: boolean = false;
   export let size: "medium" | "small" | "" = "";
   export let width: number | string = NOVEL_COVER_WIDTH + "px";
-  $: height =
-    width === "100%"
-      ? `${
-          (coverEl?.clientWidth ?? 0) * NOVEL_COVER_ASPECT_RATIO + "px" ||
-          100 / NOVEL_COVER_ASPECT_RATIO
-        }`
-      : NOVEL_COVER_HEIGHT + "px";
+
+  const ASPECT_RATIO = import.meta?.env?.COVER_ASPECT_RATIO || 1;
 
   export let style = "";
 
@@ -62,12 +57,12 @@
 <div
   class="book-cover image {size}"
   class:isNovelPageCover
-  style="--width: var(--wrapper-width, {width});--height: var(--wrapper-height, {height});--aspect-ratio: {NOVEL_COVER_ASPECT_RATIO};{style}"
+  style="--width: var(--wrapper-width, {width});;--aspect-ratio: {ASPECT_RATIO};{style}"
   bind:this={coverEl}
 >
   {#if loading}
     <div class="preload">
-      <SkeletonShell {width} {height} />
+      <SkeletonShell {width} height="100%" />
     </div>
   {/if}
   <picture use:pictureElement class:loading>
@@ -140,7 +135,7 @@
     // background-color: var(--foreground-color);
     box-shadow: 0 4px 12px #0003;
     width: var(--width);
-    height: var(--height);
+    aspect-ratio: 1;
     max-width: auto;
     margin: 0 auto;
     contain: content;
@@ -152,17 +147,8 @@
       display: block;
     }
 
-    .preload {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-      // width: 100%;
-      // height: 100%;
-      // aspect-ratio: var(--aspect-ratio);
-      // background-size: 100% 100% !important;
-      // background-repeat: no-repeat !important;
-      // filter: blur(5px);
+    * {
+      aspect-ratio: var(--aspect-ratio);
     }
 
     picture {

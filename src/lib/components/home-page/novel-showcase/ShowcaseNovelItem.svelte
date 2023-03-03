@@ -1,39 +1,68 @@
 <script lang="ts">
   import BookCover from "$lib/components/BookCover.svelte";
+  import SkeletonShell from "$lib/components/SkeletonShell.svelte";
   import { numberFormatter } from "$lib/utils/string";
   import { EyeIcon, ThumbsUpIcon, UsersIcon } from "svelte-feather-icons";
+  import StatsItem from "./ShowcaseNovelStatsItem.svelte";
 
   export let novel: string = "";
-  export let synopsis: string = "";
   export let isHighlight: boolean = false;
 
-  const ICON_SIZE = "15";
+  $: title = "";
+  $: synopsis = ``;
+  //   $: synopsis = `
+  // Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique eos repudiandae distinctio officia, repellendus error aut quam? Ullam, eligendi cumque fugit officiis saepe similique esse ab labore, ea autem quis!
+  // `;
 
-  let views = 2_12512616124;
-  let likes = 512512616;
-  let followers = 125216;
+  const PRELOAD_PRIMARY_COLOR = "#9996";
+  const PRELOAD_SECONDARY_COLOR = "#aaaa";
 </script>
 
-<a class="showcase-item-wrapper" href="/novel/{novel}">
+<a class:disabled={!novel} class:isHighlight class="showcase-item-wrapper" href="/novel/{novel}">
   <BookCover width="100%" {novel} />
-  <h3>Novel titles jedam jedom jedamp</h3>
+  {#if title}
+    <h3>{title}</h3>
+  {:else}
+    <div class="title-preload">
+      <SkeletonShell
+        height="18"
+        width="100%"
+        primaryColor={PRELOAD_PRIMARY_COLOR}
+        secondaryColor={PRELOAD_SECONDARY_COLOR}
+      />
+      <SkeletonShell
+        height="18"
+        width="80%"
+        primaryColor={PRELOAD_PRIMARY_COLOR}
+        secondaryColor={PRELOAD_SECONDARY_COLOR}
+      />
+    </div>
+  {/if}
   <div class="stats-grid" class:isHighlight>
-    <div class="inline-flex" style="grid-area:views">
-      <EyeIcon size={ICON_SIZE} /> <span class="number">{numberFormatter(views)}</span>
-    </div>
-    <div class="inline-flex" style="grid-area:likes">
-      <ThumbsUpIcon size={ICON_SIZE} /> <span class="number">{numberFormatter(likes)}</span>
-    </div>
-    <div class="inline-flex" style="grid-area:followers">
-      <UsersIcon size={ICON_SIZE} /> <span class="number">{numberFormatter(followers)}</span>
+    <StatsItem type="views" />
+    <StatsItem type="likes" />
+    <StatsItem type="followers">
       {#if !isHighlight}
         users
       {/if}
-    </div>
+    </StatsItem>
   </div>
-  {#if synopsis}
+  {#if isHighlight}
     <div class="synopsis">
-      {synopsis}
+      {#if synopsis}
+        {synopsis}
+      {:else}
+        <div class="loading">
+          {#each Array(4).fill("") as item, index}
+            <SkeletonShell
+              height="18"
+              width={index < 3 ? "100%" : "80%"}
+              primaryColor={PRELOAD_PRIMARY_COLOR}
+              secondaryColor={PRELOAD_SECONDARY_COLOR}
+            />
+          {/each}
+        </div>
+      {/if}
     </div>
   {/if}
 </a>
@@ -66,22 +95,12 @@
       color: var(--primary-color-lighten-3);
       opacity: 0.66;
 
-      .inline-flex {
-        display: inline-flex;
-        align-items: flex-start;
-
-        gap: 0.3em;
-        // margin-right: 0.5em;
-        font-size: 90%;
-        flex-wrap: nowrap;
-      }
-
       &.isHighlight {
         grid-template-columns: repeat(3, auto);
         grid-template-rows: 1fr;
         grid-template-areas: "views likes followers";
 
-        .inline-flex {
+        :global(.inline-flex) {
           align-items: center;
         }
       }
@@ -95,6 +114,10 @@
       overflow: hidden;
       margin-top: 0.5em;
       line-height: 1.4;
+
+      .loading {
+        opacity: 0.6;
+      }
     }
 
     &:hover {
@@ -105,6 +128,18 @@
       .stats-grid {
         opacity: 1;
       }
+    }
+
+    .title-preload {
+      margin: {
+        top: 1em;
+        bottom: 0.5em;
+      }
+    }
+
+    &.disabled {
+      pointer-events: none;
+      cursor: auto;
     }
   }
 </style>

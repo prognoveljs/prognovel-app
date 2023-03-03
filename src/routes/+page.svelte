@@ -2,14 +2,15 @@
   import { onMount, setContext } from "svelte";
   import GenerateHTML from "$lib/components/_HTML.svelte";
   import HomeShortcut from "$lib/components/home-page/HomeShortcut.svelte";
-  import LazyComponentsSkeletonShell from "$lib/components/home-page/_LazyComponentsSkeletonShell.svelte";
-  import { loadHomepageLazyComponents } from "$lib/utils/preload.js";
+  // import LazyComponentsSkeletonShell from "$lib/components/home-page/_LazyComponentsSkeletonShell.svelte";
+  // import { loadHomepageLazyComponents } from "$lib/utils/preload.js";
   import { page, siteMetadata } from "$lib/store/states";
   import NavMobile from "$lib/components/NavMobile.svelte";
   import HomeHero from "$lib/components/home-page/HomeHero.svelte";
   import { SITE_TITLE } from "$lib/_setting";
   import { fetchSiteMetadata } from "$lib/utils/fetch-metadata";
   import type { NovelMetadata, NovelsMetadata, SiteMetadata, Bookmark } from "$typings";
+  import ComponentsLazy from "$lib/components/home-page/ComponentsLazy.svelte";
 
   interface PreloadData {
     status: number;
@@ -59,11 +60,12 @@
 
 <div class="lazy-component">
   <div class="horizontal-line" />
-  {#await loadHomepageLazyComponents()}
+  <ComponentsLazy />
+  <!-- {#await loadHomepageLazyComponents()}
     <LazyComponentsSkeletonShell />
   {:then component}
     <svelte:component this={component} />
-  {/await}
+  {/await} -->
 </div>
 
 <GenerateHTML />

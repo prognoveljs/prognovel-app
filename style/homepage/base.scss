@@ -46,7 +46,7 @@
   .hero {
     --padding-side: calc(50% - var(--max-width) / 2);
     --padding-top: 24px;
-    --padding-bottom: 32px;
+    --padding-bottom: 2em;
     // overflow: auto;
     // overflow-x: auto;
     width: auto;
@@ -82,7 +82,7 @@
 }
 
 .horizontal-line {
-  $thickness: 2.5px;
+  $thickness: 1.5px;
   position: absolute;
   width: 180%;
   left: -40%;
@@ -90,6 +90,7 @@
   height: $thickness;
   background: linear-gradient(to right, #fff0, #fff5, #fff0);
   border-radius: math.div($thickness, 2);
+  opacity: 0.6;
 }
 
 @import "globals";
