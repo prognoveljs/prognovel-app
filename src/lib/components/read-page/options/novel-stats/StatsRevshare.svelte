@@ -38,7 +38,7 @@
     <div>
       Revenue sharing is based how many times a contributors (such as author, editor, proofreader)
       being credited in chapters in {$novelTitles[$currentNovel]}. This only applies for splitting
-      revenue from <a href="https://webmonetization.org/">Web Monetization</a> streams in real-time.
+      revenue from <a href="https://interledger.org/">Web Monetization</a> streams in real-time.
     </div>
   </div>
 </section>

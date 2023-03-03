@@ -23,4 +23,4 @@ Web Monetization API requires payment pointers to inform browser which person it
 
 At this moment, digital wallet providers that you can use are [Uphold]() and [Gatehub](). Note that Web Monetization ecoystem still in its infancy and it is expected that more and more digital wallet providers will support Web Monetization once the standard proposal advances toward more browsers adoptions.
 
-_for more updated digital wallet list, visit [https://webmonetization.org/docs/ilp-wallets](https://webmonetization.org/docs/ilp-wallets)_
+_for more updated digital wallet list, visit [https://interledger.org/docs/ilp-wallets](https://interledger.org/docs/ilp-wallets)_

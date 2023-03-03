@@ -18,7 +18,7 @@
           <strong class="email-address">prognovel@gmail.com</strong>
         </p>
         <div>
-          &#x1F5A5; <a href="https://community.webmonetization.org/prognovel">Dev Logs</a>
+          &#x1F5A5; <a href="https://community.interledger.org/prognovel">Dev Logs</a>
         </div>
         <div>&#x1F6A9; <a href="/roadmap" data-sveltekit-preload-data>Roadmaps</a></div>
         <div>
@@ -55,7 +55,7 @@
     <div class="misc">
       <a href="https://www.twitter.com/prognovel">twitter</a>
       <a href="https://www.github.com/prognoveljs">github</a>
-      <a href="https://community.webmonetization.org/prognovel">WM API community</a>
+      <a href="https://community.interledger.org/prognovel">WM API community</a>
       <strong style="display: block;">
         <small>&copy; Copyright {COPYRIGHT_YEAR}, ProgNovel</small>
       </strong>

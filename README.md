@@ -73,7 +73,7 @@ ProgNovel works best when hosted on Jamstack platforms for performance and effie
 
 ## Other links
 
-[ProgNovel on Web Monetization community space](https://community.webmonetization.org/prognovel)<br/>
+[ProgNovel on Web Monetization community space](https://community.interledger.org/prognovel)<br/>
 [ProgNovel on Twitter](https://twitter.com/ProgNovel)<br/>
 [ProgNovel on Reddit](https://www.reddit.com/r/prognovel)
 
