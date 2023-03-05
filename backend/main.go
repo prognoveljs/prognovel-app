@@ -4,6 +4,7 @@ import (
 	"log"
 	"prognovel/backend/api"
 	global "prognovel/backend/app"
+	"prognovel/backend/chatgpt"
 	"prognovel/backend/coin"
 	"prognovel/backend/user"
 
@@ -21,6 +22,7 @@ func main() {
 	global.ProgNovelApp.OnBeforeServe().Add(api.APINovelRoute)
 	global.ProgNovelApp.OnBeforeServe().Add(api.APIInitRoute)
 	global.ProgNovelApp.OnBeforeServe().Add(api.PaymentRoute)
+	global.ProgNovelApp.OnBeforeServe().Add(chatgpt.AskGPT)
 	// global.ProgNovelApp.OnBeforeServe().Add(image.OptimizeImageAndSave)
 	global.ProgNovelApp.OnRecordBeforeCreateRequest().Add(user.DefaultProfileValues)
 
