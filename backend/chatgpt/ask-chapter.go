@@ -9,6 +9,11 @@ import (
 	"github.com/sashabaranov/go-openai"
 )
 
+var ask_prefix string = `
+Bot will only answer anything related to novel books based on user's input.
+It will apologize politely if it doesn't recognize the books user is talking about:
+`
+
 func AskGPT(e *core.ServeEvent) error {
 	// add new "GET /api/hello" route to the app router (echo)
 	e.Router.AddRoute(echo.Route{
@@ -19,11 +24,11 @@ func AskGPT(e *core.ServeEvent) error {
 
 			req := openai.ChatCompletionRequest{
 				Model:     openai.GPT3Dot5Turbo,
-				MaxTokens: 1000,
+				MaxTokens: 256,
 				Messages: []openai.ChatCompletionMessage{
 					{
 						Role:    openai.ChatMessageRoleUser,
-						Content: message,
+						Content: ask_prefix + "\n" + message,
 					},
 				},
 				Stream: false,
