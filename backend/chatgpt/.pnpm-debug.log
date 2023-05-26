@@ -1,0 +1,17 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 error pnpm": {
+    "code": "ERR_PNPM_UNEXPECTED_STORE",
+    "expectedStorePath": "/Users/radhy/Library/pnpm/store/v3",
+    "actualStorePath": "/Users/radhy/.pnpm-store/v3",
+    "modulesDir": "/Users/radhy/Documents/@proyek/@prognovel/prognovel-app/node_modules",
+    "err": {
+      "name": "pnpm",
+      "message": "Unexpected store location",
+      "code": "ERR_PNPM_UNEXPECTED_STORE",
+      "stack": "pnpm: Unexpected store location\n    at checkCompatibility (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:91481:15)\n    at /usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:92003:44\n    at Array.map (<anonymous>)\n    at validateModules (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:92001:34)\n    at getContext (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:91899:34)\n    at async mutateModules (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:119570:19)\n    at async handler (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:121870:33)\n    at async /usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:182106:21\n    at async run (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:182080:34)\n    at async runPnpm (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:182299:5)"
+    }
+  }
+}

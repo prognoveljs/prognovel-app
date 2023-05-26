@@ -1,4 +1,4 @@
-lockfileVersion: 5.4
+lockfileVersion: 5.3
 
 specifiers:
   '@cloudflare/workers-types': ^3.5.0
@@ -39,7 +39,7 @@ specifiers:
   ncp: ^2.0.0
   node-fetch: ^2.6.0
   npm-run-all: ^4.1.5
-  pocketbase: ^0.8.0
+  pocketbase: ^0.15.0
   postcss: ^8.4.12
   postcss-load-config: ^3.1.4
   rxjs: ^7.5.5
@@ -89,7 +89,7 @@ dependencies:
   js-crypto-aes: 1.0.4
   ncp: 2.0.0
   node-fetch: 2.6.7
-  pocketbase: 0.8.0
+  pocketbase: 0.15.0
   rxjs: 7.5.6
   sharp: 0.29.3
   short-uuid: 4.2.0
@@ -114,7 +114,7 @@ devDependencies:
   '@types/medium-editor': 5.0.5
   '@types/ws': 8.5.3
   autoprefixer: 10.4.8_postcss@8.4.16
-  carbon-preprocess-svelte: 0.8.2_x3y2lyioxqlolfdfa75f6lh7ve
+  carbon-preprocess-svelte: 0.8.2_bef1a5e10ebc16e5946507fa5f2cffa9
   disqus-svelte: 1.0.9
   mdsvex: 0.8.9_svelte@3.49.0
   npm-run-all: 4.1.5
@@ -125,7 +125,7 @@ devDependencies:
   svelte: 3.49.0
   svelte-intersection-observer: 0.10.0
   svelte-loader: 2.13.6_svelte@3.49.0
-  svelte-preprocess: 4.10.7_x3y2lyioxqlolfdfa75f6lh7ve
+  svelte-preprocess: 4.10.7_bef1a5e10ebc16e5946507fa5f2cffa9
   svelte-previous: 2.1.1
   svelte-progresscircle: 0.3.0
   vite: 3.1.0_sass@1.54.5
@@ -474,13 +474,14 @@ packages:
       ieee754: 1.2.1
     dev: false
 
-  /bufferutil/4.0.6:
-    resolution: {integrity: sha512-jduaYOYtnio4aIAyc6UbvPCVcgq7nYpVnucyxr6eCYg/Woad9Hf/oxxBRDnGGjPfjUm6j5O/uBWhIu4iLebFaw==}
+  /bufferutil/4.0.7:
+    resolution: {integrity: sha512-kukuqc39WOHtdxtw4UScxF/WVnMFVSQVKhtx3AjZJzhd0RGZZldcrfSEbVsWWe6KNH253574cq5F+wpv0G9pJw==}
     engines: {node: '>=6.14.2'}
     requiresBuild: true
     dependencies:
       node-gyp-build: 4.5.0
     dev: false
+    optional: true
 
   /call-bind/1.0.2:
     resolution: {integrity: sha512-7O+FbCihrB5WGbFYesctwmTKae6rOiIzmz1icreWJ+0aA7LJfuqhEso2T9ncpcFtzMQtzXf2QGGueWJGTYsqrA==}
@@ -510,11 +511,11 @@ packages:
     resolution: {integrity: sha512-45SHyp8RRwP5ZgV1YOvFIKPpdJDIrVzPL3f+YFK5V81eXr0MDH41vebKlRDAVMqAAetci8n8nRNGJ6JbBX2soQ==}
     dev: false
 
-  /carbon-preprocess-svelte/0.8.2_x3y2lyioxqlolfdfa75f6lh7ve:
+  /carbon-preprocess-svelte/0.8.2_bef1a5e10ebc16e5946507fa5f2cffa9:
     resolution: {integrity: sha512-dOy9pcC4prPCDYfznX8o403At5GQhEHn2nSpFEzLAWOqcw+h1ZAr5fvrkI6y8GrrQRjkti7Xs53/N/piyxo5Yw==}
     dependencies:
       purgecss: 4.1.3
-      svelte-preprocess: 4.10.7_lz623qhwylasrwtq72vzmn2f6e
+      svelte-preprocess: 4.10.7_5e7dadc0f6c2c128da70feab963745f1
       typescript: 4.8.2
     transitivePeerDependencies:
       - '@babel/core'
@@ -1890,6 +1891,7 @@ packages:
     resolution: {integrity: sha512-2iGbaQBV+ITgCz76ZEjmhUKAKVf7xfY1sRl4UiKQspfZMH2h06SyhNsnSVy50cwkFQDGLyif6m/6uFXHkOZ6rg==}
     hasBin: true
     dev: false
+    optional: true
 
   /node-releases/2.0.6:
     resolution: {integrity: sha512-PiVXnNuFm5+iYkLBNeq5211hvO38y63T0i2KKh2KnUs3RpzJ+JtODFjkD8yjLwnDkTYF1eKXheUwdssR+NRZdg==}
@@ -2023,8 +2025,8 @@ packages:
     hasBin: true
     dev: true
 
-  /pocketbase/0.8.0:
-    resolution: {integrity: sha512-LMuV46YcuG4bDZ1DNeUkvbaS5MWLZ1gpmccn6rYIg50n1bQ/BZJ9ip6SMJqo7xRGkPSL4kk1RP/zCkiG6g37Lg==}
+  /pocketbase/0.15.0:
+    resolution: {integrity: sha512-JaJIgMF0iiEiE7IS1q/SkQ3+a74HPnTXiuquHISSoZc23FHEOLXzDS+J8J1kWZmwFZmfqD0VDftlUUMs743J9w==}
     dev: false
 
   /postcss-load-config/3.1.4_postcss@8.4.16:
@@ -2458,10 +2460,10 @@ packages:
     resolution: {integrity: sha512-qVd3xIaZ120KClGBe5WKDswwI2y7ZYjXfhI2F2eRvr1Uv9t/tz8tF0heqdDXXfPqqZA4S2GadEwjBkGSIRNBCw==}
     dependencies:
       nanoid: 4.0.0
-      ws: 8.8.1_22kvxa7zeyivx4jp72v2w3pkvy
+      ws: 8.8.1_d8af4ee520e1351ed995313ec18969b4
     optionalDependencies:
-      bufferutil: 4.0.6
-      utf-8-validate: 5.0.9
+      bufferutil: 4.0.7
+      utf-8-validate: 5.0.10
     dev: false
 
   /svelte-dev-helper/1.1.9:
@@ -2511,7 +2513,7 @@ packages:
       svelte-dev-helper: 1.1.9
     dev: true
 
-  /svelte-preprocess/4.10.7_lz623qhwylasrwtq72vzmn2f6e:
+  /svelte-preprocess/4.10.7_5e7dadc0f6c2c128da70feab963745f1:
     resolution: {integrity: sha512-sNPBnqYD6FnmdBrUmBCaqS00RyCsCpj2BG58A1JBswNF7b0OKviwxqVrOL/CKyJrLSClrSeqQv5BXNg2RUbPOw==}
     engines: {node: '>= 9.11.2'}
     requiresBuild: true
@@ -2565,7 +2567,7 @@ packages:
       typescript: 4.8.2
     dev: true
 
-  /svelte-preprocess/4.10.7_x3y2lyioxqlolfdfa75f6lh7ve:
+  /svelte-preprocess/4.10.7_bef1a5e10ebc16e5946507fa5f2cffa9:
     resolution: {integrity: sha512-sNPBnqYD6FnmdBrUmBCaqS00RyCsCpj2BG58A1JBswNF7b0OKviwxqVrOL/CKyJrLSClrSeqQv5BXNg2RUbPOw==}
     engines: {node: '>= 9.11.2'}
     requiresBuild: true
@@ -2733,13 +2735,14 @@ packages:
     resolution: {integrity: sha512-WRbjgmYzgXkCV7zNVpy5YgrHgbBv126rMALQQMrmzOVC4GM2waQ9x7xtm8VU+1yF2kWyPzI9zbZ48n4vSxwfSA==}
     dev: false
 
-  /utf-8-validate/5.0.9:
-    resolution: {integrity: sha512-Yek7dAy0v3Kl0orwMlvi7TPtiCNrdfHNd7Gcc/pLq4BLXqfAmd0J7OWMizUQnTTJsyjKn02mU7anqwfmUP4J8Q==}
+  /utf-8-validate/5.0.10:
+    resolution: {integrity: sha512-Z6czzLq4u8fPOyx7TU6X3dvUZVvoJmxSQ+IcrlmagKhilxlhZgxPK6C5Jqbkw1IDUmFTM+cz9QDnnLTwDz/2gQ==}
     engines: {node: '>=6.14.2'}
     requiresBuild: true
     dependencies:
       node-gyp-build: 4.5.0
     dev: false
+    optional: true
 
   /util-deprecate/1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
@@ -2867,7 +2870,7 @@ packages:
         optional: true
     dev: false
 
-  /ws/8.8.1_22kvxa7zeyivx4jp72v2w3pkvy:
+  /ws/8.8.1_d8af4ee520e1351ed995313ec18969b4:
     resolution: {integrity: sha512-bGy2JzvzkPowEJV++hF07hAD6niYSr0JzBNo/J29WsB57A2r7Wlc1UFcTR9IzrPvuNVO4B8LGqF8qcpsVOhJCA==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
@@ -2879,8 +2882,8 @@ packages:
       utf-8-validate:
         optional: true
     dependencies:
-      bufferutil: 4.0.6
-      utf-8-validate: 5.0.9
+      bufferutil: 4.0.7
+      utf-8-validate: 5.0.10
     dev: false
 
   /yallist/4.0.0:
