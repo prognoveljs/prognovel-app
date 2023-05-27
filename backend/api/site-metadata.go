@@ -47,11 +47,15 @@ type User struct {
 	Avatar   string `json:"avatar"`
 }
 
-var data_file_name string = "site_metadata.json"
+var data_file_name string = ".cache/site_metadata.json"
 
 var site_metadata_global SiteMetadata
 
 func init() {
+	if _, err := os.Stat(".cache"); os.IsNotExist(err) {
+		os.MkdirAll(".cache", 0700) // Create your file
+	}
+
 	file, err := os.Open(data_file_name)
 	if err != nil {
 		fmt.Println("Error opening file:", err)
@@ -114,7 +118,7 @@ func APISiteMetadataRoute(e *core.ServeEvent) error {
 			return c.JSON(http.StatusOK, site_metadata_global)
 		},
 		Middlewares: []echo.MiddlewareFunc{
-			// apis.RequireAdminOrOwnerAuth("user-id"),
+			// apis.RequireAdminAuth(),
 		},
 	})
 

@@ -16,6 +16,8 @@ src/lib/.generated
 .svelte
 /bin/air
 vite.config.js.timestamp-*
+.cache
+
 
 # Local Netlify folder
 .netlify
