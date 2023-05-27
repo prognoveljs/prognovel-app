@@ -3,6 +3,7 @@
   import HistorySection from "./shortcut/History.svelte";
   import type { Bookmark } from "$typings";
 
+  // TODO - bookmark metadata fetch here
   export let bookmarkData: Bookmark[] = null;
   let select = "bookmark";
   $: translateX = select === "bookmark" ? "0" : "calc(var(--shortcut-width) * -1)";
@@ -14,12 +15,14 @@
       <span
         class="bookmark {select === 'bookmark' ? 'select' : ''}"
         on:click={() => (select = "bookmark")}
+        on:keyup
       >
         bookmark
       </span>
       <span
         class="recent {select === 'recent' ? 'select' : ''}"
         on:click={() => (select = "recent")}
+        on:keyup
       >
         recent reads
       </span>

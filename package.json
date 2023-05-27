@@ -13,7 +13,7 @@
 		"pocketbase:create-migration": "go run backend/main.go migrate create \"migration\"",
 		"pocketbase:migrate": "go run backend/main.go migrate collections",
 		"format": "prettier --write src/**/*.{ts,js,svelte} --plugin-search-dir=.",
-		"sveltekit-upgrade": "pnpm add -D @sveltejs/kit@next @sveltejs/adapter-static@next svelte-preprocess@latest vite@latest"
+		"sveltekit-upgrade": "pnpm add -D svelte@latest @sveltejs/kit@latest @sveltejs/adapter-static@latest svelte-preprocess@latest vite@latest"
 	},
 	"dependencies": {
 		"@editorjs/editorjs": "^2.25.0",
@@ -43,7 +43,6 @@
 		"rxjs": "^7.5.5",
 		"sharp": "^0.29.3",
 		"short-uuid": "^4.2.0",
-		"surrealdb.js": "^0.3.1",
 		"svelte-feather-icons": "^4.0.0",
 		"svelte-forms": "^2.3.1",
 		"svelte-inview": "^3.0.0",
@@ -57,8 +56,8 @@
 		"@fullhuman/postcss-purgecss": "^4.1.3",
 		"@originjs/vite-plugin-commonjs": "^1.0.3",
 		"@playwright/test": "^1.21.1",
-		"@sveltejs/adapter-static": "1.0.0-next.43",
-		"@sveltejs/kit": "1.0.0-next.481",
+		"@sveltejs/adapter-static": "2.0.2",
+		"@sveltejs/kit": "1.19.0",
 		"@types/aws-lambda": "^8.10.93",
 		"@types/js-cookie": "^3.0.2",
 		"@types/medium-editor": "^5.0.5",
@@ -72,13 +71,13 @@
 		"postcss-load-config": "^3.1.4",
 		"sass": "1.54.5",
 		"stream": "^0.0.2",
-		"svelte": "3.49.0",
+		"svelte": "3.59.1",
 		"svelte-intersection-observer": "^0.10.0",
 		"svelte-loader": "^2.13.6",
-		"svelte-preprocess": "^4.10.7",
+		"svelte-preprocess": "^5.0.3",
 		"svelte-previous": "^2.1.0",
 		"svelte-progresscircle": "^0.3.0",
-		"vite": "3.1.0",
+		"vite": "4.3.8",
 		"vite-plugin-dynamic-import": "^0.1.1",
 		"vite-plugin-environment": "^1.1.1"
 	}

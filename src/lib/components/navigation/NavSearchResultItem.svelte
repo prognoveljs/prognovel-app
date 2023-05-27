@@ -2,7 +2,7 @@
   // import { novelCoverPlaceholders } from "$lib/utils/novel-page";
   import { frameTick } from "$lib/utils/animation";
   import { getCoverURLPath } from "$lib/utils/images";
-  import { prefetch, prefetchRoutes } from "$app/navigation";
+  import { preloadData } from "$app/navigation";
   import { fade, fly } from "svelte/transition";
   import { isMobileScreen } from "$lib/utils/mobile";
   import SkeletonShell from "../SkeletonShell.svelte";
@@ -18,7 +18,7 @@
       const elTitle: HTMLDivElement = el.querySelector(".title");
 
       await frameTick();
-      prefetch(el.href);
+      preloadData(el.href);
 
       elWrapper.style.height = `calc(var(--item-height) + ${elTitle.clientHeight}px - 18px)`;
       clicked = true;

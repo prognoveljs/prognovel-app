@@ -8,35 +8,10 @@ const IDB_NOVEL_PREFIX = "novel-";
 const IDB_HOMEPAGE_PREFIX = "homepage";
 
 export async function fetchSiteMetadata(): Promise<SiteMetadata> {
-  let data: SiteMetadata;
-  const url = new URL(import.meta.env.BACKEND_API);
-  if (import.meta.env.IS_STATIC_API) url.pathname = "sitemetadata.json";
-  try {
-    const response = await fetch(url.href);
-    data = await response.json();
-    await setIDB(IDB_HOMEPAGE_PREFIX, data, getMetadataStore());
-  } catch (err) {
-    console.error("Failed to fetch site metadata from server.");
-    try {
-      data = await getIDB(IDB_HOMEPAGE_PREFIX, getMetadataStore());
-    } catch (error) {
-      console.error("Error reading site metadata from IndexedDB.");
-      throw new Error(error);
-    }
-    if (!data) {
-      try {
-        const staleResponse = await fetch("/publish/sitemetadata.json");
-        data = await staleResponse.json();
-        data.stale = true;
-      } catch (err) {
-        throw `Failed to find fallback for homepage. No metadata found in cache.`;
-      }
-    }
-  }
+  const res = await fetch("/api/site-metadata");
+  const metadata: SiteMetadata = await res.json();
 
-  siteMetadata.set(data);
-
-  return data;
+  return metadata;
 }
 
 // TODO add loading status to NovelMetadata

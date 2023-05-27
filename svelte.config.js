@@ -35,16 +35,6 @@ export default {
     adapter: adapter({
       fallback: "200.html",
     }),
-    // prerender: {
-    //   entries: ["*"],
-    // },
-    trailingSlash: "always",
-    // vite: {
-
-    // },
-    prerender: {
-      onError: "continue",
-    },
     files: {
       serviceWorker: "src/service-worker.ts",
     },

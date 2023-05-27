@@ -13,8 +13,8 @@
 
   <p>{error.message}</p>
 
-  {#if dev && error.stack}
-    <pre>{error.stack}</pre>
+  {#if dev && error}
+    <pre>{JSON.stringify(error)}</pre>
   {/if}
 </div>
 

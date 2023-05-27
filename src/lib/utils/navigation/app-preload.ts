@@ -1,7 +1,3 @@
-import { siteMetadata } from "$lib/store/states";
-import { prefetch } from "$app/navigation";
-import type { SiteMetadata } from "$typings";
-
 const PRELOAD_NOVELS = 3; // prefetch first 3 novel found in metadata
 
 // TODO- wait for connection idle

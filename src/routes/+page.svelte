@@ -12,20 +12,9 @@
   import type { NovelMetadata, NovelsMetadata, SiteMetadata, Bookmark } from "$typings";
   import ComponentsLazy from "$lib/components/home-page/ComponentsLazy.svelte";
 
-  interface PreloadData {
-    status: number;
-    message?: string;
-    fresh?: boolean;
-    novels?: string[];
-    bookmarkData?: Bookmark[];
-  }
-
   export let data;
 
-  $: novelList = (data.novelList as string[]) ?? [];
-  $: sitemetadata = (data.sitemetadata as SiteMetadata & PreloadData) ?? {};
-  $: novelsMetadata = (data.novelsMetadata as NovelsMetadata) ?? {};
-  $: bookmarkData = data.bookmarkData as Bookmark[];
+  $: ({ sitemetadata, novelsMetadata } = data);
 
   setContext("data_static", {
     siteMetadata: sitemetadata,
@@ -37,9 +26,7 @@
     page: $page,
   });
 
-  onMount(async () => {
-    // if (!sitemetadata.fresh) fetchSiteMetadata();
-  });
+  onMount(async () => {});
 </script>
 
 <svelte:head>
@@ -47,11 +34,10 @@
 </svelte:head>
 <NavMobile />
 <div class="container">
-  <HomeShortcut {bookmarkData} />
+  <HomeShortcut />
   <div class="page-content">
     <div class="hero-container">
       <section class="hero">
-        <!-- <h1>{SITE_TITLE}</h1> -->
         <HomeHero />
       </section>
     </div>
@@ -61,11 +47,6 @@
 <div class="lazy-component">
   <div class="horizontal-line" />
   <ComponentsLazy />
-  <!-- {#await loadHomepageLazyComponents()}
-    <LazyComponentsSkeletonShell />
-  {:then component}
-    <svelte:component this={component} />
-  {/await} -->
 </div>
 
 <GenerateHTML />

@@ -12,6 +12,7 @@ require (
 
 require (
 	github.com/dustin/go-humanize v1.0.1 // indirect
+	github.com/imdario/mergo v0.3.15 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
 	golang.org/x/sync v0.2.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230525234015-3fc162c6f38a // indirect

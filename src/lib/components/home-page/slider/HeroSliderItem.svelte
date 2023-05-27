@@ -1,6 +1,6 @@
 <script lang="ts">
   import { scale } from "svelte/transition";
-  import { goto, prefetch } from "$app/navigation";
+  import { goto, preloadData } from "$app/navigation";
   import { novelCoverSubtitle, tagColorizer } from "$lib/utils/novel-page";
   import { onMount } from "svelte";
   import BookCover from "$lib/components/BookCover.svelte";
@@ -17,7 +17,7 @@
   let node;
 
   onMount(async () => {
-    if (novel) prefetch("/novel/" + novel);
+    if (novel) preloadData("/novel/" + novel);
   });
 </script>
 
@@ -33,6 +33,7 @@
     start: 0.9,
   }}
   bind:this={node}
+  on:keyup
   on:click={() => goto("/novel/" + novel)}
   class="wrapper"
 >
