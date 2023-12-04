@@ -22,7 +22,14 @@
     };
     $backend
       .collection("users")
-      .authWithOAuth2(
+      // .authWithOAuth2(
+      //   authProvider.name,
+      //   url.searchParams.get("code"),
+      //   authProvider.codeVerifier,
+      //   //@ts-ignore
+      //   location.origin + "/login/redirect",
+      // )
+      .authWithOAuth2Code(
         authProvider.name,
         url.searchParams.get("code"),
         authProvider.codeVerifier,
