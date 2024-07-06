@@ -20,6 +20,11 @@ for content creators to experiment with. Because ProgNovel built mainly in Jamst
 
 _THE DEPLOYMENT INSTRUCTIONS BELOW MAY BE OBSOLETE IN FAVOR OF A NEW BACKEND CURRENTLY IN DEVELOPMENT. THERE'S CURRENTLY NO ETA FOR THE PROJECT TO BE ACTIVE AGAIN AS I AM CURRENTLY IN SHORT OF FUNDS AND RESOURCES TO SUPPORT THIS PROJECT - BUT DO NOTE THAT THIS DOESN'T MEAN THAT THE PROJECT IS ABANDONED BECAUSE EVEN IF I AM WORKING ON ANOTHER PROJECT, I AM USUALLY USING THE SAME STACK AND TECHNOLOGIES SO THE PROJECT CAN STILL BENEFITS FROM EXPERIENCE AS WELL AS TRIAL AND ERRORS FROM OTHER PROJECTS THAT I CAN USE LATER ON TO MAKE PROGNOVEL BETTER._
 
+## (NEW 2024 PROJECT UPDATE)
+
+There's another project that I'm currently working on that is halfway to public alpha. I learned a lot from this project, where it fails and where it can shine, and apply them to my next project.
+I consider the new project as spiritual successor of ProgNovel so please stay tune!
+
 ## Screenshot
 
 _ProgNovel on Desktop_
